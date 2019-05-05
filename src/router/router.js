@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const router =  new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -31,7 +31,7 @@ const router =  new Router({
         title: '注册'
       },
       component: () => import('../views/login/Register.vue')
-    },
+    }
   ]
 })
 

@@ -211,6 +211,8 @@ a:focus {
 
 /* start loading */
 #start_wrapper{
+  box-sizing: border-box;
+  width: 100%;
   padding: 0.2rem 0;
 }
 .start_img{

@@ -9,10 +9,10 @@ export default {
   name: 'Index',
   mounted () {
     try {
+      document.body.removeChild(document.getElementById('start_wrapper'))
       setTimeout(() => {
-        document.body.removeChild(document.getElementById('start_wrapper'))
         document.getElementById('app').style.display = 'block'
-      }, 50000)
+      }, 500)
     } catch (e) {
       console.log(e)
     }

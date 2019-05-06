@@ -1,21 +1,17 @@
 <template>
   <div class="index_wrapper">
     这是首页
+    <Tabs></Tabs>
   </div>
 </template>
 
 <script>
+import Tabs from '../../components/Tab.vue'
+
 export default {
   name: 'Index',
-  mounted () {
-    try {
-      document.body.removeChild(document.getElementById('start_wrapper'))
-      setTimeout(() => {
-        document.getElementById('app').style.display = 'block'
-      }, 500)
-    } catch (e) {
-      console.log(e)
-    }
+  components: {
+    Tabs
   }
 }
 </script>

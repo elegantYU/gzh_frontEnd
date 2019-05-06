@@ -9,6 +9,14 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      name: 'home',
+      meta: {
+        title: '首页'
+      },
+      component: () => import('../App.vue')
+    },
+    {
+      path: '/index',
       name: 'index',
       meta: {
         title: '首页'
@@ -36,7 +44,6 @@ const router = new Router({
 })
 
 router.afterEach((to, from, next) => {
-  console.log(to)
   document.title = to.meta.title
 })
 

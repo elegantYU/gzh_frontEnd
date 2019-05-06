@@ -9,15 +9,15 @@
       <div class="login_input">
         <span></span>
         <input :type="v_switch ? 'text' : 'password'" placeholder="请输入密码" v-model="v_password">
-        <i></i>
+        <i @click="f_switch"></i>
       </div>
-      <div class="login_submit">
+      <div class="login_submit" @click="f_login">
         登录
       </div>
     </div>
-    <div class="login_detail">
-      <span>忘记密码</span>
-      <span>没有账号？<i>立即注册</i></span>
+    <div class="login_detail clearfix">
+      <span @click="f_forget">忘记密码</span>
+      <span>没有账号？<i @click="f_register">立即注册</i></span>
     </div>
   </div>
 </template>
@@ -41,6 +41,21 @@ export default {
     } catch (e) {
       console.log(e)
     }
+  },
+  methods: {
+    f_login () {
+      console.log('登录')
+    },
+    f_forget () {
+      console.log('忘记密码')
+    },
+    f_register () {
+      console.log('注册')
+      this.$router.push({ name: 'register' })
+    },
+    f_switch () {
+      this.v_switch = !this.v_switch
+    }
   }
 }
 </script>
@@ -54,11 +69,13 @@ export default {
     margin: 0 auto 1.5rem;
   }
   .login_content{
+    margin-bottom: 0.42rem;
     .login_input{
       height: 0.84rem;
       margin-bottom: 0.25rem;
       box-sizing: border-box;
       border-bottom: 1px solid #d2d2d2;
+      text-align: left;
       span{
         display: inline-block;
         width: 0.25rem;
@@ -74,6 +91,7 @@ export default {
         }
       }
       &:nth-of-type(2){
+        margin-bottom: 0.95rem;
         span{
           background-image: url('../../assets/images/login/login_icon_lock.png');
         }
@@ -83,6 +101,46 @@ export default {
         width: 4.9rem;
         height: 100%;
         font-size: 0.28rem;
+      }
+      i{
+        display: inline-block;
+        width: 0.35rem;
+        height: 100%;
+        background-image: url('../../assets/images/login/login_icon_eye.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center center;
+        cursor: pointer;
+      }
+    }
+    .login_submit{
+      width: 100%;
+      height :0.9rem;
+      border-radius: 0.41rem;
+      background-color: #f73476;
+      color: #fff;
+      font-size: 0.34rem;
+      line-height: 0.9rem;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+  .login_detail{
+    font-size: 0.26rem;
+    line-height: 1.5em;
+    padding: 0 0.3rem;
+    span{
+      color: #a0a0a0;
+      &:nth-of-type(1) {
+        float: left;
+      }
+      &:nth-of-type(2) {
+        float: right;
+      }
+      i{
+        font-style: normal;
+        color: #f73476;
+        cursor: pointer;
       }
     }
   }

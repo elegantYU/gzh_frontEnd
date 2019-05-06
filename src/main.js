@@ -5,10 +5,13 @@ import App from './App.vue'
 import router from './router/router'
 import store from './store/store'
 import baseCss from './assets/css/base.css'
+import { deviceRem } from './utils/utils'
 
 Vue.use(VueAxios, Axios)
 
 Vue.config.productionTip = false
+
+deviceRem(750)
 
 new Vue({
   router,

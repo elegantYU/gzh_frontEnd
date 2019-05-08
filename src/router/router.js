@@ -9,19 +9,35 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'app',
       meta: {
         title: '首页'
       },
-      component: () => import('../App.vue')
+      components: () => import('../App.vue')
     },
     {
-      path: '/index',
-      name: 'index',
-      meta: {
-        title: '首页'
-      },
-      component: () => import('../views/index/Index.vue')
+      path: '/home',
+      name: 'home',
+      component: () => import('../views/Home.vue'),
+      children: [
+        {
+          path: '/home/index',
+          name: 'index',
+          meta: {
+            title: '首页'
+          },
+          component: () => import('../views/index/Index.vue')
+        },
+        // 报修
+        {
+          path: '/home/myrepair',
+          name: 'myrepair',
+          meta: {
+            title: '我的报修'
+          },
+          component: () => import('../views/index/repair/myRepair.vue')
+        }
+      ]
     },
     // 登录注册
     {

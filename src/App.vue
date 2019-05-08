@@ -14,7 +14,7 @@ export default {
       document.body.removeChild(document.getElementById('start_wrapper'))
       setTimeout(() => {
         document.getElementById('app').style.display = 'block'
-        this.$router.push({ name: 'index' })
+        this.$router.push({ name: 'login' })
       }, 500)
     } catch (e) {
       console.log(e)

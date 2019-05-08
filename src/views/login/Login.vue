@@ -45,6 +45,7 @@ export default {
   methods: {
     f_login () {
       console.log('登录')
+      this.$router.push({ name: 'index' })
     },
     f_forget () {
       console.log('忘记密码')

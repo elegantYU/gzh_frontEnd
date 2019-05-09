@@ -2,6 +2,7 @@ html * {
   outline: 0;
   -webkit-text-size-adjust: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  line-height: 1em;
 }
 
 html {
@@ -268,4 +269,18 @@ a:focus {
   100%{
     opacity: 1;
   }
+}
+
+/* muse */
+.mu-carousel-indicators{
+  height: 0.3rem !important;
+}
+.mu-carousel-indicator-button{
+  width: 0.3rem !important;
+  height: 0.3rem !important;
+  margin: 0 !important;
+}
+.mu-carousel-indicator-icon{
+  width: 0.1rem !important;
+  height: 0.1rem !important;
 }

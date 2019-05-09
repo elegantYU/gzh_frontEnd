@@ -36,8 +36,24 @@ const router = new Router({
             title: '我的报修'
           },
           component: () => import('../views/index/repair/myRepair.vue')
-        }
+        },
       ]
+    },
+    {
+      path: '/willrepair',
+      name: 'willrepair',
+      meta: {
+        title: '我要报修'
+      },
+      component: () => import('../views/index/repair/willRepair.vue')
+    },
+    {
+      path: '/repairdetail',
+      name: 'repairdetail',
+      meta: {
+        title: '报修详情'
+      },
+      component: () => import('../views/index/repair/repairDetail.vue')
     },
     // 登录注册
     {

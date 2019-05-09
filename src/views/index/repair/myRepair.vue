@@ -69,6 +69,7 @@ export default {
     },
     f_moveRepair () {
       console.log('我要报修')
+      this.$router.push({ name: 'willrepair' })
     }
   }
 }
@@ -112,9 +113,11 @@ export default {
         .myRep_list_left{
           float: left;
           width: calc(100% - 1.6rem);
+          height: 1.43rem;
           box-sizing: border-box;
           padding-right: 0.24rem;
           text-align: left;
+          position: relative;
           h6{
             font-size: 0.34rem;
             color: #000;
@@ -134,6 +137,9 @@ export default {
             -webkit-box-orient: vertical;
           }
           .myRep_list_left_detail{
+            position: absolute;
+            width: 100%;
+            bottom: 0;
             span{
               font-size: 0.2rem;
               color: #000;
@@ -143,6 +149,7 @@ export default {
             }
             .myRep_detail_status{
               float: right;
+              margin-right: 0.24rem;
             }
           }
         }

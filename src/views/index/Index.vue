@@ -3,11 +3,17 @@
     <div class="index_swipe">
       <span class="index_map" @click="f_switchVillage"><i></i>康馨园</span>
       <span class="index_notice" @click="f_viewNotice"></span>
-      <mt-swipe>
-        <mt-swipe-item>1</mt-swipe-item>
-        <mt-swipe-item>2</mt-swipe-item>
-        <mt-swipe-item>3</mt-swipe-item>
-      </mt-swipe>
+      <mu-carousel hide-controls>
+        <mu-carousel-item>
+          <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg" alt="">
+        </mu-carousel-item>
+        <mu-carousel-item>
+          <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg" alt="">
+        </mu-carousel-item>
+        <mu-carousel-item>
+          <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg" alt="">
+        </mu-carousel-item>
+      </mu-carousel>
     </div>
     <div class="index_tools">
       <h5>智慧小区</h5>
@@ -134,15 +140,12 @@ export default {
   .index_swipe{
     height: 3.1rem;
     position: relative;
-    .mint-swipe{
+    .mu-carousel{
       height: 100%;
-      .mint-swipe-item{
+      .mu-carousel-item{
         background-color: blue;
-      }
-      .mint-swipe-indicator{
-        background-color: #b3b3b3;
-        &.is-active{
-          background-color: #fff;
+        img{
+          width: 100%;
         }
       }
     }
@@ -258,11 +261,14 @@ export default {
         .index_topic_item_left{
           display: inline-block;
           width: calc(100% - 1.7rem);
+          height: 1.1rem;
           padding-right: 0.15rem;
           box-sizing: border-box;
+          position: relative;
           p{
             font-size: 0.26rem;
             text-align: left;
+            line-height: 1.2em;
             margin-bottom: 0.35rem;
             text-overflow: -o-ellipsis-lastline;
             text-overflow: ellipsis;
@@ -273,6 +279,9 @@ export default {
             -webkit-box-orient: vertical;
           }
           .index_topic_item_detail{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
             font-size: 0.18rem;
             color: #888;
             span{

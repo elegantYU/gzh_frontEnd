@@ -284,3 +284,10 @@ a:focus {
   width: 0.1rem !important;
   height: 0.1rem !important;
 }
+/* dateinput */
+.mu-input-content{
+  border-bottom: 0.5px solid #ccc;
+}
+.mu-text-field-input{
+  text-indent: 1em;
+}

@@ -48,7 +48,7 @@ const router = new Router({
       component: () => import('../views/index/repair/willRepair.vue')
     },
     {
-      path: '/repairdetail',
+      path: '/repairdetail/:id',
       name: 'repairdetail',
       meta: {
         title: '报修详情'

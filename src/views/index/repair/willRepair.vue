@@ -202,13 +202,13 @@ export default {
       }
       .wr_input{
         height: 1.48rem;
-        padding: 0.1rem 0.3rem;
+        padding: 0.3rem;
         background-color: #fff;
         textarea{
          width: 100%;
          height: 100%; 
          resize: none;
-         font-size: 0.32rem;
+         font-size: 0.26rem;
         }
       }
     }

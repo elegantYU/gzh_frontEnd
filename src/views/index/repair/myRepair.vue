@@ -5,71 +5,116 @@
         <li class="active">我的报修单</li>
         <li @click="f_moveRepair">我要报修</li>
       </ul>
-      <ul class="myRep_list">
-        <li
-          v-for="(v, i) in v_repairList"
-          :key="i"
-          @click="f_detail"
-        >
-          <div class="myRep_list_left">
-            <h6>{{ v.name }}</h6>
-            <p>{{ v.detail }}</p>
-            <div class="myRep_list_left_detail clearfix">
-              <span class="myRep_detail_time">{{ v.time }}</span>
-              <span class="myRep_detail_status">{{ v.status }}</span>
-            </div>
-          </div>
-          <img :src="v.image" alt="">
-        </li>
+      <ul class="myRep_list" ref="container">
+        <mu-load-more @refresh="f_refresh" :refreshing="v_refreshing" :loading="v_loading" @load="f_load">
+          <mu-list>
+            <template v-for="(v, i) in v_repairList">
+              <li
+                :key="i"
+                @click="f_detail(v.id)"
+              >
+                <div class="myRep_list_left">
+                  <h6>{{ v.title }}</h6>
+                  <p>{{ v.detail }}</p>
+                  <div class="myRep_list_left_detail clearfix">
+                    <span class="myRep_detail_time">{{ v.time }}</span>
+                    <span class="myRep_detail_status">{{ v.sts }}</span>
+                  </div>
+                </div>
+                <img :src="v.img[0]" alt="">
+              </li>
+            </template>
+          </mu-list>
+        </mu-load-more>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import { setTimeout } from 'timers';
 export default {
   name: 'MyRepair',
   data () {
     return {
       v_repairList: [
         {
-          name: '厨房水管破裂',
+          id: 1,
+          title: '厨房水管破裂',
           detail: '这是发生什么卡了？你家的排粪管炸了!我的天哪，屎尿喷的哪哪都是，赶紧回去看看吧，到屎里把人捞出来',
           time: '2019-01-01 15:00:00',
-          status: '已完成',
-          image: 'https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg'
+          sts: '已完成',
+          img: ['https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg']
         },
         {
-          name: '厨房水管破裂',
+          id: 1,
+          title: '厨房水管破裂',
           detail: '这是发生什么卡了？你家的排粪管炸了!我的天哪，屎尿喷的哪哪都是，赶紧回去看看吧，到屎里把人捞出来',
           time: '2019-01-01 15:00:00',
-          status: '已完成',
-          image: 'https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg'
+          sts: '已完成',
+          img: ['https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg']
         },
         {
-          name: '厨房水管破裂',
+          id: 1,
+          title: '厨房水管破裂',
           detail: '这是发生什么卡了？你家的排粪管炸了!我的天哪，屎尿喷的哪哪都是，赶紧回去看看吧，到屎里把人捞出来',
           time: '2019-01-01 15:00:00',
-          status: '已完成',
-          image: 'https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg'
+          sts: '已完成',
+          img: ['https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg']
         },
         {
-          name: '厨房水管破裂',
+          id: 1,
+          title: '厨房水管破裂',
           detail: '这是发生什么卡了？你家的排粪管炸了!我的天哪，屎尿喷的哪哪都是，赶紧回去看看吧，到屎里把人捞出来',
           time: '2019-01-01 15:00:00',
-          status: '已完成',
-          image: 'https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg'
-        }
-      ]
+          sts: '已完成',
+          img: ['https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg']
+        },
+      ],
+      v_listNum: 1,
+      v_refreshing: false,
+      v_loading: false
     }
   },
   methods: {
-    f_detail () {
-      console.log('保修单的详情')
+    f_detail (id) {
+      this.$router.push({ name: 'repairdetail', params: { id: id } })
     },
     f_moveRepair () {
       console.log('我要报修')
       this.$router.push({ name: 'willrepair' })
+    },
+    f_getList () {
+      this.$http
+        .get('/admin/property/repair/list', {
+          params: {
+            createUserId: '',
+            pageNum: this.v_listNum,
+            pageSize: 10
+          }
+        })
+        .then(res => {
+          console.log('所有单', res.data)
+          this.v_repairList.concat(res.data)
+        })
+    },
+    f_refresh () {
+      this.v_refreshing = true
+      this.$refs.container.scrollTop = 0
+      setTimeout(() => {
+        this.v_refreshing = false
+        this.v_repairList = []
+        this.v_listNum = 1
+        this.f_getList()
+      }, 1000)
+    },
+    f_load () {
+      this.v_loading = true
+      setTimeout(() => {
+        this.v_loading = false
+        this.v_listNum++
+        this.f_getList()
+      }, 1000)
     }
   }
 }

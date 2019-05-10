@@ -53,7 +53,7 @@ export default {
     },
     f_getCode () {
       if (!(/^1[345678]\d{9}$/.test(phone))) {
-        console.log('手机号错误')
+        this.$toast('手机号错误')
         return
       }
     },

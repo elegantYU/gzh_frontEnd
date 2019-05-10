@@ -5,30 +5,31 @@
       <div class="wr_form">
         <div class="wr_input">
           <label>房屋名称</label>
-          <input type="text" readonly :value="v_from.houseName">
+          <input type="text" readonly v-model="v_from.houseName" @click="f_openHouse" placeholder="请选择房屋信息">
+          <i></i>
         </div>
         <div class="wr_input">
           <label>报修类型</label>
-          <input type="text" readonly :value="v_from.type" @click="f_openType" placeholder="请选择报修类型">
+          <input type="text" readonly v-model="v_from.type" @click="f_openType" placeholder="请选择报修类型">
           <i></i>
         </div>
         <div class="wr_input">
           <label>标题</label>
-          <input type="text" :value="v_from.title" placeholder="请输入标题" maxlength="15">
+          <input type="text" v-model="v_from.title" placeholder="请输入标题(15个字以内)" maxlength="15">
         </div>
         <div class="wr_input">
           <label>联系人</label>
-          <input type="text" :value="v_from.userName" placeholder="请输入联系人">
+          <input type="text" v-model="v_from.userName" placeholder="请输入联系人">
         </div>
         <div class="wr_input">
           <label>联系方式</label>
-          <input type="text" :value="v_from.telPhone" placeholder="请输入联系方式">
+          <input type="text" v-model="v_from.telPhone" placeholder="请输入联系方式" @blur="f_checkPhone">
         </div>
         <div class="wr_input wr_datetime">
           <label>预约时间</label>
           <div class="wr_datetime_item">
             <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" :solo='true' :full-width="true" prefix="开始" clock-type='24hr' view-type='list' v-model="v_from.startTime" type="dateTime" landscape></mu-date-input>
-            <mu-date-input container="bottomSheet" :should-disable-date="f_endTimeRules" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_from.endTime" type="dateTime" landscape></mu-date-input>
+            <mu-date-input container="bottomSheet" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_from.endTime" type="time" landscape></mu-date-input>
           </div>
         </div>
       </div>
@@ -51,9 +52,23 @@
           <div class="wr_preview_add" @click="f_upload"></div>
         </div>
       </div>
-      <div class="wr_submit">
+      <div class="wr_submit" @click="f_submit">
         报修
       </div>
+      <!-- 哪间屋子 -->
+      <mu-bottom-sheet :open.sync="v_houseFlag">
+        <mu-list>
+          <mu-sub-header>选择房屋信息</mu-sub-header>
+          <mu-list-item
+            button
+            v-for="(v, i) in v_user.house"
+            :key="i"
+            @click="f_chooseHouse(v)"
+          >
+            <mu-list-item-title>{{ v }}</mu-list-item-title>
+          </mu-list-item>
+        </mu-list>
+      </mu-bottom-sheet>
       <!-- 报修类型 -->
       <mu-bottom-sheet :open.sync="v_typeFlag">
         <mu-list>
@@ -73,13 +88,18 @@
 </template>
 
 <script>
+import { dateFormat } from '../../../utils/utils'
+
 export default {
   name: 'WillRepair',
   data () {
     return {
+      v_user: {
+        house: ['1栋2单元407', '1栋2单元407']
+      },
       v_from: {
         communityName: '戈雅花苑',
-        houseName: '1栋2单元407',
+        houseName: '',
         type: '',
         title: '',
         userName: '',
@@ -103,28 +123,64 @@ export default {
         { name: '防水施工方法' },
       ],
       v_typeFlag: false,
+      v_houseFlag: false,
       v_images: []
+    }
+  },
+  watch: {
+    'v_from.endTime': function (now, past) {
+      let start = this.v_from.startTime
+      let startTime = new Date(start).toLocaleTimeString('chinese', { hour12: false })
+      if (now && start) {
+        let date = dateFormat(start)
+        let endStamp = new Date(now).getTime()
+        let endTime = new Date(now).toLocaleTimeString('chinese', { hour12: false })
+        if (endStamp < new Date(start).getTime()) {
+          this.v_from.endTime = start
+          this.v_from.startTime = `${date} ${endTime}`
+        } else {
+          this.v_from.endTime = `${date} ${endTime}`
+        }
+      } else {
+        this.v_from.endTime = ''
+        this.$toast({
+          msg: '请先选择开始时间',
+          time: 1500
+        })
+      }
     }
   },
   methods: {
     f_openType () {
       this.v_typeFlag = true
     },
+    f_openHouse () {
+      this.v_houseFlag = true
+    },
     f_chooseType (name) {
       this.v_typeFlag = false
       this.v_from.type = name
     },
+    f_chooseHouse (name) {
+      this.v_houseFlag = false
+      this.v_from.houseName = name
+    },
     f_startTimeRules (date) {
       let today = new Date().getTime()
-      console.log(new Date(date).toLocaleString())
       return new Date(date).getTime() < today
     },
-    // 预约时间区间是否默认为两小时
-    // 时间判断弹窗➕清空操作
-    f_endTimeRules (date) {
-
+    f_checkPhone () {
+      if (!(/^1[345678]\d{9}$/.test(this.v_from.telPhone))) {
+        this.$toast('手机号错误')
+        this.v_from.telPhone = ''
+        console.log(this.v_from.telPhone)
+        return
+      }
     },
     f_upload () {
+      
+    },
+    f_submit () {
 
     }
   }

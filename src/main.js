@@ -9,9 +9,11 @@ import { deviceRem } from './utils/utils'
 import wxsdk from './utils/wxsdk'
 import './assets/css/base.css'
 import 'muse-ui/dist/muse-ui.css'
+import toastMessage  from './components/plugin/Toast'
 
 Vue.use(VueAxios, Axios)
 Vue.use(MuseUI)
+Vue.use(toastMessage)
 Vue.prototype.wxsdk = wxsdk
 
 Vue.config.productionTip = false

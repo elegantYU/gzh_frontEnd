@@ -50,33 +50,7 @@ const router = new Router({
         {
           path: '/neighbor',
           name: 'neighbor',
-          component: () => import('../views/index/neighbor/index.vue'),
-          children: [
-            {
-              path: '/neighbor/public',
-              name: 'neighborPublic',
-              meta: {
-                title: '共享大厅'
-              },
-              component: () => import('../views/index/neighbor/public.vue')
-            },
-            {
-              path: '/neighbor/mine',
-              name: 'neighborMine',
-              meta: {
-                title: '我的共享'
-              },
-              component: () => import('../views/index/neighbor/mine.vue')
-            },
-            {
-              path: '/neighbor/order',
-              name: 'neighborOrder',
-              meta: {
-                title: '我的预约'
-              },
-              component: () => import('../views/index/neighbor/order.vue')
-            },
-          ]
+          component: () => import('../views/index/neighbor/index.vue')
         }
       ]
     },

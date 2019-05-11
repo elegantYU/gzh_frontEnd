@@ -17,78 +17,92 @@
           <div class="n_nav_filter" :class="v_filterFlag ? 'active' : ''" @click="f_filter"></div>
         </div>
         <div class="n_filter clearfix" v-if="v_filterFlag">
-          <div class="n_filter_list" v-for="(v, i) in v_now" :key="i" @click="f_startFilter(v.name)"  :class="v.active ? 'active' : ''">
+          <div class="n_filter_list" v-for="(v, i) in v_now" :key="i" @click="f_startFilter(i)"  :class="v.active ? 'active' : ''">
             {{ v.name }}
           </div>
         </div>
       </div>
       <!-- 路由 -->
       <div class="n_router_wrapper" :class="v_filterFlag ? 'active' : ''">
-        <router-view></router-view>
+        <component :is="v_component" :taskType="v_filterProp"></component>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Public from './public.vue'
+import Mine from './mine.vue'
+import Order from './order.vue'
+
 export default {
   name: 'Neighbor',
   data () {
     return {
       v_nav: [
-        { name: '共享大厅', router: 'neighborPublic', active: true },
-        { name: '我的共享', router: 'neighborMine', active: false },
+        { name: '共享大厅', router: 'neighborPublic', component: 'Public', active: true },
+        { name: '我的共享', router: 'neighborMine', component: 'Mine', active: false },
         { name: '我要共享', router: 'neighborSelf', active: false },
-        { name: '我的预约', router: 'neighborOrder', active: false },
+        { name: '我的预约', router: 'neighborOrder', component: 'Order', active: false },
       ],
       v_filterFlag: false,
       v_filterList: {
-        'neighborPublic': [
+        'Public': [
           { name: '全部', active: true },
           { name: '拼车', active: false },
           { name: '车位共享', active: false },
           { name: '时间互换', active: false },
           { name: '资源共享', active: false },
         ],
-        'neighborMine': [
+        'Mine': [
           { name: '全部', active: true },
           { name: '拼车', active: false },
           { name: '车位共享', active: false },
           { name: '时间互换', active: false },
           { name: '资源共享', active: false },
         ],
-        'neighborSelf': [],
-        'neighborOrder': [
+        'Order': [
           { name: '全部', active: true },
           { name: '预约成功', active: false },
           { name: '预约失败', active: false }
         ]
       },
-      v_now: []
+      v_now: [],
+      v_component: 'Public',
+      v_filterProp: 0
     }
   },
+  components: {
+    Public,
+    Mine,
+    Order
+  },
   mounted () {
-    this.$router.push({ name: 'neighborPublic' })
+    document.title = this.v_nav[0].name
   },
   methods: {
     f_moveNav (i) {
-      this.$router.push({ name: this.v_nav[i].router })
       this.v_nav.map(v => v.active = false)
       this.v_filterFlag = false
       // 
       if (i === 2) {
         this.v_nav.map(v => v.router === this.$store.state.neighbor.router ? v.active = true : '')
+        this.$router.push({ name: this.v_nav[i].router })
       } else {
         this.v_nav[i].active = true
         this.$store.commit('neighborRouter', this.v_nav[i].router)
+        this.v_component = this.v_nav[i].component
+        document.title = this.v_nav[i].name
       }
     },
     f_filter () {
       this.v_filterFlag = !this.v_filterFlag
-      this.v_now = this.v_filterList[this.$route.name].slice()
+      this.v_now = this.v_filterList[this.v_component].slice()
     },
-    f_startFilter (n) {
-      console.log('点击筛选', n)
+    f_startFilter (i) {
+      this.v_filterProp = i
+      this.v_now.map(v => v.active = false)
+      this.v_now[i].active = true
     }
   }
 }
@@ -176,6 +190,7 @@ export default {
       position: absolute;
       top: 1rem;
       left: 0;
+      width: 100%;
       &.active{
         top: 1.96rem;
       }

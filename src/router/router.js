@@ -31,49 +31,17 @@ const router = new Router({
         // 报修
         {
           path: '/home/myrepair',
-          name: 'myRepair',
+          name: 'myrepair',
           meta: {
             title: '我的报修'
           },
           component: () => import('../views/index/repair/myRepair.vue')
         },
-        // 邻里共享
-        {
-          path: '/neighbor',
-          name: 'neighbor',
-          component: () => import('../views/index/neighbor/index.vue'),
-          children: [
-            {
-              path: '/neighbor/public',
-              name: 'neighborPublic',
-              meta: {
-                title: '共享大厅'
-              },
-              component: () => import('../views/index/neighbor/public.vue')
-            },
-            {
-              path: '/neighbor/mine',
-              name: 'neighborMine',
-              meta: {
-                title: '我的共享'
-              },
-              component: () => import('../views/index/neighbor/mine.vue')
-            },
-            {
-              path: '/neighbor/order',
-              name: 'neighborOrder',
-              meta: {
-                title: '我的预约'
-              },
-              component: () => import('../views/index/neighbor/order.vue')
-            },
-          ]
-        }
       ]
     },
     {
       path: '/willrepair',
-      name: 'willRepair',
+      name: 'willrepair',
       meta: {
         title: '我要报修'
       },
@@ -81,19 +49,11 @@ const router = new Router({
     },
     {
       path: '/repairdetail/:id',
-      name: 'repairDetail',
+      name: 'repairdetail',
       meta: {
         title: '报修详情'
       },
       component: () => import('../views/index/repair/repairDetail.vue')
-    },
-    {
-      path: '/neighbor/self',
-      name: 'neighborSelf',
-      meta: {
-        title: '我要共享'
-      },
-      component: () => import('../views/index/neighbor/self.vue')
     },
     // 登录注册
     {

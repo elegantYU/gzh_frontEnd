@@ -5,41 +5,41 @@
       <div class="rep_from">
         <div class="rep_input">
           <label>房屋名称</label>
-          <input type="text" readonly v-model="v_info.houseName">
+          <input type="text" readonly :value="v_info.houseName">
         </div>
         <div class="rep_input">
           <label>报修类型</label>
-          <input type="text" readonly v-model="v_info.type">
+          <input type="text" readonly :value="v_info.type">
         </div>
         <div class="rep_input">
           <label>标题</label>
-          <input type="text" readonly v-model="v_info.title">
+          <input type="text" readonly :value="v_info.title">
         </div>
         <div class="rep_input">
           <label>联系人</label>
-          <input type="text" readonly v-model="v_info.userName">
+          <input type="text" readonly :value="v_info.userName">
         </div>
         <div class="rep_input">
           <label>联系方式</label>
-          <input type="text" readonly v-model="v_info.telPhone">
+          <input type="text" readonly :value="v_info.telPhone">
         </div>
         <div class="rep_input">
           <label>状态</label>
-          <input type="text" readonly v-model="status">
+          <input type="text" readonly :value="status">
         </div>
         <div class="rep_input">
           <label>预约时间</label>
-          <input type="text" readonly v-model="orderTime">
+          <input type="text" readonly :value="orderTime">
         </div>
         <div class="rep_input">
           <label>报修时间</label>
-          <input type="text" readonly v-model="v_info.createTime">
+          <input type="text" readonly :value="v_info.createTime">
         </div>
       </div>
       <div class="rep_detail">
         <b>内容描述</b>
         <div class="rep_detail_text">
-          <textarea readonly v-model="v_info.detail"></textarea>
+          <textarea readonly>asdasddassdas</textarea>
         </div>
       </div>
       <div class="rep_preview">
@@ -56,13 +56,13 @@
       </div>
       <div class="rep_comment">
         <div class="rep_comment_area">
-          <textarea placeholder="在这里可以输入评价内容最多200个字" maxlength="200" v-model="v_info.content"></textarea>
+          <textarea placeholder="在这里可以输入评价内容最多200个字" maxlength="200"></textarea>
         </div>
-        <div class="rep_comment_btn" @click="f_submit">{{ commentBtn }}</div>
+        <div class="rep_comment_btn">{{ commentBtn }}</div>
       </div>
       <div class="rep_commentList">
         <p>评论</p>
-        <mu-load-more :loading="v_loading" @load='f_loadComments' :loaded-all="v_loadAll">
+        <mu-load-more :loading="v_loading" @load='f_loadComments'>
           <mu-list>
             <template v-for="(v, i) in v_commments">
               <div class="rep_comments_item" :key="i">
@@ -80,9 +80,6 @@
             </template>
           </mu-list>
         </mu-load-more>
-        <div class="rep_nothing" v-show="v_noComment">
-          暂无评价
-        </div>
       </div>
     </div>
   </div>
@@ -95,23 +92,50 @@ export default {
   data () {
     return {
       v_id: 0,
-      v_info: {},
-      v_commments: [],
+      v_info: {
+        communityName: '什么小区',
+        houseName: '1栋单元407',
+        type: '水暖维修',
+        title: 'xxx水暖维修',
+        userName: '狗蛋',
+        telPhone: '12345678910',
+        startTime: '2019-05-10 10:00:00',
+        endTime: '2019-05-10 16:00:00',
+        createTime: '2019-05-09 15:00:00',
+        detail: '想想想想想想想想想想想',
+        img: [''],
+        sts: 1
+      },
+      v_commments: [
+        {
+          createUserId: 2,
+          createUserName: '老王',
+          content: '你老婆真棒你老婆真棒你老婆真棒你老婆真棒你老婆真棒你老婆真棒你老婆真棒你老婆真棒你老婆真棒你老婆真棒你老婆真棒',
+          headIcon: '',
+          createTime: '2019-05-09 15:00:20',
+          sts: 1
+        },
+        {
+          createUserId: 2,
+          createUserName: '老王',
+          content: '你老婆真棒',
+          headIcon: '',
+          createTime: '2019-05-09 15:00:20',
+          sts: 1
+        }
+      ],
       v_commmentNum: 1,
-      v_loading: false,
-      v_loadAll: false,
-      v_noComment: false
+      v_loading: false
     }
   },
-  mounted () {
+  created () {
+    console.log(this.$route.params.id)
     this.v_id = this.$route.params.id
-    this.f_getInfo()
-    this.f_getComments()
   },
   computed: {
     orderTime: function () {
-      // let str = `${this.v_info.startTime} ~ ${this.v_info.endTime.split(' ')[1]}`
-      return ''
+      let str = `${this.v_info.startTime} ~ ${this.v_info.endTime.split(' ')[1]}`
+      return str
     },
     status: function () {
       switch (this.v_info.sts) {
@@ -133,10 +157,9 @@ export default {
   methods: {
     f_getInfo () {
       this.$http
-        .get('/admin/property/repair/get', { params: { id: this.v_id } })
+        .get('/admin/property/repair/detail', { params: { id: this.v_id } })
         .then(res => {
-          res.data.data.img = JSON.parse(res.data.data.img)
-          this.v_info = Object.assign({}, res.data.data)
+          console.log('维修信息', res)
         })
     },
     f_getComments () {
@@ -149,15 +172,8 @@ export default {
           }
         })
         .then(res => {
-          if (!res.data.data.length) {
-            this.v_loadAll = true
-          }
-          res.data.data.forEach(v => {
-            this.v_commments.push(v)
-          })
-          if (!this.v_commments.length) {
-            this.v_noComment = true
-          }
+          console.log('评论信息', res)
+          this.v_commments.concat(res.data)
         })
     },
     f_loadComments () {
@@ -167,33 +183,6 @@ export default {
         this.v_commmentNum++
         this.f_getComments()
       }, 1000)
-    },
-    f_submit () {
-      let params = {
-        rId: this.v_id,
-        createUserId: 2, // 用户id
-        createUserName: '欧丹', // 用户名称
-        content: this.v_info.content
-      }
-      if (this.v_info.content.trim()) {
-        this.$http
-          .post('/admin/comment/add', params)
-          .then(res => {
-            if (res.data.success) {
-              this.$toast({
-                msg: '评价成功',
-                time: 1000
-              })
-              this.f_getComments()
-            }
-          })
-      } else {
-        this.v_info.content = ''
-        this.$toast({
-          msg: '请输入评论内容',
-          time: 1500
-        })
-      }
     }
   }
 }
@@ -204,6 +193,7 @@ export default {
   height: 100%;
   .rep_content{
     background-color: #efeff4;
+    padding-bottom: 1.2rem;
     h6{
       padding: 0.23rem 0 0.26rem;
       font-size: 0.36rem;
@@ -357,11 +347,6 @@ export default {
           font-size: 0.3rem;
           color: #333333;
         }
-      }
-      .rep_nothing{
-        font-size: 0.24rem;
-        color: #ccc;
-        padding: 0.2rem 0;
       }
     }
   }

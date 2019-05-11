@@ -6,19 +6,19 @@
         <li @click="f_moveRepair">我要报修</li>
       </ul>
       <ul class="myRep_list" ref="container">
-        <mu-load-more @refresh="f_refresh" :refreshing="v_refreshing" :loading="v_loading" @load="f_load" :loaded-all="v_loadAll">
+        <mu-load-more @refresh="f_refresh" :refreshing="v_refreshing" :loading="v_loading" @load="f_load">
           <mu-list>
             <template v-for="(v, i) in v_repairList">
               <li
                 :key="i"
-                @click="f_detail(v)"
+                @click="f_detail(v.id)"
               >
                 <div class="myRep_list_left">
                   <h6>{{ v.title }}</h6>
                   <p>{{ v.detail }}</p>
                   <div class="myRep_list_left_detail clearfix">
-                    <span class="myRep_detail_time">{{ v.createTime }}</span>
-                    <span class="myRep_detail_status" :class="v.sts === 3 ? 'myRep_status_warn' : v.sts === 6 ? 'myRep_status_success' : ''">{{ f_formatSts(v) }}</span>
+                    <span class="myRep_detail_time">{{ v.time }}</span>
+                    <span class="myRep_detail_status">{{ v.sts }}</span>
                   </div>
                 </div>
                 <img :src="v.img[0]" alt="">
@@ -32,74 +32,70 @@
 </template>
 
 <script>
+import { setTimeout } from 'timers';
 export default {
   name: 'MyRepair',
   data () {
     return {
-      v_repairList: [],
+      v_repairList: [
+        {
+          id: 1,
+          title: '厨房水管破裂',
+          detail: '这是发生什么卡了？你家的排粪管炸了!我的天哪，屎尿喷的哪哪都是，赶紧回去看看吧，到屎里把人捞出来',
+          time: '2019-01-01 15:00:00',
+          sts: '已完成',
+          img: ['https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg']
+        },
+        {
+          id: 1,
+          title: '厨房水管破裂',
+          detail: '这是发生什么卡了？你家的排粪管炸了!我的天哪，屎尿喷的哪哪都是，赶紧回去看看吧，到屎里把人捞出来',
+          time: '2019-01-01 15:00:00',
+          sts: '已完成',
+          img: ['https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg']
+        },
+        {
+          id: 1,
+          title: '厨房水管破裂',
+          detail: '这是发生什么卡了？你家的排粪管炸了!我的天哪，屎尿喷的哪哪都是，赶紧回去看看吧，到屎里把人捞出来',
+          time: '2019-01-01 15:00:00',
+          sts: '已完成',
+          img: ['https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg']
+        },
+        {
+          id: 1,
+          title: '厨房水管破裂',
+          detail: '这是发生什么卡了？你家的排粪管炸了!我的天哪，屎尿喷的哪哪都是，赶紧回去看看吧，到屎里把人捞出来',
+          time: '2019-01-01 15:00:00',
+          sts: '已完成',
+          img: ['https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg']
+        },
+      ],
       v_listNum: 1,
       v_refreshing: false,
-      v_loading: false,
-      v_loadAll: true
+      v_loading: false
     }
   },
-  mounted () {
-    this.f_getList()
-  },
   methods: {
-    f_detail (v) {
-      //  这里根据状态判断进入页面
-      if (v.sts === 3) {
-        this.$router.push({ name: 'willRepair', query: { id: v.id } })
-      } else {
-        this.$router.push({ name: 'repairDetail', params: { id: v.id } })
-      }
-    },
-    f_formatSts (v) {
-      switch (v.sts) {
-        case 1:
-        case 2:
-          return '待审核'
-          break
-        case 3:
-          return '未通过'
-          break
-        case 4:
-          return '待上门'
-          break
-        case 5:
-          return '待评价'
-          break
-        case 6:
-          return '已完成'
-          break
-      }
+    f_detail (id) {
+      this.$router.push({ name: 'repairdetail', params: { id: id } })
     },
     f_moveRepair () {
-      this.$router.push({ name: 'willRepair' })
+      console.log('我要报修')
+      this.$router.push({ name: 'willrepair' })
     },
     f_getList () {
       this.$http
         .get('/admin/property/repair/list', {
           params: {
-            createUserId: '2',
+            createUserId: '',
             pageNum: this.v_listNum,
             pageSize: 10
           }
         })
         .then(res => {
-          if (!res.data.data.length) {
-            this.v_loadAll = true
-          }
-
-          res.data.data.forEach(v => {
-            if (v.img) {
-              v.img = JSON.parse(v.img)
-            } else {
-              v.img = []
-            }
-            this.v_repairList.push(v)
-          })
+          console.log('所有单', res.data)
+          this.v_repairList.concat(res.data)
         })
     },
     f_refresh () {
@@ -199,12 +195,6 @@ export default {
             .myRep_detail_status{
               float: right;
               margin-right: 0.24rem;
-              &.myRep_status_warn{
-                color: #f64682;
-              }
-              &.myRep_status_success{
-                color: #07C160;
-              }
             }
           }
         }

@@ -5,17 +5,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: {
-      
-    },
-    neighbor: {
-      router: ''
-    }
+
   },
   mutations: {
-    neighborRouter (state, r) {
-      state.neighbor.router = r
-    }
+
   },
   actions: {
 

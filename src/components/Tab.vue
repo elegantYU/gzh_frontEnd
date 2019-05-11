@@ -23,7 +23,7 @@ export default {
     f_gomy () {
       // 先验证登录状态
       console.log('user')
-      this.$router.push({ name: 'login' })
+      this.$router.push({ name: 'my' })
     }
   }
 }

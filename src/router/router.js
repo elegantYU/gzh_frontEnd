@@ -37,6 +37,14 @@ const router = new Router({
           },
           component: () => import('../views/index/repair/myRepair.vue')
         },
+        {
+          path: '/home/my',
+          name: 'my',
+          meta: {
+            title: '我的'
+          },
+          component: () => import('../views/my/index.vue')
+        }
       ]
     },
     {

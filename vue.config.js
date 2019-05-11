@@ -1,11 +1,11 @@
 module.exports = {
   devServer: {
-    // proxy: {
-    //   '/api': {
-    //     target: '',
-    //     ws: true,
-    //     changeOrigin: true
-    //   }
-    // }
+    proxy: {
+      '/admin': {
+        target: 'http://118.126.66.195:8081',
+        ws: true,
+        changeOrigin: true
+      }
+    }
   },
 }

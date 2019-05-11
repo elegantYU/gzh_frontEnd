@@ -23,7 +23,7 @@
         </div>
         <div class="wr_input">
           <label>联系方式</label>
-          <input type="text" v-model="v_from.telPhone" placeholder="请输入联系方式" @blur="f_checkPhone">
+          <input type="text" v-model="v_from.telPhone" placeholder="请输入联系方式" maxlength="11" @blur="f_checkPhone">
         </div>
         <div class="wr_input wr_datetime">
           <label>预约时间</label>
@@ -36,7 +36,7 @@
       <div class="wr_detail">
         <b>内容描述</b>
         <div class="wr_input">
-          <textarea placeholder="内容不超过200字" maxlength="200" :value="v_from.detail"></textarea>
+          <textarea placeholder="内容不超过200字" maxlength="200" v-model="v_from.detail"></textarea>
         </div>
       </div>
       <div class="wr_upload">
@@ -94,6 +94,7 @@ export default {
   name: 'WillRepair',
   data () {
     return {
+      v_id: '',
       v_user: {
         house: ['1栋2单元407', '1栋2单元407']
       },
@@ -103,12 +104,12 @@ export default {
         type: '',
         title: '',
         userName: '',
-        createUserId: '',
+        createUserId: 2,
         telPhone: '',
         startTime: '',
         endTime: '',
         detail: '',
-        img: []
+        img: ['', '']
       },
       v_types: [
         { name: '水暖检修' },
@@ -128,6 +129,15 @@ export default {
     }
   },
   watch: {
+    // 时间修正
+    'v_from.startTime': function (now, past) {
+      let date = dateFormat(now)
+      this.v_from.startTime = `${new Date(now).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')}`
+      if (this.v_from.endTime) {
+        let time = this.v_from.endTime.split(' ')[1]
+        this.v_from.endTime = `${date} ${time}`
+      }
+    },
     'v_from.endTime': function (now, past) {
       let start = this.v_from.startTime
       let startTime = new Date(start).toLocaleTimeString('chinese', { hour12: false })
@@ -149,6 +159,16 @@ export default {
         })
       }
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.$data.v_id = to.query.id || ''
+      if (vm.$data.v_id) {
+        vm.$http.get('/admin/property/repair/add').then(res => {
+          // 信息填充
+        })
+      }
+    })
   },
   methods: {
     f_openType () {
@@ -173,15 +193,48 @@ export default {
       if (!(/^1[345678]\d{9}$/.test(this.v_from.telPhone))) {
         this.$toast('手机号错误')
         this.v_from.telPhone = ''
-        console.log(this.v_from.telPhone)
         return
       }
     },
     f_upload () {
-      
+      // this.$wxsdk  上传图片获取链接
     },
     f_submit () {
-
+      let params = Object.assign({}, this.v_from)
+      params.img = JSON.stringify(params.img)
+      if (this.v_from.communityName && this.v_from.houseName && this.v_from.type && this.v_from.userName && this.v_from.telPhone && this.v_from.startTime && this.v_from.endTime) {
+        if (this.v_id) {
+          params = { ...params, id: this.v_id }
+          this.$http
+            .post('/admin/property/repair/add', params)
+            .then(res => {
+              if (res.data.success) {
+                this.$toast({
+                  msg: '修改成功',
+                  time: 1000
+                })
+                this.$router.go(-1)
+              }
+            })
+        } else {
+          this.$http
+            .post('/admin/property/repair/add', params)
+            .then(res => {
+              if (res.data.success) {
+                this.$toast({
+                  msg: '提交成功',
+                  time: 1000
+                })
+                this.$router.go(-1)
+              }
+            })
+        }
+      } else {
+        this.$toast({
+          msg: '所填信息不完整',
+          time: 1500
+        })
+      }
     }
   }
 }

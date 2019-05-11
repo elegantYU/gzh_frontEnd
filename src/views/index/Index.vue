@@ -72,7 +72,7 @@ export default {
   data () {
     return {
       v_tools1: [
-        { msg: '物业报修', path: 'myrepair', icon: require('../../assets/images/index/index_wy.png') },
+        { msg: '物业报修', path: 'myRepair', icon: require('../../assets/images/index/index_wy.png') },
         { msg: '访客通行', path: '', icon: require('../../assets/images/index/index_fk.png') },
         { msg: '预约服务', path: '', icon: require('../../assets/images/index/index_fw.png') },
         { msg: '失物招领', path: '', icon: require('../../assets/images/index/index_sw.png') }
@@ -80,7 +80,7 @@ export default {
       v_tools2: [
         { msg: '智慧停车', path: '', icon: require('../../assets/images/index/index_zh.png') },
         { msg: '生活超市', path: '', icon: require('../../assets/images/index/index_sh.png') },
-        { msg: '邻里共享', path: '', icon: require('../../assets/images/index/index_ll.png') },
+        { msg: '邻里共享', path: 'neighbor', icon: require('../../assets/images/index/index_ll.png') },
         { msg: '全部', path: '', icon: require('../../assets/images/index/index_qb.png') }
       ],
       v_topic: [

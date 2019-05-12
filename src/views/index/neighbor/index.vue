@@ -120,6 +120,7 @@ export default {
       position: fixed;
       top: 0;
       left: 0;
+      z-index: 100;
       .n_nav{
         height: 0.9rem;
         background-color: #fff;
@@ -166,6 +167,7 @@ export default {
       .n_filter{
         margin-bottom: 0.2rem;
         padding: 0 0.3rem;
+        background-color: #efeff4;
         text-align: left;
         overflow-x: auto;
         .n_filter_list{

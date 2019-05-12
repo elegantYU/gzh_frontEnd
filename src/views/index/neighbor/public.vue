@@ -1,10 +1,10 @@
 <template>
   <div class="pub_wrapper">
     <div class="pub_content" ref="container">
-      <mu-load-more @refresh="f_refresh" :refreshing="v_refresh" :loading="v_loading" @load="f_load" :loaded-all="v_laodAll">
+      <mu-load-more :loading="v_loading" @load="f_load" :loaded-all="v_laodAll">
         <mu-list>
           <template v-for="(v, i) in v_list">
-            <div class="pub_item clearfix" :key="i">
+            <div class="pub_item clearfix" :key="i" @click="f_viewDetail(v)">
               <div class="pub_item_left">
                 <h6>{{ v.title }}</h6>
                 <p>{{ v.content }}</p>
@@ -31,7 +31,6 @@ export default {
     return {
       v_list: [],
       v_pageNum: 1,
-      v_refresh: false,
       v_loading: false,
       v_laodAll: false
     }
@@ -41,7 +40,6 @@ export default {
   },
   watch: {
     'taskType': function (now, last) {
-      console.log(now)
       this.v_list = []
       this.f_getList()
     }
@@ -63,8 +61,6 @@ export default {
             pageSize: 5
           }
 
-      console.log(this.taskType)
-      console.log(params)
       this.$http
         .get('/admin/share/getAllShareInfo', { params })
         .then(res => {
@@ -84,14 +80,9 @@ export default {
         this.f_getList()
       }, 1000)
     },
-    f_refresh () {
-      this.v_refresh = true
-      this.$refs.container.scrollTop = 0
-      setTimeout(() => {
-        this.v_refresh = false
-        this.pageNum = 1
-        this.f_getList()
-      }, 1000)
+    f_viewDetail (v) {
+      console.log(v)
+      this.$router.push({ name: 'neighborDetail', query: { id: v.id } })
     }
   }
 }
@@ -103,6 +94,7 @@ export default {
   background-color: #efeff4;
   .pub_content{
     background-color: #efeff4;
+    padding-bottom: 1.2rem;
     .pub_item{
       width: 100%;
       height: 1.82rem;
@@ -152,7 +144,8 @@ export default {
       }
       .pub_item_right{
         float: left;
-        display: table-cell;
+        display: flex;
+        align-items: center;
         width: 1.6rem;
         height: 100%;
         img{

@@ -17,13 +17,11 @@ export default {
   name: 'Tabs',
   methods: {
     f_gohome () {
-      console.log('back 首页')
-      this.$router.push({ name: 'index' })
+      this.$router.replace({ name: 'index' })
     },
     f_gomy () {
       // 先验证登录状态
-      console.log('user')
-      this.$router.push({ name: 'my' })
+      this.$router.replace({ name: 'my' })
     }
   }
 }

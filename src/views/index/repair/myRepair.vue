@@ -6,7 +6,7 @@
         <li @click="f_moveRepair">我要报修</li>
       </ul>
       <ul class="myRep_list" ref="container">
-        <mu-load-more @refresh="f_refresh" :refreshing="v_refreshing" :loading="v_loading" @load="f_load" :loaded-all="v_loadAll">
+        <mu-load-more :loading="v_loading" @load="f_load" :loaded-all="v_loadAll">
           <mu-list>
             <template v-for="(v, i) in v_repairList">
               <li
@@ -21,7 +21,9 @@
                     <span class="myRep_detail_status" :class="v.sts === 3 ? 'myRep_status_warn' : v.sts === 6 ? 'myRep_status_success' : ''">{{ f_formatSts(v) }}</span>
                   </div>
                 </div>
-                <img :src="v.img[0]" alt="">
+                <div class="myRep_list_right">
+                  <img :src="v.img[0]" alt="">
+                </div>
               </li>
             </template>
           </mu-list>
@@ -38,7 +40,6 @@ export default {
     return {
       v_repairList: [],
       v_listNum: 1,
-      v_refreshing: false,
       v_loading: false,
       v_loadAll: true
     }
@@ -102,16 +103,6 @@ export default {
           })
         })
     },
-    f_refresh () {
-      this.v_refreshing = true
-      this.$refs.container.scrollTop = 0
-      setTimeout(() => {
-        this.v_refreshing = false
-        this.v_repairList = []
-        this.v_listNum = 1
-        this.f_getList()
-      }, 1000)
-    },
     f_load () {
       this.v_loading = true
       setTimeout(() => {
@@ -130,6 +121,7 @@ export default {
   height: 100%;
   .myRep_content{
     padding-bottom: 1.2rem;
+    background-color: #efeff4;
     .myRep_nav{
       margin-bottom: 0.28rem;
       li{
@@ -208,10 +200,15 @@ export default {
             }
           }
         }
-        img{
+        .myRep_list_right{
           float: left;
           width: 1.6rem;
           height: 1.43rem;
+          display: flex;
+          align-items: center;
+          img{
+            width: 100%;
+          }
         }
       }
     }

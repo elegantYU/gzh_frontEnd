@@ -78,6 +78,14 @@ const router = new Router({
       },
       component: () => import('../views/index/neighbor/self.vue')
     },
+    {
+      path: '/neighbor/detail',
+      name: 'neighborDetail',
+      meta: {
+        title: '我要共享'
+      },
+      component: () => import('../views/index/neighbor/detail.vue')
+    },
     // 登录注册
     {
       path: '/login',

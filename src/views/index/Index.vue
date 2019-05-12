@@ -59,7 +59,9 @@
               </ul>
             </div>
           </div>
-          <img :src="v.image" alt="">
+          <div class="index_topic_img">
+            <img :src="v.image" alt="">
+          </div>
         </li>
       </ul>
     </div>
@@ -259,7 +261,7 @@ export default {
         box-shadow: 0 4px 10px rgba(124, 134, 138, 0.2);
         margin-bottom: 0.16rem;
         .index_topic_item_left{
-          display: inline-block;
+          float: left;
           width: calc(100% - 1.7rem);
           height: 1.1rem;
           padding-right: 0.15rem;
@@ -341,10 +343,15 @@ export default {
             }
           }
         }
-        img{
-          display: inline-block;
+        .index_topic_img{
+          float: left;
           width: 1.7rem;
           height: 100%;
+          display: flex;
+          align-items: center;
+          img{
+            width: 100%
+          }
         }
       }
     }

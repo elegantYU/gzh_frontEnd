@@ -246,6 +246,7 @@ export default {
   background-color: #efeff4;
   .wr_content{
     padding-bottom: 1.2rem;
+    background-color: #efeff4;
     h6{
       padding: 0.23rem 0 0.26rem;
       font-size: 0.36rem;
@@ -365,7 +366,7 @@ export default {
       }
     }
     .wr_submit{
-      padding: 0 0.3rem; 
+      margin: 0 0.3rem; 
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;

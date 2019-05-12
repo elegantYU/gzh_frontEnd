@@ -10,10 +10,12 @@ import wxsdk from './utils/wxsdk'
 import './assets/css/base.css'
 import 'muse-ui/dist/muse-ui.css'
 import toastMessage  from './components/plugin/Toast'
+import confirmContent from './components/plugin/Confirm/index'
 
 Vue.use(VueAxios, Axios)
 Vue.use(MuseUI)
 Vue.use(toastMessage)
+Vue.use(confirmContent)
 Vue.prototype.wxsdk = wxsdk
 
 Vue.config.productionTip = false

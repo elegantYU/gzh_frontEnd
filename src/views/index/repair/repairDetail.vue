@@ -133,8 +133,9 @@ export default {
   methods: {
     f_getInfo () {
       this.$http
-        .get('/admin/property/repair/get', { params: { id: this.v_id } })
+        .get('/admin/property/repair/detail', { params: { id: this.v_id } })
         .then(res => {
+          console.log(res)
           res.data.data.img = JSON.parse(res.data.data.img)
           this.v_info = Object.assign({}, res.data.data)
         })
@@ -202,6 +203,7 @@ export default {
 <style lang="scss" scoped>
 .rep_wrapper{
   height: 100%;
+  background-color: #efeff4;
   .rep_content{
     background-color: #efeff4;
     h6{

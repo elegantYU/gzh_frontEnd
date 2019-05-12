@@ -54,6 +54,7 @@ export default {
   background: #efeff4;
   .contain{
     background-color: #efeff4;
+    padding-bottom: 1.2rem;
   }
 }
 .hd {

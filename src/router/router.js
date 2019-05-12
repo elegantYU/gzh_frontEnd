@@ -51,6 +51,15 @@ const router = new Router({
           path: '/neighbor',
           name: 'neighbor',
           component: () => import('../views/index/neighbor/index.vue')
+        },
+        // 环境秩序
+        {
+          path: '/home/environment',
+          name: 'environment',
+          meta: {
+            title: '环境秩序'
+          },
+          component: () => import('../views/index/all/environment/index.vue')
         }
       ]
     },

@@ -62,6 +62,7 @@
         <div class="nd_input" v-if="v_content.shareType === '4'">
           <label>人脸门禁</label>
           <input type="text" readonly v-model="v_content.skill">
+          <span>※需要携带本人省份证在进门处登记人脸识别照片</span>
         </div>
         <!-- 预约状态 -->
         <div class="nd_input" v-if="v_orderStatus">
@@ -93,19 +94,44 @@
       <div class="nd_submit" v-if="submit" @click="f_order">
         {{ v_orderText }}
       </div>
+      <!-- 物业特有评论 -->
+      <div class="nd_comments">
+        <h6>申请人</h6>
+        <ul class="nd_comments_list">
+          <li
+            v-for="(v, i) in v_comments"
+            :key="i"
+            class="clearfix"
+          >
+            <div class="nd_comments_avatar">
+              <img src="" alt="">
+            </div>
+            <div class="nd_comments_content">
+              <ul>
+                <li><label>姓名</label>：</li>
+                <li><label>联系方式</label>：</li>
+                <li><label>身份证号</label>：</li>
+                <li><label>房屋信息</label>：</li>
+                <li><label>预约时间</label>：</li>
+              </ul>
+            </div>
+            <span>预约成功</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { setTimeout } from 'timers';
 export default {
   name: 'Detail',
   data () {
     return {
       v_content: {},
       v_orderStatus: 0,
-      v_orderText: ''
+      v_orderText: '',
+      v_comments: []
     }
   },
   computed: {
@@ -166,7 +192,6 @@ export default {
       this.$http
         .get('/admin/share/getShareInfoDetail', { params })
         .then(res => {
-          console.log(res)
           if (res.data.success) {
             this.v_content = Object.assign({}, res.data.data)
           }
@@ -241,6 +266,7 @@ export default {
         background-color: #fff;
         text-align: left;
         padding: 0 0.3rem;
+        position: relative;
         label{
           display: inline-block;
           font-size: 0.34rem;
@@ -251,6 +277,13 @@ export default {
           width: calc(100% - 2.25rem);
           height: 100%;
           background-color: transparent;
+        }
+        span{
+          position: absolute;
+          right: 0.3rem;
+          top: 0.35rem;
+          color: #ff0000;
+          font-size: 0.16rem;
         }
       }
     }
@@ -303,7 +336,7 @@ export default {
       }
     }
     .nd_submit{
-      margin: 0 0.3rem;
+      margin: 0 0.3rem 0.3rem;
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;
@@ -312,6 +345,79 @@ export default {
       line-height: 0.9rem;
       border-radius: 0.415rem;
       cursor: pointer;
+    }
+    .nd_comments{
+      padding: 0.3rem;
+      background-color: #efeff4;
+      h6{
+        color: #333;
+        font-size: 0.3rem;
+        text-indent: 1em;
+        text-align: left;
+        position: relative;
+        padding: 0;
+        &::before{
+          position: absolute;
+          left: 0;
+          top: 0;
+          content: '';
+          width: 0.1rem;
+          height: 0.3rem;
+          background-color: #f73476;
+        }
+      }
+      .nd_comments_list{
+        padding-left: 0.2rem;
+        padding-top: 0.2rem;
+        &>li{
+          position: relative;
+          .nd_comments_avatar{
+            width: 0.6rem;
+            height: 0.6rem;
+            display: flex;
+            align-items: center;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid #036ff5;
+            float: left;
+            img{
+              width: 100%;
+            }
+          }
+          .nd_comments_content{
+            padding-left: 0.2rem;
+            float: left;
+            li{
+              color: #000;
+              font-size: 0.24rem;
+              height: 0.24rem;
+              text-align: left;
+              margin-bottom: 0.15rem;
+              label{
+                display: inline-block;
+                text-align: justify;
+                width: 1rem;
+                overflow: hidden;
+                color: #666;
+                vertical-align: top;
+                &::after{
+                  content: " ";
+                  display: inline-block;
+                  width: 100%;
+                  height: 0;
+                }
+              }
+            }
+          }
+          span{
+            color: #f73476;
+            font-size: 0.24rem;
+            position: absolute;
+            top: 0;
+            right: 0;
+          }
+        }
+      }
     }
   }
 }

@@ -10,7 +10,7 @@ import wxsdk from './utils/wxsdk'
 import './assets/css/base.css'
 import 'muse-ui/dist/muse-ui.css'
 import toastMessage  from './components/plugin/Toast'
-import confirmContent from './components/plugin/Confirm/index'
+import confirmContent from './components/plugin/Confirm'
 
 Vue.use(VueAxios, Axios)
 Vue.use(MuseUI)

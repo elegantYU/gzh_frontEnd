@@ -23,7 +23,7 @@
         </div>
         <div class="wr_input">
           <label>联系方式</label>
-          <input type="text" v-model="v_from.telPhone" placeholder="请输入联系方式" maxlength="11" @blur="f_checkPhone">
+          <input type="text" v-model="v_from.telPhone" placeholder="手机号、微信、QQ">
         </div>
         <div class="wr_input wr_datetime">
           <label>预约时间</label>
@@ -188,13 +188,6 @@ export default {
     f_startTimeRules (date) {
       let today = new Date().getTime()
       return new Date(date).getTime() < today
-    },
-    f_checkPhone () {
-      if (!(/^1[345678]\d{9}$/.test(this.v_from.telPhone))) {
-        this.$toast('手机号错误')
-        this.v_from.telPhone = ''
-        return
-      }
     },
     f_upload () {
       // this.$wxsdk  上传图片获取链接

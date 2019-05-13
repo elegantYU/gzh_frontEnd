@@ -47,7 +47,7 @@ export default {
       this.taskType !== 0
         ? params = {
             userId: 1,
-            taskType: this.taskType,
+            status: this.taskType,
             pageNum: this.v_pageNum,
             pageSize: 5
           } 
@@ -58,7 +58,7 @@ export default {
           }
 
       this.$http
-        .get('/admin/share/getMeShareInfo', { params })
+        .get('/admin/share/getMeApplyInfoList', { params })
         .then(res => {
           if (!res.data.data.length) {
             this.v_laodAll = true

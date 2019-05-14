@@ -29,52 +29,64 @@
         <label>收费标准</label>
         <input type="text" placeholder="10元/时" v-model="v_from.price">
       </div>
-      <div class="ns_input" v-if="v_taskType === '2'">
+      <div class="ns_input ns_input_check" v-if="v_taskType === '2'">
         <label>车位锁</label>
-        
+        <span @click="f_changeLock(1)"><i :class="v_from.carLock === 1 ? 'ns_checked' : ''"></i>有</span>
+        <span @click="f_changeLock(0)"><i :class="v_from.carLock === 0 ? 'ns_checked' : ''"></i>无</span>
       </div>
-      <div class="ns_input" v-if="v_taskType === '2'">
+      <div class="ns_input ns_shareTime" v-if="v_taskType === '2'">
         <label>共享时间</label>
-        开始时间 结束时间
+        <span>
+          <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_from.startTime" type="dateTime" landscape></mu-date-input>
+          <mu-date-input container="bottomSheet" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_from.endTime" type="time" landscape></mu-date-input>
+        </span>
       </div>
       <!-- 拼车 -->
       <div class="ns_input" v-if="v_taskType === '1'">
         <label>车牌号</label>
-        <input type="text" readonly placeholder="请选择车牌号" v-model="v_from.carNum">
+        <input type="text" readonly placeholder="请选择车牌号" v-model="v_from.carNum" @click="f_openCarNum">
         <i></i>
       </div>
       <div class="ns_input" v-if="v_taskType === '1'">
         <label>发车地点</label>
-        <input type="text" readonly placeholder="请输入发车地点" v-model="v_from.departPlace">
+        <input type="text" placeholder="请输入发车地点" v-model="v_from.departPlace">
       </div>
       <div class="ns_input" v-if="v_taskType === '1'">
         <label>目的地</label>
-        <input type="text" readonly placeholder="请输入目的地" v-model="v_from.destination">
+        <input type="text" placeholder="请输入目的地" v-model="v_from.destination">
       </div>
       <div class="ns_input" v-if="v_taskType === '1'">
         <label>发车时间</label>
-        <input type="text" readonly placeholder="请输入发车时间" v-model="v_from.startTime">
+        <mu-date-input v-model="v_from.startTime" underline-color="red" label="请输入发车时间" view-type='list' container="bottomSheet" :should-disable-date="f_startTimeRules" type="dateTime" :solo='true' clock-type='24hr' label-float full-width landscape></mu-date-input>
       </div>
       <!-- 时间互换 -->
-      <div class="ns_input" v-if="v_taskType === '3'">
+      <div class="ns_input ns_input_check" v-if="v_taskType === '3'">
         <label>性别</label>
+        <span @click="f_changeSex(1)"><i :class="v_from.gender === 1 ? 'ns_checked' : ''"></i>男</span>
+        <span @click="f_changeSex(0)"><i :class="v_from.gender === 0 ? 'ns_checked' : ''"></i>女</span>
       </div>
       <div class="ns_input" v-if="v_taskType === '3'">
         <label>职业</label>
-        <input type="text" readonly placeholder="请输入职业" v-model="v_from.profession">
+        <input type="text" placeholder="请输入职业" v-model="v_from.profession">
       </div>
       <div class="ns_input" v-if="v_taskType === '3'">
         <label>技能</label>
-        <input type="text" readonly placeholder="请输入技能" v-model="v_from.skill">
+        <input type="text" placeholder="请输入技能" v-model="v_from.skill">
       </div>
-      <div class="ns_input" v-if="v_taskType === '3'">
+      <div class="ns_input ns_shareTime" v-if="v_taskType === '3'">
         <label>互换时间</label>
-        开始 结束时间
+        <span>
+          <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_from.startTime" type="dateTime" landscape></mu-date-input>
+          <mu-date-input container="bottomSheet" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_from.endTime" type="time" landscape></mu-date-input>
+        </span>
       </div>
       <!-- 资源共享 -->
-      <div class="ns_input" v-if="v_taskType === '4'">
+      <div class="ns_input ns_shareTime" v-if="v_taskType === '4'">
         <label>共享时间</label>
-        开始 结束时间
+        <span>
+          <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_from.startTime" type="dateTime" landscape></mu-date-input>
+          <mu-date-input container="bottomSheet" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_from.endTime" type="time" landscape></mu-date-input>
+        </span>
       </div>
     </div>
     <!-- 类型 -->
@@ -91,16 +103,33 @@
         </mu-list-item>
       </mu-list>
     </mu-bottom-sheet>
+    <!-- 车牌 -->
+    <mu-bottom-sheet :open.sync="v_carFlag">
+      <mu-list>
+        <mu-sub-header>选择车牌</mu-sub-header>
+        <mu-list-item
+          button
+          v-for="(v, i) in v_types"
+          :key="i"
+          @click="f_chooseCarNum(i)"
+        >
+          <mu-list-item-title>{{ v.name }}</mu-list-item-title>
+        </mu-list-item>
+      </mu-list>
+    </mu-bottom-sheet>
   </div>
 </template>
 
 <script>
+import { dateFormat } from '../../../utils/utils' 
+
 export default {
   name: 'Self',
   data () {
     return {
       v_taskType: '0',
       v_typeFlag: false,
+      v_carFlag: false,
       v_types: [
         { name: '拼车', taskType: '1' },
         { name: '车位共享', taskType: '2' },
@@ -117,12 +146,12 @@ export default {
         content: '',
         startTime: '',
         endTime: '',
-        carLock: '',
+        carLock: 1,
         price: '',
         carNum: '',
         departPlace: '',
         destination: '',
-        gender: '',
+        gender: 1,
         profession: '',
         skill: '',
         createUserId: '',
@@ -149,6 +178,37 @@ export default {
       }
     },
   },
+  watch: {
+    'v_from.startTime': function (now, past) {
+      let date = dateFormat(now)
+      this.v_from.startTime = `${new Date(now).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')}`
+      if (this.v_from.endTime) {
+        let time = this.v_from.endTime.split(' ')[1]
+        this.v_from.endTime = `${date} ${time}`
+      }
+    },
+    'v_from.endTime': function (now, past) {
+      let start = this.v_from.startTime
+      let startTime = new Date(start).toLocaleTimeString('chinese', { hour12: false })
+      if (now && start) {
+        let date = dateFormat(start)
+        let endStamp = new Date(now).getTime()
+        let endTime = new Date(now).toLocaleTimeString('chinese', { hour12: false })
+        if (endStamp < new Date(start).getTime()) {
+          this.v_from.endTime = start
+          this.v_from.startTime = `${date} ${endTime}`
+        } else {
+          this.v_from.endTime = `${date} ${endTime}`
+        }
+      } else {
+        this.v_from.endTime = ''
+        this.$toast({
+          msg: '请先选择开始时间',
+          time: 1500
+        })
+      }
+    }
+  },
   methods: {
     f_openType () {
       this.v_typeFlag = true
@@ -156,6 +216,22 @@ export default {
     f_chooseType (i) {
       this.v_taskType = this.v_from.taskType = this.v_types[i].taskType
       this.v_typeFlag = false
+    },
+    f_openCarNum () {
+      this.v_carFlag = true
+    },
+    f_chooseCarNum (i) {
+      console.log('这个车牌', i)
+    },
+    f_changeLock (n) {
+      this.v_from.carLock = n
+    },
+    f_changeSex (n) {
+      this.v_from.gender = n
+    },
+    f_startTimeRules (date) {
+      let today = new Date().getTime()
+      return new Date(date).getTime() < today
     }
   }
 }
@@ -191,7 +267,7 @@ export default {
         height: 100%;
         background-color: transparent;
       }
-      i{
+      &>i{
         display: inline-block;
         width: 0.25rem;
         height: 100%;
@@ -200,6 +276,48 @@ export default {
         background-position: center center;
         background-size: contain;
         vertical-align: middle;
+      }
+      &>.mu-input{
+        width: calc(100% - 2.25rem);
+      }
+      &.ns_shareTime{
+        height: 1.8rem;
+        span{
+          display: inline-block;
+          width: calc(100% - 2.25rem);
+          vertical-align: middle;
+          .mu-input{
+            height: 0.9rem;
+            box-sizing: border-box;
+            margin: 0;
+            &:last-of-type{
+              border: none;
+            }
+          }
+        }
+      }
+      &.ns_input_check{
+        span{
+          display: inline-block;
+          width: 1.38rem;
+          height: 100%;
+          i{
+            display: inline-block;
+            width: 0.46rem;
+            height: 0.46rem;
+            border-radius: 50%;
+            border: 1px solid #cacaca;
+            vertical-align: -0.11rem;
+            margin-right: 0.2rem;
+            &.ns_checked{
+              border: none;
+              background-image: url('../../../assets/images/neighbor/neighbor_checked.png');
+              background-repeat: no-repeat;
+              background-position: center center;
+              background-size: 100% 100%;
+            }
+          }
+        }
       }
     }
   }

@@ -67,14 +67,14 @@
         <!-- 预约状态 -->
         <div class="nd_input" v-if="v_orderStatus">
           <label>预约状态</label>
-          <input type="text" readonly :value="this.v_content.shareStatus === 1 ? '预约成功' : '预约失败'">
+          <input type="text" readonly :value="v_apply">
         </div>
       </div>
       <!-- 内容描述 -->
       <div class="nd_description">
         <b>内容描述</b>
         <div class="nd_input">
-          <textarea></textarea>
+          <textarea readonly v-model="v_content.content"></textarea>
         </div>
       </div>
       <!-- 图片 -->
@@ -83,7 +83,7 @@
         <div class="nd_preview_wrapper">
           <div
             class="nd_preview_item"
-            v-for="(v, i) in v_content.imgUrl"
+            v-for="(v, i) in imgJson"
             :key="i"
           >
             <img :src="v" alt="">
@@ -129,8 +129,9 @@ export default {
   data () {
     return {
       v_content: {},
-      v_orderStatus: 0,
+      v_orderStatus: false,
       v_orderText: '',
+      v_apply: '',
       v_comments: []
     }
   },
@@ -168,6 +169,10 @@ export default {
     hasLock: function () {
       return this.v_content.carLock ? '有' : '无'
     },
+    imgJson: function () {
+      console.log(this.v_content.imgUrl)
+      return eval(this.v_content.imgUrl)
+    },
     submit: function () {
       if (this.v_content.shareType === '2') {
         this.v_orderText = '立即预约'
@@ -193,41 +198,35 @@ export default {
         .get('/admin/share/getShareInfoDetail', { params })
         .then(res => {
           if (res.data.success) {
+            console.log('结果', res.data.data)
             this.v_content = Object.assign({}, res.data.data)
           }
         })
     },
     f_order () {
       if (this.v_content.shareType === '2') {
-        if (this.v_content.shareStatus === 0) {
-          let params = {
-            id: this.v_content.id,
-            userId: '用户的userId',
-            telephone: this.v_content.telephone,
-            address: '用户的房屋驻地',
-            IDCard: '用户的身份证号'
-          }
-          this.$http
-            .get('/admin/share/applyShareInfo', { params })
-            .then(res => {
-              console.log('是否预约成功', res)
-              if (res.data.success) {
-                this.v_content.shareStatus = 1
-              } else {
-                this.v_content.shareStatus = 2
-              }
-            })
-        } else {
-          this.v_orderStatus = true
+        let params = {
+          id: this.v_content.id,
+          userId: '用户的userId',
+          telephone: this.v_content.telephone,
+          address: '用户的房屋驻地',
+          IDCard: '用户的身份证号'
         }
+        this.$http
+          .get('/admin/share/applyShareInfo', { params })
+          .then(res => {
+            if (res.data.msg) {
+              this.v_apply = res.data.msg
+              this.v_orderStatus = true
+            }
+          })
       } else {
         let params = {
-          id: this.v_content[i].id
+          id: this.v_content[i].id,
+          type: 2
         }
-        this.$confirm({
-          title: '提示',
-          content: '确认取消共享吗?'
-        }).then(() => {
+        let flag = confirm('确认取消共享吗?')
+        if (flag) {
           this.$http
             .get('/admin/share/deleteShareInfo', { params })
             .then(res => {
@@ -238,7 +237,7 @@ export default {
                 this.$toast('网络错误')
               }
             })
-        })
+        }
       }
     }
   }
@@ -329,6 +328,8 @@ export default {
           height: 1.16rem;
           box-sizing: border-box;
           margin: 0 0.04rem;
+          display: flex;
+          align-items: center;
           img{
             width: 100%;
           }

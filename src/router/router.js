@@ -145,6 +145,15 @@ const router = new Router({
         title: '注册'
       },
       component: () => import('../views/login/Register.vue')
+    },
+    // 全部
+    {
+      path: '/all',
+      name: 'all',
+      meta: {
+        title: '我的'
+      },
+      component: () => import('../views/index/all/index.vue')
     }
   ]
 })

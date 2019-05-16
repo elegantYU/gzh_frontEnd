@@ -22,6 +22,8 @@
 
   - 其余规范参照 eslint 的 standard 规范
 
+  - 部分使用提示或弹窗地方使用 this.$toast({ msg: String, time: Number}), 对话框使用原生 confirm
+
 #### vue文件
 
   - 页面文件放入views文件夹，公用组件放入components文件夹

@@ -95,7 +95,7 @@
         {{ v_orderText }}
       </div>
       <!-- 物业特有评论 -->
-      <div class="nd_comments">
+      <div class="nd_comments" v-if="false">
         <h6>申请人</h6>
         <ul class="nd_comments_list">
           <li
@@ -129,7 +129,7 @@ export default {
   data () {
     return {
       v_content: {},
-      v_orderStatus: false,
+      v_orderStatus: true,
       v_orderText: '',
       v_apply: '',
       v_comments: []
@@ -192,14 +192,29 @@ export default {
     f_getContent () {
       let id = this.$route.query.id
       let params = {
-        id
+        id,
+        userId: 12
       }
       this.$http
-        .get('/admin/share/getShareInfoDetail', { params })
+        .get('/admin/share/getMeApplyDetail', { params })
         .then(res => {
           if (res.data.success) {
             console.log('结果', res.data.data)
-            this.v_content = Object.assign({}, res.data.data)
+            this.v_content = Object.assign({}, res.data.data.shareInfo)
+            switch (res.data.data.apply.sts) {
+              case '1':
+                this.v_apply = '申请中'
+                break
+              case '2':
+                this.v_apply = '申请通过'
+                break
+              case '3':
+                this.v_apply = '拒绝'
+                break
+              case '4':
+                this.v_apply = '关闭发布'
+                break
+            }
           }
         })
     },

@@ -63,6 +63,7 @@ export default {
         ],
         'Order': [
           { name: '全部', active: true },
+          { name: '预约中', active: false },
           { name: '预约成功', active: false },
           { name: '预约失败', active: false }
         ]
@@ -101,6 +102,9 @@ export default {
     },
     f_startFilter (i) {
       this.v_filterProp = i
+      // if (this.v_now.length === 3) {
+      //   this.v_filterProp = i + 1
+      // }
       this.v_now.map(v => v.active = false)
       this.v_now[i].active = true
     }

@@ -52,7 +52,7 @@ export default {
       console.log('提交')
     },
     f_getCode () {
-      if (!(/^1[345678]\d{9}$/.test(phone))) {
+      if (!(/^1[345678]\d{9}$/.test(v_phone))) {
         this.$toast('手机号错误')
         return
       }

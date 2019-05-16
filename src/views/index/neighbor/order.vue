@@ -38,6 +38,12 @@ export default {
   props: {
     taskType: Number
   },
+  watch: {
+    'taskType': function (now, last) {
+      this.v_list = []
+      this.f_getList()
+    }
+  },
   mounted () {
     this.f_getList()
   },
@@ -46,15 +52,15 @@ export default {
       let params
       this.taskType !== 0
         ? params = {
-            userId: 1,
+            userId: 25,
             status: this.taskType,
             pageNum: this.v_pageNum,
-            pageSize: 5
+            pageSize: 10
           } 
         : params = {
-            userId: 1,
+            userId: 25,
             pageNum: this.v_pageNum,
-            pageSize: 5
+            pageSize: 10
           }
 
       this.$http
@@ -77,7 +83,8 @@ export default {
       }, 1000)
     },
     f_viewDetail (v) {
-      this.$router.push({ name: 'neighborDetail', query: { id: v.id } })
+      console.log('list', this.v_list)
+      this.$router.push({ name: 'neighborOD', query: { id: v.id } })
     }
   }
 }

@@ -42,7 +42,7 @@
       <div class="wr_upload">
         <b>图片<span>（最多三张）</span></b>
         <div class="wr_preview">
-          <div 
+          <div
             class="wr_preview_list"
             v-for="(v, i) in v_images"
             :key="i"
@@ -88,8 +88,7 @@
 </template>
 
 <script>
-import { dateFormat } from '../../../utils/utils'
-
+import { dateFormat, stop, move } from '../../../utils/utils'
 export default {
   name: 'WillRepair',
   data () {
@@ -121,7 +120,7 @@ export default {
         { name: '门窗检修' },
         { name: '家用电器检修' },
         { name: '房顶检修' },
-        { name: '防水施工方法' },
+        { name: '防水施工方法' }
       ],
       v_typeFlag: false,
       v_houseFlag: false,
@@ -173,17 +172,21 @@ export default {
   methods: {
     f_openType () {
       this.v_typeFlag = true
+      stop()
     },
     f_openHouse () {
       this.v_houseFlag = true
+      stop()
     },
     f_chooseType (name) {
       this.v_typeFlag = false
       this.v_from.type = name
+      move()
     },
     f_chooseHouse (name) {
       this.v_houseFlag = false
       this.v_from.houseName = name
+      move()
     },
     f_startTimeRules (date) {
       let today = new Date().getTime()
@@ -309,7 +312,7 @@ export default {
         background-color: #fff;
         textarea{
          width: 100%;
-         height: 100%; 
+         height: 100%;
          resize: none;
          font-size: 0.26rem;
         }
@@ -359,7 +362,7 @@ export default {
       }
     }
     .wr_submit{
-      margin: 0 0.3rem; 
+      margin: 0 0.3rem;
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;

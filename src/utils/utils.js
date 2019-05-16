@@ -22,4 +22,13 @@ const dateFormat = date => {
   return `${year}-${month}-${day}`
 }
 
-export { deviceRem, dateFormat }
+// 滑动限制
+const stop = () => {
+  document.body.style.overflow = 'hidden'
+}
+// 取消滑动限制
+const move = () => {
+  document.body.style.overflow = ''
+}
+
+export { deviceRem, dateFormat, stop, move }

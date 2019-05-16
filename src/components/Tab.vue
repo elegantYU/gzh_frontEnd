@@ -21,7 +21,7 @@ export default {
     },
     f_gomy () {
       // 先验证登录状态
-      this.$router.replace({ name: 'my' })
+      this.$router.replace({ name: 'no' })
     }
   }
 }

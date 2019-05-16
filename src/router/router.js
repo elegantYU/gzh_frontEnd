@@ -99,9 +99,43 @@ const router = new Router({
       path: '/neighbor/detail',
       name: 'neighborDetail',
       meta: {
-        title: '我要共享'
+        title: '共享详情'
       },
       component: () => import('../views/index/neighbor/detail.vue')
+    },
+    {
+      path: '/neighbor/ordetDetail',
+      name: 'neighborOD',
+      meta: {
+        title: '共享详情'
+      },
+      component: () => import('../views/index/neighbor/orderDetail.vue')
+    },
+    // 我的房屋
+    {
+      path: '/my/house/index',
+      name: 'house',
+      meta: {
+        title: '我的房屋'
+      },
+      component: () => import('../views/my/house/index.vue')
+    },
+    {
+      path: '/my/house/add',
+      name: 'houseAdd',
+      meta: {
+        title: '房屋认证'
+      },
+      component: () => import('../views/my/house/add.vue')
+    },
+    // 缺省页 用户登录注册但是没有房子就出现这个
+    {
+      path: '/my/house/no',
+      name: 'no',
+      meta: {
+        title: '我的房屋'
+      },
+      component: () => import('../views/my/house/noHouse.vue')
     },
     // 登录注册
     {
@@ -119,6 +153,15 @@ const router = new Router({
         title: '注册'
       },
       component: () => import('../views/login/Register.vue')
+    },
+    // 全部
+    {
+      path: '/all',
+      name: 'all',
+      meta: {
+        title: '我的'
+      },
+      component: () => import('../views/index/all/index.vue')
     }
   ]
 })

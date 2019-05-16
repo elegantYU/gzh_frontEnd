@@ -53,6 +53,7 @@
   </div>
 </template>
 <script>
+import { stop, move } from '../../../../utils/utils'
 export default {
   name: 'goReport',
   data () {
@@ -82,10 +83,12 @@ export default {
   methods: {
     f_openType () {
       this.v_typeFlag = true
+      stop()
     },
     f_chooseType (name) {
       this.v_typeFlag = false
       this.v_from.type = name
+      move()
     },
     f_upload () {
       // this.$wxsdk  上传图片获取链接

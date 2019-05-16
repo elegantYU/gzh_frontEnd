@@ -5,7 +5,12 @@ module.exports = {
         target: 'http://118.126.66.195:8081',
         ws: true,
         changeOrigin: true
-      }
+      },
+      '/obtain': {
+        target: 'http://118.126.66.195:8081',
+        ws: true,
+        changeOrigin: true
+      },
     }
   },
 }

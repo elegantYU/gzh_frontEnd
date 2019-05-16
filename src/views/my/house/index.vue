@@ -1,13 +1,130 @@
 <template>
-  
+  <div class="house_wrapper">
+    <div class="house_container">
+      <h6>康兴园小区</h6>
+      <ul class="house_list">
+        <li
+          v-for="(v, i) in v_houseList"
+          :key="i"
+        >
+          <div class="house_input">
+            <label>身份</label>
+            <p>{{ v.idenity }}</p>
+          </div>
+          <div class="house_input">
+            <label>房屋信息</label>
+            <p>{{ v.info }}</p>
+          </div>
+          <div class="house_input">
+            <label>认证状态</label>
+            <p :class="v.status ? 'house_unchecked' : ''">{{ statusText }}</p>
+          </div>
+        </li>
+      </ul>
+      <div class="house_submit" @click="f_submit">添加房屋认证</div>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'House'
+  name: 'House',
+  data () {
+    return {
+      v_houseList: [
+        { idenity: '业主', info: '1栋1单元101室', status: '已认证' },
+        { idenity: '业主', info: '1栋1单元101室', status: '未通过' },
+        { idenity: '业主', info: '1栋1单元101室', status: '已认证' },
+      ]
+    }
+  },
+  computed: {
+    statusText: function () {
+      return '已认证'
+    }
+  },
+  mounted () {
+    this.f_getList()
+  },
+  methods: {
+    f_getList () {
+      this.$http
+        .get()
+        .then(res => {
+          console.log(res)
+        })
+    },
+    f_submit () {
+      this.$router.push({ name: 'houseAdd' })
+    }
+  }
 }
 </script>
 
 <style lang='scss' scoped>
-
+.house_wrapper{
+  background-color: #efeff4;
+  height: 100%;
+  .house_container{
+    padding-bottom: 1.2rem;
+    background-color: #efeff4;
+    h6{
+      height: 0.9rem;
+      color: #999;
+      background-color: #fff;
+      font-size: 0.36rem;
+      line-height: 0.9rem;
+    }
+    .house_list{
+      padding: 0.2rem 0.25rem 0;
+      margin-bottom: 1rem;
+      li{
+        width: 7rem;
+        height: 2.7rem;
+        border-radius: 0.15rem;
+        background-color: white;
+        box-shadow: 0.1rem 0 0.3rem 0 rgba(0, 0, 0, 0.05);
+        margin-bottom: 0.5rem;
+        .house_input{
+          border-bottom: 1px solid #e5e5e5;
+          height: 0.9rem;
+          font-size: 0.34rem;
+          padding: 0 0.4rem;
+          display: flex;
+          &:last-of-type{
+            border: none;
+          }
+          label{
+            width: 1.4rem;
+            height: 100%;
+            line-height: 0.9rem;
+            color: #b2b2b2;
+            text-align: left;
+          }
+          p{
+            flex: 1;
+            height: 100%;
+            line-height: 0.9rem;
+            text-align: right;
+            &.house_unchecked{
+              color: #0000ff;
+            }
+          }
+        }
+      }
+    }
+    .house_submit{
+      border-radius: 0.15rem;
+      line-height: 0.9rem;
+      width: 7rem;
+      height: 0.9rem;
+      color: #f64682;
+      font-size: 0.3rem;
+      background-color: #fff;
+      box-shadow: 0.1rem 0 0.3rem 0 rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      margin: 0 auto;
+    }
+  }
+}
 </style>

@@ -288,3 +288,7 @@ a:focus {
 .mu-text-field-input{
   text-indent: 1em;
 }
+/* mu select */
+.mu-select-action{
+  display: none !important;
+}

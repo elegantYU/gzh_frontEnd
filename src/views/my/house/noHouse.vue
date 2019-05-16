@@ -10,10 +10,11 @@ export default {
   name: 'No',
   beforeRouteEnter (to, from, next) {
     // 若用户信息完善 则进入 我的 页面
+    next()
   },
   methods: {
     f_move () {
-      this.$router.push({ name: 'houseAdd' })
+      this.$router.push({ name: 'house' })
     }
   }
 }

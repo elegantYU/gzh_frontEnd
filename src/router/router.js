@@ -72,6 +72,14 @@ const router = new Router({
       component: () => import('../views/index/repair/willRepair.vue')
     },
     {
+      path: '/goreport',
+      name: 'goreport',
+      meta: {
+        title: '我要上报'
+      },
+      component: () => import('../views/index/all/environment/goReport.vue')
+    },
+    {
       path: '/repairdetail/:id',
       name: 'repairDetail',
       meta: {

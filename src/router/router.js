@@ -162,6 +162,15 @@ const router = new Router({
         title: '我的'
       },
       component: () => import('../views/index/all/index.vue')
+    },
+    // 省市选择
+    {
+      path: '/pick',
+      name: 'pick',
+      meta: {
+        title: '省市选择'
+      },
+      component: () => import('../views/index/all/picker.vue')
     }
   ]
 })

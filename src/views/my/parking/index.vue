@@ -1,45 +1,46 @@
 <template>
-  <div class="car_wrapper">
-    <div class="car_container">
-      <h6>康兴园小区</h6>
+  <div class="park_wrapper">
+    <div class="park_container">
+      <h6>康馨苑小区</h6>
       <ul>
         <li
-          class="car_item"
           v-for="(v, i) in v_list"
           :key="i"
         >
-          <div class="car_input">
-            <label>型号</label>
-            <p>{{ v.model }}</p>
-          </div>
-          <div class="car_input">
-            <label>种类</label>
-            <p>{{ v.type }}</p>
-          </div>
-          <div class="car_input">
-            <label>车牌号</label>
+          <div class="park_input">
+            <label>车位编号</label>
             <p>{{ v.carNum }}</p>
           </div>
-          <div class="car_input">
+          <div class="park_input">
+            <label>类型</label>
+            <p>{{ v.type }}</p>
+          </div>
+          <div class="park_input">
+            <label>车位锁</label>
+            <p>{{ v.carLock }}</p>
+          </div>
+          <div class="park_input">
+            <label>有效期</label>
+            <p>{{ v.time }}</p>
+          </div>
+          <div class="park_input">
             <label>状态</label>
             <p>{{ v.status }}</p>
           </div>
         </li>
       </ul>
-      <div class="car_submit" @click="f_submit">添加车辆认证</div>
+      <div class="park_submit" @click="f_addItem">添加房屋认证</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Car',
+  name: 'Park',
   data () {
     return {
       v_list: [
-        { model: '轿车', type: '两厢车', carNum: '浙A0000', status: '1'  },
-        { model: '轿车', type: '两厢车', carNum: '浙A0000', status: '1'  },
-        { model: '轿车', type: '两厢车', carNum: '浙A0000', status: '1'  },
+        { carNum: '军A000', type: '思想车', carLock: '0', time: '2019-01-01', status: '0' }
       ]
     }
   },
@@ -51,18 +52,18 @@ export default {
           console.log(res)
         })
     },
-    f_submit () {
-      this.$router.push({ name: 'carAdd' })
+    f_addItem () {
+      this.$router.push({ name: 'parkAdd' })
     }
   }
 }
 </script>
 
 <style lang='scss' scoped>
-.car_wrapper{
+.park_wrapper{
   background-color: #efeff4;
   height: 100%;
-  .car_container{
+  .park_container{
     background-color: #efeff4;
     padding-bottom: 1.2rem;
     h6{
@@ -75,14 +76,14 @@ export default {
     ul{
       padding: 0.2rem 0.25rem 0;
       margin-bottom: 1rem;
-      .car_item{
+      li{
         width: 7rem;
-        height: 3.6rem;
+        height: 4.5rem;
         border-radius: 0.15rem;
         background-color: white;
         box-shadow: 0.1rem 0 0.3rem 0 rgba(0, 0, 0, 0.05);
         margin-bottom: 0.5rem;
-        .car_input{
+        .park_input{
           border-bottom: 1px solid #e5e5e5;
           height: 0.9rem;
           font-size: 0.34rem;
@@ -110,7 +111,7 @@ export default {
         }
       }
     }
-    .car_submit{
+    .park_submit{
       border-radius: 0.15rem;
       line-height: 0.9rem;
       width: 7rem;

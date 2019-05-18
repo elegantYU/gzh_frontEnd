@@ -1,0 +1,231 @@
+<template>
+  <div class="pa_wrapper">
+    <div class="pa_container">
+      <div class="pa_header">
+        车位信息
+        <span @click="f_addItem">添加</span>
+      </div>
+      <ul>
+        <li
+          v-for="(v, i) in v_list"
+          :key="i"
+        >
+          <div class="pa_input">
+            <label>姓名</label>
+            <div class="pa_input_box">
+              <input type="text" placeholder="请输入姓名" v-model="v.name">
+            </div>
+          </div>
+          <div class="pa_input">
+            <label>联系方式</label>
+            <div class="pa_input_box">
+              <input type="text" placeholder="请输入联系方式" v-model="v.contact">
+            </div>
+          </div>
+          <div class="pa_input">
+            <label>车位编号</label>
+            <div class="pa_input_box">
+              <mu-select v-model="v.parkNum" :solo="true" full-width placeholder="请选择车位">
+                <mu-option v-for="(v,i) in v_parkNum" :key="i" :label="v" :value="v"></mu-option>
+              </mu-select>
+            </div>
+            <i></i>
+          </div>
+          <div class="pa_input">
+            <label>类型</label>
+            <div class="pa_input_box">
+              <input type="text" readonly v-model="v.type">
+            </div>
+          </div>
+          <div class="pa_input">
+            <label>车牌号</label>
+            <div class="pa_input_box">
+              <mu-select v-model="v.carNum" multiple full-width :solo="true" placeholder="请选择车牌号">
+                <mu-option v-for="(v,i) in v_carNum" :key="i" :label="v" :value="v"></mu-option>
+              </mu-select>
+            </div>
+            <i></i>
+          </div>
+          <div class="pa_input">
+            <label>车位锁</label>
+            <div class="pa_input_box pa_input_radio">
+              <span @click="f_checkLock(i, 1)"><i :class="v.carLock === 1 ? 'pa_checked' : ''"></i>有</span>
+              <span @click="f_checkLock(i, 0)"><i :class="v.carLock === 0 ? 'pa_checked' : ''"></i>无</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="pa_submit" @click="f_submit">提交</div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'ParkAdd',
+  data () {
+    return {
+      v_list: [
+        { name: '', contact: '', parkNum: '', type: '自有', carNum: [], carLock: 1  }
+      ],
+      v_parkNum: ['qedasasd', 'asdqads', 'qdasdasd'],
+      v_carNum: ['asdasd', 'asdasdads', 'asdasdsadsa']
+    }
+  },
+  methods: {
+    f_addItem () {
+      let item = {
+        name: '',
+        contact: '',
+        parkNum: '',
+        type: '自有',
+        carNum: [],
+        carLock: 1
+      }
+      this.v_list.push(item)
+    },
+    f_checkLock (i, n) {
+      this.v_list[i].carLock = n
+    },
+    f_submit () {
+      let flag = false
+      for (let i = 0; i < this.v_list.length; i++) {
+        for (const key in this.v_list[i]) {
+          if (this.v_list[i][key] === '') {
+            this.$toast('请填写完整')
+            return
+          }
+        }
+        for (let ind = 1; ind < this.v_list.length; ind++) {
+          if (this.v_list[i].parkNum === this.v_list[ind].parkNum) {
+            flag= true
+          }
+        }
+      }
+
+      if (flag) {
+        this.$toast('请勿选择同一车位')
+        return
+      }
+
+      this.$http
+        .post('')
+        .then(res => {
+          this.$toast('提交成功')
+          this.$router.go(-1)
+        })
+    }
+  }
+}
+</script>
+
+<style lang='scss' scoped>
+.pa_wrapper{
+  background-color: #efeff4;
+  height: 100%;
+  .pa_container{
+    background-color: #efeff4;
+    padding-bottom: 1.2rem;
+    .pa_header{
+      height: 0.85rem;
+      padding: 0 0.32rem;
+      line-height: 0.85rem;
+      font-size: 0.3rem;
+      color: #999;
+      position: relative;
+      text-align: left;
+      span{
+        position: absolute;
+        top: 50%;
+        right: 0.32rem;
+        transform: translateY(-50%);
+        width: 1.2rem;
+        height: 0.6rem;
+        border: 0.02rem solid #dfdfdf;
+        background-color: #f8f8f8;
+        border-radius: 0.06rem;
+        font-size: 0.26rem;
+        line-height: 0.6rem;
+        color: #f64682;
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+    ul{
+      li{
+        border-top: 1px solid #e5e5e5;
+        margin-bottom: 0.2rem;
+        .pa_input{
+          padding: 0 0.3rem;
+          background-color: #fff;
+          display: flex;
+          height: 0.9rem;;
+          line-height: 0.9rem;
+          border-bottom: 1px solid #e5e5e5;
+          &:last-of-type{
+            border: none;
+          }
+          label{
+            width: 1.8rem;
+            line-height: 0.9rem;
+            font-size: 0.34rem;
+            text-align: left;
+          }
+          .pa_input_box{
+            flex: 1;
+            input{
+              width: 100%;
+              height: 100%;
+            }
+            &.pa_input_radio{
+              text-align: left;
+              span{
+                display: inline-block;
+                width: 1.38rem;
+                height: 100%;
+                line-height: 0.9rem;
+                i{
+                  display: inline-block;
+                  width: 0.46rem;
+                  height: 0.46rem;
+                  border-radius: 50%;
+                  border: 1px solid #cacaca;
+                  vertical-align: -0.15rem;
+                  margin-right: 0.2rem;
+                  &.pa_checked{
+                    border: none;
+                    background-image: url('../../../assets/images/neighbor/neighbor_checked.png');
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    background-size: 100% 100%;
+                  }
+                }
+              }
+            }
+          }
+          &>i{
+            width: 0.25rem;
+            height: 100%;
+            background-image: url('../../../assets/images/repair/repair_arrow.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+    .pa_submit{
+      margin: 0.4rem 0.3rem 0;
+      height: 0.9rem;
+      background-color: #f73476;
+      text-align: center;
+      font-size: 0.34rem;
+      color: #fff;
+      line-height: 0.9rem;
+      border-radius: 0.415rem;
+      cursor: pointer;
+    }
+  }
+}
+</style>

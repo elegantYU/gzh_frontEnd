@@ -1,10 +1,10 @@
 <template>
   <div class="tab_wrapper">
-    <div class="tab_side tab_home" @click="f_gohome">
+    <div class="tab_side tab_home" :class="v_home ? 'tab_active' : ''" @click="f_gohome">
       <i></i>
       <span>首页</span>
     </div>
-    <div class="tab_side tab_my" @click="f_gomy">
+    <div class="tab_side tab_my" :class="v_home ? '' : 'tab_active'" @click="f_gomy">
       <i></i>
       <span>我的</span>
     </div>
@@ -15,13 +15,20 @@
 <script>
 export default {
   name: 'Tabs',
+  data () {
+    return {
+      v_home: true
+    }
+  },
   methods: {
     f_gohome () {
       this.$router.replace({ name: 'index' })
+      this.v_home = true
     },
     f_gomy () {
       // 先验证登录状态
-      this.$router.replace({ name: 'no' })
+      this.$router.replace({ name: 'park' })
+      this.v_home = false
     }
   }
 }
@@ -59,7 +66,7 @@ export default {
     &.tab_home{
       float: left;
       i{
-        background-image: url('../assets/images/tabs/tab_home_active.png');
+        background-image: url('../assets/images/tabs/tab_home.png');
       }
       &.tab_active{
         i{
@@ -74,7 +81,7 @@ export default {
       }
       &.tab_active{
         i{
-
+          background-image: url('../assets/images/tabs/tab_my_active.png');
         }
       }
     }

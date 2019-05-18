@@ -115,6 +115,18 @@ export default {
         area: ''
       }
     }
+  },
+  mounted () {
+    this.f_getList()
+  },
+  methods: {
+    f_getList () {
+      this.$http
+        .get('/obtain/config/linkage', { params: { configCode: 'provinceSynchroKey', orgCode: '0' } })
+        .then(res => {
+          console.log(res)
+        })
+    }
   }
 }
 </script>

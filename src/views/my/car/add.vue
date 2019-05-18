@@ -1,15 +1,185 @@
 <template>
   <div class="ca_wrapper">
-    <div class="ca_container"></div>
+    <div class="ca_container">
+      <div class="ca_header">
+        车辆信息
+        <span @click="f_addItem">添加</span>
+      </div>
+      <ul>
+        <li
+          v-for="(v, i) in v_list"
+          :key="i"
+        >
+          <div class="ca_input">
+            <label>型号</label>
+            <div class="ca_input_box">
+              <mu-select v-model="v.model" :solo="true" placeholder="请选择型号">
+                <mu-option v-for="(v,i) in v_model" :key="i" :label="v" :value="v"></mu-option>
+              </mu-select>
+            </div>
+            <i></i>
+          </div>
+          <div class="ca_input">
+            <label>类型</label>
+            <div class="ca_input_box">
+              <mu-select v-model="v.type" :solo="true" placeholder="请选择类型">
+                <mu-option v-for="(v,i) in v_type" :key="i" :label="v" :value="v"></mu-option>
+              </mu-select>
+            </div>
+            <i></i>
+          </div>
+          <div class="ca_input">
+            <label>车牌</label>
+            <div class="ca_input_box">
+              <mu-select v-model="v.carNum" :solo="true" placeholder="请选择车牌号">
+                <mu-option v-for="(v,i) in v_carNum" :key="i" :label="v" :value="v"></mu-option>
+              </mu-select>
+            </div>
+            <i></i>
+          </div>
+        </li>
+      </ul>
+      <div class="ca_submit" @click="f_submit">提交</div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'CarAdd'
+  name: 'CarAdd',
+  data () {
+    return {
+      v_list: [
+        { model: '', type: '', carNum: '' }
+      ],
+      v_model: ['火车', '轿车', '面包车'],
+      v_type: ['两厢', '四厢', '七厢'],
+      v_carNum: ['军A0000', '军A0000', '军A0000']
+    }
+  },
+  methods: {
+    f_addItem () {
+      let item = {
+        model: '',
+        type: '',
+        carNum: ''
+      }
+      this.v_list.push(item)
+    },
+    f_submit () {
+      let flag = false
+      for (let i = 0; i < this.v_list.length; i++) {
+        for (const key in this.v_list[i]) {
+          if (this.v_list[i][key] === '') {
+            this.$toast('请填写完整')
+            return
+          }
+        }
+        for (let ind = 1; ind < this.v_list.length; ind++) {
+          if (this.v_list[i].carNum === this.v_list[ind].carNum) {
+            flag= true
+          }
+        }
+      }
+
+      if (flag) {
+        this.$toast('请勿选择同一车牌')
+        return
+      }
+
+      this.$http
+        .post('')
+        .then(res => {
+          this.$toast('提交成功')
+          this.$router.go(-1)
+        })
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-
+.ca_wrapper{
+  background-color: #efeff4;
+  height: 100%;
+  .ca_container{
+    background-color: #efeff4;
+    padding-bottom: 1.2rem;
+    .ca_header{
+      height: 0.85rem;
+      padding: 0 0.32rem;
+      line-height: 0.85rem;
+      font-size: 0.3rem;
+      color: #999;
+      position: relative;
+      text-align: left;
+      span{
+        position: absolute;
+        top: 50%;
+        right: 0.32rem;
+        transform: translateY(-50%);
+        width: 1.2rem;
+        height: 0.6rem;
+        border: 0.02rem solid #dfdfdf;
+        background-color: #f8f8f8;
+        border-radius: 0.06rem;
+        font-size: 0.26rem;
+        line-height: 0.6rem;
+        color: #f64682;
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+    ul{
+      li{
+        border-top: 1px solid #e5e5e5;
+        margin-bottom: 0.2rem;
+        .ca_input{
+          padding: 0 0.3rem;
+          background-color: #fff;
+          display: flex;
+          height: 0.9rem;;
+          line-height: 0.9rem;
+          border-bottom: 1px solid #e5e5e5;
+          &:last-of-type{
+            border: none;
+          }
+          label{
+            width: 1.5rem;
+            line-height: 0.9rem;
+            font-size: 0.34rem;
+            text-align: left;
+          }
+          .ca_input_box{
+            flex: 1;
+            input{
+              width: 100%;
+              height: 100%;
+            }
+          }
+          i{
+            width: 0.25rem;
+            height: 100%;
+            background-image: url('../../../assets/images/repair/repair_arrow.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+    .ca_submit{
+      margin: 0.4rem 0.3rem 0;
+      height: 0.9rem;
+      background-color: #f73476;
+      text-align: center;
+      font-size: 0.34rem;
+      color: #fff;
+      line-height: 0.9rem;
+      border-radius: 0.415rem;
+      cursor: pointer;
+    }
+  }
+}
 </style>

@@ -7,8 +7,8 @@
       </div>
       <section>
         <mybtn @myclick = "myclick"></mybtn>
-        <mybtn :data = "{img: 'icon2', txt: '我的车辆'}" @myclick = "myclick"></mybtn>
-        <mybtn :data = "{img: 'icon3', txt: '我的车位'}" @myclick = "myclick"></mybtn>
+        <mybtn :data = "{img: 'icon2', txt: '我的车辆', path: 'car'}" @myclick = "myclick"></mybtn>
+        <mybtn :data = "{img: 'icon3', txt: '我的车位', path: 'park'}" @myclick = "myclick"></mybtn>
       </section>
       <section>
         <mybtn :data = "{img: 'icon4', txt: '我的订单'}" @myclick = "myclick"></mybtn>
@@ -41,8 +41,8 @@ export default {
     mybtn
   },
   methods: {
-    myclick (txt) {
-      console.log(txt)
+    myclick (path) {
+      this.$router.push({ name: path })
     }
   }
 }

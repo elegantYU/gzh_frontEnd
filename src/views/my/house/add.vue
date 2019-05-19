@@ -6,9 +6,7 @@
         <div class="ha_input">
           <label>区域</label>
           <div class="ha_input_box">
-            <mu-select v-model="v_form.area" :solo="true" placeholder="请选择省市区">
-              <mu-option v-for="(v,i) in v_area" :key="i" :label="v" :value="v"></mu-option>
-            </mu-select>
+            <input type="text" readonly v-model="v_form.region">
           </div>
           <i></i>
         </div>
@@ -112,7 +110,26 @@ export default {
     return {
       v_area: ['区域A', '区域B', '区域C', '区域D', '区域E', '区域F'],
       v_form: {
-        area: ''
+        memberId: 2,        // 用户id,
+        name: '',          //姓名
+        regionId: '',              // 省市区编码（用，号拼接）
+        region: '',                //省市区
+        streetId: 0,                       //街道id
+        street: '',        //街道名称
+        communityId: 0,             //社区id
+        community: '',          //社区名称
+        villageId: 0,                   //小区id
+        village: '',           //小区名称
+        buildingId: 0,                 //楼幢id
+        building: '',            //楼幢名称
+        unitId: 0,                        //单元id
+        unit: '',                  //单元名
+        roomId: 0,                       //室id
+        room: 0,                     //室
+        identityInformation: '',   //身份信息
+        phone: '',    // 联系电话啊
+        searchWord: '',       //将上述省市区街道小区楼幢室组合起来
+        img: []
       }
     }
   },

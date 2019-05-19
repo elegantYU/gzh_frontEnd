@@ -14,14 +14,15 @@ export default {
       default: () => {
         return {
           img: 'icon1',
-          txt: '我的房屋'
+          txt: '我的房屋',
+          path: 'house'
         }
       }
     }
   },
   methods: {
     myclick () {
-      this.$emit('myclick', this.data.txt)
+      this.$emit('myclick', this.data.path)
     }
   }
 }

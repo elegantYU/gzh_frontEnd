@@ -51,7 +51,7 @@ const router = new Router({
     { path: '/login', name: 'login', meta: { title: '登录' }, component: () => import('../views/login/Login.vue')},
     { path: '/register', name: 'register', meta: { title: '注册' }, component: () => import('../views/login/Register.vue')},
     // 省市选择
-    { path: '/pick', name: 'pick', meta: { title: '省市选择' }, component: () => import('../views/index/all/picker.vue')}
+    // { path: '/pick', name: 'pick', meta: { title: '省市选择' }, component: () => import('../views/index/all/picker.vue')}
   ]
 })
 

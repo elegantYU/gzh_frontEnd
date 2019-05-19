@@ -27,7 +27,7 @@ export default {
     },
     f_gomy () {
       // 先验证登录状态
-      this.$router.replace({ name: 'park' })
+      this.$router.replace({ name: 'house' })
       this.v_home = false
     }
   }

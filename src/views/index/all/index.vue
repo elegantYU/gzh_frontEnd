@@ -2,14 +2,14 @@
   <div class="wp">
     <p class="title">常用服务</p>
     <div class="serve-wp">
-      <div class="serve-li" v-for="(d, i) in data" :key="d.id">
+      <div class="serve-li" v-for="(d, i) in data" :key="d.id" @click="switchRoute(d)">
         <img class="icon" :src="require(`@/assets/images/all/${i+1}.png`)" alt="">
         <p class="txt">{{d}}</p>
       </div>
     </div>
     <p class="title">更多服务</p>
     <div class="serve-wp">
-      <div class="serve-li" v-for="(d, i) in moreServe" :key="d.id">
+      <div class="serve-li" v-for="(d, i) in moreServe" :key="d.id" @click="switchRoute(d)">
         <img class="icon" :src="require(`@/assets/images/all/more${i+1}.png`)" alt="">
         <p class="txt">{{d}}</p>
       </div>
@@ -21,8 +21,61 @@ export default {
   name: 'allIndex',
   data () {
     return {
-      data: ['物业报修', '访客通行', '联系物业', '智慧停车', '停车服务', '预约服务', '车位锁', '环境秩序', '智慧政务', '生活超市', '邻里共享', '失物招领', '小区头条', '宠物登记'],
+      data: ['物业报修', '物业报修', '联系物业', '智慧停车', '停车服务', '预约服务', '车位锁', '环境秩序', '智慧政务', '生活超市', '邻里共享', '失物招领', '小区头条', '宠物登记'],
       moreServe: ['诉求建议', '快递服务']
+    }
+  },
+  methods: {
+    switchRoute (d) {
+      console.log(d)
+      switch(d)
+      {
+        case '物业报修':
+          this.$router.push({name: ''})
+          break;
+        case '物业报修':
+          this.$router.push({name: ''})
+          break;
+        case '联系物业':
+          this.$router.push({name: ''})
+          break;
+        case '智慧停车':
+          this.$router.push({name: ''})
+          break;
+        case '停车服务':
+          this.$router.push({name: ''})
+          break;
+        case '预约服务':
+          this.$router.push({name: ''})
+          break;
+        case '车位锁':
+          this.$router.push({name: ''})
+          break;
+        case '智慧政务':
+          this.$router.push({name: ''})
+          break;
+        case '生活超市':
+          this.$router.push({name: ''})
+          break;
+        case '邻里共享':
+          this.$router.push({name: ''})
+          break;
+        case '失物招领':
+          this.$router.push({name: ''})
+          break;
+        case '小区头条':
+          this.$router.push({name: ''})
+          break;
+        case '宠物登记':
+          this.$router.push({name: ''})
+          break;
+        case '诉求建议':
+          this.$router.push({name: ''})
+          break;
+        case '快递服务':
+          this.$router.push({name: ''})
+          break;
+      }
     }
   }
 }

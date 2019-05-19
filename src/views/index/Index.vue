@@ -4,14 +4,8 @@
       <span class="index_map" @click="f_switchVillage"><i></i>康馨园</span>
       <span class="index_notice" @click="f_viewNotice"></span>
       <mu-carousel hide-controls>
-        <mu-carousel-item>
-          <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg" alt="">
-        </mu-carousel-item>
-        <mu-carousel-item>
-          <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg" alt="">
-        </mu-carousel-item>
-        <mu-carousel-item>
-          <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-94316.jpg" alt="">
+        <mu-carousel-item v-for="(v, i) in v_banner" :key="i">
+          <img :src="v" alt="">
         </mu-carousel-item>
       </mu-carousel>
     </div>
@@ -73,6 +67,7 @@ export default {
   name: 'Index',
   data () {
     return {
+      v_banner: [],
       v_tools1: [
         { msg: '物业报修', path: 'myRepair', icon: require('../../assets/images/index/index_wy.png') },
         { msg: '访客通行', path: '', icon: require('../../assets/images/index/index_fk.png') },
@@ -114,6 +109,9 @@ export default {
       ]
     }
   },
+  mounted () {
+    this.f_getBanner()
+  },
   methods: {
     f_switchVillage () {
       console.log('切换小区')
@@ -130,6 +128,13 @@ export default {
     },
     f_moreTopic () {
       console.log('所有话题列表')
+    },
+    f_getBanner () {
+      this.$http
+        .get('/admin/mindex/banner/bannerList')
+        .then(res => {
+          this.v_banner = res.data.data
+        })
     }
   }
 }

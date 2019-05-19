@@ -39,15 +39,15 @@
         <div class="pa_input">
           <label>性别</label>
           <div class="pa_input_box pa_input_radio">
-            <span @click="f_checkGender(i, '1')"><i :class="v_form.gender === '1' ? 'pa_checked' : ''"></i>雄</span>
-            <span @click="f_checkGender(i, '0')"><i :class="v_form.gender === '0' ? 'pa_checked' : ''"></i>雌</span>
+            <span @click="f_checkGender('1')"><i :class="v_form.gender === '1' ? 'pa_checked' : ''"></i>雄</span>
+            <span @click="f_checkGender('0')"><i :class="v_form.gender === '0' ? 'pa_checked' : ''"></i>雌</span>
           </div>
         </div>
         <div class="pa_input">
           <label>是否绝育</label>
           <div class="pa_input_box pa_input_radio">
-            <span @click="f_checkSterilization(i, '1')"><i :class="v_form.sterilization === '1' ? 'pa_checked' : ''"></i>是</span>
-            <span @click="f_checkSterilization(i, '0')"><i :class="v_form.sterilization === '0' ? 'pa_checked' : ''"></i>否</span>
+            <span @click="f_checkSterilization('1')"><i :class="v_form.sterilization === '1' ? 'pa_checked' : ''"></i>是</span>
+            <span @click="f_checkSterilization('0')"><i :class="v_form.sterilization === '0' ? 'pa_checked' : ''"></i>否</span>
           </div>
         </div>
         <div class="pa_input">
@@ -59,7 +59,7 @@
         <div class="pa_input">
           <label>免疫时间</label>
           <div class="pa_input_box">
-            <mu-date-input container="bottomSheet" no-display :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_form.exemptionTime" type="date" landscape></mu-date-input>
+            <mu-date-input container="bottomSheet" no-display :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_form.exemptionTime" type="dateTime" landscape></mu-date-input>
           </div>
         </div>
         <div class="pa_input">
@@ -78,6 +78,7 @@
       <div class="pa_upload">
         <b>证件照片上传<span>（健康免疫证与养犬登记证）</span></b>
         <div class="pa_preview">
+          <p>请上传含有上述信息的所有页面，以便物业核对</p>
           <div
             class="pa_preview_list"
             v-for="(v, i) in v_form.exemptionImg"
@@ -110,8 +111,8 @@ export default {
         exemptionTime: '',
         vaccineType: '',
         petRegisNum: '',
-        createUserId: '',
-        exemptionImg: []        // 图片数组
+        createUserId: '12',
+        //exemptionImg: []        // 图片数组
       },
       v_address: []
     }
@@ -131,13 +132,21 @@ export default {
       }
 
       this.$http
-        .get('/admin/member/house/all', params)
+        .get('/admin/member/house/all', { params })
         .then(res => {
-          this.v_address = res.data.data.map(v => `${v.region}${v.street}${v.community}${v.village}`)
+          this.v_address = res.data.data.map(v => `${v.community}${v.street}${v.village}${v.unit}${v.room}`)
         })
+    },
+    f_checkGender (n) {
+      this.v_form.gender = n
+    },
+    f_checkSterilization (n) {
+      this.v_form.sterilization = n
     },
     f_submit () {
       let params = Object.assign({}, this.v_form)
+      params.exemptionTime = new Date(params.exemptionTime).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
+      console.log(params)
 
       if (params.raiser && params.petBreed && params.exemptionNum && params.exemptionTime && params.vaccineType && params.petRegisNum) {
         this.$http
@@ -146,6 +155,8 @@ export default {
             if (res.data.success) {
               this.$toast('登记成功')
               this.$router.go(-1)
+            } else {
+              this.$toast('网络错误')
             }
             console.log(res)
           })
@@ -248,6 +259,14 @@ export default {
         padding: 0.3rem;
         box-sizing: border-box;
         background-color: #fff;
+        position: relative;
+        p{
+          position: absolute;
+          font-size: 0.18rem;
+          color: #ff0000;
+          top: 0.1rem;
+          left: 0.4rem;
+        }
         .pa_preview_list{
           float: left;
           width: 1.16rem;

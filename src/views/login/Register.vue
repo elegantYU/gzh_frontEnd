@@ -68,7 +68,6 @@ export default {
         this.$http
           .post('/admin/user/register', params)
           .then(res => {
-            console.log(res)
             if (res.data.data) {
               this.$toast('注册成功')
               this.$router.push({ name: 'login' })

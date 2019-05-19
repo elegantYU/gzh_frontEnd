@@ -9,7 +9,7 @@
       <div class="reg_input">
         <span></span>
         <input type="text" placeholder="验证码" v-model="v_code">
-        <i @click="f_getCode">发送验证码</i>
+        <i @click="f_getCode" :class="v_flag ? '' : 'reg_not'">{{ v_flag ? '发送验证码' : `${v_time} s` }}</i>
       </div>
       <div class="reg_input">
         <span></span>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { setTimeout, clearTimeout } from 'timers';
 export default {
   name: 'Register',
   data () {
@@ -34,7 +35,9 @@ export default {
       v_phone: '',
       v_code: '',
       v_password: '',
-      v_again: ''
+      v_again: '',
+      v_flag: true,
+      v_time: 60
     }
   },
   mounted () {
@@ -44,32 +47,67 @@ export default {
         document.getElementById('app').style.display = 'block'
       }, 500)
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
   },
   methods: {
     f_submit () {
-      console.log('提交')
-    },
-    f_getCode () {
-      if (!(/^1[345678]\d{9}$/.test(v_phone))) {
-        this.$toast('手机号错误')
-        return
+      let params = {
+        phoneNum: this.v_phone,
+        password: this.v_password,
+        smsCode: this.v_code,
+        wxCode: ''
       }
-    },
-    f_verify () {
+
       if (this.v_phone && this.v_code && this.v_password && this.v_again) {
         // 密码是否一致
         if (this.v_password !== this.v_again) {
-          console.log('密码不一致')
+          this.$toast('密码不一致')
           return
         }
-        // 验证码
-      
+        this.$http
+          .post('/admin/user/register', params)
+          .then(res => {
+            if (res.data.data) {
+              this.$toast('注册成功')
+              this.$router.push({ name: 'login' })
+            } else {
+              this.$toast('注册失败')
+            }
+          })
       } else {
-        console.log('请填写完整')
+        this.$toast('请填写完整')
         return 
       }
+    },
+    f_getCode () {
+      if (!(/^1[345678]\d{9}$/.test(this.v_phone))) {
+        this.$toast('手机号错误')
+        return
+      }
+      let params = {
+        phoneNum: this.v_phone
+      }
+
+      this.v_flag = false
+      this.f_countDown()
+      this.$http
+        .get('/admin/sms/code', { params })
+        .then(res => {
+          this.$toast('已发送')
+        })
+    },
+    f_countDown () {
+      let t = setTimeout(() => {
+        if (this.v_time === 0) {
+          clearTimeout(t)
+          this.v_flag = true
+          this.v_time = 60
+          return
+        }
+        this.v_time--
+        this.f_countDown()
+      }, 1000)
     }
   }
 }
@@ -137,8 +175,13 @@ export default {
         color: #fff;
         background: #f73476;
         border-radius: 0.08rem;
-        vertical-align: super;
+        vertical-align: top;
         cursor: pointer;
+        &.reg_not{
+          pointer-events: none;
+          background-color: #d2d2d2;
+          color: #999;
+        }
       }
     }
     .reg_submit{

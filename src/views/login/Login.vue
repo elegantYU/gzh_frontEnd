@@ -39,19 +39,35 @@ export default {
         document.getElementById('app').style.display = 'block'
       }, 500)
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
   },
   methods: {
     f_login () {
-      console.log('登录')
-      this.$router.push({ name: 'index' })
+      let params = {
+        phoneNum: this.v_phone,
+        password: this.v_password
+      }
+
+      // this.$router.push({ name: 'index' })
+
+      this.$http
+        .post('/admin/user/login', params)
+        .then(res => {
+          if (res.data.data) {
+            console.log(res.data.data)
+            this.$toast('登录成功')
+            this.$store.dispatch('setUser', res.data.data)
+            this.$router.push({ name: 'index' })
+          } else {
+            this.$toast('登录失败')
+          }
+        })
     },
     f_forget () {
       console.log('忘记密码')
     },
     f_register () {
-      console.log('注册')
       this.$router.push({ name: 'register' })
     },
     f_switch () {

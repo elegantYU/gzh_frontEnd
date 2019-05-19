@@ -26,7 +26,7 @@
           </div>
           <div class="pet_input">
             <label>状态</label>
-            <p>{{ v.sts }}</p>
+            <p :class="v.sts === '已登记' ? 'house_unchecked' : ''">{{ v.sts }}</p>
           </div>
         </li>
       </ul>
@@ -40,27 +40,28 @@ export default {
   name: 'Pet',
   data () {
     return {
-      v_list: [
-        { petBreed: '', petName: '', gender: '', exemptionNum: '', sts: '' }
-      ]
+      v_list: []
     }
+  },
+  mounted () {
+    this.f_getList()
   },
   methods: {
     f_getList () {
       let params = {
-        userId: 1,
-        pageNum: 10,
+        userId: 14,
+        pageNum: 1,
         pageSize: 10
       }
       this.$http
         .get('/admin/member/pet/getMePetListByPage', { params })
         .then(res => {
           console.log(res.data.data)
-          this.v_list.concat(res.data.data)
+          this.v_list = res.data.data.list
         })
     },
     f_submit () {
-
+      this.$router.push({ name: 'petAdd' })
     }
   }
 }
@@ -89,7 +90,7 @@ export default {
         border-radius: 0.15rem;
         background-color: white;
         box-shadow: 0.1rem 0 0.3rem 0 rgba(0, 0, 0, 0.05);
-        margin-bottom: 0.5rem;
+        margin: 0 auto 0.5rem;
         .pet_input{
           border-bottom: 1px solid #e5e5e5;
           height: 0.9rem;
@@ -100,7 +101,7 @@ export default {
             border: none;
           }
           label{
-            width: 1.4rem;
+            width: 2.4rem;
             height: 100%;
             line-height: 0.9rem;
             color: #b2b2b2;

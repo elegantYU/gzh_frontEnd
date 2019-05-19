@@ -6,13 +6,13 @@
         <div class="pa_input">
           <label>饲养人</label>
           <div class="pa_input_box">
-            <input type="text" readonly v-model="v.raiser">
+            <input type="text" readonly v-model="v_form.raiser">
           </div>
         </div>
         <div class="pa_input">
           <label>家庭住址</label>
           <div class="pa_input_box">
-            <mu-select v-model="v.address" :solo="true" placeholder="请选择房屋">
+            <mu-select v-model="v_form.address" full-width :solo="true" placeholder="请选择房屋">
               <mu-option v-for="(v,i) in v_address" :key="i" :label="v" :value="v"></mu-option>
             </mu-select>
           </div>
@@ -21,57 +21,57 @@
         <div class="pa_input">
           <label>宠物品种</label>
           <div class="pa_input_box">
-            <input type="text" v-model="v.petBreed" placeholder="请输入宠物品种">
+            <input type="text" v-model="v_form.petBreed" placeholder="请输入宠物品种">
           </div>
         </div>
         <div class="pa_input">
           <label>昵称</label>
           <div class="pa_input_box">
-            <input type="text" v-model="v.petName" placeholder="请输入宠物昵称">
+            <input type="text" v-model="v_form.petName" placeholder="请输入宠物昵称">
           </div>
         </div>
         <div class="pa_input">
           <label>体重</label>
           <div class="pa_input_box">
-            <input type="text" v-model="v.weight" placeholder="请输入宠物体重">
+            <input type="text" v-model="v_form.weight" placeholder="请输入宠物体重">
           </div>
         </div>
         <div class="pa_input">
           <label>性别</label>
-          <div class="pa_input_box">
-            <span @click="f_checkGender(i, '1')"><i :class="v.gender === '1' ? 'pa_checked' : ''"></i>雄</span>
-            <span @click="f_checkGender(i, '0')"><i :class="v.gender === '0' ? 'pa_checked' : ''"></i>雌</span>
+          <div class="pa_input_box pa_input_radio">
+            <span @click="f_checkGender(i, '1')"><i :class="v_form.gender === '1' ? 'pa_checked' : ''"></i>雄</span>
+            <span @click="f_checkGender(i, '0')"><i :class="v_form.gender === '0' ? 'pa_checked' : ''"></i>雌</span>
           </div>
         </div>
         <div class="pa_input">
           <label>是否绝育</label>
-          <div class="pa_input_box">
-            <span @click="f_checkSterilization(i, '1')"><i :class="v.sterilization === '1' ? 'pa_checked' : ''"></i>是</span>
-            <span @click="f_checkSterilization(i, '0')"><i :class="v.sterilization === '0' ? 'pa_checked' : ''"></i>否</span>
+          <div class="pa_input_box pa_input_radio">
+            <span @click="f_checkSterilization(i, '1')"><i :class="v_form.sterilization === '1' ? 'pa_checked' : ''"></i>是</span>
+            <span @click="f_checkSterilization(i, '0')"><i :class="v_form.sterilization === '0' ? 'pa_checked' : ''"></i>否</span>
           </div>
         </div>
         <div class="pa_input">
           <label>健康免疫证编号</label>
           <div class="pa_input_box">
-            <input type="text" v-model="v.exemptionNum" placeholder="请输入健康免疫证编号">
+            <input type="text" v-model="v_form.exemptionNum" placeholder="请输入健康免疫证编号">
           </div>
         </div>
         <div class="pa_input">
           <label>免疫时间</label>
           <div class="pa_input_box">
-            <mu-date-input container="bottomSheet" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v.exemptionTime" type="date" landscape></mu-date-input>
+            <mu-date-input container="bottomSheet" no-display :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_form.exemptionTime" type="date" landscape></mu-date-input>
           </div>
         </div>
         <div class="pa_input">
           <label>疫苗种类</label>
           <div class="pa_input_box">
-            <input type="text" v-model="v.vaccineType" placeholder="请输入疫苗种类">
+            <input type="text" v-model="v_form.vaccineType" placeholder="请输入疫苗种类">
           </div>
         </div>
         <div class="pa_input">
           <label>养犬登记编号</label>
           <div class="pa_input_box">
-            <input type="text" v-model="v.petRegisNum" placeholder="请输入养犬登记编号">
+            <input type="text" v-model="v_form.petRegisNum" placeholder="请输入养犬登记编号">
           </div>
         </div>
       </div>
@@ -80,7 +80,7 @@
         <div class="pa_preview">
           <div
             class="pa_preview_list"
-            v-for="(v, i) in v_images"
+            v-for="(v, i) in v_form.exemptionImg"
             :key="i"
           >
             <img :src="v" alt="">
@@ -103,7 +103,7 @@ export default {
         petBreed: '',
         petName: '',
         gender: '1',
-        sterillzation: '1',
+        sterilization: '1',
         weight: '',
         address: '',
         exemptionNum: '',
@@ -111,16 +111,30 @@ export default {
         vaccineType: '',
         petRegisNum: '',
         createUserId: '',
-        exemptionImg: '',
-        petRegisImg: '',
-        petImg: ''
+        exemptionImg: []        // 图片数组
       },
       v_address: []
     }
   },
+  mounted () {
+    this.f_getHouse()
+    // 饲养人name
+    this.v_form.raiser = this.$store.state.user.name
+  },
   methods: {
     f_upload () {
 
+    },
+    f_getHouse () {
+      let params = {
+        memberId: 2
+      }
+
+      this.$http
+        .get('/admin/member/house/all', params)
+        .then(res => {
+          this.v_address = res.data.data.map(v => `${v.region}${v.street}${v.community}${v.village}`)
+        })
     },
     f_submit () {
       let params = Object.assign({}, this.v_form)
@@ -129,6 +143,10 @@ export default {
         this.$http
           .post('/admin/member/pet/addPet', params)
           .then(res => {
+            if (res.data.success) {
+              this.$toast('登记成功')
+              this.$router.go(-1)
+            }
             console.log(res)
           })
       } else {
@@ -164,7 +182,7 @@ export default {
           border: none;
         }
         label{
-          width: 1.8rem;
+          width: 2.4rem;
           line-height: 0.9rem;
           font-size: 0.34rem;
           text-align: left;

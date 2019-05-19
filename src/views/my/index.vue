@@ -43,6 +43,33 @@ export default {
   methods: {
     myclick (txt) {
       console.log(txt)
+      switch(txt)
+      {
+        case '我的车辆':
+          this.$router.push({name: 'car'})
+          break;
+        case '我的车位':
+          this.$router.push({name: 'park'})
+          break;
+        case '我的订单':
+          this.$router.push({name: ''})
+          break;
+        case '我的活动':
+          this.$router.push({name: ''})
+          break;
+        case '我的访客':
+          this.$router.push({name: ''})
+          break;
+        case '帮助中心':
+          this.$router.push({name: ''})
+          break;
+        case '关于我们':
+          this.$router.push({name: ''})
+          break;
+        case '切换账号':
+          this.$router.push({name: ''})
+          break;
+      }
     }
   }
 }

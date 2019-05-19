@@ -18,7 +18,9 @@ const router = new Router({
         // 邻里共享
         { path: '/neighbor', name: 'neighbor', component: () => import('../views/index/neighbor/index.vue')},
         // 环境秩序
-        { path: '/home/environment', name: 'environment', meta: { title: '环境秩序' }, component: () => import('../views/index/all/environment/index.vue')}
+        { path: '/home/environment', name: 'environment', meta: { title: '环境秩序' }, component: () => import('../views/index/all/environment/index.vue')},
+        // 全部
+        { path: '/home/all', name: 'all', meta: { title: '我的' }, component: () => import('../views/index/all/index.vue')},
       ]
     },
     { path: '/willrepair', name: 'willRepair', meta: { title: '我要报修' }, component: () => import('../views/index/repair/willRepair.vue')},
@@ -37,9 +39,7 @@ const router = new Router({
     { path: '/my/house/no', name: 'no', meta: { title: '我的房屋' }, component: () => import('../views/my/house/noHouse.vue')},
     // 登录注册
     { path: '/login', name: 'login', meta: { title: '登录' }, component: () => import('../views/login/Login.vue')},
-    { path: '/register', name: 'register', meta: { title: '注册' }, component: () => import('../views/login/Register.vue')},
-    // 全部
-    { path: '/all', name: 'all', meta: { title: '我的' }, component: () => import('../views/index/all/index.vue')},
+    { path: '/register', name: 'register', meta: { title: '注册' }, component: () => import('../views/login/Register.vue')},    
     // 省市选择
     { path: '/pick', name: 'pick', meta: { title: '省市选择' }, component: () => import('../views/index/all/picker.vue')}
   ]

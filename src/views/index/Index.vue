@@ -83,7 +83,7 @@ export default {
         { msg: '智慧停车', path: '', icon: require('../../assets/images/index/index_zh.png') },
         { msg: '生活超市', path: '', icon: require('../../assets/images/index/index_sh.png') },
         { msg: '邻里共享', path: 'neighbor', icon: require('../../assets/images/index/index_ll.png') },
-        { msg: '全部', path: '', icon: require('../../assets/images/index/index_qb.png') }
+        { msg: '全部', path: 'all', icon: require('../../assets/images/index/index_qb.png') }
       ],
       v_topic: [
         {

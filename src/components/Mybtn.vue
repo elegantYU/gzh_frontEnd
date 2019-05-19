@@ -49,8 +49,8 @@ export default {
   .icon {
     width: 0.37rem;
     vertical-align: middle;
-     margin-left: 0.4rem;
-     margin-right: 0.24rem;
+    margin-left: 0.4rem;
+    margin-right: 0.24rem;
   }
 }
 </style>

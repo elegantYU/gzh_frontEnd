@@ -22,7 +22,7 @@
       <section>
         <mybtn :data = "{img: 'icon9', txt: '切换账号'}" @myclick = "myclick"></mybtn>
       </section>
-    </div>
+    </div> 
   </div>
 </template>
 <script>

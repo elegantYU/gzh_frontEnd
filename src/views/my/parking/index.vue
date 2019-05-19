@@ -9,27 +9,27 @@
         >
           <div class="park_input">
             <label>车位编号</label>
-            <p>{{ v.carNum }}</p>
+            <p>{{ v.position }}</p>
           </div>
           <div class="park_input">
             <label>类型</label>
-            <p>{{ v.type }}</p>
+            <p>{{ v.lotType }}</p>
           </div>
           <div class="park_input">
             <label>车位锁</label>
-            <p>{{ v.carLock }}</p>
+            <p>{{ v.lockType }}</p>
           </div>
           <div class="park_input">
             <label>有效期</label>
-            <p>{{ v.time }}</p>
+            <p>{{ v.validityDate }}</p>
           </div>
           <div class="park_input">
             <label>状态</label>
-            <p>{{ v.status }}</p>
+            <p :class="!v.status ? '' : 'house_unchecked'">{{ f_status(v) }}</p>
           </div>
         </li>
       </ul>
-      <div class="park_submit" @click="f_addItem">添加房屋认证</div>
+      <div class="park_submit" @click="f_addItem">添加车位认证</div>
     </div>
   </div>
 </template>
@@ -39,18 +39,36 @@ export default {
   name: 'Park',
   data () {
     return {
-      v_list: [
-        { carNum: '军A000', type: '思想车', carLock: '0', time: '2019-01-01', status: '0' }
-      ]
+      v_list: []
     }
+  },
+  mounted () {
+    this.f_getList()
   },
   methods: {
     f_getList () {
+      let params = {
+        memberId: 2,
+        pageNum: 1,
+        pageSize: 10000
+      }
+
       this.$http
-        .get('')
+        .get('/admin/member/parking/lot/my/lots', { params })
         .then(res => {
-          console.log(res)
+          res.data.data.map(v => this.v_list.push(v))
         })
+    },
+    f_status (v) {
+      switch (v.status) {
+        case 0:
+          return '未认证'
+          break
+        case 1:
+        case 2:
+          return '已认证'
+          break
+      }
     },
     f_addItem () {
       this.$router.push({ name: 'parkAdd' })

@@ -10,19 +10,19 @@
         >
           <div class="car_input">
             <label>型号</label>
-            <p>{{ v.model }}</p>
+            <p>{{ v.vehicleType }}</p>
           </div>
           <div class="car_input">
             <label>种类</label>
-            <p>{{ v.type }}</p>
+            <p>{{ v.vehicleStructure }}</p>
           </div>
           <div class="car_input">
             <label>车牌号</label>
-            <p>{{ v.carNum }}</p>
+            <p>{{ v.vehicleNumber }}</p>
           </div>
           <div class="car_input">
             <label>状态</label>
-            <p>{{ v.status }}</p>
+            <p :class="!v.status ? '' : 'house_unchecked'">{{ f_status(v) }}</p>
           </div>
         </li>
       </ul>
@@ -36,20 +36,37 @@ export default {
   name: 'Car',
   data () {
     return {
-      v_list: [
-        { model: '轿车', type: '两厢车', carNum: '浙A0000', status: '1'  },
-        { model: '轿车', type: '两厢车', carNum: '浙A0000', status: '1'  },
-        { model: '轿车', type: '两厢车', carNum: '浙A0000', status: '1'  },
-      ]
+      v_list: []
     }
+  },
+  mounted () {
+    this.f_getList()
   },
   methods: {
     f_getList () {
+      let params = {
+        memberId: 2,
+        pageNum : 1,
+        pageSize: 10000
+      }
+
       this.$http
-        .get('')
+        .get('/admin/member/car/my/cars', { params })
         .then(res => {
-          console.log(res)
+          console.log(res.data.data)
+          this.v_list = res.data.data
         })
+    },
+    f_status (v) {
+      switch (v.status) {
+        case 0:
+          return '未认证'
+          break
+        case 1:
+        case 2:
+          return '已认证'
+          break
+      }
     },
     f_submit () {
       this.$router.push({ name: 'carAdd' })

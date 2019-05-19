@@ -13,19 +13,19 @@
           <div class="pa_input">
             <label>姓名</label>
             <div class="pa_input_box">
-              <input type="text" placeholder="请输入姓名" v-model="v.name">
+              <input type="text" placeholder="请输入姓名" v-model="v.belonger">
             </div>
           </div>
           <div class="pa_input">
             <label>联系方式</label>
             <div class="pa_input_box">
-              <input type="text" placeholder="请输入联系方式" v-model="v.contact">
+              <input type="text" placeholder="请输入联系方式" v-model="v.phoneNum">
             </div>
           </div>
           <div class="pa_input">
             <label>车位编号</label>
             <div class="pa_input_box">
-              <mu-select v-model="v.parkNum" :solo="true" full-width placeholder="请选择车位">
+              <mu-select v-model="v.position" :solo="true" full-width placeholder="请选择车位">
                 <mu-option v-for="(v,i) in v_parkNum" :key="i" :label="v" :value="v"></mu-option>
               </mu-select>
             </div>
@@ -34,13 +34,13 @@
           <div class="pa_input">
             <label>类型</label>
             <div class="pa_input_box">
-              <input type="text" readonly v-model="v.type">
+              <input type="text" readonly v-model="v.lotType">
             </div>
           </div>
           <div class="pa_input">
             <label>车牌号</label>
             <div class="pa_input_box">
-              <mu-select v-model="v.carNum" multiple full-width :solo="true" placeholder="请选择车牌号">
+              <mu-select v-model="v.vehicleNumber" multiple full-width :solo="true" placeholder="请选择车牌号">
                 <mu-option v-for="(v,i) in v_carNum" :key="i" :label="v" :value="v"></mu-option>
               </mu-select>
             </div>
@@ -49,8 +49,8 @@
           <div class="pa_input">
             <label>车位锁</label>
             <div class="pa_input_box pa_input_radio">
-              <span @click="f_checkLock(i, 1)"><i :class="v.carLock === 1 ? 'pa_checked' : ''"></i>有</span>
-              <span @click="f_checkLock(i, 0)"><i :class="v.carLock === 0 ? 'pa_checked' : ''"></i>无</span>
+              <span @click="f_checkLock(i, '有')"><i :class="v.lockType === '有' ? 'pa_checked' : ''"></i>有</span>
+              <span @click="f_checkLock(i, '无')"><i :class="v.lockType === '无' ? 'pa_checked' : ''"></i>无</span>
             </div>
           </div>
         </li>
@@ -66,26 +66,45 @@ export default {
   data () {
     return {
       v_list: [
-        { name: '', contact: '', parkNum: '', type: '自有', carNum: [], carLock: 1  }
+        { belonger: '', phoneNum: '', position: '', lotType: '自有', vehicleNumber: [], lockType: '有'  }
       ],
       v_parkNum: ['qedasasd', 'asdqads', 'qdasdasd'],
       v_carNum: ['asdasd', 'asdasdads', 'asdasdsadsa']
     }
   },
+  mounted  () {
+    this.f_getCarNum()
+  },
   methods: {
+    f_getCarNum () {
+      let params = {
+        phone: '13454133344'
+      }
+
+      this.$http
+      .get('/obtain/config/carportSpinner', { params })
+        .then(res => {
+          this.v_parkNum = res.data.data.map(v => v.carNo)
+        })
+      this.$http
+        .get('/obtain/config/carSpinner', { params })
+        .then(res => {
+          this.v_carNum = res.data.data.map(v => v.carNo)
+        })
+    },
     f_addItem () {
       let item = {
-        name: '',
-        contact: '',
-        parkNum: '',
-        type: '自有',
-        carNum: [],
-        carLock: 1
+        belonger: '',
+        phoneNum: '',
+        position: '',
+        lotType: '自有',
+        vehicleNumber: [],
+        lockType: '有'
       }
       this.v_list.push(item)
     },
     f_checkLock (i, n) {
-      this.v_list[i].carLock = n
+      this.v_list[i].lockType = n
     },
     f_submit () {
       let flag = false
@@ -97,23 +116,30 @@ export default {
           }
         }
         for (let ind = 1; ind < this.v_list.length; ind++) {
-          if (this.v_list[i].parkNum === this.v_list[ind].parkNum) {
+          if (this.v_list[i].vehicleNumber === this.v_list[ind].vehicleNumber) {
             flag= true
           }
         }
       }
+      this.v_list.forEach(v => {
+        v.vehicleNumber = v.vehicleNumber.join(',')
+      })
 
       if (flag) {
         this.$toast('请勿选择同一车位')
         return
       }
 
-      this.$http
-        .post('')
-        .then(res => {
-          this.$toast('提交成功')
-          this.$router.go(-1)
-        })
+      this.v_list.map((v, i) => {
+        let params = Object.assign({}, v)
+        this.$http
+          .post('/admin/member/parking/lot/save', params)
+          .then(res => {
+            if (this.v_list.length-1 === i) {
+              this.$router.go(-1)
+            }
+          })
+      })
     }
   }
 }

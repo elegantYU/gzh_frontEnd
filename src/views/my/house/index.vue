@@ -9,15 +9,15 @@
         >
           <div class="house_input">
             <label>身份</label>
-            <p>{{ v.idenity }}</p>
+            <p>{{ v.identityInformation }}</p>
           </div>
           <div class="house_input">
             <label>房屋信息</label>
-            <p>{{ v.info }}</p>
+            <p>{{ f_house(v) }}</p>
           </div>
           <div class="house_input">
             <label>认证状态</label>
-            <p :class="v.status ? 'house_unchecked' : ''">{{ statusText }}</p>
+            <p :class="!v.status ? '' : 'house_unchecked'">{{ f_status(v) }}</p>
           </div>
         </li>
       </ul>
@@ -31,16 +31,7 @@ export default {
   name: 'House',
   data () {
     return {
-      v_houseList: [
-        { idenity: '业主', info: '1栋1单元101室', status: '已认证' },
-        { idenity: '业主', info: '1栋1单元101室', status: '未通过' },
-        { idenity: '业主', info: '1栋1单元101室', status: '已认证' },
-      ]
-    }
-  },
-  computed: {
-    statusText: function () {
-      return '已认证'
+      v_houseList: []
     }
   },
   mounted () {
@@ -48,11 +39,31 @@ export default {
   },
   methods: {
     f_getList () {
+      let params = {
+        memberId: 2
+      }
+
       this.$http
-        .get()
+        .get('/admin/member/house/all', { params })
         .then(res => {
+          this.v_houseList = res.data.data.slice()
+
           console.log(res)
         })
+    },
+    f_house (v) {
+      return `${v.building}${v.unit}${v.room}`
+    },
+    f_status (v) {
+      switch (v.status) {
+        case 0:
+          return '未认证'
+          break
+        case 1:
+        case 2:
+          return '已认证'
+          break
+      }
     },
     f_submit () {
       this.$router.push({ name: 'houseAdd' })

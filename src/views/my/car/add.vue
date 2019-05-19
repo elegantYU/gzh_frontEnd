@@ -13,7 +13,7 @@
           <div class="ca_input">
             <label>型号</label>
             <div class="ca_input_box">
-              <mu-select v-model="v.model" :solo="true" placeholder="请选择型号">
+              <mu-select v-model="v.vehicleType" :solo="true" placeholder="请选择型号">
                 <mu-option v-for="(v,i) in v_model" :key="i" :label="v" :value="v"></mu-option>
               </mu-select>
             </div>
@@ -22,7 +22,7 @@
           <div class="ca_input">
             <label>类型</label>
             <div class="ca_input_box">
-              <mu-select v-model="v.type" :solo="true" placeholder="请选择类型">
+              <mu-select v-model="v.vehicleStructure" :solo="true" placeholder="请选择类型">
                 <mu-option v-for="(v,i) in v_type" :key="i" :label="v" :value="v"></mu-option>
               </mu-select>
             </div>
@@ -31,7 +31,7 @@
           <div class="ca_input">
             <label>车牌</label>
             <div class="ca_input_box">
-              <mu-select v-model="v.carNum" :solo="true" placeholder="请选择车牌号">
+              <mu-select v-model="v.vehicleNumber" :solo="true" placeholder="请选择车牌号">
                 <mu-option v-for="(v,i) in v_carNum" :key="i" :label="v" :value="v"></mu-option>
               </mu-select>
             </div>
@@ -50,19 +50,34 @@ export default {
   data () {
     return {
       v_list: [
-        { model: '', type: '', carNum: '' }
+        { vehicleType: '', vehicleStructure: '', vehicleNumber: '' }
       ],
-      v_model: ['火车', '轿车', '面包车'],
-      v_type: ['两厢', '四厢', '七厢'],
-      v_carNum: ['军A0000', '军A0000', '军A0000']
+      v_model: ['货车', '轿车', '面包车'],
+      v_type: ['轿车--两厢车', '轿车--三厢车', '面包车--七座', '面包车--七座以上', '货车--厢式货车', '货车--敞开类货车'],
+      v_carNum: []
     }
   },
+  mounted () {
+    this.f_getCarNUm()
+  },
   methods: {
+    f_getCarNUm () {
+      let params = {
+        phone: ''
+      }
+
+      this.$http
+        .get('/obtain/config/carSpinner', { params })
+        .then(res => {
+          this.v_carNum = res.data.data.map(v => v.carNo)
+        })
+    },
     f_addItem () {
       let item = {
-        model: '',
-        type: '',
-        carNum: ''
+        memberId: 2,
+        vehicleType: '',
+        vehicleStructure: '',
+        vehicleNumber: ''
       }
       this.v_list.push(item)
     },
@@ -76,7 +91,7 @@ export default {
           }
         }
         for (let ind = 1; ind < this.v_list.length; ind++) {
-          if (this.v_list[i].carNum === this.v_list[ind].carNum) {
+          if (this.v_list[i].vehicleNumber === this.v_list[ind].vehicleNumber) {
             flag= true
           }
         }
@@ -87,12 +102,16 @@ export default {
         return
       }
 
-      this.$http
-        .post('')
-        .then(res => {
-          this.$toast('提交成功')
-          this.$router.go(-1)
-        })
+      this.v_list.map((v, i) => {
+        this.$http
+          .post('/admin/member/car/save', params)
+          .then(res => {
+            if (this.v_list.length -1 === i) {
+              this.$toast('提交成功')
+              this.$router.go(-1)
+            }
+          })
+      })
     }
   }
 }

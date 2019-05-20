@@ -64,7 +64,7 @@ export default {
           this.$router.push({name: ''})
           break;
         case '小区头条':
-          this.$router.push({name: ''})
+          this.$router.push({name: 'topic'})
           break;
         case '宠物登记':
           this.$router.push({name: 'pet'})

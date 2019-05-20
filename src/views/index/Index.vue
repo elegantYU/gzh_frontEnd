@@ -131,8 +131,14 @@ export default {
     },
     f_getBanner () {
       this.$http
-        .get('/admin/mindex/banner/bannerList')
+        .get('/admin/mindex/banner/bannerList', {
+          params: {
+            pageNum: 1,
+            pageSize: 3
+          }
+        })
         .then(res => {
+          console.log(res.data.data)
           this.v_banner = res.data.data
         })
     }

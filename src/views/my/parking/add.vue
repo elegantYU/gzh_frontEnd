@@ -89,7 +89,7 @@ export default {
       this.$http
         .get('/obtain/config/carSpinner', { params })
         .then(res => {
-          this.v_carNum = res.data.data.map(v => v.parkinglot_id)                 // 待改
+          this.v_carNum = res.data.data.map(v => v.code)                 // 待改
         })
     },
     f_addItem () {

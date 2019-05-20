@@ -17,7 +17,7 @@
       </section>
       <section>
         <mybtn :data = "{img: 'icon7', txt: '帮助中心'}" @myclick = "myclick"></mybtn>
-        <mybtn :data = "{img: 'icon8', txt: '关于我们'}" @myclick = "myclick"></mybtn>
+        <mybtn :data = "{img: 'icon8', txt: '关于我们', path: 'aboutus'}" @myclick = "myclick"></mybtn>
       </section>
       <section>
         <mybtn :data = "{img: 'icon9', txt: '切换账号'}" @myclick = "myclick"></mybtn>

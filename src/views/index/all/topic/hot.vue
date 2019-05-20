@@ -1,6 +1,6 @@
 <template>
-  <div class="tn_wrapper">
-    <div class="tn_container">
+  <div class="th_wrapper">
+    <div class="th_container">
       <mu-load-more :loading="v_loading" @load="f_load" :loaded-all="v_loadAll">
         <mu-list>
           <template v-for="(v, i) in v_topic">
@@ -14,6 +14,11 @@
                 <div class="index_topic_item_detail clearfix">
                   <span>{{ v.postBegin }}</span>
                   <span>来源</span>
+                  <ul class="clearfix">
+                    <li><i></i>320</li>
+                    <li><i></i>320</li>
+                    <li><i></i>320</li>
+                  </ul>
                 </div>
               </div>
               <div class="index_topic_img">
@@ -29,7 +34,6 @@
 
 <script>
 export default {
-  name: 'Notice',
   data () {
     return {
       v_topic: [],
@@ -44,7 +48,7 @@ export default {
   methods: {
     f_getList () {
       let params = {
-        type: 2,
+        type: 4,
         pageNum: this.v_pageNum,
         pageSize: 10
       }
@@ -52,7 +56,6 @@ export default {
       this.$http
         .get('/obtain/notice/pageList', { params })
         .then(res => {
-          console.log(res)
           if (res.data.data.length) {
             res.data.data.forEach(v => {
               v.postBegin = v.postBegin.split(' ')[0]
@@ -72,28 +75,29 @@ export default {
       }, 1000)
     },
     f_moveDetail (v) {
+      this.$router.push({ name: 'topicDetail'})
       this.$http
         .get('/obtain/notice/add', {
           params: {
-            id
+            id: 1
           }
         })
         .then(res => {
           console.log('增加流量')
         })
-      this.$router.push({ name: 'topicDetail', query: { id: v.id }})
     }
   }
 }
 </script>
 
 <style lang='scss' scoped>
-.tn_wrapper{
+.th_wrapper{
   background-color: #efeff4;
   height: 100%;
-  .tn_container{
-    background-color: #efeff4;
+  .th_container{
+    padding-top: 0.2rem;
     padding-bottom: 1.2rem;
+    background-color: #efeff4;
     .th_list_item{
       height: 1.5rem;
       padding: 0.2rem 0.3rem 0.2rem 0.5rem;
@@ -130,9 +134,7 @@ export default {
           color: #888;
           span{
             float: left;
-            &:last-of-type{
-              float: right;
-            }
+            margin-left: 0.15rem;
           }
           ul{
             float: right;

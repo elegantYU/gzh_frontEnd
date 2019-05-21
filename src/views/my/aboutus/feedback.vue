@@ -2,12 +2,12 @@
   <div class="wp">
     <div class="wr_feedback">
       <div class="wr_input">
-        <textarea placeholder="请输入您的反馈" maxlength="200" v-model="v_form.content"></textarea>
+        <textarea placeholder="请输入您的反馈" maxlength="200" v-model="content"></textarea>
       </div>
     </div>
     <div class="wr_form">
       <div class="wr_input">
-        <input type="text" v-model="v_form.email" placeholder="邮箱（选填）">
+        <input type="text" v-model="email" placeholder="邮箱（选填）">
       </div>
     </div>
     <div class="wr_submit" @click="f_submit">
@@ -16,20 +16,56 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'feedback',
   data () {
     return {
-      v_form: {
-        content: '',
-        email: ''
-      }
+      content: '',
+      email: ''
     }
   },
   methods: {
     f_submit () {
-
+      let params = {
+        content: this.content,
+        email: this.email,
+        createUserId: this.user.id,
+        createName: this.user.name,
+        type: 2
+      }
+      console.log(this.user, params, 111)
+      if (this.content) {
+        if (this.email) {
+          if ((/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.email))) {
+            this.f_post(params)
+          } else {
+            this.$toast('请填写正确的邮箱')
+          }
+        } else {
+          this.f_post(params)
+        }
+      } else {
+        this.$toast('请填写完整')
+      }
+    },
+    f_post (params) {
+      this.$http
+        .post('/admin/complaint/addComOrSugg', params)
+        .then(res => {
+          if (res.data.data) {
+            this.$toast('反馈成功')
+            this.$router.push({ name: 'aboutus' })
+          } else {
+            this.$toast('反馈失败')
+          }
+        })
     }
+  },
+  computed: {
+    ...mapState({
+      user: (state) => state.user
+    })
   }
 }
 </script>

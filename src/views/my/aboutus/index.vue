@@ -5,7 +5,7 @@
       <p class="cue">仆汇未来社区</p>
       <p class="vision">版本号 1.0.0</p>
       <section>
-        <mybtn :data = "{img: 'function', txt: '功能介绍', path: ''}"  @myclick = "myclick"></mybtn>
+        <mybtn :data = "{img: 'function', txt: '功能介绍', path: 'function'}"  @myclick = "myclick"></mybtn>
         <mybtn :data = "{img: 'feedback', txt: '意见反馈', path: 'feedback'}"  @myclick = "myclick"></mybtn>
       </section>
     </div>

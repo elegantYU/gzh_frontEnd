@@ -4,7 +4,7 @@
     <div class="login_content">
       <div class="login_input">
         <span></span>
-        <input type="text" placeholder="请输入手机号" v-model="v_phone">
+        <input type="text" placeholder="请输入手机号" maxlength="11" v-model="v_phone">
       </div>
       <div class="login_input">
         <span></span>

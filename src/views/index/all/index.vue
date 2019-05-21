@@ -73,7 +73,7 @@ export default {
           this.$router.push({name: ''})
           break;
         case '快递服务':
-          this.$router.push({name: ''})
+          window.open('https://m.kuaidi100.com/app/?coname=chenjunqi')
           break;
       }
     }

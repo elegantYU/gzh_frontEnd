@@ -20,37 +20,42 @@
           <span>评论</span>
         </div>
         <div class="td_comment_list">
-          <mu-load-more :loading="v_loading" @load="f_load" :loaded-all="v_loadAll">
-            <mu-list>
-              <template v-for="(v, i) in v_comments">
+          <div
+            v-for="(v, i) in v_comments"
+            :key="i"
+            class="td_comment_item"
+          >
+            <div class="td_comment_item_left">
+              <div class="td_comment_avatar">
+                <img src="" alt="">
+              </div>
+            </div>
+            <div class="td_comment_item_right">
+              <div class="td_comment_right_top">
+                <span>{{ v.mianComment.createUserName }}</span>
+                <i></i>
+              </div>
+              <div class="td_comment_right_bottom">
+                {{ v.mainComment.createTime }}
+              </div>
+              <div class="td_comment_content">
+                {{ v.mianComment.content }}
+              </div>
+              <div class="td_comment_content_list">
+                <!-- 品论 -->
                 <div
-                  :key="i"
-                  class="td_comment_item"
+                  class="td_comment_content_list_each"
+                  v-for="(val, ind) in v.childrenComments"
+                  :key="ind"
+                  :class="v.openComment ? '' : ''"
                 >
-                  <div class="td_comment_item_left">
-                    <div class="td_comment_avatar">
-                      <img src="" alt="">
-                    </div>
-                  </div>
-                  <div class="td_comment_item_right">
-                    <div class="td_comment_right_top">
-                      <span>贝贝</span>
-                      <i></i>
-                    </div>
-                    <div class="td_comment_right_bottom">
-                      17-05-21 15:32
-                    </div>
-                    <div class="td_comment_content">
-                      这是xxx的评论啊苏打水大所大所大所大所大所所啊苏打水大所大所多
-                    </div>
-                    <div class="td_comment_content_list">
-                      <!-- 品论 -->
-                    </div>
-                  </div>
+                  <span>{{ val.createUserName }}:</span>
+                  <p>{{ val.content }}</p>
                 </div>
-              </template>
-            </mu-list>
-          </mu-load-more>
+                <div class="td_more_comments" v-if="v.childrenComments.length > 3" @click="f_openComments(i)">共{{ v.childrenComments.length }}条回复></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -62,7 +67,27 @@ export default {
   name: 'detail',
   data () {
     return {
-      v_comments: []
+      v_id: 2,
+      v_comments: [],
+
+    }
+  },
+  mounted () {
+    this.f_getComments()
+  },
+  methods: {
+    f_getComments () {
+      this.$http
+        .post(`/admin/comment/noticeList?rId=${this.v_id}&rtype=notice`)
+        .then(res => {
+          res.data.data.forEach(v => {
+            v.openComment = false
+            this.v_comments.push(v)
+          })
+        })
+    },
+    f_openComments (i) {
+      this.v_comments[i].openComment = true
     }
   }
 }

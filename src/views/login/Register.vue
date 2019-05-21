@@ -4,6 +4,10 @@
     <div class="reg_content">
       <div class="reg_input">
         <span></span>
+        <input type="text" placeholder="请输入用户名" v-model="v_name">
+      </div>
+      <div class="reg_input">
+        <span></span>
         <input type="text" placeholder="请输入手机号" maxlength="11" v-model="v_phone">
       </div>
       <div class="reg_input">
@@ -32,6 +36,7 @@ export default {
   name: 'Register',
   data () {
     return {
+      v_name: '',
       v_phone: '',
       v_code: '',
       v_password: '',
@@ -56,7 +61,8 @@ export default {
         phoneNum: this.v_phone,
         password: this.v_password,
         smsCode: this.v_code,
-        wxCode: ''
+        userName: this.v_name
+        // wxCode: ''
       }
 
       if (this.v_phone && this.v_code && this.v_password && this.v_again) {
@@ -144,15 +150,20 @@ export default {
       }
       &:nth-of-type(2){
         span{
-          background-image: url('../../assets/images/login/reg_shell.png');
+          background-image: url('../../assets/images/login/login_icon_phone.png');
         }
       }
       &:nth-of-type(3){
         span{
-          background-image: url('../../assets/images/login/login_icon_lock.png');
+          background-image: url('../../assets/images/login/reg_shell.png');
         }
       }
       &:nth-of-type(4){
+        span{
+          background-image: url('../../assets/images/login/login_icon_lock.png');
+        }
+      }
+      &:nth-of-type(5){
         margin-bottom: 0.95rem;
         span{
           background-image: url('../../assets/images/login/login_icon_lock.png');

@@ -24,7 +24,9 @@ const router = new Router({
         // 全部
         { path: '/home/all', name: 'all', meta: { title: '我的' }, component: () => import('../views/index/all/index.vue') },
         // 头条
-        { path: '/home/topic', name: 'topic', meta: { title: '小区头条' }, component: () => import('../views/index/all/topic/index.vue') }
+        { path: '/home/topic', name: 'topic', meta: { title: '小区头条' }, component: () => import('../views/index/all/topic/index.vue') },
+        // 联系物业
+        { path: '/home/contact', name: 'contact', meta: { title: '联系物业' }, component: () => import('../views/index/all/contactProperty/contact.vue') }
       ]
     },
     { path: '/willrepair', name: 'willRepair', meta: { title: '我要报修' }, component: () => import('../views/index/repair/willRepair.vue') },
@@ -67,7 +69,6 @@ const router = new Router({
     { path: '/aboutus', name: 'aboutus', meta: { title: '关于我们' }, component: () => import('../views/my/aboutus/index.vue') },
     // 功能介绍
     { path: '/function', name: 'function', meta: { title: '功能介绍' }, component: () => import('../views/my/aboutus/function.vue') }
-
   ]
 })
 

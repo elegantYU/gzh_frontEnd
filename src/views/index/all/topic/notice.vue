@@ -52,7 +52,6 @@ export default {
       this.$http
         .get('/obtain/notice/pageList', { params })
         .then(res => {
-          console.log(res)
           if (res.data.data.length) {
             res.data.data.forEach(v => {
               v.postBegin = v.postBegin.split(' ')[0]

@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     wxcode: '',
-    user: {},
+    user: {},         // id name phoneNum headIcon
     neighbor: {
       router: ''
     }

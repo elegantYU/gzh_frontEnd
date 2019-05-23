@@ -102,9 +102,6 @@ export default {
     },
     f_startFilter (i) {
       this.v_filterProp = i
-      // if (this.v_now.length === 3) {
-      //   this.v_filterProp = i + 1
-      // }
       this.v_now.map(v => v.active = false)
       this.v_now[i].active = true
     }

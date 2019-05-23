@@ -83,7 +83,7 @@ export default {
       this.$http
         .get('/admin/property/repair/list', {
           params: {
-            createUserId: '2',
+            createUserId: this.$store.state.user.id,
             pageNum: this.v_listNum,
             pageSize: 10
           }

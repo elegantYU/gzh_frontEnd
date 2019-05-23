@@ -15,6 +15,7 @@ import { Picker, Popup } from 'mint-ui'
 
 import 'mint-ui/lib/style.css'
 
+Axios.defaults.baseURL = 'http://118.126.66.195:8081'
 Vue.use(VueAxios, Axios)
 Vue.use(MuseUI)
 Vue.use(toastMessage)

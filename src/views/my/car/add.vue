@@ -63,7 +63,7 @@ export default {
   methods: {
     f_getCarNUm () {
       let params = {
-        phone: ''
+        phone: this.$store.state.user.phoneNum
       }
 
       this.$http
@@ -74,7 +74,7 @@ export default {
     },
     f_addItem () {
       let item = {
-        memberId: 2,
+        memberId: this.$store.state.user.id,
         vehicleType: '',
         vehicleStructure: '',
         vehicleNumber: ''

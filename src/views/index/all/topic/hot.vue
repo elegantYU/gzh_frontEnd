@@ -75,7 +75,7 @@ export default {
       }, 1000)
     },
     f_moveDetail (v) {
-      this.$router.push({ name: 'topicDetail'})
+      this.$router.push({ name: 'topicDetail', query: { id: v.id }})
       this.$http
         .get('/obtain/notice/add', {
           params: {

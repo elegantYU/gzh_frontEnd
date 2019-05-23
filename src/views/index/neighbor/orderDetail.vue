@@ -193,7 +193,7 @@ export default {
       let id = this.$route.query.id
       let params = {
         id,
-        userId: 12
+        userId: this.$store.state.user.id
       }
       this.$http
         .get('/admin/share/getMeApplyDetail', { params })
@@ -222,7 +222,7 @@ export default {
       if (this.v_content.shareType === '2') {
         let params = {
           id: this.v_content.id,
-          userId: '用户的userId',
+          userId: this.$store.state.user.id,
           telephone: this.v_content.telephone,
           address: '用户的房屋驻地',
           IDCard: '用户的身份证号'

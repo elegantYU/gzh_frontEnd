@@ -111,7 +111,7 @@ export default {
         exemptionTime: '',
         vaccineType: '',
         petRegisNum: '',
-        createUserId: '12',
+        createUserId: '',       // user id 
         //exemptionImg: []        // 图片数组
       },
       v_address: []
@@ -121,6 +121,7 @@ export default {
     this.f_getHouse()
     // 饲养人name
     this.v_form.raiser = this.$store.state.user.name
+    this.v_form.createUserId = this.$store.state.user.id
   },
   methods: {
     f_upload () {
@@ -128,7 +129,7 @@ export default {
     },
     f_getHouse () {
       let params = {
-        memberId: 2
+        memberId: this.v_form.createUserId
       }
 
       this.$http

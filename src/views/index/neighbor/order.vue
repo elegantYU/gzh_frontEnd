@@ -52,13 +52,13 @@ export default {
       let params
       this.taskType !== 0
         ? params = {
-            userId: 25,
+            userId: this.$store.state.user.id,
             status: this.taskType,
             pageNum: this.v_pageNum,
             pageSize: 10
           } 
         : params = {
-            userId: 25,
+            userId: this.$store.state.user.id,
             pageNum: this.v_pageNum,
             pageSize: 10
           }
@@ -83,7 +83,6 @@ export default {
       }, 1000)
     },
     f_viewDetail (v) {
-      console.log('list', this.v_list)
       this.$router.push({ name: 'neighborOD', query: { id: v.id } })
     }
   }

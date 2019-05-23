@@ -172,8 +172,8 @@ export default {
     f_submit () {
       let params = {
         rId: this.v_id,
-        createUserId: 2, // 用户id
-        createUserName: '欧丹', // 用户名称
+        createUserId: this.$store.state.user.id, // 用户id
+        createUserName: this.$store.state.user.name, // 用户名称
         content: this.v_info.content
       }
       if (this.v_info.content.trim()) {

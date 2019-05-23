@@ -32,6 +32,13 @@ export default {
       v_switch: false
     }
   },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      if (vm.$store.state.user.id) {
+        vm.$router.push({ name: 'index' })
+      }
+    })
+  },
   mounted () {
     try {
       document.body.removeChild(document.getElementById('start_wrapper'))
@@ -49,8 +56,7 @@ export default {
         password: this.v_password
       }
 
-      // this.$router.push({ name: 'index' })
-
+      this.$router.push({ name: 'index' })
       this.$http
         .post('/admin/user/login', params)
         .then(res => {

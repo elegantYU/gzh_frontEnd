@@ -45,6 +45,13 @@ export default {
       v_time: 60
     }
   },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      if (vm.$store.state.user.id) {
+        vm.$router.push({ name: 'index' })
+      }
+    })
+  },
   mounted () {
     try {
       document.body.removeChild(document.getElementById('start_wrapper'))

@@ -47,13 +47,13 @@ export default {
       let params
       this.taskType !== 0
         ? params = {
-            userId: 1,
+            userId: this.$store.state.user.id,
             taskType: this.taskType,
             pageNum: this.v_pageNum,
             pageSize: 5
           } 
         : params = {
-            userId: 1,
+            userId: this.$store.state.user.id,
             pageNum: this.v_pageNum,
             pageSize: 5
           }
@@ -81,10 +81,9 @@ export default {
       let params = {
         id: this.v_list[i].id
       }
-      this.$confirm({
-        title: '提示',
-        content: '此条信息将被删除，是否进行？'
-      }).then(() => {
+
+      let flag = confirm('此条信息将被删除，是否进行？')
+      if (flag) {
         this.$http
           .get('/admin/share/deleteShareInfo', { params })
           .then(res => {
@@ -95,7 +94,7 @@ export default {
               this.$toast('网络错误')
             }
           })
-      })
+      }
     },
     f_viewDetail (v) {
       this.$router.push({ name: 'neighborDetail', query: { id: v.id } })

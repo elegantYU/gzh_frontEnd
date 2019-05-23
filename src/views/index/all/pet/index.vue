@@ -49,14 +49,13 @@ export default {
   methods: {
     f_getList () {
       let params = {
-        userId: 14,
+        userId: this.$store.state.user.id,
         pageNum: 1,
         pageSize: 10
       }
       this.$http
         .get('/admin/member/pet/getMePetListByPage', { params })
         .then(res => {
-          console.log(res.data.data)
           this.v_list = res.data.data.list
         })
     },

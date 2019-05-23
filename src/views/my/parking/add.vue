@@ -78,7 +78,7 @@ export default {
   methods: {
     f_getCarNum () {
       let params = {
-        phone: '13454133344'
+        phone: this.$store.state.user.phoneNum
       }
 
       this.$http

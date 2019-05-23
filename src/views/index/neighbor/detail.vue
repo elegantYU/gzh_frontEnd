@@ -198,7 +198,6 @@ export default {
         .get('/admin/share/getShareInfoDetail', { params })
         .then(res => {
           if (res.data.success) {
-            console.log('结果', res.data.data)
             this.v_content = Object.assign({}, res.data.data)
           }
         })
@@ -207,7 +206,7 @@ export default {
       if (this.v_content.shareType === '2') {
         let params = {
           id: this.v_content.id,
-          userId: '用户的userId',
+          userId: this.$store.state.user.id,
           telephone: this.v_content.telephone,
           address: '用户的房屋驻地',
           IDCard: '用户的身份证号'

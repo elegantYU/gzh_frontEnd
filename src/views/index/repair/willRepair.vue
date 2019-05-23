@@ -169,6 +169,9 @@ export default {
       }
     })
   },
+  mounted () {
+    this.v_from.createUserId = this.$store.state.user.id
+  },
   methods: {
     f_openType () {
       this.v_typeFlag = true

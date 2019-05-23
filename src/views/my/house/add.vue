@@ -155,7 +155,7 @@ export default {
     return {
       v_area: ['区域A', '区域B', '区域C', '区域D', '区域E', '区域F'],
       v_form: {
-        memberId: 2,                // 用户id,
+        memberId: 0,                // 用户id,
         name: '',                   //姓名
         regionId: '',               // 省市区编码（用，号拼接）
         region: '',                 //省市区
@@ -191,8 +191,9 @@ export default {
     }
   },
   mounted () {
+    this.v_form.memberId = this.$store.state.user.id
     this.f_getList('provinceSynchroKey', {
-      id: '0',
+      id: this.$store.state.user.id,
       name: '浙江省',
       active: true
     })

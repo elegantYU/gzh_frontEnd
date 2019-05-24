@@ -188,9 +188,10 @@ export default {
         background-color: #fff;
         display: flex;
         align-items: center;
-        height: 0.9rem;;
+        height: 0.9rem;
         line-height: 0.9rem;
         border-bottom: 1px solid #e5e5e5;
+        font-size: 0.3rem;
         &:last-of-type{
           border: none;
         }
@@ -213,11 +214,13 @@ export default {
           }
           &.pa_input_radio{
             text-align: left;
+            display: flex;
             span{
               display: inline-block;
               width: 1.38rem;
               height: 100%;
               line-height: 0.9rem;
+              font-size: 0.3rem;
               i{
                 display: inline-block;
                 width: 0.46rem;

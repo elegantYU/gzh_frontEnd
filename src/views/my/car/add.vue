@@ -103,6 +103,7 @@ export default {
       }
 
       this.v_list.map((v, i) => {
+        let params = Object.assign({}, v)
         this.$http
           .post('/admin/member/car/save', params)
           .then(res => {

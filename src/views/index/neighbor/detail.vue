@@ -266,15 +266,18 @@ export default {
         text-align: left;
         padding: 0 0.3rem;
         position: relative;
+        display: flex;
         label{
-          display: inline-block;
+          display: block;
           font-size: 0.34rem;
+          line-height: 0.9rem;
           width: 2rem;
           height: 100%;
         }
         input{
-          width: calc(100% - 2.25rem);
+          flex: 1;
           height: 100%;
+          font-size: 0.3rem;
           background-color: transparent;
         }
         span{

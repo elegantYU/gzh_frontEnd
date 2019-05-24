@@ -59,7 +59,7 @@
           </div>
         </div>
         <!-- 没有评论 -->
-        <div v-else>暂无评论</div>
+        <div class="td_nocomment" v-else>暂无评论</div>
       </div>
       <!-- 报名 -->
       <div class="td_signup" :class="signupLabel">
@@ -251,7 +251,7 @@ export default {
     f_postComment () {
       let params = {
         rId: this.v_currentRid,
-        rType: 'notice',
+        rtype: 'notice',
         createUserId: this.$store.state.user.id,
         createUserName: this.$store.state.user.name,
         content: this.v_textarea
@@ -472,6 +472,9 @@ export default {
           }
         }
       }
+      .td_nocomment{
+        font-size: 0.3rem;
+      }
     }
     .td_signup{
       position: fixed;
@@ -626,9 +629,15 @@ export default {
           }
           .td_sign_box{
             flex: 1;
+            height: 100%;
+            .mu-input{
+              display: block;
+            }
             input{
+              display: block;
               width: 100%;
               height: 100%;
+              font-size: 0.3rem;
             }
           }
           i{

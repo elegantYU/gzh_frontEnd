@@ -172,6 +172,7 @@ export default {
     f_submit () {
       let params = {
         rId: this.v_id,
+        rtype: 'repair',
         createUserId: this.$store.state.user.id, // 用户id
         createUserName: this.$store.state.user.name, // 用户名称
         content: this.v_info.content

@@ -187,6 +187,7 @@ export default {
         padding: 0 0.3rem;
         background-color: #fff;
         display: flex;
+        align-items: center;
         height: 0.9rem;;
         line-height: 0.9rem;
         border-bottom: 1px solid #e5e5e5;
@@ -201,9 +202,14 @@ export default {
         }
         .pa_input_box{
           flex: 1;
+          .mu-input{
+            display: block;
+          }
           input{
             width: 100%;
             height: 100%;
+            font-size: 0.28rem;
+            line-height: 0.9rem;
           }
           &.pa_input_radio{
             text-align: left;

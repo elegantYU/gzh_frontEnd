@@ -390,16 +390,20 @@ export default {
         background-color: #fff;
         text-align: left;
         padding: 0 0.3rem;
+        display: flex;
         label{
-          display: inline-block;
+          display: block;
           font-size: 0.34rem;
+          line-height: 0.9rem;
           width: 2rem;
           height: 100%;
         }
         input{
-          width: calc(100% - 2.25rem);
+          display: block;
+          flex: 1;
           height: 100%;
           background-color: transparent;
+          font-size: 0.3rem;
         }
         &>i{
           display: inline-block;
@@ -412,6 +416,7 @@ export default {
           vertical-align: middle;
         }
         &>.mu-input{
+          display: block;
           width: calc(100% - 2.25rem);
         }
         &.ns_shareTime{

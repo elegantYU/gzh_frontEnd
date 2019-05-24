@@ -193,13 +193,19 @@ export default {
           }
           label{
             width: 1.8rem;
+            height: 0.9rem;
             line-height: 0.9rem;
             font-size: 0.34rem;
             text-align: left;
           }
           .pa_input_box{
             flex: 1;
+            .mu-input{
+              display: block;
+            }
             input{
+              display: block;
+              font-size: 0.3rem;
               width: 100%;
               height: 100%;
             }

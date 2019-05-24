@@ -192,7 +192,7 @@ export default {
     f_getContent () {
       let id = this.$route.query.id
       let params = {
-        id,
+        id: id,
         userId: this.$store.state.user.id
       }
       this.$http

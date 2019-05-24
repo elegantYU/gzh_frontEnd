@@ -48,9 +48,9 @@
               <div class="index_topic_item_detail clearfix">
                 <span>来源 {{ v.sourceName }}</span>
                 <ul class="clearfix">
-                  <li><i></i>320</li>
-                  <li><i></i>320</li>
-                  <li><i></i>320</li>
+                  <li><i></i>{{ v.rate }}</li>
+                  <li><i></i>{{ v.comment }}</li>
+                  <li><i></i>{{ v.collect }}</li>
                 </ul>
               </div>
             </div>
@@ -101,7 +101,7 @@ export default {
     },
     f_getTopic () {
       let params = {
-        type: 3,
+        type: 4,
         pageNum: 1,
         pageSize: 5
       }
@@ -114,6 +114,7 @@ export default {
         })
     },
     f_moveTopic (v) {
+      console.log(v)
       this.$router.push({ name: 'topicDetail', query: { id: v.id }})
     },
     f_moreTopic () {

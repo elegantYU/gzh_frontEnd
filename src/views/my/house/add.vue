@@ -193,7 +193,7 @@ export default {
   mounted () {
     this.v_form.memberId = this.$store.state.user.id
     this.f_getList('provinceSynchroKey', {
-      id: this.$store.state.user.id,
+      id: '0',
       name: '浙江省',
       active: true
     })
@@ -328,7 +328,7 @@ export default {
       this.v_form.buildingId = this.v_building.filter(v => v.name === this.v_form.building)[0].id
       this.v_form.unitId = this.v_unit.filter(v => v.name === this.v_form.unit)[0].id
       this.v_form.roomId = this.v_house.filter(v => v.name === this.v_form.room)[0].id
-      this.v_form.searchWord = `${this.v_form.region}${this.v_form.street}${this.v_form.community}${this.v_form.village}${this.v_form.building}${this.v_form.unit}${this.v_form.room}${this.v_form.name}`
+      this.v_form.searchWord = `${this.v_form.region}${this.v_form.street}${this.v_form.community}${this.v_form.village}${this.v_form.building}${this.v_form.unit}${this.v_form.room}`
 
       for (const key in this.v_form) {
         const el = this.v_form[key]
@@ -382,13 +382,18 @@ export default {
         }
         label{
           width: 1.5rem;
+          height: 100%;
           line-height: 0.9rem;
           font-size: 0.34rem;
           text-align: left;
         }
         .ha_input_box{
           flex: 1;
+          .mu-input{
+            display: block;
+          }
           input{
+            display: block;
             width: 100%;
             height: 100%;
           }

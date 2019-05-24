@@ -6,8 +6,8 @@
         <span>来源: {{ v_detail.sourceName }}</span>
         <span>{{ v_detail.createTime }}</span>
         <ul>
-          <li><i></i>320</li>
-          <li><i></i>320</li>
+          <li><i></i>{{ v_detail.rate }}</li>
+          <li :class="v_collect ? 'index_topic_icon_active' : ''" @click="f_getCollect"><i></i>{{ v_detail.collect }}</li>
         </ul>
       </div>
       <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-96210.jpg" alt="">
@@ -120,6 +120,7 @@ export default {
       v_comments: [],
       v_total: 0,
       v_status: 0,
+      v_collect: false,
       v_submit: false,
       v_signup: false,
       v_houseList: [],
@@ -148,11 +149,58 @@ export default {
     }
   },
   mounted () {
+    this.v_id = this.$route.query.id
     this.f_getDetail()
     this.f_getComments()
     this.f_getHouse()
+    this.f_addRate()
   },
   methods: {
+    f_addRate () {
+      let params = {
+        id: this.v_id
+      }
+      console.log('params',params)
+      this.$http
+        .get('/obtain/notice/add', { params })
+        .then(res => {
+          console.log('增加流量')
+        })
+    },
+    f_getCollect () {
+      let params
+
+      if (this.v_collect) {
+        params = {
+          memberId: this.$store.state.user.id,
+          noticeId: this.v_id
+        }
+
+        this.$http
+          .post('/notice/activity/cancel', params)
+          .then(res => {
+            if (res.data.success) {
+              this.$toast('取消收藏')
+            }
+          })
+      } else {
+        params = {
+          noticeId: this.v_id,
+          type: this.v_detail.type,
+          memberId: this.$store.state.user.id,
+          phone: this.$store.state.user.phoneNum
+        }
+
+        this.$http
+          .post('/notice/activity/add', params)
+          .then(res => {
+            if (res.data.success) {
+              this.$toast('收藏成功')
+            }
+          })
+      }
+      
+    },
     f_getHouse () {
       let params = {
         memberId: this.$store.state.user.id
@@ -181,11 +229,13 @@ export default {
       this.$http
         .post(`/admin/comment/noticeList?rId=${this.v_id}&rtype=notice`)
         .then(res => {
-          res.data.data.forEach(v => {
-            v.openComment = false
-            this.v_total++
-            this.v_comments.push(v)
-          })
+          if (res.data.data.length) {
+            res.data.data.forEach(v => {
+              v.openComment = false
+              this.v_total++
+              this.v_comments.push(v)
+            })
+          }
         })
     },
     f_openComments (i) {
@@ -198,15 +248,16 @@ export default {
     f_closeSubmitComments () {
       this.v_submit = false
     },
-    f_postComment (id) {
+    f_postComment () {
       let params = {
-        rId: id,
+        rId: this.v_currentRid,
         rType: 'notice',
         createUserId: this.$store.state.user.id,
         createUserName: this.$store.state.user.name,
         content: this.v_textarea
       }
 
+      console.log('Pinlun ', params)
       this.$http
         .post('/admin/comment/add', params)
         .then(res => {

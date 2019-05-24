@@ -175,7 +175,8 @@ export default {
         rtype: 'repair',
         createUserId: this.$store.state.user.id, // 用户id
         createUserName: this.$store.state.user.name, // 用户名称
-        content: this.v_info.content
+        content: this.v_info.content,
+        parentId: 0
       }
       if (this.v_info.content.trim()) {
         this.$http

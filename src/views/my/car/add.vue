@@ -50,7 +50,7 @@ export default {
   data () {
     return {
       v_list: [
-        { vehicleType: '', vehicleStructure: '', vehicleNumber: '' }
+        { memberId: '', vehicleType: '', vehicleStructure: '', vehicleNumber: '' }
       ],
       v_model: ['货车', '轿车', '面包车'],
       v_type: ['轿车--两厢车', '轿车--三厢车', '面包车--七座', '面包车--七座以上', '货车--厢式货车', '货车--敞开类货车'],
@@ -58,6 +58,7 @@ export default {
     }
   },
   mounted () {
+    this.v_list[0].memberId = this.$store.state.user.id
     this.f_getCarNUm()
   },
   methods: {
@@ -69,7 +70,7 @@ export default {
       this.$http
         .get('/obtain/config/carSpinner', { params })
         .then(res => {
-          this.v_carNum = res.data.data.map(v => v.carNo)
+          res.data.data.map(v => this.v_carNum(v.carNo))
         })
     },
     f_addItem () {

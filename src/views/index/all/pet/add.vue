@@ -118,10 +118,10 @@ export default {
     }
   },
   mounted () {
-    this.f_getHouse()
     // 饲养人name
     this.v_form.raiser = this.$store.state.user.name
     this.v_form.createUserId = this.$store.state.user.id
+    this.f_getHouse()
   },
   methods: {
     f_upload () {

@@ -66,13 +66,14 @@ export default {
   data () {
     return {
       v_list: [
-        { belonger: '', phoneNum: '', position: '', lotType: '自有', vehicleNumber: [], lockType: '有'  }
+        { memberId: '', belonger: '', phoneNum: '', position: '', lotType: '自有', vehicleNumber: [], lockType: '有'  }
       ],
       v_parkNum: [],
       v_carNum: []
     }
   },
   mounted  () {
+    this.v_list[0].memberId = this.$store.state.user.id
     this.f_getCarNum()
   },
   methods: {
@@ -85,13 +86,13 @@ export default {
       .get('/obtain/config/carportSpinner', { params })
         .then(res => {
           console.log(res)
-          this.v_parkNum = res.data.data.map(v => v.carNo)
+          res.data.data.map(v => this.v_parkNum.push(v.code))
         })
       this.$http
         .get('/obtain/config/carSpinner', { params })
         .then(res => {
           console.log(res)
-          this.v_carNum = res.data.data.map(v => v.code)                 // 待改
+          res.data.data.map(v => this.v_carNum.push(v.carNo))                 // 待改
         })
     },
     f_addItem () {
@@ -101,7 +102,8 @@ export default {
         position: '',
         lotType: '自有',
         vehicleNumber: [],
-        lockType: '有'
+        lockType: '有',
+        memberId: this.$store.state.user.id
       }
       this.v_list.push(item)
     },

@@ -17,7 +17,7 @@
       <div class="td_comment">
         <div class="td_comment_header">
           <span>全部评论（{{ v_total }}条）</span>
-          <span @click="f_openSubmitComments(v_detail.id)">评论</span>
+          <span @click="f_openSubmitComments(0)">评论</span>
         </div>
         <div class="td_comment_list" v-if="v_total">
           <div
@@ -48,12 +48,12 @@
                   v-for="(val, ind) in v.childrenComments"
                   :key="ind"
                   :class="v.openComment ? '' : 'td_comment_content_list_more'"
-                  @click="f_openSubmitComments(v.rid)"
+                  @click="f_openSubmitComments(v.mianComment.rid)"
                 >
                   <span>{{ val.createUserName }}:</span>
                   <p>{{ val.content }}</p>
                 </div>
-                <div class="td_more_comments" v-if="v.childrenComments.length > 3" @click="f_openComments(i)">共{{ v.childrenComments.length }}条回复 ></div>
+                <div class="td_more_comments" v-if="false" @click="f_openComments(i)">共{{ v.childrenComments.length }}条回复 ></div>
               </div>
             </div>
           </div>
@@ -64,10 +64,10 @@
       <!-- 报名 -->
       <div class="td_signup" :class="signupLabel">
         <span>{{ new Date().getTime > new Date(this.v_detail.postEnd) ? '已结束' : '报名中' }}</span>
-        <span @click="f_openSignUp">我要报名</span>
+        <span @click="f_openSignUp">{{ v_status === 1 ? '审核中' : '我要报名' }}</span>
       </div>
       <!-- 提交评论 -->
-      <div class="td_submit_wrapper" v-if="v_submit">
+      <div class="td_submit_wrapper" v-show="v_submit">
         <div class="td_mask" @click="f_closeSubmitComments"></div>
         <div class="td_submit_content">
           <div class="td_submit_text">
@@ -103,7 +103,7 @@
             </div>
           </div>
           <!--  -->
-          <div class="td_sign_btn">立即报名</div>
+          <div class="td_sign_btn" @click="f_signup">立即报名</div>
         </div>
       </div>
     </div>
@@ -119,7 +119,7 @@ export default {
       v_detail: {},
       v_comments: [],
       v_total: 0,
-      v_status: 0,
+      v_status: 3,
       v_collect: false,
       v_submit: false,
       v_signup: false,
@@ -138,7 +138,7 @@ export default {
         case 2:
           return 'td_signup_3'
           break
-        case 3:
+        case 0:
           return 'td_signup_4'
           break
       }
@@ -148,7 +148,7 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     this.v_id = this.$route.query.id
     this.f_getDetail()
     this.f_getComments()
@@ -214,6 +214,21 @@ export default {
           }
         })
     },
+    f_getStatus () {
+      let params = {
+        memberId: this.$store.state.user.id,
+        rActivityId: this.v_detail.id
+      }
+
+      this.$http
+        .get('/notice/activity/detail', { params })
+        .then(res => {
+          console.log(res)
+          if (res.data.result) {
+            this.v_status = res.data.result.sts
+          }
+        })
+    },
     f_getDetail () {
       let params = {
         id: this.$route.query.id
@@ -223,12 +238,15 @@ export default {
         .get('/obtain/notice/detail', { params })
         .then(res => {
           this.v_detail = Object.assign({}, res.data.data)
+          this.v_status = res.data.data.status
+          this.f_getStatus()
         })
     },
     f_getComments () {
       this.$http
         .post(`/admin/comment/noticeList?rId=${this.v_id}&rtype=notice`)
         .then(res => {
+          this.v_comments = []
           if (res.data.data.length) {
             res.data.data.forEach(v => {
               v.openComment = false
@@ -250,11 +268,12 @@ export default {
     },
     f_postComment () {
       let params = {
-        rId: this.v_currentRid,
+        rId: this.v_id,
         rtype: 'notice',
         createUserId: this.$store.state.user.id,
         createUserName: this.$store.state.user.name,
-        content: this.v_textarea
+        content: this.v_textarea,
+        parentId: this.v_currentRid
       }
 
       console.log('Pinlun ', params)
@@ -264,6 +283,7 @@ export default {
           if (res.data.success) {
             this.$toast('评论成功')
             this.f_closeSubmitComments()
+            this.f_getComments()
           } else {
             console.log('评论失败', res)
           }
@@ -286,7 +306,7 @@ export default {
       }
 
       this.$http
-        .get('/notice/activity/add', )
+        .post('/notice/activity/add', params)
         .then(res => {
           if (res.data.success) {
             this.v_status = 1

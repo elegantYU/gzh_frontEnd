@@ -95,7 +95,7 @@ export default {
     return {
       v_id: '',
       v_user: {
-        house: ['1栋2单元407', '1栋2单元407']
+        house: []
       },
       v_from: {
         communityName: '戈雅花苑',
@@ -173,6 +173,17 @@ export default {
     this.v_from.createUserId = this.$store.state.user.id
   },
   methods: {
+    f_getHouse () {
+      let params = {
+        memberId: this.$store.state.user.id
+      }
+
+      this.$http
+        .get('/admin/member/house/all', { params })
+        .then(res => {
+          res.data.data.map(v => this.v_user.house.push(`${v.searchWord}`))
+        })
+    },
     f_openType () {
       this.v_typeFlag = true
       stop()

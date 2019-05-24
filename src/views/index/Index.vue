@@ -149,7 +149,7 @@ export default {
       .mu-carousel{
         height: 100%;
         .mu-carousel-item{
-          background-color: blue;
+          background-color: transparent;
           img{
             width: 100%;
           }

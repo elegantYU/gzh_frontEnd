@@ -12,7 +12,7 @@
               <div class="index_topic_item_left">
                 <p>{{ v.title }}</p>
                 <div class="index_topic_item_detail clearfix">
-                  <span>{{ v.postBegin }}</span>
+                  <span>{{ v.createTime }}</span>
                   <span>来源</span>
                 </div>
               </div>

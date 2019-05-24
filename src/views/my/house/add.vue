@@ -394,6 +394,7 @@ export default {
           }
           input{
             display: block;
+            font-size: 0.3rem;
             width: 100%;
             height: 100%;
           }

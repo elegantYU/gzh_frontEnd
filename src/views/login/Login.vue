@@ -56,7 +56,7 @@ export default {
         password: this.v_password
       }
 
-      this.$router.push({ name: 'index' })
+      // this.$router.push({ name: 'index' })
       this.$http
         .post('/admin/user/login', params)
         .then(res => {

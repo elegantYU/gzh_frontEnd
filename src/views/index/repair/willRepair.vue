@@ -266,6 +266,7 @@ export default {
         label{
           display: block;
           font-size: 0.34rem;
+          line-height: 0.9rem;
           width: 2rem;
           height: 100%;
           line-height: 0.9rem;
@@ -275,6 +276,7 @@ export default {
           font-size: 0.3rem;
           flex: 1;
           height: 100%;
+          font-size: 0.3rem;
           background-color: transparent;
         }
         i{

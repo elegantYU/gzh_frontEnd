@@ -63,6 +63,7 @@ export default {
     line-height: 0.9rem;
     font-size: 0.34rem;
     color: #b2b2b2;
+    border-bottom: 0.01rem solid #e5e5e5;
   }
   .contact-li,
   .contact-leader {
@@ -87,11 +88,6 @@ export default {
         color: #000;
       }
     }
-    .tel-a {
-      img {
-        vertical-align: middle;
-      }
-    }
   }
   .contact-li {
     &:nth-last-of-type(){
@@ -100,6 +96,7 @@ export default {
   }
   .telicon {
     width: 0.4rem;
+    vertical-align: middle;
   }
 }
 </style>

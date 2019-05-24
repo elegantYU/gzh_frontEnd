@@ -54,7 +54,7 @@ export default {
     f_getlist () {
       console.log(222)
       this.$http
-        .get('/admin/contact/property')
+        .get('/admin/property/members')
         .then(res => {
           if (res.data.data) {
             // this.$toast('反馈成功')
@@ -76,7 +76,8 @@ export default {
             data.map(v => {
               if (v.leaderName) {
                 this.contact.map(m => {
-                  if (v.leader === m.leader.name) {
+                  if (v.leaderName === m.leader.name) {
+                    console.log(111)
                     m.watchman.push({
                       name: v.name,
                       tel: v.phone

@@ -17,6 +17,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import { setTimeout } from 'timers';
 export default {
   name: 'feedback',
   data () {
@@ -27,20 +28,20 @@ export default {
   },
   methods: {
     f_submit () {
-      // let params = {
-      //   content: this.content,
-      //   email: this.email,
-      //   createUserId: this.user.id,
-      //   createName: this.user.name,
-      //   type: 2
-      // }
       let params = {
-        content: '11111',
-        email: '255636@163.com',
-        createUserId: 1,
-        createName: '高伟',
+        content: this.content,
+        email: this.email,
+        createUserId: this.user.id,
+        createName: this.user.name,
         type: 2
       }
+      // let params = {
+      //   content: '11111',
+      //   email: '255636@163.com',
+      //   createUserId: 1,
+      //   createName: '高伟',
+      //   type: 2
+      // }
       console.log(this.user, params, 111)
       if (this.content) {
         if (this.email) {
@@ -60,9 +61,12 @@ export default {
       this.$http
         .post('/admin/complaint/addComOrSugg', params)
         .then(res => {
-          if (res.data.data) {
+          console.log(res.statusText)
+          if (res.statusText === 'OK') {
             this.$toast('反馈成功')
-            this.$router.push({ name: 'aboutus' })
+            setTimeout(() => {
+              this.$router.push({ name: 'aboutus' })
+            }, 1000)
           } else {
             this.$toast('反馈失败')
           }

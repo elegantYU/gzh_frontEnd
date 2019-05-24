@@ -40,7 +40,7 @@ export default {
   methods: {
     f_getList () {
       let params = {
-        memberId: 2
+        memberId: this.$store.state.user.id
       }
 
       this.$http
@@ -48,7 +48,6 @@ export default {
         .then(res => {
           this.v_houseList = res.data.data.slice()
 
-          console.log(res)
         })
     },
     f_house (v) {

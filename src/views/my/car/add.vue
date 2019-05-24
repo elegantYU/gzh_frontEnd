@@ -63,7 +63,7 @@ export default {
   methods: {
     f_getCarNUm () {
       let params = {
-        phone: ''
+        phone: this.$store.state.user.phoneNum
       }
 
       this.$http
@@ -74,7 +74,7 @@ export default {
     },
     f_addItem () {
       let item = {
-        memberId: 2,
+        memberId: this.$store.state.user.id,
         vehicleType: '',
         vehicleStructure: '',
         vehicleNumber: ''
@@ -165,13 +165,19 @@ export default {
           }
           label{
             width: 1.5rem;
+            height: 0.9rem;
             line-height: 0.9rem;
             font-size: 0.34rem;
             text-align: left;
           }
           .ca_input_box{
             flex: 1;
+            .mu-input{
+              display: block;
+            }
             input{
+              display: block;
+              font-size: 0.3rem;
               width: 100%;
               height: 100%;
             }

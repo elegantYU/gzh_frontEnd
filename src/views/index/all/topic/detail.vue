@@ -6,8 +6,8 @@
         <span>来源: {{ v_detail.sourceName }}</span>
         <span>{{ v_detail.createTime }}</span>
         <ul>
-          <li><i></i>320</li>
-          <li><i></i>320</li>
+          <li><i></i>{{ v_detail.rate }}</li>
+          <li :class="v_collect ? 'index_topic_icon_active' : ''" @click="f_getCollect"><i></i>{{ v_detail.collect }}</li>
         </ul>
       </div>
       <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-96210.jpg" alt="">
@@ -33,7 +33,7 @@
             <div class="td_comment_item_right">
               <div class="td_comment_right_top">
                 <span>{{ v.mianComment.createUserName }}</span>
-                <i @click="f_openSubmitComments(v.mainComment.rid)"></i>
+                <i @click="f_openSubmitComments(v.mianComment.rid)"></i>
               </div>
               <div class="td_comment_right_bottom">
                 {{ '2019-01-01' }}
@@ -69,10 +69,12 @@
       <!-- 提交评论 -->
       <div class="td_submit_wrapper" v-if="v_submit">
         <div class="td_mask" @click="f_closeSubmitComments"></div>
-        <div class="td_submit_text">
-          <textarea placeholder="请输入内容" v-model="v_textarea"></textarea>
+        <div class="td_submit_content">
+          <div class="td_submit_text">
+            <textarea placeholder="请输入内容" v-model="v_textarea"></textarea>
+          </div>
+          <div class="td_submit_btn" @click="f_postComment">提交</div>
         </div>
-        <div class="td_submit_btn" @click="f_postComment">提交</div>
       </div>
       <!-- 我要报名 -->
       <div class="td_signup_wrapper" v-if="v_signup">
@@ -100,6 +102,8 @@
               <input type="text" readonly v-model="$store.state.user.phoneNum">
             </div>
           </div>
+          <!--  -->
+          <div class="td_sign_btn">立即报名</div>
         </div>
       </div>
     </div>
@@ -116,6 +120,7 @@ export default {
       v_comments: [],
       v_total: 0,
       v_status: 0,
+      v_collect: false,
       v_submit: false,
       v_signup: false,
       v_houseList: [],
@@ -144,11 +149,58 @@ export default {
     }
   },
   mounted () {
+    this.v_id = this.$route.query.id
     this.f_getDetail()
     this.f_getComments()
     this.f_getHouse()
+    this.f_addRate()
   },
   methods: {
+    f_addRate () {
+      let params = {
+        id: this.v_id
+      }
+      console.log('params',params)
+      this.$http
+        .get('/obtain/notice/add', { params })
+        .then(res => {
+          console.log('增加流量')
+        })
+    },
+    f_getCollect () {
+      let params
+
+      if (this.v_collect) {
+        params = {
+          memberId: this.$store.state.user.id,
+          noticeId: this.v_id
+        }
+
+        this.$http
+          .post('/notice/activity/cancel', params)
+          .then(res => {
+            if (res.data.success) {
+              this.$toast('取消收藏')
+            }
+          })
+      } else {
+        params = {
+          noticeId: this.v_id,
+          type: this.v_detail.type,
+          memberId: this.$store.state.user.id,
+          phone: this.$store.state.user.phoneNum
+        }
+
+        this.$http
+          .post('/notice/activity/add', params)
+          .then(res => {
+            if (res.data.success) {
+              this.$toast('收藏成功')
+            }
+          })
+      }
+      
+    },
     f_getHouse () {
       let params = {
         memberId: this.$store.state.user.id
@@ -164,13 +216,12 @@ export default {
     },
     f_getDetail () {
       let params = {
-        id: 2
+        id: this.$route.query.id
       }
 
       this.$http
         .get('/obtain/notice/detail', { params })
         .then(res => {
-          console.log(res.data.data)
           this.v_detail = Object.assign({}, res.data.data)
         })
     },
@@ -178,11 +229,13 @@ export default {
       this.$http
         .post(`/admin/comment/noticeList?rId=${this.v_id}&rtype=notice`)
         .then(res => {
-          res.data.data.forEach(v => {
-            v.openComment = false
-            this.v_total++
-            this.v_comments.push(v)
-          })
+          if (res.data.data.length) {
+            res.data.data.forEach(v => {
+              v.openComment = false
+              this.v_total++
+              this.v_comments.push(v)
+            })
+          }
         })
     },
     f_openComments (i) {
@@ -195,15 +248,16 @@ export default {
     f_closeSubmitComments () {
       this.v_submit = false
     },
-    f_postComment (id) {
+    f_postComment () {
       let params = {
-        rId: id,
+        rId: this.v_currentRid,
         rType: 'notice',
         createUserId: this.$store.state.user.id,
         createUserName: this.$store.state.user.name,
         content: this.v_textarea
       }
 
+      console.log('Pinlun ', params)
       this.$http
         .post('/admin/comment/add', params)
         .then(res => {
@@ -492,25 +546,112 @@ export default {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.2);
+        background-color: rgba(0, 0, 0, 0.8);
       }
-      .td_submit_text{
+      .td_submit_content{
+        position: absolute;
+        bottom: 0.2rem;
+        left: 0;
         width: 100%;
-        height: 2rem;
-        padding: 0.2rem;
-        background-color: white;
-        margin-bottom: 0.1rem;
-        textarea{
-          resize: none;
-          font-size: 0.24rem;
-          line-height: 1.75em;
+        .td_submit_text{
+          width: 100%;
+          height: 2rem;
+          padding: 0.2rem;
+          background-color: white;
+          margin-bottom: 0.1rem;
+          textarea{
+            resize: none;
+            width: 100%;
+            height: 100%;
+            text-align: left;
+            font-size: 0.24rem;
+            line-height: 1.75em;
+          }
+        }
+        .td_submit_btn{
+          width: calc(100% - 0.6rem);
+          height: 0.8rem;
+          margin: 0 auto;
+          border-radius: 0.1rem;
+          background-color: #f64682;
+          line-height: 0.8rem;
+          font-size: 0.34rem;
+          color: #fff;
+          cursor: pointer;
         }
       }
-      .td_submit_btn{
-        width: calc(100% - 0.6rem);
-        height: 0.8rem;
-        border-radius: 0.1rem;
-        background-color: #f64682;
+    }
+    .td_signup_wrapper{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      .td_mask{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+      .td_sign_content{
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        transform: translateY(-50%);
+        h6{
+          font-size: 0.6rem;
+          color: #fff;
+          margin-bottom: 0.2rem;
+        }
+        .td_sign_input{
+          width: 100%;
+          padding: 0 0.3rem;
+          height: 0.9rem;
+          line-height: 0.9rem;
+          box-sizing: border-box;
+          border-bottom: 1px solid #e5e5e5;
+          background-color: #fff;
+          text-align: left;
+          display: flex;
+          align-items: center;
+          label{
+            display: inline-block;
+            font-size: 0.34rem;
+            width: 2rem;
+            height: 100%;
+            line-height: 0.9rem;
+          }
+          .td_sign_box{
+            flex: 1;
+            input{
+              width: 100%;
+              height: 100%;
+            }
+          }
+          i{
+            display: inline-block;
+            width: 0.25rem;
+            height: 100%;
+            background-image: url('../../../../assets/images/repair/repair_arrow.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;
+            vertical-align: middle;
+          }
+        }
+        .td_sign_btn{
+          width: calc(100% - 0.6rem);
+          height: 0.9rem;
+          margin: 0.9rem auto 0;
+          border-radius: 0.42rem;
+          background-color: #f73476;
+          line-height: 0.9rem;
+          font-size: 0.34rem;
+          color: #fff;
+        }
       }
     }
   }

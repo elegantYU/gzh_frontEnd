@@ -105,6 +105,13 @@ export default {
     background-color: #fff;
     text-align: left;
     padding: 0 0.3rem;
+    display: flex;
+    input{
+      display: block;
+      width: 100%;
+      height: 100%;
+      font-size: 0.3rem;
+    }
   }
 }
 .wr_submit {

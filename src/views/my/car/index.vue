@@ -45,7 +45,7 @@ export default {
   methods: {
     f_getList () {
       let params = {
-        memberId: 2,
+        memberId: this.$store.state.user.id,
         pageNum : 1,
         pageSize: 10000
       }
@@ -53,7 +53,6 @@ export default {
       this.$http
         .get('/admin/member/car/my/cars', { params })
         .then(res => {
-          console.log(res.data.data)
           this.v_list = res.data.data
         })
     },

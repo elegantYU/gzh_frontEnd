@@ -68,8 +68,8 @@ export default {
       v_list: [
         { belonger: '', phoneNum: '', position: '', lotType: '自有', vehicleNumber: [], lockType: '有'  }
       ],
-      v_parkNum: ['qedasasd', 'asdqads', 'qdasdasd'],
-      v_carNum: ['asdasd', 'asdasdads', 'asdasdsadsa']
+      v_parkNum: [],
+      v_carNum: []
     }
   },
   mounted  () {
@@ -78,17 +78,19 @@ export default {
   methods: {
     f_getCarNum () {
       let params = {
-        phone: '13454133344'
+        phone: this.$store.state.user.phoneNum
       }
 
       this.$http
       .get('/obtain/config/carportSpinner', { params })
         .then(res => {
+          console.log(res)
           this.v_parkNum = res.data.data.map(v => v.carNo)
         })
       this.$http
         .get('/obtain/config/carSpinner', { params })
         .then(res => {
+          console.log(res)
           this.v_carNum = res.data.data.map(v => v.code)                 // 待改
         })
     },
@@ -193,23 +195,33 @@ export default {
           }
           label{
             width: 1.8rem;
+            height: 0.9rem;
             line-height: 0.9rem;
             font-size: 0.34rem;
             text-align: left;
           }
           .pa_input_box{
             flex: 1;
+            .mu-input{
+              display: block;
+            }
             input{
+              display: block;
+              font-size: 0.3rem;
               width: 100%;
               height: 100%;
+              font-size: 0.3rem;
             }
             &.pa_input_radio{
               text-align: left;
+              display: flex;
+              flex-wrap: nowrap;
               span{
                 display: inline-block;
                 width: 1.38rem;
                 height: 100%;
                 line-height: 0.9rem;
+                font-size: 0.3rem;
                 i{
                   display: inline-block;
                   width: 0.46rem;

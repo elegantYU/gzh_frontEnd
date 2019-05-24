@@ -169,6 +169,9 @@ export default {
       }
     })
   },
+  mounted () {
+    this.v_from.createUserId = this.$store.state.user.id
+  },
   methods: {
     f_openType () {
       this.v_typeFlag = true
@@ -258,15 +261,22 @@ export default {
         background-color: #fff;
         text-align: left;
         padding: 0 0.3rem;
+        display: flex;
+        align-items: center;
         label{
-          display: inline-block;
+          display: block;
           font-size: 0.34rem;
+          line-height: 0.9rem;
           width: 2rem;
           height: 100%;
+          line-height: 0.9rem;
         }
         input{
-          width: calc(100% - 2.25rem);
+          display: block;
+          font-size: 0.3rem;
+          flex: 1;
           height: 100%;
+          font-size: 0.3rem;
           background-color: transparent;
         }
         i{

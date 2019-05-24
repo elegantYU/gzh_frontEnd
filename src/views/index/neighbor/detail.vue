@@ -108,11 +108,11 @@
             </div>
             <div class="nd_comments_content">
               <ul>
-                <li><label>姓名</label>：</li>
-                <li><label>联系方式</label>：</li>
+                <li><label>姓名</label>：{{ $store.state.user.name }}</li>
+                <li><label>联系方式</label>：{{ $store.state.user.phoneNum }}</li>
                 <li><label>身份证号</label>：</li>
-                <li><label>房屋信息</label>：</li>
-                <li><label>预约时间</label>：</li>
+                <li><label>房屋信息</label>：{{ $store.state.house[0] }}</li>
+                <li><label>预约时间</label>：{{ new Date().toLocaleString('chinese', { hour12: false }).replace(/\//g, '-') }}</li>
               </ul>
             </div>
             <span>预约成功</span>
@@ -198,7 +198,6 @@ export default {
         .get('/admin/share/getShareInfoDetail', { params })
         .then(res => {
           if (res.data.success) {
-            console.log('结果', res.data.data)
             this.v_content = Object.assign({}, res.data.data)
           }
         })
@@ -207,11 +206,12 @@ export default {
       if (this.v_content.shareType === '2') {
         let params = {
           id: this.v_content.id,
-          userId: '用户的userId',
-          telephone: this.v_content.telephone,
-          address: '用户的房屋驻地',
-          IDCard: '用户的身份证号'
+          userId: this.$store.state.user.id,
+          telephone: this.$store.state.user.phoneNum,
+          address: this.$store.state.house[0],
+          IDCard: '--'
         }
+        console.log(params)
         this.$http
           .get('/admin/share/applyShareInfo', { params })
           .then(res => {

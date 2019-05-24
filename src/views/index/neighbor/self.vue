@@ -236,6 +236,10 @@ export default {
       }
     }
   },
+  mounted () {
+    this.v_from.createUserId = this.$store.state.user.id
+    this.v_from.createUserName = this.$store.state.user.name
+  },
   methods: {
     f_openType () {
       this.v_typeFlag = true
@@ -274,6 +278,8 @@ export default {
           case '1':
             if (this.v_from.carNum && this.v_from.departPlace && this.v_from.destination && this.v_from.startTime) {
               params = {
+                createUserId: this.v_from.createUserId,
+                createUserName: this.v_from.createUserName,
                 taskType: this.v_from.taskType,
                 title: this.v_from.title,
                 contact: this.v_from.contact,
@@ -293,6 +299,8 @@ export default {
           case '2':
             if (this.v_from.carNum && this.v_from.startTime && this.v_from.endTime) {
               params = {
+                createUserId: this.v_from.createUserId,
+                createUserName: this.v_from.createUserName,
                 taskType: this.v_from.taskType,
                 title: this.v_from.title,
                 contact: this.v_from.contact,
@@ -312,6 +320,8 @@ export default {
           case '3':
             if (this.v_from.skill && this.v_from.startTime && this.v_from.endTime) {
               params = {
+                createUserId: this.v_from.createUserId,
+                createUserName: this.v_from.createUserName,
                 taskType: this.v_from.taskType,
                 title: this.v_from.title,
                 contact: this.v_from.contact,
@@ -332,6 +342,8 @@ export default {
           case '4':
             if (this.v_from.startTime && this.v_from.endTime && this.v_from.content) {
               params = {
+                createUserId: this.v_from.createUserId,
+                createUserName: this.v_from.createUserName,
                 taskType: this.v_from.taskType,
                 title: this.v_from.title,
                 contact: this.v_from.contact,
@@ -390,16 +402,21 @@ export default {
         background-color: #fff;
         text-align: left;
         padding: 0 0.3rem;
+        display: flex;
         label{
-          display: inline-block;
+          display: block;
           font-size: 0.34rem;
+          line-height: 0.9rem;
           width: 2rem;
           height: 100%;
         }
         input{
-          width: calc(100% - 2.25rem);
+          display: block;
+          flex: 1;
           height: 100%;
+          font-size: 0.3rem;
           background-color: transparent;
+          font-size: 0.3rem;
         }
         &>i{
           display: inline-block;
@@ -412,6 +429,7 @@ export default {
           vertical-align: middle;
         }
         &>.mu-input{
+          display: block;
           width: calc(100% - 2.25rem);
         }
         &.ns_shareTime{

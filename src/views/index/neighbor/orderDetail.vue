@@ -91,9 +91,9 @@
         </div>
       </div>
       <!-- 取消共享 或者 立即预约 -->
-      <div class="nd_submit" v-if="submit" @click="f_order">
+      <!-- <div class="nd_submit" v-if="submit" @click="f_order">
         {{ v_orderText }}
-      </div>
+      </div> -->
       <!-- 物业特有评论 -->
       <div class="nd_comments" v-if="false">
         <h6>申请人</h6>
@@ -192,8 +192,8 @@ export default {
     f_getContent () {
       let id = this.$route.query.id
       let params = {
-        id,
-        userId: 12
+        id: id,
+        userId: this.$store.state.user.id
       }
       this.$http
         .get('/admin/share/getMeApplyDetail', { params })
@@ -222,7 +222,7 @@ export default {
       if (this.v_content.shareType === '2') {
         let params = {
           id: this.v_content.id,
-          userId: '用户的userId',
+          userId: this.$store.state.user.id,
           telephone: this.v_content.telephone,
           address: '用户的房屋驻地',
           IDCard: '用户的身份证号'

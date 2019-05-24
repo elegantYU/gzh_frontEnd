@@ -40,6 +40,10 @@ export default {
   components: {
     mybtn
   },
+  mounted () {
+    this.user.avatar = this.$store.state.user.headIcon
+    this.user.name = this.$store.state.user.name
+  },
   methods: {
     myclick (path) {
       this.$router.push({ name: path })

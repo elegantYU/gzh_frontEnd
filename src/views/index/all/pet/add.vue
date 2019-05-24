@@ -111,7 +111,7 @@ export default {
         exemptionTime: '',
         vaccineType: '',
         petRegisNum: '',
-        createUserId: '12',
+        createUserId: '',       // user id 
         //exemptionImg: []        // 图片数组
       },
       v_address: []
@@ -121,6 +121,7 @@ export default {
     this.f_getHouse()
     // 饲养人name
     this.v_form.raiser = this.$store.state.user.name
+    this.v_form.createUserId = this.$store.state.user.id
   },
   methods: {
     f_upload () {
@@ -128,7 +129,7 @@ export default {
     },
     f_getHouse () {
       let params = {
-        memberId: 2
+        memberId: this.v_form.createUserId
       }
 
       this.$http
@@ -186,6 +187,7 @@ export default {
         padding: 0 0.3rem;
         background-color: #fff;
         display: flex;
+        align-items: center;
         height: 0.9rem;;
         line-height: 0.9rem;
         border-bottom: 1px solid #e5e5e5;
@@ -200,9 +202,14 @@ export default {
         }
         .pa_input_box{
           flex: 1;
+          .mu-input{
+            display: block;
+          }
           input{
             width: 100%;
             height: 100%;
+            font-size: 0.28rem;
+            line-height: 0.9rem;
           }
           &.pa_input_radio{
             text-align: left;

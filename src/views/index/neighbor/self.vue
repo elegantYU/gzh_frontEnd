@@ -435,13 +435,15 @@ export default {
         &.ns_shareTime{
           height: 1.8rem;
           span{
-            display: inline-block;
+            display: flex;
+            flex-wrap: wrap;
             width: calc(100% - 2.25rem);
             vertical-align: middle;
             .mu-input{
               height: 0.9rem;
               box-sizing: border-box;
               margin: 0;
+              padding: 0;
               &:last-of-type{
                 border: none;
               }
@@ -450,7 +452,9 @@ export default {
         }
         &.ns_input_check{
           span{
-            display: inline-block;
+            display: flex;
+            font-size: 0.3rem;
+            align-items: center;
             width: 1.38rem;
             height: 100%;
             i{

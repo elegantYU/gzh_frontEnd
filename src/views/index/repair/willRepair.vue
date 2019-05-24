@@ -292,13 +292,15 @@ export default {
         &.wr_datetime{
           height: 1.8rem;
           .wr_datetime_item{
-            display: inline-block;
+            display: flex;
+            flex-wrap: wrap;
             width: calc(100% - 2.25rem);
             vertical-align: middle;
             .mu-input{
               height: 0.9rem;
               box-sizing: border-box;
               margin: 0;
+              padding: 0;
               &:last-of-type{
                 border: none;
               }

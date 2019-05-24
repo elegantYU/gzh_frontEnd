@@ -12,12 +12,12 @@
               <div class="index_topic_item_left">
                 <p>{{ v.title }}</p>
                 <div class="index_topic_item_detail clearfix">
-                  <span>{{ v.postBegin }}</span>
-                  <span>来源</span>
+                  <span>{{ f_formatDate(v.createTime) }}</span>
+                  <span>来源 {{ v.sourceName }}</span>
                   <ul class="clearfix">
-                    <li><i></i>320</li>
-                    <li><i></i>320</li>
-                    <li><i></i>320</li>
+                    <li><i></i>{{ v.rate }}</li>
+                    <li><i></i>{{ v.comment }}</li>
+                    <li><i></i>{{ v.collect }}</li>
                   </ul>
                 </div>
               </div>
@@ -85,6 +85,9 @@ export default {
         .then(res => {
           console.log('增加流量')
         })
+    },
+    f_formatDate (time) {
+      return time.split(' ')[0]
     }
   }
 }

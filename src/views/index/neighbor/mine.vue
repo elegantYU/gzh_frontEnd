@@ -10,7 +10,7 @@
                 <p>{{ v.content }}</p>
                 <div class="nm_item_left_detail clearfix">
                   <span class="nm_item_detail_time">{{ v.createTime }}</span>
-                  <span class="nm_delete" @click="f_delete(i)"></span>
+                  <span class="nm_delete" @click.stop="f_delete(i)"></span>
                   <span class="nm_item_detail_title">{{ v.taskType }}</span>
                 </div>
               </div>

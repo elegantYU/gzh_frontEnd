@@ -193,7 +193,7 @@ export default {
   mounted () {
     this.v_form.memberId = this.$store.state.user.id
     this.f_getList('provinceSynchroKey', {
-      id: this.$store.state.user.id,
+      id: '0',
       name: '浙江省',
       active: true
     })
@@ -388,9 +388,15 @@ export default {
         }
         .ha_input_box{
           flex: 1;
+          align-items: center;
+          .mu-input{
+            display: block;
+          }
           input{
+            display: block;
             width: 100%;
             height: 100%;
+            font-size: 0.3rem;
           }
         }
         i{

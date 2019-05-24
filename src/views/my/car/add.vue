@@ -171,7 +171,11 @@ export default {
           }
           .ca_input_box{
             flex: 1;
+            .mu-input{
+              display: block;
+            }
             input{
+              display: block;
               width: 100%;
               height: 100%;
             }

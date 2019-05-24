@@ -91,9 +91,9 @@
         </div>
       </div>
       <!-- 取消共享 或者 立即预约 -->
-      <div class="nd_submit" v-if="submit" @click="f_order">
+      <!-- <div class="nd_submit" v-if="submit" @click="f_order">
         {{ v_orderText }}
-      </div>
+      </div> -->
       <!-- 物业特有评论 -->
       <div class="nd_comments" v-if="false">
         <h6>申请人</h6>

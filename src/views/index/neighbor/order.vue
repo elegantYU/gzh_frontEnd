@@ -14,7 +14,7 @@
                 </div>
               </div>
               <div class="no_item_right">
-                <img :src="v.imgUrl" alt="">
+                <img :src="JSON.parse(v.imgUrl)[0]" alt="">
               </div>
             </div>
           </template>

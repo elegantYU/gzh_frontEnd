@@ -135,16 +135,20 @@ export default {
         background-color: #fff;
         text-align: left;
         padding: 0 0.3rem;
+        display: flex;
         label{
           display: inline-block;
           font-size: 0.34rem;
+          line-height: 0.9rem;
           width: 2rem;
           height: 100%;
         }
         input{
+          display: block;
           width: calc(100% - 2.25rem);
           height: 100%;
           background-color: transparent;
+          font-size: 0.3rem;
         }
         i{
           display: inline-block;

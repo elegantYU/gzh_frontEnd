@@ -7,7 +7,7 @@
         <span>{{ v_detail.createTime }}</span>
         <ul>
           <li><i></i>{{ v_detail.rate }}</li>
-          <li :class="v_collect ? 'index_topic_icon_active' : ''" @click="f_getCollect"><i></i>{{ v_detail.collect }}</li>
+          <li :class="v_detail.hasCollect ? 'index_topic_icon_active' : ''" @click="f_getCollect"><i></i>{{ v_detail.collect }}</li>
         </ul>
       </div>
       <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-96210.jpg" alt="">
@@ -41,7 +41,7 @@
               <div class="td_comment_content">
                 {{ v.mianComment.content }}
               </div>
-              <div class="td_comment_content_list">
+              <div class="td_comment_content_list" v-if="v.childrenComments">
                 <!-- 品论 -->
                 <div
                   class="td_comment_content_list_each"
@@ -120,7 +120,6 @@ export default {
       v_comments: [],
       v_total: 0,
       v_status: 3,
-      v_collect: false,
       v_submit: false,
       v_signup: false,
       v_houseList: [],
@@ -170,7 +169,7 @@ export default {
     f_getCollect () {
       let params
 
-      if (this.v_collect) {
+      if (this.v_detail.hasCollect) {
         params = {
           memberId: this.$store.state.user.id,
           noticeId: this.v_id
@@ -471,6 +470,7 @@ export default {
               width: 100%;
               height: auto;
               padding: 0.1rem 0.2rem;
+              background-color: #f5f5f5;
               &.td_comment_content_list_more{
                 height: 1.55rem;
                 overflow: hidden;

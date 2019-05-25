@@ -14,7 +14,7 @@
                 </div>
               </div>
               <div class="pub_item_right">
-                <img :src="v.imgUrl" alt="">
+                <img :src="JSON.parse(v.imgUrl)[0]" alt="">
               </div>
             </div>
           </template>
@@ -64,6 +64,7 @@ export default {
       this.$http
         .get('/admin/share/getAllShareInfo', { params })
         .then(res => {
+          console.log(res)
           if (!res.data.data.length) {
             this.v_laodAll = true
           }

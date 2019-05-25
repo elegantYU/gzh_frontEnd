@@ -15,7 +15,7 @@
                 </div>
               </div>
               <div class="nm_item_right">
-                <img :src="v.imgUrl" alt="">
+                <img :src="JSON.parse(v.imgUrl)[0]" alt="">
               </div>
             </div>
           </template>

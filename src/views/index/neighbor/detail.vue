@@ -156,12 +156,13 @@ export default {
       switch (this.v_content.taskType) {
         case '1':
         case '3':
-          return this.v_content.startTime
+          return this.v_content.startTime.replace(this.v_content.startTime.slice(16), '')
           break
         default:
           if (this.v_content.endTime) {
-            let time = this.v_content.endTime.split(' ')[1]
-            return `${this.v_content.startTime} ~ ${time}`
+            let time = this.v_content.endTime.split(' ')[1].replace(this.v_content.endTime.split(' ')[1].slice(5), '')
+            let start = this.v_content.startTime.replace(this.v_content.startTime.slice(16), '')
+            return `${start} ~ ${time}`
           }
           break
       }

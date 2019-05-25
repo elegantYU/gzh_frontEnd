@@ -70,7 +70,7 @@ export default {
       this.$http
         .get('/obtain/config/carSpinner', { params })
         .then(res => {
-          res.data.data.map(v => this.v_carNum(v.carNo))
+          res.data.data.map(v => this.v_carNum.push(v.carNo))
         })
     },
     f_addItem () {
@@ -108,9 +108,13 @@ export default {
         this.$http
           .post('/admin/member/car/save', params)
           .then(res => {
-            if (this.v_list.length -1 === i) {
-              this.$toast('提交成功')
-              this.$router.go(-1)
+            if (res.data.success) {
+              if (this.v_list.length - 1 === i) {
+                this.$toast('提交成功')
+                this.$router.go(-1)
+              }
+            } else {
+              this.$toast(res.data.msg)
             }
           })
       })

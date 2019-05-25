@@ -139,8 +139,12 @@ export default {
         this.$http
           .post('/admin/member/parking/lot/save', params)
           .then(res => {
-            if (this.v_list.length-1 === i) {
-              this.$router.go(-1)
+            if (res.data.success) {
+              if (this.v_list.length-1 === i) {
+                this.$router.go(-1)
+              }
+            } else {
+              this.$toast(res.data.msg)
             }
           })
       })

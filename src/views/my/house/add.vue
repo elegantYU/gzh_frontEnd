@@ -344,12 +344,15 @@ export default {
       }
 
       let params = this.v_form
-      console.log(params)
       this.$http
         .post('/admin/member/house/save', params)
         .then(res => {
-          this.$toast(res.data.msg)
-          this.$router.go(-1)
+          if (res.data.success) {
+            this.$toast(res.data.msg)
+            this.$router.go(-1)
+          } else {
+            this.$toast(res.data.msg)
+          }
         })
     }
   }

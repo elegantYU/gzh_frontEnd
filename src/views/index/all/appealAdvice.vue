@@ -1,18 +1,18 @@
 <template>
    <div class="wr_wrapper">
     <div class="wr_content">
-      <h6>{{ v_from.communityName }}</h6>
+      <h6>{{ v_communityName }}</h6>
       <div class="wr_form">
         <div class="wr_input">
           <label>投诉对象</label>
-          <input type="text" readonly v-model="v_from.appeal" @click="f_openAppeal" placeholder="请选择投诉对象">
+          <input type="text" readonly v-model="v_from.complaintTarget" @click="f_openAppeal" placeholder="请选择投诉对象">
           <i></i>
         </div>
       </div>
       <div class="wr_detail">
         <b>内容描述</b>
         <div class="wr_input">
-          <textarea placeholder="内容不超过200字" maxlength="200" v-model="v_from.detail"></textarea>
+          <textarea placeholder="内容不超过200字" maxlength="200" v-model="v_from.content"></textarea>
         </div>
       </div>
       <div class="wr_upload">
@@ -58,19 +58,23 @@ export default {
       v_user: {
         appeal: ['业委会', '物业', '邻里纠纷']
       },
+      v_communityName: '戈雅花苑',
       v_from: {
-        communityName: '戈雅花苑',
-        appeal: '',
-        type: '',
-        createUserId: 2,
-        detail: '',
-        img: ['', '']
+        complaintTarget: '',
+        type: '1',
+        createUserId: 0,
+        createName: '',
+        content: '',
       },
       v_appealFlag: false,
       v_images: []
     }
   },
-    methods: {
+  mounted () {
+    this.v_from.createUserId = this.$store.state.user.id
+    this.v_from.createName = this.$store.state.user.name
+  },
+  methods: {
     f_openAppeal () {
       this.v_appealFlag = true
       stop()
@@ -82,7 +86,8 @@ export default {
     },
     f_chooseAppeal (name) {
       this.v_appealFlag = false
-      this.v_from.appeal = name
+      this.v_from.complaintTarget = name
+      console.log(this.v_from.complaintTarget)
       move()
     },
     f_upload () {
@@ -90,8 +95,14 @@ export default {
     },
     f_submit () {
       let params = Object.assign({}, this.v_from)
-      params.img = JSON.stringify(params.img)
-      if (this.v_from.communityName && this.v_from.appeal) {
+      params.imgUrl = JSON.stringify(this.v_images)
+      if (this.v_from.complaintTarget && this.v_from.content) {
+        this.$http
+          .post('/admin/complaint/addComOrSugg', params)
+          .then(res => {
+            this.$toast('已发送')
+            this.$router.go(-1)
+          })
       } else {
         this.$toast({
           msg: '所填信息不完整',

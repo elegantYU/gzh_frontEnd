@@ -95,7 +95,7 @@
         {{ v_orderText }}
       </div>
       <!-- 物业特有评论 -->
-      <div class="nd_comments">
+      <div class="nd_comments" v-if="v_content.shareType == 2">
         <h6>申请人</h6>
         <ul class="nd_comments_list">
           <li
@@ -174,10 +174,10 @@ export default {
       return eval(this.v_content.imgUrl)
     },
     submit: function () {
-      if (this.v_content.shareType === '2') {
+      if (this.v_content.shareType == 2) {
         this.v_orderText = '立即预约'
         return true
-      } else if (this.v_content.createUserId === '用户本省的userId') {
+      } else if (this.v_content.createUserId === this.$store.state.user.id) {
         this.v_orderText = '取消共享'
         return true
       } else {
@@ -222,7 +222,7 @@ export default {
           })
       } else {
         let params = {
-          id: this.v_content[i].id,
+          id: this.v_content.id,
           type: 2
         }
         let flag = confirm('确认取消共享吗?')
@@ -231,8 +231,8 @@ export default {
             .get('/admin/share/deleteShareInfo', { params })
             .then(res => {
               if (res.data.success) {
-                this.v_list.splice(i, 1)
                 this.$toast('取消成功')
+                this.$router.go(-1)
               } else {
                 this.$toast('网络错误')
               }

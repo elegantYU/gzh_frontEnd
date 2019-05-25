@@ -127,7 +127,6 @@ export default {
         background-color: #fff;
         box-sizing: border-box;
         padding: 0.2rem 0.3rem 0.1rem;
-        margin-bottom: 0.2rem;
         .n_nav_bar{
           width: calc(100% - 0.5rem);
           height: 100%;
@@ -166,8 +165,7 @@ export default {
         }
       }
       .n_filter{
-        margin-bottom: 0.2rem;
-        padding: 0 0.3rem;
+        padding: 0.1rem 0.3rem 0;
         background-color: #efeff4;
         text-align: left;
         overflow-x: auto;
@@ -195,7 +193,7 @@ export default {
       left: 0;
       width: 100%;
       &.active{
-        top: 1.96rem;
+        top: 1.7rem;
       }
     }
   }

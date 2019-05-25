@@ -72,16 +72,7 @@ export default {
       }, 1000)
     },
     f_moveDetail (v) {
-      this.$http
-        .get('/obtain/notice/add', {
-          params: {
-            id
-          }
-        })
-        .then(res => {
-          console.log('增加流量')
-        })
-      this.$router.push({ name: 'topicDetail', query: { id: v.id }})
+      this.$router.push({ name: 'noticeDetail', query: { id: v.id }})
     }
   }
 }
@@ -99,7 +90,6 @@ export default {
       padding: 0.2rem 0.3rem 0.2rem 0.5rem;
       background-color: #fff;
       box-sizing: border-box;
-      box-shadow: 0 4px 10px rgba(124, 134, 138, 0.2);
       margin-bottom: 0.16rem;
       .index_topic_item_left{
         float: left;

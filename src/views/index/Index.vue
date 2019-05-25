@@ -45,12 +45,12 @@
           >
             <div class="index_topic_item_left">
               <p>{{ v.title }}</p>
-              <div class="index_topic_item_detail clearfix">
-                <span>来源 {{ v.sourceName }}</span>
+              <div class="index_topic_item_detail">
+                <span>{{ v.sourceName }}  {{ v.type === 1 ? '政策法规' : v.type === 2 ? '通知公告' : '热门活动' }}</span>
                 <ul class="clearfix">
-                  <li><i></i>{{ v.rate }}</li>
-                  <li><i></i>{{ v.comment }}</li>
-                  <li><i></i>{{ v.collect }}</li>
+                  <li :class=""><i></i>{{ v.rate }}</li>
+                  <li :class=""><i></i>{{ v.comment }}</li>
+                  <li :class=""><i></i>{{ v.collect }}</li>
                 </ul>
               </div>
             </div>
@@ -290,11 +290,9 @@ export default {
               width: 100%;
               font-size: 0.18rem;
               color: #888;
-              span{
-                float: left;
-              }
+              display: flex;
+              justify-content: space-between;
               ul{
-                float: right;
                 li{
                   float: left;
                   font-size: 0.2rem;

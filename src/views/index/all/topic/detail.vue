@@ -36,7 +36,7 @@
                 <i @click="f_openSubmitComments(v.mianComment.rid)"></i>
               </div>
               <div class="td_comment_right_bottom">
-                {{ '2019-01-01' }}
+                {{ v.mianComment.createTime.split(' ')[0] }}
               </div>
               <div class="td_comment_content">
                 {{ v.mianComment.content }}
@@ -246,6 +246,7 @@ export default {
       this.$http
         .post(`/admin/comment/noticeList?rId=${this.v_id}&rtype=notice`)
         .then(res => {
+          console.log(res.data)
           this.v_comments = []
           if (res.data.data.length) {
             res.data.data.forEach(v => {
@@ -281,7 +282,7 @@ export default {
         .post('/admin/comment/add', params)
         .then(res => {
           if (res.data.success) {
-            this.$toast('评论成功')
+            this.$toast('回复成功')
             this.f_closeSubmitComments()
             this.f_getComments()
           } else {
@@ -433,6 +434,7 @@ export default {
           }
           .td_comment_item_right{
             flex: 1;
+            border-bottom: 1px solid #f5f5f5;
             .td_comment_right_top{
               padding-left: 0.2rem;
               height: 0.4rem;
@@ -505,6 +507,7 @@ export default {
       height: 1.2rem;
       display: flex;
       align-items: center;
+      background-color: #efeff4;
       span{
         font-size: 0.28rem;
         flex: 1;

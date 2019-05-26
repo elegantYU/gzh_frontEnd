@@ -23,7 +23,7 @@
         </div>
         <div class="wr_input">
           <label>联系方式</label>
-          <input type="text" v-model="v_from.telPhone" placeholder="请输入联系方式" @blur="f_checkPhone">
+          <input type="text" v-model="v_from.telPhone" placeholder="手机号、微信、QQ">
         </div>
         <div class="wr_input wr_datetime">
           <label>预约时间</label>
@@ -42,7 +42,7 @@
       <div class="wr_upload">
         <b>图片<span>（最多三张）</span></b>
         <div class="wr_preview">
-          <div 
+          <div
             class="wr_preview_list"
             v-for="(v, i) in v_images"
             :key="i"
@@ -88,14 +88,13 @@
 </template>
 
 <script>
-import { dateFormat } from '../../../utils/utils'
-
+import { dateFormat, stop, move } from '../../../utils/utils'
 export default {
   name: 'WillRepair',
   data () {
     return {
       v_user: {
-        house: ['1栋2单元407', '1栋2单元407']
+        house: []
       },
       v_from: {
         communityName: '戈雅花苑',
@@ -120,7 +119,7 @@ export default {
         { name: '门窗检修' },
         { name: '家用电器检修' },
         { name: '房顶检修' },
-        { name: '防水施工方法' },
+        { name: '防水施工方法' }
       ],
       v_typeFlag: false,
       v_houseFlag: false,
@@ -150,32 +149,52 @@ export default {
       }
     }
   },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.$data.v_id = to.query.id || ''
+      if (vm.$data.v_id) {
+        vm.$http.get('/admin/property/repair/add').then(res => {
+          // 信息填充
+        })
+      }
+    })
+  },
+  mounted () {
+    this.v_from.createUserId = this.$store.state.user.id
+  },
   methods: {
+    f_getHouse () {
+      let params = {
+        memberId: this.$store.state.user.id
+      }
+
+      this.$http
+        .get('/admin/member/house/all', { params })
+        .then(res => {
+          res.data.data.map(v => this.v_user.house.push(`${v.searchWord}`))
+        })
+    },
     f_openType () {
       this.v_typeFlag = true
+      stop()
     },
     f_openHouse () {
       this.v_houseFlag = true
+      stop()
     },
     f_chooseType (name) {
       this.v_typeFlag = false
       this.v_from.type = name
+      move()
     },
     f_chooseHouse (name) {
       this.v_houseFlag = false
       this.v_from.houseName = name
+      move()
     },
     f_startTimeRules (date) {
       let today = new Date().getTime()
       return new Date(date).getTime() < today
-    },
-    f_checkPhone () {
-      if (!(/^1[345678]\d{9}$/.test(this.v_from.telPhone))) {
-        this.$toast('手机号错误')
-        this.v_from.telPhone = ''
-        console.log(this.v_from.telPhone)
-        return
-      }
     },
     f_upload () {
       
@@ -193,6 +212,7 @@ export default {
   background-color: #efeff4;
   .wr_content{
     padding-bottom: 1.2rem;
+    background-color: #efeff4;
     h6{
       padding: 0.23rem 0 0.26rem;
       font-size: 0.36rem;
@@ -208,15 +228,22 @@ export default {
         background-color: #fff;
         text-align: left;
         padding: 0 0.3rem;
+        display: flex;
+        align-items: center;
         label{
-          display: inline-block;
+          display: block;
           font-size: 0.34rem;
+          line-height: 0.9rem;
           width: 2rem;
           height: 100%;
+          line-height: 0.9rem;
         }
         input{
-          width: calc(100% - 2.25rem);
+          display: block;
+          font-size: 0.3rem;
+          flex: 1;
           height: 100%;
+          font-size: 0.3rem;
           background-color: transparent;
         }
         i{
@@ -232,13 +259,15 @@ export default {
         &.wr_datetime{
           height: 1.8rem;
           .wr_datetime_item{
-            display: inline-block;
+            display: flex;
+            flex-wrap: wrap;
             width: calc(100% - 2.25rem);
             vertical-align: middle;
             .mu-input{
               height: 0.9rem;
               box-sizing: border-box;
               margin: 0;
+              padding: 0;
               &:last-of-type{
                 border: none;
               }
@@ -262,7 +291,7 @@ export default {
         background-color: #fff;
         textarea{
          width: 100%;
-         height: 100%; 
+         height: 100%;
          resize: none;
          font-size: 0.26rem;
         }
@@ -312,7 +341,7 @@ export default {
       }
     }
     .wr_submit{
-      padding: 0 0.3rem; 
+      margin: 0 0.3rem;
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;

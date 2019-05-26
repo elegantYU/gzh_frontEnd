@@ -1,0 +1,25 @@
+.wp {
+  width: 100%;
+  background: #efeff4;
+}
+.hd {
+  width: 100%;
+  padding-top: 0.38rem;
+  padding-bottom: 0.87rem;
+  background: url('../../assets/images/my/hdbg.png');
+  margin-bottom: 0.2rem;
+  .avatar {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-bottom: 0.22rem;
+    border: 0.04rem solid #fff;
+    border-radius: 50%;
+  }
+  .name {
+    font-size: 0.36rem;
+    color: #fff;
+  }
+}
+section {
+  margin-bottom: 0.2rem;
+}

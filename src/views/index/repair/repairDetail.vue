@@ -159,7 +159,9 @@ export default {
       this.$http
         .get('/admin/property/repair/detail', { params: { id: this.v_id } })
         .then(res => {
-          console.log('维修信息', res)
+          console.log(res)
+          res.data.data.img = JSON.parse(res.data.data.img)
+          this.v_info = Object.assign({}, res.data.data)
         })
     },
     f_getComments () {
@@ -183,6 +185,35 @@ export default {
         this.v_commmentNum++
         this.f_getComments()
       }, 1000)
+    },
+    f_submit () {
+      let params = {
+        rId: this.v_id,
+        rtype: 'repair',
+        createUserId: this.$store.state.user.id, // 用户id
+        createUserName: this.$store.state.user.name, // 用户名称
+        content: this.v_info.content,
+        parentId: 0
+      }
+      if (this.v_info.content.trim()) {
+        this.$http
+          .post('/admin/comment/add', params)
+          .then(res => {
+            if (res.data.success) {
+              this.$toast({
+                msg: '评价成功',
+                time: 1000
+              })
+              this.f_getComments()
+            }
+          })
+      } else {
+        this.v_info.content = ''
+        this.$toast({
+          msg: '请输入评论内容',
+          time: 1500
+        })
+      }
     }
   }
 }
@@ -191,6 +222,7 @@ export default {
 <style lang="scss" scoped>
 .rep_wrapper{
   height: 100%;
+  background-color: #efeff4;
   .rep_content{
     background-color: #efeff4;
     padding-bottom: 1.2rem;

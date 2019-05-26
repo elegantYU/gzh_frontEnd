@@ -6,7 +6,7 @@
         <li @click="f_moveRepair">我要报修</li>
       </ul>
       <ul class="myRep_list" ref="container">
-        <mu-load-more @refresh="f_refresh" :refreshing="v_refreshing" :loading="v_loading" @load="f_load">
+        <mu-load-more :loading="v_loading" @load="f_load" :loaded-all="v_loadAll">
           <mu-list>
             <template v-for="(v, i) in v_repairList">
               <li
@@ -21,7 +21,9 @@
                     <span class="myRep_detail_status">{{ v.sts }}</span>
                   </div>
                 </div>
-                <img :src="v.img[0]" alt="">
+                <div class="myRep_list_right">
+                  <img :src="v.img[0]" alt="">
+                </div>
               </li>
             </template>
           </mu-list>
@@ -72,8 +74,8 @@ export default {
         },
       ],
       v_listNum: 1,
-      v_refreshing: false,
-      v_loading: false
+      v_loading: false,
+      v_loadAll: true
     }
   },
   methods: {
@@ -88,25 +90,26 @@ export default {
       this.$http
         .get('/admin/property/repair/list', {
           params: {
-            createUserId: '',
+            createUserId: this.$store.state.user.id,
             pageNum: this.v_listNum,
             pageSize: 10
           }
         })
         .then(res => {
-          console.log('所有单', res.data)
-          this.v_repairList.concat(res.data)
+          console.log(res)
+          if (!res.data.data.length) {
+            this.v_loadAll = true
+          }
+
+          res.data.data.forEach(v => {
+            if (v.img) {
+              v.img = JSON.parse(v.img)
+            } else {
+              v.img = []
+            }
+            this.v_repairList.push(v)
+          })
         })
-    },
-    f_refresh () {
-      this.v_refreshing = true
-      this.$refs.container.scrollTop = 0
-      setTimeout(() => {
-        this.v_refreshing = false
-        this.v_repairList = []
-        this.v_listNum = 1
-        this.f_getList()
-      }, 1000)
     },
     f_load () {
       this.v_loading = true
@@ -126,6 +129,7 @@ export default {
   height: 100%;
   .myRep_content{
     padding-bottom: 1.2rem;
+    background-color: #efeff4;
     .myRep_nav{
       margin-bottom: 0.28rem;
       li{
@@ -198,10 +202,15 @@ export default {
             }
           }
         }
-        img{
+        .myRep_list_right{
           float: left;
           width: 1.6rem;
           height: 1.43rem;
+          display: flex;
+          align-items: center;
+          img{
+            width: 100%;
+          }
         }
       }
     }

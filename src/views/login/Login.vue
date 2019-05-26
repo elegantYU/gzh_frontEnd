@@ -4,7 +4,7 @@
     <div class="login_content">
       <div class="login_input">
         <span></span>
-        <input type="text" placeholder="请输入手机号" v-model="v_phone">
+        <input type="text" placeholder="请输入手机号" maxlength="11" v-model="v_phone">
       </div>
       <div class="login_input">
         <span></span>
@@ -32,6 +32,13 @@ export default {
       v_switch: false
     }
   },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      if (vm.$store.state.user.id) {
+        vm.$router.push({ name: 'index' })
+      }
+    })
+  },
   mounted () {
     try {
       document.body.removeChild(document.getElementById('start_wrapper'))
@@ -39,23 +46,52 @@ export default {
         document.getElementById('app').style.display = 'block'
       }, 500)
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
   },
   methods: {
     f_login () {
-      console.log('登录')
-      this.$router.push({ name: 'index' })
+      let params = {
+        phoneNum: this.v_phone,
+        password: this.v_password
+      }
+
+      // this.$router.push({ name: 'index' })
+      this.$http
+        .post('/admin/user/login', params)
+        .then(res => {
+          console.log(res)
+          if (res.data.success) {
+            this.$toast('登录成功')
+            this.$store.dispatch('setUser', res.data.data)
+            this.f_getUserHouse(res.data.data.id)
+            this.$router.push({ name: 'index' })
+          } else {
+            this.$toast(res.data.msg)
+          }
+        })
     },
     f_forget () {
       console.log('忘记密码')
     },
     f_register () {
-      console.log('注册')
       this.$router.push({ name: 'register' })
     },
     f_switch () {
       this.v_switch = !this.v_switch
+    },
+    f_getUserHouse (id) {
+      let params = {
+        memberId: id
+      }
+
+      this.$http
+        .get('/admin/member/house/all', { params })
+        .then(res => {
+          if (res.data.data.length) {
+            this.$store.dispatch('setHouse', res.data.data)
+          }
+        })
     }
   }
 }

@@ -55,7 +55,7 @@ export default {
           this.$router.push({name: ''})
           break;
         case '生活超市':
-          this.$router.push({name: ''})
+          this.$router.push({name: 'shop'})
           break;
         case '邻里共享':
           this.$router.push({name: 'neighbor'})

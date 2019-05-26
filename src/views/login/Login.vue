@@ -60,13 +60,14 @@ export default {
       this.$http
         .post('/admin/user/login', params)
         .then(res => {
-          if (res.data.data) {
+          console.log(res)
+          if (res.data.success) {
             this.$toast('登录成功')
             this.$store.dispatch('setUser', res.data.data)
             this.f_getUserHouse(res.data.data.id)
             this.$router.push({ name: 'index' })
           } else {
-            this.$toast('登录失败')
+            this.$toast(res.data.msg)
           }
         })
     },

@@ -46,7 +46,10 @@ export default {
       this.$http
         .get('/admin/member/house/all', { params })
         .then(res => {
-          this.v_houseList = res.data.data.slice()
+          if (res.data.data.length) {
+            this.v_houseList = res.data.data.map(v => v)
+            this.$store.state.house = this.v_houseList
+          }
 
         })
     },

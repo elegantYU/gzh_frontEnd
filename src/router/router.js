@@ -21,6 +21,8 @@ const router = new Router({
         { path: '/home/neighbor', name: 'neighbor', component: () => import('../views/index/neighbor/index.vue') },
         // 环境秩序
         { path: '/home/environment', name: 'environment', meta: { title: '环境秩序' }, component: () => import('../views/index/all/environment/index.vue') },
+        // 超市
+        { path: '/shop', name: 'shop', meta: { title: '生活超市' }, component: () => import('../views/index/shop/index.vue') },
         // 全部
         { path: '/home/all', name: 'all', meta: { title: '我的' }, component: () => import('../views/index/all/index.vue') },
         // 头条

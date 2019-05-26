@@ -33,7 +33,7 @@
             <div class="td_comment_item_right">
               <div class="td_comment_right_top">
                 <span>{{ v.mianComment.createUserName }}</span>
-                <i @click="f_openSubmitComments(v.mianComment.rid)"></i>
+                <i @click="f_openSubmitComments(v.mianComment.id)"></i>
               </div>
               <div class="td_comment_right_bottom">
                 {{ v.mianComment.createTime.split(' ')[0] }}
@@ -48,7 +48,7 @@
                   v-for="(val, ind) in v.childrenComments"
                   :key="ind"
                   :class="v.openComment ? '' : 'td_comment_content_list_more'"
-                  @click="f_openSubmitComments(v.mianComment.rid)"
+                  @click="f_openSubmitComments(v.mianComment.id)"
                 >
                   <span>{{ val.createUserName }}:</span>
                   <p>{{ val.content }}</p>
@@ -262,9 +262,11 @@ export default {
     f_openSubmitComments (id) {
       this.v_submit = true
       this.v_currentRid = id
+      console.log(id)
     },
     f_closeSubmitComments () {
       this.v_submit = false
+      this.v_textarea = ''
     },
     f_postComment () {
       let params = {
@@ -276,7 +278,6 @@ export default {
         parentId: this.v_currentRid
       }
 
-      console.log('Pinlun ', params)
       this.$http
         .post('/admin/comment/add', params)
         .then(res => {

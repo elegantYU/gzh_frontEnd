@@ -20,7 +20,7 @@ export default new Vuex.Store({
       state.user = Object.assign({}, obj)
     },
     setHouse (state, obj) {
-      obj.map(v => state.house.push(v))
+      state.house = obj.map(v => v)
     },
     neighborRouter (state, r) {
       state.neighbor.router = r

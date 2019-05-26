@@ -78,7 +78,7 @@ export default {
       ],
       v_tools2: [
         { msg: '智慧停车', path: '', icon: require('../../assets/images/index/index_zh.png') },
-        { msg: '生活超市', path: '', icon: require('../../assets/images/index/index_sh.png') },
+        { msg: '生活超市', path: 'shop', icon: require('../../assets/images/index/index_sh.png') },
         { msg: '邻里共享', path: 'neighbor', icon: require('../../assets/images/index/index_ll.png') },
         { msg: '全部', path: 'all', icon: require('../../assets/images/index/index_qb.png') }
       ],

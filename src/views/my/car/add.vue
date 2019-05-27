@@ -171,6 +171,7 @@ export default {
           }
           .ca_input_box{
             flex: 1;
+            font-size: 0.3rem;
             .mu-input{
               display: block;
             }

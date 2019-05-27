@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <router-view v-touch:right.capture='f_globalMove' v-touch:up.capture='f_moveTop'></router-view>
   </div>
 </template>
 
@@ -16,6 +16,14 @@ export default {
       }, 500)
     } catch (e) {
       console.log(e)
+    }
+  },
+  methods: {
+    f_globalMove () {
+      this.$router.go(-1)
+    },
+    f_moveTop () {
+      return false
     }
   }
 }

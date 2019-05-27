@@ -77,7 +77,9 @@ const router = new Router({
     // 功能介绍
     { path: '/function', name: 'function', meta: { title: '功能介绍' }, component: () => import('../views/my/aboutus/function.vue') },
     // 诉求建议
-    { path: '/appeal', name: 'appeal', meta: { title: '诉求建议' }, component: () => import('../views/index/all/appealAdvice.vue') }
+    { path: '/appeal', name: 'appeal', meta: { title: '诉求建议' }, component: () => import('../views/index/all/appealAdvice.vue') },
+    //  我的活动
+    { path: '/active', name: 'active', meta: { title: '我的活动' }, component: () => import('../views/my/active/index.vue') },
   ]
 })
 

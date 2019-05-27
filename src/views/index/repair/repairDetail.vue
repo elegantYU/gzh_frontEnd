@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="rep_comment">
+      <div class="rep_comment" v-if="v_info.sts===5 || v_info.sts===6">
         <div class="rep_comment_area">
           <textarea placeholder="在这里可以输入评价内容最多200个字" maxlength="200" v-model="v_info.content"></textarea>
         </div>
@@ -122,10 +122,13 @@ export default {
       }
     },
     commentBtn: function () {
+      console.log(this.v_info.sts)
       switch (this.v_info.sts) {
-        case 1:
-        case 2:
+        case 5:
           return '立即评价'
+          break
+        case 6:
+          return '继续评价'
           break
       }
     }

@@ -169,6 +169,8 @@ export default {
         background-color: #efeff4;
         text-align: left;
         overflow-x: auto;
+        display: flex;
+        align-items: center;
         .n_filter_list{
           display: inline-block;
           border-radius: 0.1rem;

@@ -1,12 +1,12 @@
 <template>
-  <div class="th_wrapper">
-    <div class="th_container">
+  <div class="cc_wrapper">
+    <div class="cc_container">
       <mu-load-more :loading="v_loading" @load="f_load" :loaded-all="v_loadAll">
         <mu-list>
-          <template v-for="(v, i) in v_topic">
+          <template v-for="(v, i) in v_list">
             <div
               :key="i"
-              @click="f_moveDetail(v)"
+              @click="f_viewDetail(v)"
               class="th_list_item"
             >
               <div class="index_topic_item_left">
@@ -22,7 +22,7 @@
                 </div>
               </div>
               <div class="index_topic_img">
-                <img :src="v.image" alt="">
+                <img :src="v.img[0]" alt="">
               </div>
             </div>
           </template>
@@ -34,12 +34,13 @@
 
 <script>
 export default {
+  name: 'Collect',
   data () {
     return {
-      v_topic: [],
+      v_list: [],
+      v_pageNum: 1,
       v_loading: false,
-      v_loadAll: false,
-      v_pageNum: 1
+      v_loadAll: false
     }
   },
   mounted () {
@@ -49,18 +50,15 @@ export default {
     f_getList () {
       let params = {
         memberId: this.$store.state.user.id,
-        type: 4,
-        pageNum: this.v_pageNum,
+        start: this.v_pageNum,
         pageSize: 10
       }
 
       this.$http
-        .get('/obtain/notice/pageList', { params })
+        .get('/notice/activity/participateList', { params })
         .then(res => {
           if (res.data.data.length) {
-            res.data.data.forEach(v => {
-              this.v_topic.push(v) 
-            })
+            res.data.data.map(v => this.v_list.push(v))
           } else {
             this.v_loadAll = true
           }
@@ -74,7 +72,7 @@ export default {
         this.f_getList()
       }, 1000)
     },
-    f_moveDetail (v) {
+    f_viewDetail (v) {
       this.$router.push({ name: 'topicDetail', query: { id: v.id }})
     },
     f_formatDate (time) {
@@ -85,13 +83,12 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.th_wrapper{
-  background-color: #efeff4;
+.cc_wrapper{
   height: 100%;
-  .th_container{
-    padding-top: 0.2rem;
-    padding-bottom: 1.2rem;
+  background-color: #efeff4;
+  .cc_container{
     background-color: #efeff4;
+    padding-bottom: 1.2rem;
     .th_list_item{
       height: 1.5rem;
       padding: 0.2rem 0.3rem 0.2rem 0.5rem;
@@ -148,34 +145,34 @@ export default {
               }
               &:nth-of-type(1){
                 i{
-                  background-image: url('../../../../assets/images/index/index_view.png');
+                  background-image: url('../../../assets/images/index/index_view.png');
                 }
                 &.index_topic_icon_active{
                   color: #58c3fb;
                   i{
-                    background-image: url('../../../../assets/images/index/index_viewed.png');
+                    background-image: url('../../../assets/images/index/index_viewed.png');
                   }
                 }
               }
               &:nth-of-type(2){
                 i{
-                  background-image: url('../../../../assets/images/index/index_comment.png');
+                  background-image: url('../../../assets/images/index/index_comment.png');
                 }
                 &.index_topic_icon_active{
                   color: #fbbc58;
                   i{
-                    background-image: url('../../../../assets/images/index/index_commented.png');
+                    background-image: url('../../../assets/images/index/index_commented.png');
                   }
                 }
               }
               &:nth-of-type(3){
                 i{
-                  background-image: url('../../../../assets/images/index/index_collect.png');
+                  background-image: url('../../../assets/images/index/index_collect.png');
                 }
                 &.index_topic_icon_active{
                   color: #ff6c73;
                   i{
-                    background-image: url('../../../../assets/images/index/index_collected.png');
+                    background-image: url('../../../assets/images/index/index_collected.png');
                   }
                 }
               }

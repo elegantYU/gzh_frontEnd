@@ -6,11 +6,11 @@
         <span>来源: {{ v_detail.sourceName }}</span>
         <span>{{ v_detail.createTime }}</span>
         <ul>
-          <li><i></i>{{ v_detail.rate }}</li>
+          <li :class="v_detail.hasBrowse ? 'index_topic_icon_active' : ''"><i></i>{{ v_detail.rate }}</li>
           <li :class="v_detail.hasCollect ? 'index_topic_icon_active' : ''" @click="f_getCollect"><i></i>{{ v_detail.collect }}</li>
         </ul>
       </div>
-      <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-96210.jpg" alt="">
+      <img :src="v_detail.img[0]" alt="">
       <div class="td_content">
         {{ v_detail.content }}
       </div>
@@ -149,37 +149,33 @@ export default {
   },
   created () {
     this.v_id = this.$route.query.id
-    this.f_getDetail()
+    this.f_addRate()
     this.f_getComments()
     this.f_getHouse()
-    this.f_addRate()
   },
   methods: {
     f_addRate () {
       let params = {
-        id: this.v_id
+        id: this.v_id,
+        memberId: this.$store.state.user.id
       }
-      console.log('params',params)
       this.$http
         .get('/obtain/notice/add', { params })
         .then(res => {
           console.log('增加流量')
+          this.f_getDetail()
         })
     },
     f_getCollect () {
       let params
 
       if (this.v_detail.hasCollect) {
-        params = {
-          memberId: this.$store.state.user.id,
-          noticeId: this.v_id
-        }
-
         this.$http
-          .post('/notice/activity/cancel', params)
+          .post(`/collection/notice/cancel?memberId=${this.$store.state.user.id}&noticeId=${this.v_id}`)
           .then(res => {
             if (res.data.success) {
               this.$toast('取消收藏')
+              this.f_getDetail()
             }
           })
       } else {
@@ -191,10 +187,11 @@ export default {
         }
 
         this.$http
-          .post('/notice/activity/add', params)
+          .post('/collection/notice/save', params)
           .then(res => {
             if (res.data.success) {
               this.$toast('收藏成功')
+              this.f_getDetail()
             }
           })
       }
@@ -222,7 +219,6 @@ export default {
       this.$http
         .get('/notice/activity/detail', { params })
         .then(res => {
-          console.log(res)
           if (res.data.result) {
             this.v_status = res.data.result.sts
           }
@@ -230,12 +226,14 @@ export default {
     },
     f_getDetail () {
       let params = {
-        id: this.v_id
+        id: this.v_id,
+        memberId: this.$store.state.user.id
       }
 
       this.$http
         .get('/obtain/notice/detail', { params })
         .then(res => {
+          console.log('detail', res.data);
           this.v_detail = Object.assign({}, res.data.data)
           this.v_status = res.data.data.status
           this.f_getStatus()

@@ -12,7 +12,7 @@
       </section>
       <section>
         <mybtn :data = "{img: 'icon4', txt: '我的订单'}" @myclick = "myclick"></mybtn>
-        <mybtn :data = "{img: 'icon5', txt: '我的活动'}" @myclick = "myclick"></mybtn>
+        <mybtn :data = "{img: 'icon5', txt: '我的活动', path: 'active'}" @myclick = "myclick"></mybtn>
         <mybtn :data = "{img: 'icon6', txt: '我的访客'}" @myclick = "myclick"></mybtn>
       </section>
       <section>

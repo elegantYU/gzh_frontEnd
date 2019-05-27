@@ -171,6 +171,7 @@ export default {
   },
   mounted () {
     this.v_from.createUserId = this.$store.state.user.id
+    this.f_getHouse()
   },
   methods: {
     f_getHouse () {

@@ -13,7 +13,7 @@
                 <p>{{ v.title }}</p>
                 <div class="index_topic_item_detail clearfix">
                   <span>{{ f_formatDate(v.createTime) }}</span>
-                  <span>来源 {{ v.sourceName }}</span>
+                  <span>{{ v.sourceName }}</span>
                   <ul class="clearfix">
                     <li><i></i>{{ v.rate }}</li>
                     <li><i></i>{{ v.comment }}</li>
@@ -106,7 +106,6 @@ export default {
       padding: 0.2rem 0.3rem 0.2rem 0.5rem;
       background-color: #fff;
       box-sizing: border-box;
-      box-shadow: 0 4px 10px rgba(124, 134, 138, 0.2);
       margin-bottom: 0.16rem;
       .index_topic_item_left{
         float: left;

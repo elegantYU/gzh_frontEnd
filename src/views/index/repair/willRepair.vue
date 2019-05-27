@@ -95,7 +95,7 @@ export default {
     return {
       v_id: '',
       v_user: {
-        house: ['1栋2单元407', '1栋2单元407']
+        house: []
       },
       v_from: {
         communityName: '戈雅花苑',
@@ -173,6 +173,17 @@ export default {
     this.v_from.createUserId = this.$store.state.user.id
   },
   methods: {
+    f_getHouse () {
+      let params = {
+        memberId: this.$store.state.user.id
+      }
+
+      this.$http
+        .get('/admin/member/house/all', { params })
+        .then(res => {
+          res.data.data.map(v => this.v_user.house.push(`${v.searchWord}`))
+        })
+    },
     f_openType () {
       this.v_typeFlag = true
       stop()
@@ -264,15 +275,17 @@ export default {
         display: flex;
         align-items: center;
         label{
-          display: inline-block;
+          display: block;
           font-size: 0.34rem;
           line-height: 0.9rem;
           width: 2rem;
           height: 100%;
+          line-height: 0.9rem;
         }
         input{
           display: block;
-          width: calc(100% - 2.25rem);
+          font-size: 0.3rem;
+          flex: 1;
           height: 100%;
           font-size: 0.3rem;
           background-color: transparent;
@@ -290,13 +303,15 @@ export default {
         &.wr_datetime{
           height: 1.8rem;
           .wr_datetime_item{
-            display: inline-block;
+            display: flex;
+            flex-wrap: wrap;
             width: calc(100% - 2.25rem);
             vertical-align: middle;
             .mu-input{
               height: 0.9rem;
               box-sizing: border-box;
               margin: 0;
+              padding: 0;
               &:last-of-type{
                 border: none;
               }

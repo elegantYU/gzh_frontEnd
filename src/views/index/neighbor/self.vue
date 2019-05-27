@@ -21,7 +21,7 @@
           <input type="text" placeholder="手机号、微信、QQ" v-model="v_from.telephone">
         </div>
         <!-- 车位共享 -->
-        <div class="ns_input" v-if="v_taskType === '2'" @click="f_openCarNum">
+        <div class="ns_input" v-if="v_taskType === '2'" @click="v_parkFlag = true">
           <label>车位编号</label>
           <input type="text" readonly placeholder="请选择车位" v-model="v_from.carNum">
           <i></i>
@@ -140,6 +140,20 @@
           </mu-list-item>
         </mu-list>
       </mu-bottom-sheet>
+      <!-- 车位 -->
+      <mu-bottom-sheet :open.sync="v_parkFlag">
+        <mu-list>
+          <mu-sub-header>选择车位</mu-sub-header>
+          <mu-list-item
+            button
+            v-for="(v, i) in v_carPark"
+            :key="i"
+            @click="f_choosePark(i)"
+          >
+            <mu-list-item-title>{{ v }}</mu-list-item-title>
+          </mu-list-item>
+        </mu-list>
+      </mu-bottom-sheet>
     </div>
   </div>
 </template>
@@ -154,15 +168,15 @@ export default {
       v_taskType: '0',
       v_typeFlag: false,
       v_carFlag: false,
+      v_parkFlag: false,
       v_types: [
         { name: '拼车', taskType: '1' },
         { name: '车位共享', taskType: '2' },
         { name: '时间互换', taskType: '3' },
         { name: '资源共享', taskType: '4' }
       ],
-      v_carNum: [
-        '军A1983', '警A2012'
-      ],
+      v_carNum: [],
+      v_carPark: [],
       v_from: {
         taskType: '',
         createUserName: '',
@@ -239,6 +253,8 @@ export default {
   mounted () {
     this.v_from.createUserId = this.$store.state.user.id
     this.v_from.createUserName = this.$store.state.user.name
+    this.f_getCar()
+    this.f_getPark()
   },
   methods: {
     f_openType () {
@@ -256,6 +272,11 @@ export default {
       this.v_from.carNum = this.v_carNum[i]
       this.v_carFlag = false
     },
+    f_choosePark (i) {
+      console.log(this.v_carPark[i])
+      this.v_from.carNum = this.v_carPark[i]
+      this.v_parkFlag = false
+    },
     f_changeLock (n) {
       this.v_from.carLock = n
     },
@@ -268,6 +289,32 @@ export default {
     },
     f_upload () {
 
+    },
+    f_getPark () {
+      let params = {
+        memberId: this.$store.state.user.id,
+        pageNum: 1,
+        pageSize: 100
+      }
+
+      this.$http
+        .get('/admin/member/parking/lot/my/lots', { params })
+        .then(res => {
+          res.data.data.map(v => this.v_carPark.push(v.position))
+        })
+    },
+    f_getCar () {
+      let params = {
+        memberId: this.$store.state.user.id,
+        pageNum: 1,
+        pageSize: 100
+      }
+
+      this.$http
+        .get('/admin/member/car/my/cars', { params })
+        .then(res => {
+          res.data.data.map(v => this.v_carNum.push(v.vehicleNumber))
+        })
     },
     f_validate () {
       // 校验字段 各种jb判断
@@ -306,6 +353,7 @@ export default {
                 contact: this.v_from.contact,
                 telephone: this.v_from.telephone,
                 carNum: this.v_from.carNum,
+                price: this.v_from.price,
                 carLock: this.v_from.carLock,
                 startTime: this.v_from.startTime,
                 endTime: this.v_from.endTime,
@@ -403,9 +451,8 @@ export default {
         text-align: left;
         padding: 0 0.3rem;
         display: flex;
-        align-items: center;
         label{
-          display: inline-block;
+          display: block;
           font-size: 0.34rem;
           line-height: 0.9rem;
           width: 2rem;
@@ -413,10 +460,11 @@ export default {
         }
         input{
           display: block;
-          width: calc(100% - 2.25rem);
+          flex: 1;
           height: 100%;
           font-size: 0.3rem;
           background-color: transparent;
+          font-size: 0.3rem;
         }
         &>i{
           display: inline-block;
@@ -429,18 +477,21 @@ export default {
           vertical-align: middle;
         }
         &>.mu-input{
+          display: block;
           width: calc(100% - 2.25rem);
         }
         &.ns_shareTime{
           height: 1.8rem;
           span{
-            display: inline-block;
+            display: flex;
+            flex-wrap: wrap;
             width: calc(100% - 2.25rem);
             vertical-align: middle;
             .mu-input{
               height: 0.9rem;
               box-sizing: border-box;
               margin: 0;
+              padding: 0;
               &:last-of-type{
                 border: none;
               }
@@ -449,7 +500,9 @@ export default {
         }
         &.ns_input_check{
           span{
-            display: inline-block;
+            display: flex;
+            font-size: 0.3rem;
+            align-items: center;
             width: 1.38rem;
             height: 100%;
             i{

@@ -66,13 +66,14 @@ export default {
   data () {
     return {
       v_list: [
-        { belonger: '', phoneNum: '', position: '', lotType: '自有', vehicleNumber: [], lockType: '有'  }
+        { memberId: '', belonger: '', phoneNum: '', position: '', lotType: '自有', vehicleNumber: [], lockType: '有'  }
       ],
       v_parkNum: [],
       v_carNum: []
     }
   },
   mounted  () {
+    this.v_list[0].memberId = this.$store.state.user.id
     this.f_getCarNum()
   },
   methods: {
@@ -85,13 +86,13 @@ export default {
       .get('/obtain/config/carportSpinner', { params })
         .then(res => {
           console.log(res)
-          this.v_parkNum = res.data.data.map(v => v.carNo)
+          res.data.data.map(v => this.v_parkNum.push(v.code))
         })
       this.$http
         .get('/obtain/config/carSpinner', { params })
         .then(res => {
           console.log(res)
-          this.v_carNum = res.data.data.map(v => v.code)                 // 待改
+          res.data.data.map(v => this.v_carNum.push(v.carNo))                 // 待改
         })
     },
     f_addItem () {
@@ -101,7 +102,8 @@ export default {
         position: '',
         lotType: '自有',
         vehicleNumber: [],
-        lockType: '有'
+        lockType: '有',
+        memberId: this.$store.state.user.id
       }
       this.v_list.push(item)
     },
@@ -137,8 +139,12 @@ export default {
         this.$http
           .post('/admin/member/parking/lot/save', params)
           .then(res => {
-            if (this.v_list.length-1 === i) {
-              this.$router.go(-1)
+            if (res.data.success) {
+              if (this.v_list.length-1 === i) {
+                this.$router.go(-1)
+              }
+            } else {
+              this.$toast(res.data.msg)
             }
           })
       })
@@ -195,6 +201,7 @@ export default {
           }
           label{
             width: 1.8rem;
+            height: 0.9rem;
             line-height: 0.9rem;
             font-size: 0.34rem;
             text-align: left;
@@ -206,6 +213,7 @@ export default {
             }
             input{
               display: block;
+              font-size: 0.3rem;
               width: 100%;
               height: 100%;
               font-size: 0.3rem;

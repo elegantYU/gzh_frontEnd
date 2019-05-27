@@ -344,12 +344,15 @@ export default {
       }
 
       let params = this.v_form
-      console.log(params)
       this.$http
         .post('/admin/member/house/save', params)
         .then(res => {
-          this.$toast(res.data.msg)
-          this.$router.go(-1)
+          if (res.data.success) {
+            this.$toast(res.data.msg)
+            this.$router.go(-1)
+          } else {
+            this.$toast(res.data.msg)
+          }
         })
     }
   }
@@ -382,22 +385,21 @@ export default {
         }
         label{
           width: 1.5rem;
+          height: 100%;
           line-height: 0.9rem;
           font-size: 0.34rem;
           text-align: left;
         }
         .ha_input_box{
           flex: 1;
-          align-items: center;
-          font-size: 0.3rem;
           .mu-input{
             display: block;
           }
           input{
             display: block;
+            font-size: 0.3rem;
             width: 100%;
             height: 100%;
-            font-size: 0.3rem;
           }
         }
         i{

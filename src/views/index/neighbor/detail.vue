@@ -95,7 +95,7 @@
         {{ v_orderText }}
       </div>
       <!-- 物业特有评论 -->
-      <div class="nd_comments">
+      <div class="nd_comments" v-if="v_content.shareType == 2">
         <h6>申请人</h6>
         <ul class="nd_comments_list">
           <li
@@ -108,11 +108,11 @@
             </div>
             <div class="nd_comments_content">
               <ul>
-                <li><label>姓名</label>：</li>
-                <li><label>联系方式</label>：</li>
+                <li><label>姓名</label>：{{ $store.state.user.name }}</li>
+                <li><label>联系方式</label>：{{ $store.state.user.phoneNum }}</li>
                 <li><label>身份证号</label>：</li>
-                <li><label>房屋信息</label>：</li>
-                <li><label>预约时间</label>：</li>
+                <li><label>房屋信息</label>：{{ $store.state.house[0] }}</li>
+                <li><label>预约时间</label>：{{ new Date().toLocaleString('chinese', { hour12: false }).replace(/\//g, '-') }}</li>
               </ul>
             </div>
             <span>预约成功</span>
@@ -156,12 +156,13 @@ export default {
       switch (this.v_content.taskType) {
         case '1':
         case '3':
-          return this.v_content.startTime
+          return this.v_content.startTime.replace(this.v_content.startTime.slice(16), '')
           break
         default:
           if (this.v_content.endTime) {
-            let time = this.v_content.endTime.split(' ')[1]
-            return `${this.v_content.startTime} ~ ${time}`
+            let time = this.v_content.endTime.split(' ')[1].replace(this.v_content.endTime.split(' ')[1].slice(5), '')
+            let start = this.v_content.startTime.replace(this.v_content.startTime.slice(16), '')
+            return `${start} ~ ${time}`
           }
           break
       }
@@ -174,10 +175,10 @@ export default {
       return eval(this.v_content.imgUrl)
     },
     submit: function () {
-      if (this.v_content.shareType === '2') {
+      if (this.v_content.shareType == 2) {
         this.v_orderText = '立即预约'
         return true
-      } else if (this.v_content.createUserId === '用户本省的userId') {
+      } else if (this.v_content.createUserId === this.$store.state.user.id) {
         this.v_orderText = '取消共享'
         return true
       } else {
@@ -207,10 +208,11 @@ export default {
         let params = {
           id: this.v_content.id,
           userId: this.$store.state.user.id,
-          telephone: this.v_content.telephone,
-          address: '用户的房屋驻地',
-          IDCard: '用户的身份证号'
+          telephone: this.$store.state.user.phoneNum,
+          address: this.$store.state.house[0],
+          IDCard: '--'
         }
+        console.log(params)
         this.$http
           .get('/admin/share/applyShareInfo', { params })
           .then(res => {
@@ -221,7 +223,7 @@ export default {
           })
       } else {
         let params = {
-          id: this.v_content[i].id,
+          id: this.v_content.id,
           type: 2
         }
         let flag = confirm('确认取消共享吗?')
@@ -230,8 +232,8 @@ export default {
             .get('/admin/share/deleteShareInfo', { params })
             .then(res => {
               if (res.data.success) {
-                this.v_list.splice(i, 1)
                 this.$toast('取消成功')
+                this.$router.go(-1)
               } else {
                 this.$toast('网络错误')
               }
@@ -265,15 +267,18 @@ export default {
         text-align: left;
         padding: 0 0.3rem;
         position: relative;
+        display: flex;
         label{
-          display: inline-block;
+          display: block;
           font-size: 0.34rem;
+          line-height: 0.9rem;
           width: 2rem;
           height: 100%;
         }
         input{
-          width: calc(100% - 2.25rem);
+          flex: 1;
           height: 100%;
+          font-size: 0.3rem;
           background-color: transparent;
         }
         span{

@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     wxcode: '',
     user: {},         // id name phoneNum headIcon
+    house: [],
     neighbor: {
       router: ''
     }
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     setUser (state, obj) {
       state.user = Object.assign({}, obj)
     },
+    setHouse (state, obj) {
+      state.house = obj.map(v => v)
+    },
     neighborRouter (state, r) {
       state.neighbor.router = r
     }
@@ -25,6 +29,9 @@ export default new Vuex.Store({
   actions: {
     setUser (context, obj) {
       context.commit('setUser', obj)
+    },
+    setHouse (context, obj) {
+      context.commit('setHouse', obj)
     }
   }
 })

@@ -10,7 +10,11 @@ export default {
   name: 'No',
   beforeRouteEnter (to, from, next) {
     // 若用户信息完善 则进入 我的 页面
-    next()
+    next(vm => {
+      if (vm.$store.state.house.length) {
+        vm.$router.push({ name: 'index' })
+      }
+    })
   },
   methods: {
     f_move () {

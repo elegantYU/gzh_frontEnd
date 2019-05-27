@@ -50,7 +50,7 @@ export default {
   data () {
     return {
       v_list: [
-        { vehicleType: '', vehicleStructure: '', vehicleNumber: '' }
+        { memberId: '', vehicleType: '', vehicleStructure: '', vehicleNumber: '' }
       ],
       v_model: ['货车', '轿车', '面包车'],
       v_type: ['轿车--两厢车', '轿车--三厢车', '面包车--七座', '面包车--七座以上', '货车--厢式货车', '货车--敞开类货车'],
@@ -58,6 +58,7 @@ export default {
     }
   },
   mounted () {
+    this.v_list[0].memberId = this.$store.state.user.id
     this.f_getCarNUm()
   },
   methods: {
@@ -69,7 +70,7 @@ export default {
       this.$http
         .get('/obtain/config/carSpinner', { params })
         .then(res => {
-          this.v_carNum = res.data.data.map(v => v.carNo)
+          res.data.data.map(v => this.v_carNum.push(v.carNo))
         })
     },
     f_addItem () {
@@ -103,12 +104,17 @@ export default {
       }
 
       this.v_list.map((v, i) => {
+        let params = Object.assign({}, v)
         this.$http
           .post('/admin/member/car/save', params)
           .then(res => {
-            if (this.v_list.length -1 === i) {
-              this.$toast('提交成功')
-              this.$router.go(-1)
+            if (res.data.success) {
+              if (this.v_list.length - 1 === i) {
+                this.$toast('提交成功')
+                this.$router.go(-1)
+              }
+            } else {
+              this.$toast(res.data.msg)
             }
           })
       })
@@ -165,6 +171,7 @@ export default {
           }
           label{
             width: 1.5rem;
+            height: 0.9rem;
             line-height: 0.9rem;
             font-size: 0.34rem;
             text-align: left;
@@ -177,6 +184,7 @@ export default {
             }
             input{
               display: block;
+              font-size: 0.3rem;
               width: 100%;
               height: 100%;
             }

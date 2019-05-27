@@ -6,6 +6,7 @@
 </template>
 <script>
 import panel from '@/components/panel'
+import { setPriority } from 'os';
 export default {
   name: 'contact',
   data () {
@@ -48,6 +49,56 @@ export default {
   props: {},
   components: {
     panel
+  },
+  methods: {
+    f_getlist () {
+      console.log(222)
+      this.$http
+        .get('/admin/property/members')
+        .then(res => {
+          if (res.data.data) {
+            // this.$toast('反馈成功')
+            console.log(res.data.data)
+            const data = res.data.data
+            this.contact = []
+            data.map(v => {
+              if (v.leaderName === null) {
+                this.contact.push({
+                  partment: v.department,
+                  leader: {
+                    name: v.name,
+                    tel: v.phone
+                  },
+                  watchman: []
+                })
+              }
+            })
+            data.map(v => {
+              if (v.leaderName) {
+                this.contact.map(m => {
+                  if (v.leaderName === m.leader.name) {
+                    console.log(111)
+                    m.watchman.push({
+                      name: v.name,
+                      tel: v.phone
+                    })
+                  }
+                })
+              }
+            })
+          } else {
+            // this.$toast('反馈失败')
+          }
+        })
+    }
+  },
+  mounted () {
+    this.f_getlist()
+    // for(var i=0;i<5;i++){
+    //   setTimeout(() => {
+    //     console.log(i)
+    //   }, 1000*i)
+    // }
   }
 }
 </script>

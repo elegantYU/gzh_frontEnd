@@ -37,7 +37,7 @@ export default {
           this.$router.push({name: ''})
           break;
         case '联系物业':
-          this.$router.push({name: ''})
+          this.$router.push({name: 'contact'})
           break;
         case '智慧停车':
           this.$router.push({name: ''})
@@ -55,7 +55,7 @@ export default {
           this.$router.push({name: ''})
           break;
         case '生活超市':
-          this.$router.push({name: ''})
+          this.$router.push({name: 'shop'})
           break;
         case '邻里共享':
           this.$router.push({name: 'neighbor'})
@@ -70,7 +70,7 @@ export default {
           this.$router.push({name: 'pet'})
           break;
         case '诉求建议':
-          this.$router.push({name: ''})
+          this.$router.push({name: 'appeal'})
           break;
         case '快递服务':
           window.open('https://m.kuaidi100.com/app/?coname=chenjunqi')
@@ -93,18 +93,22 @@ export default {
   color: #000;
 }
 .serve-wp {
-  display: flex;
-  flex-wrap: wrap;
+  // display: flex;
+  // flex-wrap: wrap;
+  width: 6.96rem;
+  margin: 0 auto;
   background: #fff;
-  padding-left: 0.25rem;
   padding-top: 0.3rem;
+  text-align: left;
   .icon {
     width: 0.88rem;
     margin-bottom: 0.15rem;
   }
   .serve-li {
+    display: inline-block;
     width: 1.74rem;
     margin-bottom: 0.3rem;
+    text-align: center;
   }
   .txt {
     font-size: 0.22rem;

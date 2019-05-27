@@ -7,7 +7,7 @@
         <span>{{ v_detail.createTime }}</span>
         <ul>
           <li><i></i>{{ v_detail.rate }}</li>
-          <li :class="v_collect ? 'index_topic_icon_active' : ''" @click="f_getCollect"><i></i>{{ v_detail.collect }}</li>
+          <li :class="v_detail.hasCollect ? 'index_topic_icon_active' : ''" @click="f_getCollect"><i></i>{{ v_detail.collect }}</li>
         </ul>
       </div>
       <img src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-96210.jpg" alt="">
@@ -17,7 +17,7 @@
       <div class="td_comment">
         <div class="td_comment_header">
           <span>全部评论（{{ v_total }}条）</span>
-          <span @click="f_openSubmitComments(v_detail.id)">评论</span>
+          <span @click="f_openSubmitComments(0)">评论</span>
         </div>
         <div class="td_comment_list" v-if="v_total">
           <div
@@ -33,41 +33,41 @@
             <div class="td_comment_item_right">
               <div class="td_comment_right_top">
                 <span>{{ v.mianComment.createUserName }}</span>
-                <i @click="f_openSubmitComments(v.mianComment.rid)"></i>
+                <i @click="f_openSubmitComments(v.mianComment.id)"></i>
               </div>
               <div class="td_comment_right_bottom">
-                {{ '2019-01-01' }}
+                {{ v.mianComment.createTime.split(' ')[0] }}
               </div>
               <div class="td_comment_content">
                 {{ v.mianComment.content }}
               </div>
-              <div class="td_comment_content_list">
+              <div class="td_comment_content_list" v-if="v.childrenComments">
                 <!-- 品论 -->
                 <div
                   class="td_comment_content_list_each"
                   v-for="(val, ind) in v.childrenComments"
                   :key="ind"
                   :class="v.openComment ? '' : 'td_comment_content_list_more'"
-                  @click="f_openSubmitComments(v.rid)"
+                  @click="f_openSubmitComments(v.mianComment.id)"
                 >
                   <span>{{ val.createUserName }}:</span>
                   <p>{{ val.content }}</p>
                 </div>
-                <div class="td_more_comments" v-if="v.childrenComments.length > 3" @click="f_openComments(i)">共{{ v.childrenComments.length }}条回复 ></div>
+                <div class="td_more_comments" v-if="false" @click="f_openComments(i)">共{{ v.childrenComments.length }}条回复 ></div>
               </div>
             </div>
           </div>
         </div>
         <!-- 没有评论 -->
-        <div v-else>暂无评论</div>
+        <div class="td_nocomment" v-else>暂无评论</div>
       </div>
       <!-- 报名 -->
       <div class="td_signup" :class="signupLabel">
         <span>{{ new Date().getTime > new Date(this.v_detail.postEnd) ? '已结束' : '报名中' }}</span>
-        <span @click="f_openSignUp">我要报名</span>
+        <span @click="f_openSignUp">{{ v_status === 1 ? '审核中' : '我要报名' }}</span>
       </div>
       <!-- 提交评论 -->
-      <div class="td_submit_wrapper" v-if="v_submit">
+      <div class="td_submit_wrapper" v-show="v_submit">
         <div class="td_mask" @click="f_closeSubmitComments"></div>
         <div class="td_submit_content">
           <div class="td_submit_text">
@@ -103,7 +103,7 @@
             </div>
           </div>
           <!--  -->
-          <div class="td_sign_btn">立即报名</div>
+          <div class="td_sign_btn" @click="f_signup">立即报名</div>
         </div>
       </div>
     </div>
@@ -119,8 +119,7 @@ export default {
       v_detail: {},
       v_comments: [],
       v_total: 0,
-      v_status: 0,
-      v_collect: false,
+      v_status: 3,
       v_submit: false,
       v_signup: false,
       v_houseList: [],
@@ -138,7 +137,7 @@ export default {
         case 2:
           return 'td_signup_3'
           break
-        case 3:
+        case 0:
           return 'td_signup_4'
           break
       }
@@ -148,7 +147,7 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     this.v_id = this.$route.query.id
     this.f_getDetail()
     this.f_getComments()
@@ -160,24 +159,20 @@ export default {
       let params = {
         id: this.v_id
       }
-
+      console.log('params',params)
       this.$http
         .get('/obtain/notice/add', { params })
         .then(res => {
-          console.log('增加人气')
+          console.log('增加流量')
         })
     },
     f_getCollect () {
-      let params = {
-        noticeId: this.v_id,
-        type: this.v_detail.type,
-        memberId: this.$store.state.user.id,
-        phone: this.$store.state.user.phoneNum
-      }
-      if (this.v_collect) {
+      let params
+
+      if (this.v_detail.hasCollect) {
         params = {
-          memberId: this.v_id,
-          noticeId: this.v_detail.type
+          memberId: this.$store.state.user.id,
+          noticeId: this.v_id
         }
 
         this.$http
@@ -185,7 +180,6 @@ export default {
           .then(res => {
             if (res.data.success) {
               this.$toast('取消收藏')
-              this.v_collect = false
             }
           })
       } else {
@@ -201,7 +195,6 @@ export default {
           .then(res => {
             if (res.data.success) {
               this.$toast('收藏成功')
-              this.v_collect = true
             }
           })
       }
@@ -220,6 +213,21 @@ export default {
           }
         })
     },
+    f_getStatus () {
+      let params = {
+        memberId: this.$store.state.user.id,
+        rActivityId: this.v_detail.id
+      }
+
+      this.$http
+        .get('/notice/activity/detail', { params })
+        .then(res => {
+          console.log(res)
+          if (res.data.result) {
+            this.v_status = res.data.result.sts
+          }
+        })
+    },
     f_getDetail () {
       let params = {
         id: this.v_id
@@ -229,17 +237,23 @@ export default {
         .get('/obtain/notice/detail', { params })
         .then(res => {
           this.v_detail = Object.assign({}, res.data.data)
+          this.v_status = res.data.data.status
+          this.f_getStatus()
         })
     },
     f_getComments () {
       this.$http
         .post(`/admin/comment/noticeList?rId=${this.v_id}&rtype=notice`)
         .then(res => {
-          res.data.data.forEach(v => {
-            v.openComment = false
-            this.v_total++
-            this.v_comments.push(v)
-          })
+          console.log(res.data)
+          this.v_comments = []
+          if (res.data.data.length) {
+            res.data.data.forEach(v => {
+              v.openComment = false
+              this.v_total++
+              this.v_comments.push(v)
+            })
+          }
         })
     },
     f_openComments (i) {
@@ -248,25 +262,29 @@ export default {
     f_openSubmitComments (id) {
       this.v_submit = true
       this.v_currentRid = id
+      console.log(id)
     },
     f_closeSubmitComments () {
       this.v_submit = false
+      this.v_textarea = ''
     },
-    f_postComment (id) {
+    f_postComment () {
       let params = {
-        rId: id,
-        rType: 'notice',
+        rId: this.v_id,
+        rtype: 'notice',
         createUserId: this.$store.state.user.id,
         createUserName: this.$store.state.user.name,
-        content: this.v_textarea
+        content: this.v_textarea,
+        parentId: this.v_currentRid
       }
 
       this.$http
         .post('/admin/comment/add', params)
         .then(res => {
           if (res.data.success) {
-            this.$toast('评论成功')
+            this.$toast('回复成功')
             this.f_closeSubmitComments()
+            this.f_getComments()
           } else {
             console.log('评论失败', res)
           }
@@ -289,7 +307,7 @@ export default {
       }
 
       this.$http
-        .get('/notice/activity/add', )
+        .post('/notice/activity/add', params)
         .then(res => {
           if (res.data.success) {
             this.v_status = 1
@@ -416,6 +434,7 @@ export default {
           }
           .td_comment_item_right{
             flex: 1;
+            border-bottom: 1px solid #f5f5f5;
             .td_comment_right_top{
               padding-left: 0.2rem;
               height: 0.4rem;
@@ -452,6 +471,7 @@ export default {
               width: 100%;
               height: auto;
               padding: 0.1rem 0.2rem;
+              background-color: #f5f5f5;
               &.td_comment_content_list_more{
                 height: 1.55rem;
                 overflow: hidden;
@@ -475,6 +495,9 @@ export default {
           }
         }
       }
+      .td_nocomment{
+        font-size: 0.3rem;
+      }
     }
     .td_signup{
       position: fixed;
@@ -485,6 +508,7 @@ export default {
       height: 1.2rem;
       display: flex;
       align-items: center;
+      background-color: #efeff4;
       span{
         font-size: 0.28rem;
         flex: 1;
@@ -629,9 +653,15 @@ export default {
           }
           .td_sign_box{
             flex: 1;
+            height: 100%;
+            .mu-input{
+              display: block;
+            }
             input{
+              display: block;
               width: 100%;
               height: 100%;
+              font-size: 0.3rem;
             }
           }
           i{

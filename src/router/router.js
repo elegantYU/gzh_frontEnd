@@ -67,8 +67,6 @@ const router = new Router({
     // 登录注册
     { path: '/login', name: 'login', meta: { title: '登录' }, component: () => import('../views/login/Login.vue') },
     { path: '/register', name: 'register', meta: { title: '注册' }, component: () => import('../views/login/Register.vue') },
-    // 省市选择
-    { path: '/pick', name: 'pick', meta: { title: '省市选择' }, component: () => import('../components/picker.vue') },
     // 意见反馈
     { path: '/feedback', name: 'feedback', meta: { title: '意见反馈' }, component: () => import('../views/my/aboutus/feedback.vue') },
     { path: '/success', name: 'success', meta: { title: '反馈成功' }, component: () => import('../views/my/aboutus/success.vue') },

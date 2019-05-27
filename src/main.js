@@ -11,7 +11,6 @@ import touch from 'vue-directive-touch'
 import { Picker, Popup } from 'mint-ui'
 import './assets/css/base.css'
 import 'muse-ui/dist/muse-ui.css'
-import 'mint-ui/lib/style.css'
 import router from './router/router'
 deviceRem(750)
 
@@ -23,8 +22,6 @@ Vue.use(touch)
 Vue.prototype.wxsdk = wxsdk
 
 Vue.config.productionTip = false
-Vue.component(Picker.name, Picker)
-Vue.component(Popup.name, Popup)
 
 new Vue({
   router,

@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <router-view v-touch:right.capture='f_globalMove' v-touch:up.capture='f_moveTop'></router-view>
+    <!-- <router-view
+    v-touch:right.capture='f_globalMove'
+    v-touch:up.capture='f_moveTop'
+    v-touch:down.capture='f_moveDown'></router-view> -->
+    <router-view
+    v-touch:right='f_moveRight'></router-view>
   </div>
 </template>
 
@@ -21,14 +26,26 @@ export default {
   methods: {
     f_globalMove () {
       this.$router.go(-1)
+      alert('右滑')
     },
     f_moveTop () {
+      alert('上滑')
       return false
+    },
+    f_moveDown () {
+      alert('下滑')
+    },
+    f_moveRight (e, start, end) {
+      const xLength = end.X - start.X
+      const yLength = Math.abs(end.Y - start.Y)
+      const len = xLength - yLength
+      if (len > 20) {
+        this.$router.go(-1)
+      }
     }
   }
 }
 </script>
-
 
 <style lang="scss">
 #app {

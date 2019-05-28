@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Axios from 'axios'
 import VueAxios from 'vue-axios'
-import MuseUI from 'muse-ui'
 import App from './App.vue'
 import store from './store/store'
 import { deviceRem } from './utils/utils'
@@ -13,9 +12,8 @@ import 'muse-ui/dist/muse-ui.css'
 import router from './router/router'
 deviceRem(750)
 
-// Axios.defaults.baseURL = 'http://wx.feng360.com:9999'
+Axios.defaults.baseURL = 'http://wx.feng360.com:9999'
 Vue.use(VueAxios, Axios)
-Vue.use(MuseUI)
 Vue.use(toastMessage)
 Vue.use(touch)
 Vue.prototype.wxsdk = wxsdk

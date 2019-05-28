@@ -394,6 +394,7 @@ export default {
           flex: 1;
           .mu-input{
             display: block;
+            font-size: 0.3rem;
           }
           input{
             display: block;

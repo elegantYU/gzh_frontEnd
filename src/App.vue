@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view v-touch:right.capture='f_globalMove' v-touch:up.capture='f_moveTop'></router-view>
+    <router-view v-touch:right.capture='f_globalMove' v-touch:down.capture='f_moveTop'></router-view>
   </div>
 </template>
 

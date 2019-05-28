@@ -2,7 +2,7 @@
   <div class="home_wrapper">
     <router-view></router-view>
     <Tabs></Tabs>
-    <div class="index_judge_mask" v-if="v_noHouse" @click="f_moveAddHouse"></div>
+    <!-- <div class="index_judge_mask" v-if="v_noHouse" @click="f_moveAddHouse"></div> -->
   </div>
 </template>
 

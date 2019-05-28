@@ -55,9 +55,8 @@ export default {
       }
 
       this.$http
-        .get('/collection/notice/collectionList', { params })
+        .get('/notice/activity/participateList', { params })
         .then(res => {
-          console.log(res)
           if (res.data.data.length) {
             res.data.data.map(v => this.v_list.push(v))
           } else {

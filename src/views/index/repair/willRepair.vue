@@ -108,7 +108,8 @@ export default {
         startTime: '',
         endTime: '',
         detail: '',
-        img: ['', '']
+        img: [],
+        villageCode: 4002
       },
       v_types: [
         { name: '水暖检修' },
@@ -212,7 +213,10 @@ export default {
     },
     f_submit () {
       let params = Object.assign({}, this.v_from)
-      params.img = JSON.stringify(params.img)
+      !params.img.length && delete params.img
+      // params.img = JSON.stringify(params.img)
+
+      console.log(params)
       if (this.v_from.communityName && this.v_from.houseName && this.v_from.type && this.v_from.userName && this.v_from.telPhone && this.v_from.startTime && this.v_from.endTime) {
         if (this.v_id) {
           params = { ...params, id: this.v_id }

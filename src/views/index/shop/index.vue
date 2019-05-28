@@ -11,6 +11,31 @@
           <div class="shop_nav_car"></div>
         </div>
       </div>
+      <div class="shop_body">
+        <div class="shop_category">
+          <div class="shop_category_head">
+            <span>水果生鲜</span>
+            <span>更多 ></span>
+          </div>
+          <div class="shop_category_body">
+            <ul>
+              <li>
+                <div class="shop_item_img">
+                  <img src="https://img.wowoqq.com/allimg/171130/1-1G1300I102-52.jpg" alt="">
+                </div>
+                <b>品谷白有套4粒 100g</b>
+                <p>套箱浓郁，口感绵甜多只</p>
+                <div class="shop_item_detail">
+                  <span>￥25.8</span>
+                  <s>原价:30</s>
+                  <span>销量999+件</span>
+                  <i></i>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -20,7 +45,7 @@ export default {
   name: 'Shop',
   data () {
     return {
-
+      v_list: []
     }
   },
   methods: {
@@ -91,6 +116,109 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
+      }
+    }
+    .shop_body{
+      padding: 0 0.2rem;
+      .shop_category{
+        width: 100%;
+        height: 5.2rem;
+        .shop_category_head{
+          display: flex;
+          width: 100%;
+          height: 0.7rem;
+          justify-content: space-between;
+          align-items: center;
+          span{
+            font-size: 0.32rem;
+            color: #383839;
+            &:last-of-type{
+              color: #868686;
+              font-size: 0.24rem;
+              cursor: pointer;
+            }
+          }
+        }
+        .shop_category_body{
+          width: 100%;
+          height: 4.5rem;
+          overflow: hidden;
+          &.shop_category_more{
+            height: auto;
+          }
+          ul{
+            display: flex;
+            width: 100%;
+            height: auto;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            li{
+              width: 3.5rem;
+              height: 4.5rem;
+              border-radius: 0.1rem;
+              background-color: #fff;
+              margin-bottom: 0.1rem;
+              padding: 0.4rem 0.15rem 0.3rem;
+              text-align: left;
+              .shop_item_img{
+                display: table-cell;
+                width: 3.2rem;
+                height: 2.6rem;
+                vertical-align: middle;
+                text-align: center;
+                img{
+                  max-width: 100%;
+                  max-height: 2.6rem;
+                }
+              }
+              &>b{
+                display: block;
+                font-size: 0.28rem;
+                font-weight: normal;
+                color: #010101;
+                margin-bottom: 0.2rem;
+                // 溢出隐藏
+              }
+              &>p{
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-size: 0.22rem;
+                color: #999999;
+                margin-bottom: 0.25rem;
+              }
+              .shop_item_detail{
+                display: flex;
+                width: 100%;
+                height: 0.26rem;
+                justify-content: space-between;
+                align-items: baseline;
+                flex-wrap: nowrap;
+                span{
+                  font-size: 0.3rem;
+                  color: #ee1236;
+                  &:last-of-type{
+                    font-size: 0.14rem;
+                    color: #000;
+                  }
+                }
+                s{
+                  font-size: 0.14rem;
+                }
+                i{
+                  width: 0.28rem;
+                  height: 0.28rem;
+                  background-image: url('../../../assets/images/shop/shopcar.png');
+                  background-size: contain;
+                  background-repeat: no-repeat;
+                  background-position: center center;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

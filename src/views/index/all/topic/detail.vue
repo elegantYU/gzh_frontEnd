@@ -326,6 +326,10 @@ export default {
     padding-bottom: 1.2rem;
     h6{
       height: 0.7rem;
+      padding: 0 0.3rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
       line-height: 0.7rem;
       font-size: 0.32rem;
     }

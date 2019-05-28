@@ -3,6 +3,7 @@ import Axios from 'axios'
 import VueAxios from 'vue-axios'
 import App from './App.vue'
 import store from './store/store'
+import Muse from 'muse-ui'
 import { deviceRem } from './utils/utils'
 import wxsdk from './utils/wxsdk'
 import toastMessage from './components/plugin/Toast'
@@ -14,6 +15,7 @@ deviceRem(750)
 
 // Axios.defaults.baseURL = 'http://wx.feng360.com:9999'
 Vue.use(VueAxios, Axios)
+Vue.use(Muse)
 Vue.use(toastMessage)
 Vue.use(touch)
 Vue.prototype.wxsdk = wxsdk

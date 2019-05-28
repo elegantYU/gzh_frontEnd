@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     f_move () {
-      this.$router.push({ name: 'house' })
+      this.$router.push({ name: 'houseAdd' })
     }
   }
 }

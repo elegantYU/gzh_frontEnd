@@ -12,7 +12,7 @@ import 'muse-ui/dist/muse-ui.css'
 import router from './router/router'
 deviceRem(750)
 
-Axios.defaults.baseURL = 'http://wx.feng360.com:9999'
+// Axios.defaults.baseURL = 'http://wx.feng360.com:9999'
 Vue.use(VueAxios, Axios)
 Vue.use(toastMessage)
 Vue.use(touch)

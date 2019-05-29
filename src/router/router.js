@@ -22,7 +22,15 @@ const router = new Router({
         // 环境秩序
         { path: '/home/environment', name: 'environment', meta: { title: '环境秩序' }, component: () => import('../views/index/all/environment/index.vue') },
         // 超市
-        { path: '/shop', name: 'shop', meta: { title: '生活超市' }, component: () => import('../views/index/shop/index.vue') },
+        { path: '/shop',
+          name: 'shop',
+          meta: { title: '生活超市' },
+          component: () => import('../views/index/shop/index.vue'),
+          children: [
+            { path: '/shop/more', name: 'shopMore', meta: { title: '生活超市' }, component: () => import('../views/index/shop/more.vue') },
+            { path: '/shop/category', name: 'shopCategory', meta: { title: '生活超市' }, component: () => import('../views/index/shop/category.vue') }
+          ]
+        },
         // 全部
         { path: '/home/all', name: 'all', meta: { title: '我的' }, component: () => import('../views/index/all/index.vue') },
         // 头条
@@ -46,8 +54,9 @@ const router = new Router({
     // 头条
     { path: '/topic/detail', name: 'topicDetail', meta: { title: '详情' }, component: () => import('../views/index/all/topic/detail.vue') },
     { path: '/topic/otherDetail', name: 'noticeDetail', meta: { title: '详情' }, component: () => import('../views/index/all/topic/policyDetail.vue') },
-    // 头条
     { path: '/topic/policydetail', name: 'policyDetail', meta: { title: '详情' }, component: () => import('../views/index/all/topic/policyDetail.vue') },
+    // 超市
+    { path: '/shop/detail', name: 'shopItemDetail', meta: { title: '商品详情' }, component: () => import('../views/index/shop/detail.vue') },
     // 宠物
     { path: '/pet', name: 'pet', meta: { title: '我的宠物' }, component: () => import('../views/index/all/pet/index.vue') },
     { path: '/pet/add', name: 'petAdd', meta: { title: '宠物登记' }, component: () => import('../views/index/all/pet/add.vue') },

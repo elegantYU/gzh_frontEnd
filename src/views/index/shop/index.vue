@@ -12,29 +12,7 @@
         </div>
       </div>
       <div class="shop_body">
-        <div class="shop_category">
-          <div class="shop_category_head">
-            <span>水果生鲜</span>
-            <span>更多 ></span>
-          </div>
-          <div class="shop_category_body">
-            <ul>
-              <li>
-                <div class="shop_item_img">
-                  <img src="https://img.wowoqq.com/allimg/171130/1-1G1300I102-52.jpg" alt="">
-                </div>
-                <b>品谷白有套4粒 100g</b>
-                <p>套箱浓郁，口感绵甜多只</p>
-                <div class="shop_item_detail">
-                  <span>￥25.8</span>
-                  <s>原价:30</s>
-                  <span>销量999+件</span>
-                  <i></i>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <router-view></router-view>
       </div>
     </div>
   </div>
@@ -48,8 +26,8 @@ export default {
       v_list: []
     }
   },
-  methods: {
-    
+  mounted () {
+    this.$router.push({ name: 'shopCategory' })
   }
 }
 </script>

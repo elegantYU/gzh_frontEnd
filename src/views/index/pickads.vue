@@ -6,12 +6,15 @@
     </div>
     <div class="pick-wp">
       <div class="left">
-        <div class="fa" v-for="v in left"
-        :key="v.id">{{v}}</div>
+        <div class="fa" v-for="(v, index) in left"
+        :key="v.id"
+        :class="{active: index === activeIndex}"
+        @click="f_clickLeft(v)"><i></i><span>{{v.name}}</span></div>
       </div>
       <div class="rigth">
         <div class="child" v-for="v in right"
-        :key="v.id">{{v.name}}</div>
+        :key="v.id"
+        @click="f_clickRight(v)">{{v.name}}</div>
       </div>
     </div>
   </div>
@@ -26,7 +29,8 @@ export default {
         orgCode: '0'
       },
       left: [],
-      right: []
+      right: [],
+      activeIndex: 0
     }
   },
   methods: {
@@ -37,9 +41,10 @@ export default {
           .then(res => {
             console.log(res)
             if (res.data.success) {
-              res.data.data.map(v => {
-                this.left.push(v.name)
-              })
+              // res.data.data.map(v => {
+              //   this.left.push(v.name)
+              // })
+              this.left = res.data.data
               resolve(res.data.data)
             }
           })
@@ -55,12 +60,32 @@ export default {
             console.log('市', res)
             if (res.data.success) {
               this.right = res.data.data
-              for(var i = 0; i<this.right.length -1; i++) {
-                this.left.push(' ')
-              }
+              // for (var i = 0; i < this.right.length - 1; i++) {
+              //   this.left.push(' ')
+              // }
             }
           })
       })
+    },
+    f_clickLeft (v) {
+      console.log('clickLeft', v)
+      switch (v.region) {
+        case 'province':
+          this.params = {
+            configCode: 'provinceSynchroKey',
+            orgCode: v.id
+          }
+          break
+        case 'city':
+          this.params = {
+            configCode: 'citySynchroKey',
+            orgCode: v.id
+          }
+          break
+      }
+    },
+    f_clickRight (v) {
+      console.log('clickRight', v)
     }
   },
   mounted () {
@@ -77,7 +102,7 @@ export default {
 }
 .pick-wp {
   display: flex;
-  .left{
+  .left {
     width: 2.4rem;
     .fa {
       height: 0.88rem;
@@ -88,6 +113,19 @@ export default {
       border-bottom: 0.01rem solid #c2c2c2;
       &:nth-of-type(1) {
         border-top: 0.01rem solid #c2c2c2;
+      }
+    }
+    i {
+      width: 0.1rem;
+      height: 100%;
+      background: #eaeaea;
+    }
+    span {
+      flex: 1;
+    }
+    .active {
+      i {
+        background: #f73476;
       }
     }
   }

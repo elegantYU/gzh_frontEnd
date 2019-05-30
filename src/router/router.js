@@ -22,13 +22,23 @@ const router = new Router({
         // 环境秩序
         { path: '/home/environment', name: 'environment', meta: { title: '环境秩序' }, component: () => import('../views/index/all/environment/index.vue') },
         // 超市
-        { path: '/shop', name: 'shop', meta: { title: '生活超市' }, component: () => import('../views/index/shop/index.vue') },
+        { path: '/shop',
+          name: 'shop',
+          meta: { title: '生活超市' },
+          component: () => import('../views/index/shop/index.vue'),
+          children: [
+            { path: '/shop/more', name: 'shopMore', meta: { title: '生活超市' }, component: () => import('../views/index/shop/more.vue') },
+            { path: '/shop/category', name: 'shopCategory', meta: { title: '生活超市' }, component: () => import('../views/index/shop/category.vue') }
+          ]
+        },
         // 全部
         { path: '/home/all', name: 'all', meta: { title: '我的' }, component: () => import('../views/index/all/index.vue') },
         // 头条
         { path: '/home/topic', name: 'topic', meta: { title: '小区头条' }, component: () => import('../views/index/all/topic/index.vue') },
         // 联系物业
-        { path: '/home/contact', name: 'contact', meta: { title: '联系物业' }, component: () => import('../views/index/all/contactProperty/contact.vue') }
+        { path: '/home/contact', name: 'contact', meta: { title: '联系物业' }, component: () => import('../views/index/all/contactProperty/contact.vue') },
+        // 选择地址
+        { path: '/home/pickads', name: 'pickads', meta: { title: '选择地址' }, component: () => import('../views/index/pickads.vue') }
       ]
     },
     // 发布
@@ -44,8 +54,9 @@ const router = new Router({
     // 头条
     { path: '/topic/detail', name: 'topicDetail', meta: { title: '详情' }, component: () => import('../views/index/all/topic/detail.vue') },
     { path: '/topic/otherDetail', name: 'noticeDetail', meta: { title: '详情' }, component: () => import('../views/index/all/topic/policyDetail.vue') },
-    // 头条
     { path: '/topic/policydetail', name: 'policyDetail', meta: { title: '详情' }, component: () => import('../views/index/all/topic/policyDetail.vue') },
+    // 超市
+    { path: '/shop/detail', name: 'shopItemDetail', meta: { title: '商品详情' }, component: () => import('../views/index/shop/detail.vue') },
     // 宠物
     { path: '/pet', name: 'pet', meta: { title: '我的宠物' }, component: () => import('../views/index/all/pet/index.vue') },
     { path: '/pet/add', name: 'petAdd', meta: { title: '宠物登记' }, component: () => import('../views/index/all/pet/add.vue') },
@@ -77,7 +88,7 @@ const router = new Router({
     // 诉求建议
     { path: '/appeal', name: 'appeal', meta: { title: '诉求建议' }, component: () => import('../views/index/all/appealAdvice.vue') },
     //  我的活动
-    { path: '/active', name: 'active', meta: { title: '我的活动' }, component: () => import('../views/my/active/index.vue') },
+    { path: '/active', name: 'active', meta: { title: '我的活动' }, component: () => import('../views/my/active/index.vue') }
   ]
 })
 

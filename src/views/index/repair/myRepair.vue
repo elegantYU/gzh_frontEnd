@@ -83,13 +83,14 @@ export default {
       this.$http
         .get('/admin/property/repair/list', {
           params: {
+            villageCode: '4002',
             createUserId: this.$store.state.user.id,
             pageNum: this.v_listNum,
             pageSize: 10
           }
         })
         .then(res => {
-          console.log(res)
+          console.log('维修列表',res)
           if (!res.data.data.length) {
             this.v_loadAll = true
           }

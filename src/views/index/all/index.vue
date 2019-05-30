@@ -51,6 +51,9 @@ export default {
         case '车位锁':
           this.$router.push({name: ''})
           break;
+        case '环境秩序':
+          this.$router.push({name: 'environment'})
+          break;
         case '智慧政务':
           this.$router.push({name: ''})
           break;

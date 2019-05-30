@@ -61,6 +61,23 @@ export default {
       }, 1000)
     },
     f_getList () {
+      let params = {
+        userId: this.$store.state.user.id,
+        pageSize: 10,
+        pageNum: this.v_listNum
+      }
+
+      this.$http
+        .get('/admin/environ/getMeEnvironList', { params })
+        .then(res => {
+          console.log(res)
+          if (res.data.data.length) {
+            res.data.data.map(v => {
+              this.list.push(v)
+            })
+          }
+        })
+
       this.list = [
         {
           title: '1幢2单元楼下绿化带破损严重绿化带破损严重',

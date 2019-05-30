@@ -1,6 +1,3 @@
-import prov from '@/data/provinces'
-import city from '@/data/cities'
-import area from '@/data/areas'
 // rem转换
 const deviceRem = size => {
   let docEl = document.documentElement
@@ -34,24 +31,4 @@ const move = () => {
   document.body.style.overflow = ''
 }
 
-const formateProv = (prov, city) => {
-  prov.map(p => {
-    p.children = city.filter(c => c.provinceCode === p.code)
-  })
-  return prov
-}
-
-const formateCity = (city, area) => {
-  city.map(c => {
-    c.children = area.filter(a => c.code === a.cityCode)
-  })
-  return city
-}
-// 省市区数据
-const threeLevelAddress = (prov, city, area) => {
-  return formateProv(prov, formateCity(city, area))
-}
-
-const data = threeLevelAddress(prov, city, area)
-
-export { deviceRem, dateFormat, stop, move, threeLevelAddress, data }
+export { deviceRem, dateFormat, stop, move }

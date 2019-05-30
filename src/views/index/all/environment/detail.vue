@@ -38,6 +38,7 @@
           </div>
         </div>
       </div>
+      <!-- <div class="rep_showcomment_btn" @click="f_showcomment">评论</div> -->
       <div class="rep_comment">
         <div class="rep_comment_area">
           <textarea placeholder="在这里可以输入评价内容最多200个字" maxlength="200" v-model="v_info.content"></textarea>
@@ -100,7 +101,11 @@ export default {
         this.v_commmentNum++
         this.f_getComments()
       }, 1000)
-    }
+    },
+    f_submit () {}
+  },
+  mounted () {
+    
   }
 }
 </script>
@@ -271,5 +276,16 @@ export default {
       }
     }
   }
+}
+.rep_showcomment_btn {
+  margin: 0 0.3rem;
+    height: 0.9rem;
+    background-color: #f73476;
+    text-align: center;
+    font-size: 0.34rem;
+    color: #fff;
+    line-height: 0.9rem;
+    border-radius: 0.415rem;
+    cursor: pointer;
 }
 </style>

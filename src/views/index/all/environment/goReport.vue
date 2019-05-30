@@ -99,23 +99,27 @@ export default {
       // let params = Object.assign({}, this.v_from)
       // params.img = JSON.stringify(params.img)
       console.log(this.v_from.type)
-      if (this.v_from.type && v_from.title && v_from.detail) {
+      if (this.v_from.type && this.v_from.title && this.v_from.detail) {
         // 提交表单
         let params = {
-          classify: v_from.submitType,
-          title: v_from.title,
-          content: v_from.detail,
-          imgUrl: '',
+          classify: this.v_from.submitType,
+          title: this.v_from.title,
+          content: this.v_from.detail,
+          imgUrl: [],
           createUserId: this.$store.state.user.id,
           createUserName: this.$store.state.user.name,
           villageCode: '330105001001001'
         }
+        params.imgUrl = JSON.stringify(params.imgUrl)
         this.$http
-        .post('/admin/environ/add', { params })
+        .post('/admin/environ/add', params)
         .then(res => {
           console.log(res)
           if (res.data.success) {
-            alert('成功')
+            this.$toast('上报成功')
+            this.$router.go(-1)
+          } else {
+            this.$toast('网络错误')
           }
         })
       } else {

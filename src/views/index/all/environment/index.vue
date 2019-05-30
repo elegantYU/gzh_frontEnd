@@ -12,9 +12,9 @@
       :loading="v_loading"
       @load="f_load">
         <mu-list>
-          <list v-for="l in list"
-            :key="l.id"
-            :data = "l"></list>
+          <list v-for="(v, i) in list"
+            :key="i"
+            :data="v"></list>
         </mu-list>
       </mu-load-more>
     </div>
@@ -31,19 +31,14 @@ export default {
       v_loading: false,
       v_loadAll: true,
       v_listNum: 1,
-      list: [
-        {
-          title: '1幢2单元楼下绿化带破损严重绿化带破损严重',
-          ct: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',
-          time: '2019-01-01 15:00:00',
-          type: '绿化损坏',
-          imgsrc: require('@/assets/images/environment/bg.png')
-        }
-      ]
+      list: []
     }
   },
   components: {
     list
+  },
+  mounted () {
+    this.f_getList()
   },
   methods: {
     switchTab (index) {
@@ -70,38 +65,12 @@ export default {
       this.$http
         .get('/admin/environ/getMeEnvironList', { params })
         .then(res => {
-          console.log(res)
-          if (res.data.data.length) {
-            res.data.data.map(v => {
+          if (res.data.data.list.length) {
+            res.data.data.list.map(v => {
               this.list.push(v)
             })
           }
-          console.log('this.list', this.list)
         })
-
-      // this.list = [
-      //   {
-      //     title: '1幢2单元楼下绿化带破损严重绿化带破损严重',
-      //     ct: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',
-      //     time: '2019-01-01 15:00:00',
-      //     type: '绿化损坏',
-      //     imgsrc: require('@/assets/images/environment/bg.png')
-      //   },
-      //   {
-      //     title: '1幢2单元楼下绿化带破损严重绿化带破损严重',
-      //     ct: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',
-      //     time: '2019-01-01 15:00:00',
-      //     type: '绿化损坏',
-      //     imgsrc: require('@/assets/images/environment/bg.png')
-      //   },
-      //   {
-      //     title: '1幢2单元楼下绿化带破损严重绿化带破损严重',
-      //     ct: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',
-      //     time: '2019-01-01 15:00:00',
-      //     type: '绿化损坏',
-      //     imgsrc: require('@/assets/images/environment/bg.png')
-      //   }
-      // ]
     }
   }
 }

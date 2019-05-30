@@ -1,10 +1,10 @@
 
 <template>
-  <div class="list">
+  <div class="list" @click="f_moveDetail">
     <div class="content clearfix">
       <div class="lt">
         <p class="title">{{data.title}}</p>
-        <p class="ct">{{data.centent}}</p>
+        <p class="ct">{{data.content}}</p>
         <p class="btm clearfix">
           <span class="time">{{data.createTime}}</span>
           <span class="type">{{ type }}</span>
@@ -19,43 +19,39 @@ export default {
   name: 'list',
   props: {
     data: {
-      type: Object,
-      // default: () => {
-      //   return {
-      //     title: '1幢2单元楼下绿化带破损严重绿化带破损严重',
-      //     ct: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',
-      //     time: '2019-01-01 15:00:00',
-      //     type: '绿化损坏',
-      //     imgsrc: require('@/assets/images/environment/bg.png')
-      //   }
-      // }
+      type: Object
     }
   },
   computed: {
     type () {
       switch (this.data.classify) {
-        case 1:
+        case "1":
           return '垃圾散乱'
           break
-        case 2:
+        case "2":
           return '绿化损坏'
           break
-        case 3:
+        case "3":
           return '高空抛物'
           break
-        case 4:
+        case "4":
           return '井盖缺失'
           break
-        case 5:
+        case "5":
           return '路面破损'
           break
-        case 6:
+        case '6':
           return '违章搭建'
           break
-        case 7:
+        case "7":
           return '违规停车'
           break
       }
+    }
+  },
+  methods: {
+    f_moveDetail () {
+      this.$router.push({ name: '', query: { id: this.data.id }})
     }
   }
 }
@@ -77,6 +73,7 @@ export default {
   }
   .title {
     font-size: 0.34rem;
+    font-weight: bold;
     color: #000;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -84,6 +81,7 @@ export default {
     margin-bottom: 0.05rem;
   }
   .ct {
+    height: 0.8rem;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

@@ -310,6 +310,7 @@ export default {
           if (res.data.success) {
             this.v_status = 1
             this.f_closeSignUp()
+            this.$toast('报名成功')
           }
         })
     },

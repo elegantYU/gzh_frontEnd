@@ -73,7 +73,7 @@ export default {
           this.$router.push({name: 'appeal'})
           break;
         case '快递服务':
-          window.open('https://m.kuaidi100.com/app/?coname=chenjunqi')
+          window.location.href = 'https://m.kuaidi100.com/app/?coname=chenjunqi'
           break;
       }
     }

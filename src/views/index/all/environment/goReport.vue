@@ -43,7 +43,7 @@
             button
             v-for="(v, i) in v_types"
             :key="i"
-            @click="f_chooseType(v.name)"
+            @click="f_chooseType(v.name, i)"
           >
             <mu-list-item-title>{{ v.name }}</mu-list-item-title>
           </mu-list-item>
@@ -63,20 +63,21 @@ export default {
         communityName: '康馨苑小区',
         type: '',
         detail: '',
-        img: ['', '']
+        img: ['', ''],
+        title: '',
+        submitType: ''
       },
       v_images: [],
       v_types: [
-        { name: '水暖检修' },
-        { name: '电路检修' },
-        { name: '家具维修及保养' },
-        { name: '地面维修及保养' },
-        { name: '墙面检修' },
-        { name: '洁具检修及保养' },
-        { name: '门窗检修' },
-        { name: '家用电器检修' },
-        { name: '房顶检修' },
-        { name: '防水施工方法' },
+        { name: '垃圾散落' },
+        { name: '绿化损坏' },
+        { name: '高空抛物' },
+        { name: '井盖缺失' },
+        { name: '路面破损' },
+        { name: '违章搭建' },
+        { name: '违规停车' },
+        { name: '宠物问题' },
+        { name: '其他' }
       ]
     }
   },
@@ -85,19 +86,38 @@ export default {
       this.v_typeFlag = true
       stop()
     },
-    f_chooseType (name) {
+    f_chooseType (name, i) {
       this.v_typeFlag = false
       this.v_from.type = name
+      this.v_from.submitType = i + 1
       move()
     },
     f_upload () {
       // this.$wxsdk  上传图片获取链接
     },
     f_submit () {
-      let params = Object.assign({}, this.v_from)
-      params.img = JSON.stringify(params.img)
-      if (this.v_from.communityName && this.v_from.type) {
+      // let params = Object.assign({}, this.v_from)
+      // params.img = JSON.stringify(params.img)
+      console.log(this.v_from.type)
+      if (this.v_from.type && v_from.title && v_from.detail) {
         // 提交表单
+        let params = {
+          classify: v_from.submitType,
+          title: v_from.title,
+          content: v_from.detail,
+          imgUrl: '',
+          createUserId: this.$store.state.user.id,
+          createUserName: this.$store.state.user.name,
+          villageCode: '330105001001001'
+        }
+        this.$http
+        .post('/admin/environ/add', { params })
+        .then(res => {
+          console.log(res)
+          if (res.data.success) {
+            alert('成功')
+          }
+        })
       } else {
         this.$toast({
           msg: '所填信息不完整',

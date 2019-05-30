@@ -45,7 +45,10 @@ const router = new Router({
     { path: '/publish', name: 'publish', meta: { title: '发布' }, component: () => import('../views/index/publish.vue') },
     // 报修
     { path: '/willrepair', name: 'willRepair', meta: { title: '我要报修' }, component: () => import('../views/index/repair/willRepair.vue') },
+    // 环境秩序 我要上报
     { path: '/goreport', name: 'goreport', meta: { title: '我要上报' }, component: () => import('../views/index/all/environment/goReport.vue') },
+    // 环境秩序 详情页面
+    { path: '/godetail', name: 'godetail', meta: { title: '详情页面' }, component: () => import('../views/index/all/environment/detail.vue') },
     { path: '/repairdetail/:id', name: 'repairDetail', meta: { title: '报修详情' }, component: () => import('../views/index/repair/repairDetail.vue') },
     // 邻里
     { path: '/neighbor/self', name: 'neighborSelf', meta: { title: '我要共享' }, component: () => import('../views/index/neighbor/self.vue') },

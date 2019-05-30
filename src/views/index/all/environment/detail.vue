@@ -13,11 +13,11 @@
         </div>
         <div class="rep_input">
           <label>状态</label>
-          <input type="text" readonly v-model="status">
+          <input type="text" readonly v-model="v_info.status">
         </div>
         <div class="rep_input">
           <label>时间</label>
-          <input type="text" readonly v-model="time">
+          <input type="text" readonly v-model="v_info.time">
         </div>
       </div>
       <div class="rep_detail">
@@ -42,7 +42,7 @@
         <div class="rep_comment_area">
           <textarea placeholder="在这里可以输入评价内容最多200个字" maxlength="200" v-model="v_info.content"></textarea>
         </div>
-        <div class="rep_comment_btn" @click="f_submit">{{ commentBtn }}</div>
+        <div class="rep_comment_btn" @click="f_submit">提交评论</div>
       </div>
       <div class="rep_commentList">
         <p>评论</p>
@@ -77,12 +77,29 @@ export default {
   data () {
     return {
       v_id: 0,
-      v_info: {},
+      v_info: {
+        type: '垃圾散落',
+        title: '标题',
+        status: '状态',
+        time: '2019-01-01 10:00:00',
+        detail: '内容',
+        content: ''
+      },
       v_commments: [],
       v_commmentNum: 1,
       v_loading: false,
       v_loadAll: false,
       v_noComment: false
+    }
+  },
+  methods: {
+    f_loadComments () {
+      this.v_loading = true
+      setTimeout(() => {
+        this.v_loading = false
+        this.v_commmentNum++
+        this.f_getComments()
+      }, 1000)
     }
   }
 }

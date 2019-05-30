@@ -76,31 +76,32 @@ export default {
               this.list.push(v)
             })
           }
+          console.log('this.list', this.list)
         })
 
-      this.list = [
-        {
-          title: '1幢2单元楼下绿化带破损严重绿化带破损严重',
-          ct: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',
-          time: '2019-01-01 15:00:00',
-          type: '绿化损坏',
-          imgsrc: require('@/assets/images/environment/bg.png')
-        },
-        {
-          title: '1幢2单元楼下绿化带破损严重绿化带破损严重',
-          ct: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',
-          time: '2019-01-01 15:00:00',
-          type: '绿化损坏',
-          imgsrc: require('@/assets/images/environment/bg.png')
-        },
-        {
-          title: '1幢2单元楼下绿化带破损严重绿化带破损严重',
-          ct: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',
-          time: '2019-01-01 15:00:00',
-          type: '绿化损坏',
-          imgsrc: require('@/assets/images/environment/bg.png')
-        }
-      ]
+      // this.list = [
+      //   {
+      //     title: '1幢2单元楼下绿化带破损严重绿化带破损严重',
+      //     ct: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',
+      //     time: '2019-01-01 15:00:00',
+      //     type: '绿化损坏',
+      //     imgsrc: require('@/assets/images/environment/bg.png')
+      //   },
+      //   {
+      //     title: '1幢2单元楼下绿化带破损严重绿化带破损严重',
+      //     ct: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',
+      //     time: '2019-01-01 15:00:00',
+      //     type: '绿化损坏',
+      //     imgsrc: require('@/assets/images/environment/bg.png')
+      //   },
+      //   {
+      //     title: '1幢2单元楼下绿化带破损严重绿化带破损严重',
+      //     ct: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',
+      //     time: '2019-01-01 15:00:00',
+      //     type: '绿化损坏',
+      //     imgsrc: require('@/assets/images/environment/bg.png')
+      //   }
+      // ]
     }
   }
 }

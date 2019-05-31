@@ -43,8 +43,8 @@ export default {
   methods: {
     switchTab (index) {
       this.tabindex = index
-      if(index === 1) {
-        this.$router.push({name: 'goreport'})
+      if (index === 1) {
+        this.$router.push({ name: 'goreport' })
       }
     },
     f_load () {

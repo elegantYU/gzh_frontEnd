@@ -22,7 +22,7 @@
       <div class="wr_upload">
         <b>图片<span>（最多三张）</span></b>
         <div class="wr_preview">
-          <div 
+          <div
             class="wr_preview_list"
             v-for="(v, i) in v_images"
             :key="i"
@@ -112,16 +112,16 @@ export default {
         }
         params.imgUrl = JSON.stringify(params.imgUrl)
         this.$http
-        .post('/admin/environ/add', params)
-        .then(res => {
-          console.log(res)
-          if (res.data.success) {
-            this.$toast('上报成功')
-            this.$router.go(-1)
-          } else {
-            this.$toast('网络错误')
-          }
-        })
+          .post('/admin/environ/add', params)
+          .then(res => {
+            console.log(res)
+            if (res.data.success) {
+              this.$toast('上报成功')
+              this.$router.go(-1)
+            } else {
+              this.$toast('网络错误')
+            }
+          })
       } else {
         this.$toast({
           msg: '所填信息不完整',
@@ -208,7 +208,7 @@ export default {
         background-color: #fff;
         textarea{
          width: 100%;
-         height: 100%; 
+         height: 100%;
          resize: none;
          font-size: 0.26rem;
         }
@@ -258,7 +258,7 @@ export default {
       }
     }
     .wr_submit{
-      margin: 0 0.3rem; 
+      margin: 0 0.3rem;
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;

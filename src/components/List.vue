@@ -25,25 +25,25 @@ export default {
   computed: {
     type () {
       switch (this.data.classify) {
-        case "1":
+        case '1':
           return '垃圾散乱'
           break
-        case "2":
+        case '2':
           return '绿化损坏'
           break
-        case "3":
+        case '3':
           return '高空抛物'
           break
-        case "4":
+        case '4':
           return '井盖缺失'
           break
-        case "5":
+        case '5':
           return '路面破损'
           break
         case '6':
           return '违章搭建'
           break
-        case "7":
+        case '7':
           return '违规停车'
           break
       }
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     f_moveDetail () {
-      this.$router.push({ name: '', query: { id: this.data.id }})
+      this.$router.push({ name: 'godetail', query: { id: this.data.id } })
     }
   }
 }

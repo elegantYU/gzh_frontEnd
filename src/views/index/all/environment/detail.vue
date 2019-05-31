@@ -102,10 +102,28 @@ export default {
         this.f_getComments()
       }, 1000)
     },
-    f_submit () {}
+    f_submit () {},
+    f_getComments () {
+      let params = {
+        rId: this.v_id,
+        rtype: 'notice'
+      }
+      this.$http
+        .post('/admin/comment/noticeList', params)
+        .then(res => {
+          console.log(res)
+          // if (res.data.success) {
+          //   this.$toast('上报成功')
+          //   this.$router.go(-1)
+          // } else {
+          //   this.$toast('网络错误')
+          // }
+        })
+    }
   },
   mounted () {
-    
+    this.v_id = this.$route.query.id
+    this.f_getComments()
   }
 }
 </script>

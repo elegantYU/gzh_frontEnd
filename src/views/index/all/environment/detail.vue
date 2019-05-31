@@ -134,6 +134,7 @@ export default {
           console.log(res)
           if (res.data.success) {
             this.$toast('评论成功')
+            this.f_getComments()
           } else {
             this.$toast('网络错误')
           }

@@ -90,7 +90,23 @@ export default {
       v_commmentNum: 1,
       v_loading: false,
       v_loadAll: false,
-      v_noComment: false
+      v_noComment: false,
+      typeObj: {
+        1: '垃圾散乱',
+        2: '绿化损坏',
+        3: '高空抛物',
+        4: '井盖缺失',
+        5: '路面破损',
+        6: '违章搭建',
+        7: '违规停车'
+      },
+      status: {
+        0: '待处理',
+        1: '处理中',
+        2: '已完成',
+        3: '已超时',
+        4: '已督办'
+      }
     }
   },
   methods: {
@@ -102,28 +118,77 @@ export default {
         this.f_getComments()
       }, 1000)
     },
-    f_submit () {},
-    f_getComments () {
-      let params = {
-        rId: this.v_id,
-        rtype: 'notice'
+    f_submit () {
+
+      const params = {
+        id: this.v_id,
+        parentId: this.v_commments.length - 1 >= 0 ? this.v_commments.length - 1 : 0,
+        createUserId: this.$store.state.user.id,
+        createUserName: this.$store.state.user.name,
+        content: this.v_info.content
       }
-      this.$http
-        .post('/admin/comment/noticeList', params)
+      if (this.v_info.content) {
+        this.$http
+        .post('/admin/environ/addComment', params)
         .then(res => {
           console.log(res)
-          // if (res.data.success) {
-          //   this.$toast('上报成功')
-          //   this.$router.go(-1)
-          // } else {
-          //   this.$toast('网络错误')
-          // }
+          if (res.data.success) {
+            this.$toast('评论成功')
+          } else {
+            this.$toast('网络错误')
+          }
+        })
+      }
+    },
+    f_getComments () {
+      this.$http
+        .post(`/admin/comment/noticeList?rId=${this.v_id}&rtype=environ`)
+        .then(res => {
+          console.log('getComments', res)
+          if (res.data.success) {
+            const data = res.data.data
+            if(data) {
+              data.map(v => {
+                this.v_commments.push({
+                  createUserName: v.mianComment.createUserName,
+                  createTime: v.mianComment.createTime,
+                  content: v.mianComment.content,
+                  rid: v.mianComment.rid
+                })
+              })
+            } else {
+              this.v_noComment = true
+            }
+          } else {
+            this.$toast('网络错误')
+          }
+        })
+    },
+    f_getDetail () {
+      let params = {
+        id: this.v_id
+      }
+      this.$http
+        .get('/admin/environ/getMeEnvironList', { params })
+        .then(res => {
+          console.log('f_getDetail', res)
+          if (res.data.success) {
+            const data = res.data.data
+            this.v_info.type = this.typeObj(data.classify)
+            this.v_info.title = data.title
+            this.v_info.time = data.createTime
+            this.v_info.detail = data.content
+            this.v_info.status = this.status(data.status)
+          } else {
+            this.$toast('网络错误')
+          }
         })
     }
   },
   mounted () {
     this.v_id = this.$route.query.id
     this.f_getComments()
+    this.f_getDetail()
   }
 }
 </script>

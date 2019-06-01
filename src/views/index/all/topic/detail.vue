@@ -240,8 +240,10 @@ export default {
         })
     },
     f_getComments () {
+      let villageCode = this.$store.state.villageCode
+
       this.$http
-        .post(`/admin/comment/noticeList?rId=${this.v_id}&rtype=notice`)
+        .post(`/admin/comment/noticeList?rId=${this.v_id}&rtype=notice&villageCode=${villageCode}`)
         .then(res => {
           console.log(res.data)
           this.v_comments = []
@@ -301,6 +303,7 @@ export default {
         houseInfo: this.v_house,
         memberName: this.$store.state.user.name,
         memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode,
         phone: this.$store.state.user.phoneNum
       }
 

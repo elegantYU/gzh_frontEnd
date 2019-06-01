@@ -49,6 +49,7 @@ export default {
     f_getList () {
       let params = {
         memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode,
         type: 4,
         pageNum: this.v_pageNum,
         pageSize: 10

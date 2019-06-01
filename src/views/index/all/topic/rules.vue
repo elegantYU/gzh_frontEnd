@@ -46,6 +46,8 @@ export default {
       let params = {
         type: 1,
         pageNum: this.v_pageNum,
+        memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode,
         pageSize: 10
       }
 

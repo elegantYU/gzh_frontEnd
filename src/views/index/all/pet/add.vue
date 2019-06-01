@@ -112,6 +112,7 @@ export default {
         vaccineType: '',
         petRegisNum: '',
         createUserId: '',       // user id 
+        villageCode: '',        // 小区id
         //exemptionImg: []        // 图片数组
       },
       v_address: []
@@ -121,6 +122,7 @@ export default {
     // 饲养人name
     this.v_form.raiser = this.$store.state.user.name
     this.v_form.createUserId = this.$store.state.user.id
+    this.v_form.villageCode = this.$store.state.villageCode
     this.f_getHouse()
   },
   methods: {

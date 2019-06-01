@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     wxcode: '',
     user: {},         // id name phoneNum headIcon
+    villageCode: '4002',  // 小区id
     house: [],
     neighbor: {
       router: ''

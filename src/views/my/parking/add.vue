@@ -66,7 +66,7 @@ export default {
   data () {
     return {
       v_list: [
-        { memberId: '', belonger: '', phoneNum: '', position: '', lotType: '自有', vehicleNumber: [], lockType: '有'  }
+        { memberId: '', belonger: '', phoneNum: '', position: '', lotType: '自有', vehicleNumber: [], lockType: '有', villageCode: ''  }
       ],
       v_parkNum: [],
       v_carNum: []
@@ -74,6 +74,7 @@ export default {
   },
   mounted  () {
     this.v_list[0].memberId = this.$store.state.user.id
+    this.v_list[0].villageCode = this.$store.state.villageCode
     this.f_getCarNum()
   },
   methods: {
@@ -103,7 +104,8 @@ export default {
         lotType: '自有',
         vehicleNumber: [],
         lockType: '有',
-        memberId: this.$store.state.user.id
+        memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode    // 小区id
       }
       this.v_list.push(item)
     },

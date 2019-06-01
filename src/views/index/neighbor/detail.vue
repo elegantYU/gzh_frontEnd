@@ -210,6 +210,7 @@ export default {
           userId: this.$store.state.user.id,
           telephone: this.$store.state.user.phoneNum,
           address: this.$store.state.house[0],
+          villageCode: this.$store.state.villageCode,
           IDCard: '--'
         }
         console.log(params)

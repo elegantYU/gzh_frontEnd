@@ -33,15 +33,10 @@ export default {
         email: this.email,
         createUserId: this.user.id,
         createName: this.user.name,
+        villageCode: this.villageCode,
         type: 2
       }
-      // let params = {
-      //   content: '11111',
-      //   email: '255636@163.com',
-      //   createUserId: 1,
-      //   createName: '高伟',
-      //   type: 2
-      // }
+      
       console.log(this.user, params, 111)
       if (this.content) {
         if (this.email) {

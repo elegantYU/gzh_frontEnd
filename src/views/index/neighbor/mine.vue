@@ -50,10 +50,12 @@ export default {
             userId: this.$store.state.user.id,
             taskType: this.taskType,
             pageNum: this.v_pageNum,
+            villageCode: this.$store.state.villageCode,
             pageSize: 5
           } 
         : params = {
             userId: this.$store.state.user.id,
+            villageCode: this.$store.state.villageCode,
             pageNum: this.v_pageNum,
             pageSize: 5
           }
@@ -79,7 +81,8 @@ export default {
     },
     f_delete (i) {
       let params = {
-        id: this.v_list[i].id
+        id: this.v_list[i].id,
+        villageCode: this.$store.state.villageCode,
       }
 
       let flag = confirm('此条信息将被删除，是否进行？')

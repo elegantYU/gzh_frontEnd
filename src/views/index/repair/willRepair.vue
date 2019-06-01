@@ -172,6 +172,7 @@ export default {
   },
   mounted () {
     this.v_from.createUserId = this.$store.state.user.id
+    this.v_from.villageCode = this.$store.state.villageCode
     this.f_getHouse()
   },
   methods: {

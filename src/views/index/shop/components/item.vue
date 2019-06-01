@@ -31,6 +31,7 @@ export default {
       
     },
     f_opemDetail () {
+      // this.$router.push({ name: 'shopItemDetail' , query: { id: this.item.id }})
       this.$router.push({ name: 'shopItemDetail' })
     }
   }

@@ -224,8 +224,9 @@ export default {
           id: this.v_content.id,
           userId: this.$store.state.user.id,
           telephone: this.v_content.telephone,
-          address: '用户的房屋驻地',
-          IDCard: '用户的身份证号'
+          villageCode: this.$store.state.villageCode,
+          address: this.$store.state.house[0],
+          IDCard: '--'
         }
         this.$http
           .get('/admin/share/applyShareInfo', { params })

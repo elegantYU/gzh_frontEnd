@@ -79,11 +79,11 @@ export default {
     return {
       v_id: 0,
       v_info: {
-        type: '垃圾散落',
-        title: '标题',
-        status: '状态',
-        time: '2019-01-01 10:00:00',
-        detail: '内容',
+        type: '',
+        title: '',
+        status: '',
+        time: '',
+        detail: '',
         content: ''
       },
       v_commments: [],
@@ -125,6 +125,7 @@ export default {
         parentId: this.v_commments.length - 1 >= 0 ? this.v_commments.length - 1 : 0,
         createUserId: this.$store.state.user.id,
         createUserName: this.$store.state.user.name,
+        villageCode: this.$store.state.villageCode,
         content: this.v_info.content
       }
       if (this.v_info.content) {
@@ -170,16 +171,16 @@ export default {
         id: this.v_id
       }
       this.$http
-        .get('/admin/environ/getMeEnvironList', { params })
+        .get('/admin/environ/getEnvironDetail', { params })
         .then(res => {
           console.log('f_getDetail', res)
           if (res.data.success) {
             const data = res.data.data
-            this.v_info.type = this.typeObj(data.classify)
+            this.v_info.type = this.typeObj[data.classify]
             this.v_info.title = data.title
             this.v_info.time = data.createTime
             this.v_info.detail = data.content
-            this.v_info.status = this.status(data.status)
+            this.v_info.status = this.status[data.status]
           } else {
             this.$toast('网络错误')
           }

@@ -45,6 +45,8 @@ export default {
   methods: {
     f_getList () {
       let params = {
+        villageCode: this.$store.state.villageCode,    // 小区id
+        village: '',        // 小区名
         memberId: this.$store.state.user.id,
         pageNum : 1,
         pageSize: 10000

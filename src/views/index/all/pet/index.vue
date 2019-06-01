@@ -50,6 +50,7 @@ export default {
     f_getList () {
       let params = {
         userId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode,
         pageNum: 1,
         pageSize: 10
       }

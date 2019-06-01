@@ -196,7 +196,8 @@ export default {
         profession: '',
         skill: '',
         createUserId: 1,
-        imgUrl: []
+        imgUrl: [],
+        villageCode: ''     // 小区code
       }
     }
   },
@@ -253,6 +254,7 @@ export default {
   mounted () {
     this.v_from.createUserId = this.$store.state.user.id
     this.v_from.createUserName = this.$store.state.user.name
+    this.v_from.villageCode = this.$store.state.villageCode
     this.f_getCar()
     this.f_getPark()
   },
@@ -336,7 +338,8 @@ export default {
                 destination: this.v_from.destination,
                 startTime: this.v_from.startTime,
                 content: this.v_from.content,
-                imgUrl: imgList
+                imgUrl: imgList,
+                villageCode: this.v_from.villageCode,
               }
               this.f_submit(params)
             } else {
@@ -358,7 +361,8 @@ export default {
                 startTime: this.v_from.startTime,
                 endTime: this.v_from.endTime,
                 content: this.v_from.content,
-                imgUrl: imgList
+                imgUrl: imgList,
+                villageCode: this.v_from.villageCode,
               }
               this.f_submit(params)
             } else {
@@ -380,7 +384,8 @@ export default {
                 endTime: this.v_from.endTime,
                 profession: this.v_from.profession,
                 content: this.v_from.content,
-                imgUrl: imgList
+                imgUrl: imgList,
+                villageCode: this.v_from.villageCode,
               }
               this.f_submit(params)
             } else {
@@ -399,7 +404,8 @@ export default {
                 startTime: this.v_from.startTime,
                 endTime: this.v_from.endTime,
                 content: this.v_from.content,
-                imgUrl: imgList
+                imgUrl: imgList,
+                villageCode: this.v_from.villageCode,
               }
               this.f_submit(params)
             } else {

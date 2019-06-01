@@ -93,6 +93,7 @@ export default {
   methods: {
     f_switchVillage () {
       console.log('切换小区')
+      this.$router.push({ name: "pickads" })
     },
     f_viewNotice () {
       console.log('打开通知页面')

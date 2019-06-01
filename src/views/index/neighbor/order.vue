@@ -53,12 +53,14 @@ export default {
       this.taskType !== 0
         ? params = {
             userId: this.$store.state.user.id,
+            villageCode: this.$store.state.villageCode,
             status: this.taskType,
             pageNum: this.v_pageNum,
             pageSize: 10
           } 
         : params = {
             userId: this.$store.state.user.id,
+            villageCode: this.$store.state.villageCode,
             pageNum: this.v_pageNum,
             pageSize: 10
           }

@@ -65,6 +65,7 @@ export default {
         createUserId: 0,
         createName: '',
         content: '',
+        villageCode: ''
       },
       v_appealFlag: false,
       v_images: []
@@ -73,6 +74,7 @@ export default {
   mounted () {
     this.v_from.createUserId = this.$store.state.user.id
     this.v_from.createName = this.$store.state.user.name
+    this.v_from.villageCode = this.$store.state.villageCode
   },
   methods: {
     f_openAppeal () {

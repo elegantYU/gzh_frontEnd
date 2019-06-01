@@ -50,7 +50,7 @@ export default {
   data () {
     return {
       v_list: [
-        { memberId: '', vehicleType: '', vehicleStructure: '', vehicleNumber: '' }
+        { memberId: '', vehicleType: '', vehicleStructure: '', vehicleNumber: '', villageCode: '' }
       ],
       v_model: ['货车', '轿车', '面包车'],
       v_type: ['轿车--两厢车', '轿车--三厢车', '面包车--七座', '面包车--七座以上', '货车--厢式货车', '货车--敞开类货车'],
@@ -59,6 +59,7 @@ export default {
   },
   mounted () {
     this.v_list[0].memberId = this.$store.state.user.id
+    this.v_list[0].villageCode = this.$store.state.villageCode
     this.f_getCarNUm()
   },
   methods: {
@@ -78,7 +79,8 @@ export default {
         memberId: this.$store.state.user.id,
         vehicleType: '',
         vehicleStructure: '',
-        vehicleNumber: ''
+        vehicleNumber: '',
+        villageCode: this.$store.state.villageCode      // 小区id
       }
       this.v_list.push(item)
     },

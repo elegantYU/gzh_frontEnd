@@ -50,7 +50,8 @@ export default {
       let params = {
         memberId: this.$store.state.user.id,
         pageNum: 1,
-        pageSize: 10000
+        pageSize: 10000,
+        villageCode: this.$store.state.villageCode,       // 小区id
       }
 
       this.$http

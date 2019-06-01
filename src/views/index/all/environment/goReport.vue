@@ -98,7 +98,6 @@ export default {
     f_submit () {
       // let params = Object.assign({}, this.v_from)
       // params.img = JSON.stringify(params.img)
-      console.log(this.v_from.type)
       if (this.v_from.type && this.v_from.title && this.v_from.detail) {
         // 提交表单
         let params = {
@@ -108,7 +107,7 @@ export default {
           imgUrl: [],
           createUserId: this.$store.state.user.id,
           createUserName: this.$store.state.user.name,
-          villageCode: '330105001001001'
+          villageCode: this.$store.state.villageCode
         }
         params.imgUrl = JSON.stringify(params.imgUrl)
         this.$http

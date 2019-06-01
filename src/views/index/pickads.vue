@@ -38,7 +38,8 @@ export default {
       ads: '',
       preregion: 'province',
       flag: false,
-      preads: ''
+      preads: '',
+      isrequest: true
     }
   },
   methods: {
@@ -58,7 +59,7 @@ export default {
             }
           })
       }).then(res => {
-        // console.log('res', res)
+        console.log('citySynchroKeyres', res)
         this.params = {
           configCode: 'citySynchroKey',
           orgCode: res[0].id
@@ -110,11 +111,16 @@ export default {
           }
           break
         case 'residentia':
-          this.ads = `${this.ads}>${v.name}`
+          // this.ads = `${this.ads}>${v.name}`
+          console.log(v)
+          this.isrequest = false
           this.preads = this.ads
+          this.$store.villageCode = v.id
+          this.$store.village = v.name
           break
       }
-      return new Promise((resolve) => {
+      if(this.isrequest) {
+        return new Promise((resolve) => {
         this.$http
           .get('/obtain/config/linkage', { params: this.params })
           .then(res => {
@@ -128,45 +134,46 @@ export default {
             }
             resolve(res.data.data[0])
           })
-      }).then(v => {
-        switch (v.region) {
-          case 'city':
-            this.params = {
-              configCode: 'areaSynchroKey',
-              orgCode: v.id
-            }
-            break
-          case 'county':
-            this.params = {
-              configCode: 'streetSynchroKey',
-              orgCode: v.id
-            }
-            break
-          case 'street':
-            this.params = {
-              configCode: 'communitySynchroKey',
-              orgCode: v.id
-            }
-            break
-          case 'community':
-            this.params = {
-              configCode: 'residentiaSynchroKey',
-              orgCode: v.id
-            }
-            break
-        }
-        this.$http
-          .get('/obtain/config/linkage', { params: this.params })
-          .then(res => {
-            console.log(res)
-            if (res.data.success) {
-              // res.data.data.map(v => {
-              //   this.left.push(v.name)
-              // })
-              this.right = res.data.data
-            }
-          })
-      })
+        }).then(v => {
+          switch (v.region) {
+            case 'city':
+              this.params = {
+                configCode: 'areaSynchroKey',
+                orgCode: v.id
+              }
+              break
+            case 'county':
+              this.params = {
+                configCode: 'streetSynchroKey',
+                orgCode: v.id
+              }
+              break
+            case 'street':
+              this.params = {
+                configCode: 'communitySynchroKey',
+                orgCode: v.id
+              }
+              break
+            case 'community':
+              this.params = {
+                configCode: 'residentiaSynchroKey',
+                orgCode: v.id
+              }
+              break
+          }
+          this.$http
+            .get('/obtain/config/linkage', { params: this.params })
+            .then(res => {
+              console.log(res)
+              if (res.data.success) {
+                // res.data.data.map(v => {
+                //   this.left.push(v.name)
+                // })
+                this.right = res.data.data
+              }
+            })
+        })
+      }
     },
     f_clickLeft (v, index) {
       this.activeIndex = index
@@ -215,11 +222,11 @@ export default {
             configCode: 'residentiaSynchroKey',
             orgCode: v.id
           }
-          if (this.flag) {
-            this.ads = `${this.ads}>${v.name}`
-          } else {
-            this.ads = `${this.preads}>${v.name}`
-          }
+          // if (this.flag) {
+          //   this.ads = `${this.ads}>${v.name}`
+          // } else {
+          //   this.ads = `${this.preads}>${v.name}`
+          // }
           break
       }
       this.$http

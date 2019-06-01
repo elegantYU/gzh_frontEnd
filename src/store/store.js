@@ -11,7 +11,8 @@ export default new Vuex.Store({
     house: [],
     neighbor: {
       router: ''
-    }
+    },
+    village: '' // 小区名
   },
   mutations: {
     setWxcode (state, code) {

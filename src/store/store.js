@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     wxcode: '',
     user: {},         // id name phoneNum headIcon
-    villageCode: '4002',  // 小区id
+    villageCode: '330105001001001',  // 小区id
     house: [],
     neighbor: {
       router: ''
@@ -20,6 +20,12 @@ export default new Vuex.Store({
     },
     setUser (state, obj) {
       state.user = Object.assign({}, obj)
+    },
+    setVillageCode (state, str) {
+      state.villageCode = str
+    },
+    setVillage (state, str) {
+      state.village = str
     },
     setHouse (state, obj) {
       state.house = obj.map(v => v)
@@ -34,6 +40,12 @@ export default new Vuex.Store({
     },
     setHouse (context, obj) {
       context.commit('setHouse', obj)
+    },
+    setVillageCode (context, str) {
+      context.commit('setVillageCode', str)
+    },
+    setVillage (context, str) {
+      context.commit('setVillage', str)
     }
   }
 })

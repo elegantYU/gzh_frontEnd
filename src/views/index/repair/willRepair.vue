@@ -109,7 +109,7 @@ export default {
         endTime: '',
         detail: '',
         img: [],
-        villageCode: 4002
+        villageCode: 0
       },
       v_types: [
         { name: '水暖检修' },

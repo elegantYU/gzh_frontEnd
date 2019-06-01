@@ -175,6 +175,7 @@ export default {
         idNumber: '',               // 身份证
         phone: '',                  // 联系电话啊
         searchWord: '',             //将上述省市区街道小区楼幢室组合起来
+        villageCode: ''
       },
       v_provice: [],
       v_city: [],
@@ -192,6 +193,7 @@ export default {
   },
   mounted () {
     this.v_form.memberId = this.$store.state.user.id
+    this.v_form.villageCode = this.$store.state.villageCode
     this.f_getList('provinceSynchroKey', {
       id: '0',
       name: '浙江省',

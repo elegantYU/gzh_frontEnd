@@ -115,8 +115,10 @@ export default {
           console.log(v)
           this.isrequest = false
           this.preads = this.ads
-          this.$store.villageCode = v.id
-          this.$store.village = v.name
+          this.$store.dispatch('setVillageCode', v.orgCode)
+          this.$store.dispatch('setVillage', v.name)
+          console.log(this.$store.state)
+          this.$router.go(-1)
           break
       }
       if(this.isrequest) {
@@ -273,6 +275,7 @@ export default {
     }
     span {
       flex: 1;
+      font-size: 0.3rem;
     }
     .active {
       i {
@@ -288,6 +291,7 @@ export default {
       align-items: center;
       justify-content: center;
       background: #fff;
+      font-size: 0.3rem;
       &:nth-of-type(1) {
         border-top: 0.01rem solid #c2c2c2;
       }
@@ -321,6 +325,7 @@ export default {
   line-height: 0.9rem;
   text-align: left;
   background: #fff;
+  font-size: 0.26rem;
   .ps-icon {
     // position: absolute;
     vertical-align: middle;

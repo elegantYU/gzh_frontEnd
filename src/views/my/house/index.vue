@@ -40,7 +40,8 @@ export default {
   methods: {
     f_getList () {
       let params = {
-        memberId: this.$store.state.user.id
+        memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode
       }
 
       this.$http

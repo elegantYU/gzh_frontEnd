@@ -208,18 +208,21 @@ export default {
         let params = {
           id: this.v_content.id,
           userId: this.$store.state.user.id,
+          userName: this.$store.state.user.name,
           telephone: this.$store.state.user.phoneNum,
           address: this.$store.state.house[0],
           villageCode: this.$store.state.villageCode,
           IDCard: '--'
         }
-        console.log(params)
+        console.log('房屋', this.$store.state.house)
         this.$http
           .get('/admin/share/applyShareInfo', { params })
           .then(res => {
             if (res.data.msg) {
               this.v_apply = res.data.msg
               this.v_orderStatus = true
+              this.$toast(this.v_apply)
+              this.$router.go(-1)
             }
           })
       } else {

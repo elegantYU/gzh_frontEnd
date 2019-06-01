@@ -82,14 +82,17 @@ export default {
     },
     f_getUserHouse (id) {
       let params = {
-        memberId: id
+        memberId: id,
+        villageCode: this.$store.state.villageCode
       }
 
       this.$http
         .get('/admin/member/house/all', { params })
         .then(res => {
+          console.log('房屋', res.data.data)
           if (res.data.data.length) {
-            this.$store.dispatch('setHouse', res.data.data)
+            this.$store.dispatch('setHouse', res.data.data.map(v => v.searchWord))
+            console.log(this.$store.state.house)
           }
         })
     }

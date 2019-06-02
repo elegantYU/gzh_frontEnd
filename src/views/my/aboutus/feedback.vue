@@ -33,11 +33,10 @@ export default {
         email: this.email,
         createUserId: this.user.id,
         createName: this.user.name,
-        villageCode: this.villageCode,
+        villageCode: this.$store.state.villageCode,
         type: 2
       }
       
-      console.log(this.user, params, 111)
       if (this.content) {
         if (this.email) {
           if ((/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.email))) {

@@ -38,7 +38,7 @@ export default {
   height: 100%;
   .shop_container{
     background-color: #efeff4;
-    padding-block: 1.2rem;
+    padding-bottom: 1.2rem;
     .shop_header{
       width: 100%;
       height: 3.8rem;

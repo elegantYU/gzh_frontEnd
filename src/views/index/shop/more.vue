@@ -6,9 +6,15 @@
       </div>
       <div class="shop_category_body">
         <ul>
-          <li>
-            <shopItem></shopItem>
-          </li>
+          <mu-load-more :loading="v_loading" @load="f_load" :loaded-all="v_loadAll">
+            <mu-list>
+              <template v-for="(v, i) in v_item">
+                <li :key="i">
+                  <shopItem :item="v"></shopItem>
+                </li>
+              </template>
+            </mu-list>
+          </mu-load-more>
         </ul>
       </div>
     </div>
@@ -23,6 +29,47 @@ export default {
   components: {
     shopItem
   },
+  data () {
+    return {
+      v_item: [],
+      v_productCateId: 0,
+      v_start: 1,
+      v_loading: false,
+      v_loadAll: false
+    }
+  },
+  mounted () {
+    this.v_productCateId = this.$route.query.productCateId
+    this.f_getList()
+  },
+  methods: {
+    f_getList () {
+      let params = {
+        start: this.v_start,
+        pageSize: 10,
+        villageCode: this.$store.state.villageCode,
+        productCateId: this.v_productCateId
+      }
+
+      this.$http
+        .get('/admin/product/pageList', { params })
+        .then(res => {
+          if (res.data.data.length) {
+            res.data.data.map(v => this.v_item.push(v))
+          } else {
+            this.v_loadAll = true
+          }
+        })
+    },
+    f_load () {
+      this.v_loading = true
+      setTimeout(() => {
+        this.v_loading = false
+        this.v_start++
+        this.f_getList()
+      }, 1000)
+    }
+  }
 }
 </script>
 
@@ -30,7 +77,7 @@ export default {
 .sm_wrapper{
   .shop_category{
     width: 100%;
-    height: 5.2rem;
+    background-color: #efeff4;
     .shop_category_head{
       display: flex;
       width: 100%;

@@ -1,14 +1,21 @@
 <template>
   <div class="sc_wrapper">
-    <div class="shop_category">
+    <div
+      class="shop_category"
+      v-for="(v, i) in v_list"
+      :key="i"
+    >
       <div class="shop_category_head">
-        <span>水果生鲜</span>
-        <span @click="f_moveMore()">更多 ></span>
+        <span>{{ v.codeText }}</span>
+        <span @click="f_moveMore(v.codeCd)">更多 ></span>
       </div>
       <div class="shop_category_body">
         <ul>
-          <li>
-            <shopItem></shopItem>
+          <li
+            v-for="(value, index) in v.children"
+            :key="index"
+          >
+            <shopItem :item="value"></shopItem>
           </li>
         </ul>
       </div>
@@ -29,12 +36,40 @@ export default {
   components: {
     shopItem
   },
+  created () {
+    this.f_getList()
+  },
   methods: {
     f_getList () {
-      
+      this.$http
+        .get('/admin/product/floor')
+        .then(res => {
+          res.data.data.map((v, i) => {
+            let params = {
+              start: 1,
+              pageSize: 5,
+              villageCode: this.$store.state.villageCode,
+              productCateId: v.codeCd
+            }
+            this.v_list.push(v)
+            this.f_getItem(params, v.codeCd)
+          })
+        })
+    },
+    f_getItem (params, i) {
+      this.$http
+        .get('/admin/product/pageList', { params })
+        .then(res => {
+          this.v_list.map(v => {
+            if (v.codeCd === i) {
+              v.children = res.data.data.slice(0)
+            }
+          })
+          console.log('mdb', this.v_list)
+        })
     },
     f_moveMore (i) {
-      this.$router.push({ name: 'shopMore', query: {  }})
+      this.$router.push({ name: 'shopMore', query: { productCateId: i }})
     }
   }
 }

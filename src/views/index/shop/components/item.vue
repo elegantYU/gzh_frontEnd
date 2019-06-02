@@ -1,14 +1,14 @@
 <template>
   <div class="si_wrapper" @click="f_opemDetail">
     <div class="shop_item_img">
-      <img src="https://img.wowoqq.com/allimg/171130/1-1G1300I102-52.jpg" alt="">
+      <img :src="item.productUrl" alt="">
     </div>
-    <b>品谷白有套4粒 100g</b>
-    <p>套箱浓郁，口感绵甜多只</p>
+    <b><span>{{ item.name1 }}</span> {{ item.actualSales }}{{ item.unit }}</b>
+    <p>{{ item.keyword }}</p>
     <div class="shop_item_detail">
-      <span>￥25.8</span>
-      <s>原价:30</s>
-      <span>销量999+件</span>
+      <span>￥{{ item.mallPcPrice }}</span>
+      <s v-if="item.marketPrice">原价:{{ item.marketPrice }}</s>
+      <span>销量{{ item.actualSales > 1000 ? '999+' : item.actualSales }}件</span>
       <i @click.stop="f_addShopCar"></i>
     </div>
   </div>
@@ -17,13 +17,13 @@
 <script>
 export default {
   name: 'shopItem',
-  data () {
-    return {
-
+  props: {
+    item: {
+      type: Object
     }
   },
-  props: {
-    item: Object
+  created () {
+    console.log('detail', this.item)
   },
   methods: {
     // 加入购物车
@@ -31,8 +31,7 @@ export default {
       
     },
     f_opemDetail () {
-      // this.$router.push({ name: 'shopItemDetail' , query: { id: this.item.id }})
-      this.$router.push({ name: 'shopItemDetail' })
+      this.$router.push({ name: 'shopItemDetail', query: { id: this.item.id }})
     }
   }
 }
@@ -64,6 +63,14 @@ export default {
     color: #010101;
     margin: 0.2rem auto;
     // 溢出隐藏
+    span{
+      display: inline-block;
+      max-width: 2.1rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: bottom;
+    }
   }
   &>p{
     display: block;

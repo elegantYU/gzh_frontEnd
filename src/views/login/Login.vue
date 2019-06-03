@@ -34,8 +34,10 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      if (vm.$store.state.user.id) {
+      const user = JSON.parse(localStorage.getItem('user'))
+      if (vm.$store.state.user.id || user) {
         vm.$router.push({ name: 'index' })
+        vm.$store.dispatch('setUser', user)
       }
     })
   },
@@ -65,7 +67,10 @@ export default {
             this.$toast('登录成功')
             this.$store.dispatch('setUser', res.data.data)
             this.f_getUserHouse(res.data.data.id)
-            this.$router.push({ name: 'index' })
+            this.$router.push({ name: 'pickads' })
+
+            // 持久化
+            localStorage.setItem('user', JSON.stringify(res.data.data))
           } else {
             this.$toast(res.data.msg)
           }

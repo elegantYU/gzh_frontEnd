@@ -15,7 +15,7 @@
             v-for="(value, index) in v.children"
             :key="index"
           >
-            <shopItem :item="value"></shopItem>
+            <shopItem :item="value" :key="index" v-if="v_flag"></shopItem>
           </li>
         </ul>
       </div>
@@ -27,10 +27,10 @@
 import shopItem from './components/item.vue'
 
 export default {
-  name: 'Category',
   data () {
     return {
-      v_list: []
+      v_list: [],
+      v_flag: false
     }
   },
   components: {
@@ -40,33 +40,34 @@ export default {
     this.f_getList()
   },
   methods: {
-    f_getList () {
-      this.$http
+    async f_getList () {
+      const {data: {data: result}} = await this.$http
         .get('/admin/product/floor')
-        .then(res => {
-          res.data.data.map((v, i) => {
-            let params = {
-              start: 1,
-              pageSize: 5,
-              villageCode: this.$store.state.villageCode,
-              productCateId: v.codeCd
-            }
-            this.v_list.push(v)
-            this.f_getItem(params, v.codeCd)
-          })
-        })
+
+      this.v_list.push(...result)
+
+      await Promise.all(result.map(v => this.f_getItem({
+        start: 1,
+        pageSize: 5,
+        villageCode: this.$store.state.villageCode,
+        productCateId: v.codeCd
+      }, v.codeCd)))
+
     },
     f_getItem (params, i) {
-      this.$http
-        .get('/admin/product/pageList', { params })
-        .then(res => {
-          this.v_list.map(v => {
-            if (v.codeCd === i) {
-              v.children = res.data.data.slice(0)
-            }
-          })
-          console.log('mdb', this.v_list)
+      return new Promise(async resolve => {
+        const res = await this.$http
+          .get('/admin/product/pageList', { params })
+
+        this.v_list.map(v => {
+          if (v.codeCd === i) {
+            v.children = res.data.data.slice(0)
+          }
         })
+        console.log(this.v_list)
+        this.v_flag = true
+        resolve()
+      })
     },
     f_moveMore (i) {
       this.$router.push({ name: 'shopMore', query: { productCateId: i }})

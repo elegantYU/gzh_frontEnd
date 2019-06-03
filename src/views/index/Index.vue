@@ -113,7 +113,6 @@ export default {
         .get('/obtain/notice/pageList', { params })      
         .then(res => {
           this.v_topic = res.data.data.map(v => v)
-          console.log(this.v_topic)
         })
     },
     f_moveTopic (v) {

@@ -30,17 +30,10 @@ let confirmContent = (options = {}) => {
   merge(instance.$data, options)
   return new Promise((resolve, reject) => {
     instance.show = true
-    let success = instance.success
-    let cancle = instance.cancle
+    const {success, cancle} = instance
 
-    instance.success = () => {
-      success()
-      resolve()
-    }
-    instance.cancle = () => {
-      cancle()
-      reject()
-    }
+    instance.success = () =>  resolve(success())
+    instance.cancle = () => reject(cancle())
   })
 }
 

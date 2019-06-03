@@ -1,6 +1,5 @@
 import Vue from 'vue'
-import Axios from 'axios'
-import VueAxios from 'vue-axios'
+import axios from 'axios'
 import App from './App.vue'
 import store from './store/store'
 import Muse from 'muse-ui'
@@ -14,11 +13,11 @@ import router from './router/router'
 deviceRem(750)
 
 // Axios.defaults.baseURL = 'http://wx.feng360.com:9999'
-Vue.use(VueAxios, Axios)
+Vue.prototype.$http = axios
+Vue.prototype.wxsdk = wxsdk
 Vue.use(Muse)
 Vue.use(toastMessage)
 Vue.use(touch)
-Vue.prototype.wxsdk = wxsdk
 
 Vue.config.productionTip = false
 

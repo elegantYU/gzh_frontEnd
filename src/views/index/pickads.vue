@@ -50,9 +50,6 @@ export default {
           .then(res => {
             // console.log(res)
             if (res.data.success) {
-              // res.data.data.map(v => {
-              //   this.left.push(v.name)
-              // })
               this.left = res.data.data
               this.ads = this.left[0].name
               resolve(res.data.data)

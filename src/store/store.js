@@ -8,11 +8,12 @@ export default new Vuex.Store({
     wxcode: '',
     user: {},         // id name phoneNum headIcon
     villageCode: '330105001001001',  // 小区id
+    village: '', // 小区名
+    currentPlace: {},     // 当前小区及省市区
     house: [],
     neighbor: {
       router: ''
     },
-    village: '' // 小区名
   },
   mutations: {
     setWxcode (state, code) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     setVillage (state, str) {
       state.village = str
     },
+    setCurrentPlace (state, obj) {
+      state.currentPlace = Object.assign(obj)
+    },
     setHouse (state, obj) {
       state.house = obj.map(v => v)
     },
@@ -35,8 +39,8 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    setUser (context, obj) {
-      context.commit('setUser', obj)
+    setUser ({commit}, obj) {
+      commit('setUser', obj)
     },
     setHouse (context, obj) {
       context.commit('setHouse', obj)
@@ -46,6 +50,9 @@ export default new Vuex.Store({
     },
     setVillage (context, str) {
       context.commit('setVillage', str)
+    },
+    setCurrentPlace (context, obj) {
+      context.commit('setCurrentPlace', obj)
     }
   }
 })

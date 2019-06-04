@@ -1,5 +1,5 @@
 <template>
-  <div class="si_wrapper">
+  <div class="si_wrapper" @click="f_opemDetail">
     <div class="shop_item_img">
       <img :src="item.productUrl" alt="">
     </div>
@@ -15,36 +15,36 @@
 </template>
 
 <script>
-export default {
-  data () {
-    return {
-      v_list: []
-    }
-  },
-  props: {
-    item: Object
-  },
-  mounted () {
-    console.log(this.item, 123123)
-  },
-}
 // export default {
+//   data () {
+//     return {
+//       v_list: []
+//     }
+//   },
 //   props: {
 //     item: Object
 //   },
 //   mounted () {
-//     console.log('detail', this.item)
+//     console.log(this.item, 123123)
 //   },
-//   methods: {
-//     // 加入购物车
-//     f_addShopCar () {
-      
-//     },
-//     f_opemDetail () {
-//       this.$router.push({ name: 'shopItemDetail', query: { id: this.item.id }})
-//     }
-//   }
 // }
+export default {
+  props: {
+    item: Object
+  },
+  mounted () {
+    console.log('detail', this.item)
+  },
+  methods: {
+    // 加入购物车
+    f_addShopCar () {
+      
+    },
+    f_opemDetail () {
+      this.$router.push({ name: 'shopItemDetail', query: { id: this.item.id }})
+    }
+  }
+}
 </script>
 
 <style lang='scss' scoped>

@@ -1,7 +1,7 @@
 <template>
   <div class="sc_wrapper">
     <div class="sc_header">
-      <span>共<b>1</b>件宝贝</span>
+      <span>共<b>{{ v_list.length }}</b>件宝贝</span>
       <span :class="v_delete ? 'active' : ''">管理</span>
     </div>
     <div class="sc_container">
@@ -11,7 +11,7 @@
             <template v-for="(v, i) in v_list">
               <div class="sc_list" :key="i" >
                 <div class="sc_list_check">
-                  <i ></i>
+                  <i :class="v.active ? 'active' : ''"></i>
                 </div>
                 <div class="sc_list_img">
                   <img src="" alt="">
@@ -23,7 +23,7 @@
                     <b>￥ 128.00</b>
                     <s>158.00</s>
                     <div class="sc_list_count">
-                      <i>-</i><span>0</span><i>+</i>
+                      <i>-</i><span>1</span><i>+</i>
                     </div>
                   </div>
                 </div>
@@ -34,9 +34,9 @@
       </div>
     </div>
      <div class="sc_footer">
-      <span><i></i>全选</span>
+      <span @click="f_checkAll"><i :class="v_allChecked ? 'active' : ''"></i>全选</span>
       <p>合计：<b>￥ 128.00</b></p>
-      <button>下单</button>
+      <button>{{ v_delete ? '删除' : '下单' }}</button>
     </div>
   </div>
 </template>
@@ -49,7 +49,8 @@ export default {
       v_start: 1,
       v_loading: false,
       v_laodAll: false,
-      v_delete: false
+      v_delete: false,
+      v_allChecked: false
     }
   },
   mounted () {
@@ -57,11 +58,17 @@ export default {
   },
   methods: {
     async f_getList () {
+      const params = {
+        memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode,
+        start: this.v_start,
+        pageSize: 10
+      }
       const { data: { data: result } } = await this.$http
-        .post(`/admin/cart/list?memberId=${this.$store.state.user.id}&villageCode=${this.$store.state.villageCode}&start=${v_start}&pageSize=10`)
+        .get(`/admin/cart/list`, { params })
       
       this.v_laodAll = result.length > 0 ? false : true
-      this.v_list.push(...result)
+      this.v_list.push(...result.map(v => ({...v, active: false})))
     },
     f_load () {
       this.v_loading = true

@@ -73,14 +73,35 @@ export default {
           this.v_detail = Object.assign({}, res.data.data)
         })
     },
-    f_addNum () {
+    async f_addNum () {
       this.v_num++
+
+      const params = {
+        memberId: this.$store.state.user.id,
+        count: this.v_num,
+        productId: this.v_id,
+        sellerId: this.v_detail.sellerId,
+        villageCode: this.v_detail.villageCode,
+        unitPrice: this.v_detail.mallPcPrice,
+        specInfo: this.v_detail.name1
+      }
+
+      await this.$http
+        .post('/admin/cart/add', params)
     },
-    f_cutNum () {
+    async f_cutNum () {
       if (!this.v_num) {
         return false
       }
       this.v_num--
+      
+      const params = {
+        id: this.v_id,
+        num: this.v_num
+      }
+
+      await this.$http
+        .post('/admin/cart/changeCart', params)
     },
     f_moveIndex () {
       this.$router.push({ name: 'index' })

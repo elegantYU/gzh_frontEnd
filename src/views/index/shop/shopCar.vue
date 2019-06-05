@@ -2,26 +2,26 @@
   <div class="sc_wrapper">
     <div class="sc_header">
       <span>共<b>{{ v_list.length }}</b>件宝贝</span>
-      <span :class="v_delete ? 'active' : ''">管理</span>
+      <span :class="v_delete ? 'active' : ''" @click="f_willDelete">管理</span>
     </div>
     <div class="sc_container">
       <div class="sc_content">
         <mu-load-more :loading="v_loading" @load="f_load" :loaded-all="v_laodAll">
-          <mu-list>
+          <mu-list style="padding:0;">
             <template v-for="(v, i) in v_list">
-              <div class="sc_list" :key="i" >
+              <div class="sc_list" :key="i" v-touch:long="f_deleteOne(i)">
                 <div class="sc_list_check">
-                  <i :class="v.active ? 'active' : ''"></i>
+                  <i :class="v.active ? 'active' : ''" @click="f_checkOne(i)"></i>
                 </div>
                 <div class="sc_list_img">
                   <img src="" alt="">
                 </div>
                 <div class="sc_list_detail">
-                  <h6>商品名称</h6>
-                  <div class="sc_list_detail_desc"></div>
+                  <h6>{{ v.product.name1 }}</h6>
+                  <div class="sc_list_detail_desc">{{ v.product.name1 }}</div>
                   <div class="sc_list_detail_footer">
-                    <b>￥ 128.00</b>
-                    <s>158.00</s>
+                    <b>￥ {{ v.product.mallPcPrice }}</b>
+                    <s v-if="v.product.marketPrice">{{ v.product.marketPrice }}</s>
                     <div class="sc_list_count">
                       <i>-</i><span>1</span><i>+</i>
                     </div>
@@ -35,8 +35,8 @@
     </div>
      <div class="sc_footer">
       <span @click="f_checkAll"><i :class="v_allChecked ? 'active' : ''"></i>全选</span>
-      <p>合计：<b>￥ 128.00</b></p>
-      <button>{{ v_delete ? '删除' : '下单' }}</button>
+      <p>合计：<b>￥ {{ allPrice }}</b></p>
+      <button @click="f_orderAll">{{ v_delete ? '删除' : '下单' }}</button>
     </div>
   </div>
 </template>
@@ -53,6 +53,17 @@ export default {
       v_allChecked: false
     }
   },
+  computed: {
+    allPrice () {
+      const active  = this.v_list.filter(v => v.active)
+      let pirce = 0
+      active.map(v => {
+        pirce += v.product.mallPcPrice * 1
+      })
+
+      return pirce
+    }
+  },
   mounted () {
     this.f_getList()
   },
@@ -67,6 +78,7 @@ export default {
       const { data: { data: result } } = await this.$http
         .get(`/admin/cart/list`, { params })
       
+      console.log('购物车', result)
       this.v_laodAll = result.length > 0 ? false : true
       this.v_list.push(...result.map(v => ({...v, active: false})))
     },
@@ -77,6 +89,66 @@ export default {
         this.v_start++
         this.f_getList()
       }, 1000)
+    },
+    f_checkOne (i) {
+      this.v_list[i].active = !this.v_list[i].active
+    },
+    f_checkAll () {
+      // 全选
+      this.v_allChecked = !this.v_allChecked
+      this.v_list.map(v => v.active = this.v_allChecked)
+    },
+    f_willDelete () {
+      this.v_delete = !this.v_delete
+    },
+    f_deleteOne (i) {
+      const _this = this
+      return function (e, start, end) {
+        const flag = confirm('是否删除?')
+        const params = {
+          id: _this.v_list[i].id
+        }
+        if (flag) {
+         _this.$http
+            .post('/admin/cart/del', params)
+            .then(res => {
+              if (res.data.success) {
+                _this.v_list.splice(i, 1)
+              } else {
+                _this.$toast('网络错误')
+              }
+            })
+        }
+      }
+    },
+    f_orderAll () {
+      let params
+      if (this.v_delete) {
+        //  删除
+      } else {
+        //  下单
+        params.orders = this.v_list.filter(v => v.active).map(v => {
+          return {
+            sellerId: v.sellerId,
+            memberId: this.$store.state.user.id,
+            memberName: this.$store.state.user.name,
+            moneyProduct: v.product.mallPcPrice * 1,
+            addressInfo: this.$store.state.house[0],
+            mobile: this.$store.state.user.phoneNum,
+            moneyPrice: v.product.mallPcPrice,
+            productId: v.id,
+            productName: v.name1,
+            number: 1,
+            specInfo: v.name1
+          }
+        })
+
+        this.$http
+          .post('admin/order/orders/add', params)
+          .then(res => {
+            console.log('提交订单', res)
+          })
+      }
     }
   }
 }
@@ -94,8 +166,10 @@ export default {
     height: 0.8rem;
     display: flex;
     padding: 0 0.3rem;
+    background-color: #efeff4;
     justify-content: space-between;
     align-items: center;
+    z-index: 2;
     span{
       color: #333333;
       font-size: 0.24rem;
@@ -108,9 +182,16 @@ export default {
     }
   }
   .sc_container{
+    position: absolute;
+    top: 0.8rem;
+    left: 0;
     background-color: #efeff4;
+    width: 100%;
+    padding-bottom: 2.22rem;
+    z-index: 1;
     .sc_content{
       background-color: #fff;
+      width: 100%;
       .sc_list{
         height: 2.22rem;
         border-top: 1px solid #f4f4f4;
@@ -152,6 +233,7 @@ export default {
         .sc_list_detail{
           flex: 1;
           padding-left: 0.2rem;
+          width: 4.6rem;
           h6{
             display: block;
             width: 100%;
@@ -162,9 +244,11 @@ export default {
             color: #333;
             font-weight: bold;
             margin-bottom: 0.18rem;
+            text-align: left;
           }
           .sc_list_detail_desc{
             margin-bottom: 0.18rem;
+            text-align: left;
             font-size: 0.2rem;
             color: #999;
             line-height: 1.5em;
@@ -175,6 +259,7 @@ export default {
             -webkit-line-clamp: 2;
             /*! autoprefixer: off */
             -webkit-box-orient: vertical;
+            height: 0.8rem;
           }
           .sc_list_detail_footer{
             display: flex;
@@ -221,6 +306,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     background-color: #ffffff;
+    z-index: 2;
     span{
       font-size: 0.28rem;
       color: #333333;

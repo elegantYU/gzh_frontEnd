@@ -8,7 +8,7 @@
             <i></i>
             <input type="text" placeholder="请输入商品名称">
           </div>
-          <div class="shop_nav_car"></div>
+          <div class="shop_nav_car" @click="f_moveCar"></div>
         </div>
       </div>
       <div class="shop_body">
@@ -28,6 +28,11 @@ export default {
   },
   mounted () {
     this.$router.push({ name: 'shopCategory' })
+  },
+  methods: {
+    f_moveCar () {
+      this.$router.push({ name: 'shopCar' })
+    }
   }
 }
 </script>

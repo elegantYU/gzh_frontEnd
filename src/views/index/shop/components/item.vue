@@ -15,19 +15,6 @@
 </template>
 
 <script>
-// export default {
-//   data () {
-//     return {
-//       v_list: []
-//     }
-//   },
-//   props: {
-//     item: Object
-//   },
-//   mounted () {
-//     console.log(this.item, 123123)
-//   },
-// }
 export default {
   props: {
     item: Object

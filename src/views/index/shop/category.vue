@@ -15,7 +15,7 @@
             v-for="(value, index) in v.children"
             :key="index"
           >
-            <shopItem :item="value" :key="index" v-if="v_flag"></shopItem>
+            <shopItem :item="value" :key="index"></shopItem>
           </li>
         </ul>
       </div>
@@ -29,8 +29,7 @@ import shopItem from './components/item.vue'
 export default {
   data () {
     return {
-      v_list: [],
-      v_flag: false
+      v_list: []
     }
   },
   components: {
@@ -45,14 +44,15 @@ export default {
         .get('/admin/product/floor')
 
       this.v_list.push(...result)
-
       await Promise.all(result.map(v => this.f_getItem({
         start: 1,
         pageSize: 5,
         villageCode: this.$store.state.villageCode,
         productCateId: v.codeCd
-      }, v.codeCd)))
-
+      }, v.codeCd))).then(res => {
+        this.v_list= []
+        this.v_list.push(...result)
+      })
     },
     f_getItem (params, i) {
       return new Promise(async resolve => {
@@ -64,9 +64,7 @@ export default {
             v.children = res.data.data.slice(0)
           }
         })
-        console.log(this.v_list)
-        this.v_flag = true
-        resolve()
+        resolve(res)
       })
     },
     f_moveMore (i) {

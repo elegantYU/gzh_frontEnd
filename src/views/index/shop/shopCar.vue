@@ -161,9 +161,10 @@ export default {
       if (this.v_delete) {
         //  删除
         const delArr = this.v_list.filter(v => v.active)
-        if (delArr.length) {
+        console.log(delArr)
+        if (delArr.length > 0) {
           Promise.all(delArr.map(v => {
-            params.id = v.id
+            params = { id: v.id }
             return this.$http
               .post('/admin/cart/del', params)
               .then(res => {

@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     async f_getList () {
-      const {data: {data: result}} = await this.$http
+      const { data: { data: result } } = await this.$http
         .get('/admin/product/floor')
 
       this.v_list.push(...result)
@@ -52,7 +52,8 @@ export default {
         villageCode: this.$store.state.villageCode,
         productCateId: v.codeCd
       }, v.codeCd)))
-
+      this.v_list = []
+      this.v_list.push(...result)
     },
     f_getItem (params, i) {
       return new Promise(async resolve => {
@@ -64,13 +65,13 @@ export default {
             v.children = res.data.data.slice(0)
           }
         })
-        console.log(this.v_list)
+        console.log('this.v_list', this.v_list)
         this.v_flag = true
         resolve()
       })
     },
     f_moveMore (i) {
-      this.$router.push({ name: 'shopMore', query: { productCateId: i }})
+      this.$router.push({ name: 'shopMore', query: { productCateId: i } })
     }
   }
 }

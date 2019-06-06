@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     async f_getList () {
-      const {data: {data: result}} = await this.$http
+      const { data: { data: result } } = await this.$http
         .get('/admin/product/floor')
 
       this.v_list.push(...result)
@@ -68,7 +68,7 @@ export default {
       })
     },
     f_moveMore (i) {
-      this.$router.push({ name: 'shopMore', query: { productCateId: i }})
+      this.$router.push({ name: 'shopMore', query: { productCateId: i } })
     }
   }
 }

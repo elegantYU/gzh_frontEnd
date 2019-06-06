@@ -23,7 +23,7 @@
                     <b>￥ {{ v.product.mallPcPrice }}</b>
                     <s v-if="v.product.marketPrice">{{ v.product.marketPrice }}</s>
                     <div class="sc_list_count">
-                      <i>-</i><span>1</span><i>+</i>
+                      <i @click="f_cutNum(i)">-</i><span>{{ v.count }}</span><i @click="f_addNum(i)">+</i>
                     </div>
                   </div>
                 </div>
@@ -122,6 +122,40 @@ export default {
         }
       }
     },
+    async f_cutNum (i) {
+      let params = {
+        id: this.v_list[i].id
+      }
+      this.v_list[i].count--      
+      if (this.v_list[i].count === 0) {
+        const f = confirm('是否删除?')
+        if (f) {
+          const { data: { success } } = await this.$http
+            .post('/admin/cart/del', params)
+          success ? this.v_list.splice(i, 1): ''
+        }
+      } else {
+        params.num = -1
+      }
+      
+      await this.$http
+        .post('/admin/cart/changeCart', params)
+    },
+    async f_addNum (i) {
+      const params = {
+        id: this.v_list[i].id,
+        num: 1
+      }
+
+      if (this.v_list[i].product.productStock === this.v_list[i].count) {
+        this.$toast('暂无库存')
+        return
+      }
+      this.v_list[i].count++
+
+      await this.$http
+        .post('/admin/cart/changeCart', params)
+    },
     f_orderAll () {
       let params
       if (this.v_delete) {
@@ -159,8 +193,9 @@ export default {
             specInfo: v.name1
           }
         })
-        console.log('下单', params)
         this.$store.commit('setOrderParams', params)
+        console.log('下单', params)
+        // 订单页面
       }
     }
   }

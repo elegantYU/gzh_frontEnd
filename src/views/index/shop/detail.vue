@@ -74,11 +74,15 @@ export default {
         })
     },
     async f_addNum () {
+      if (this.v_num > this.v_detail.productStock) {
+        this.$toast('库存不足')
+        return
+      }
       this.v_num++
 
       const params = {
         memberId: this.$store.state.user.id,
-        count: this.v_num,
+        count: 1,
         productId: this.v_id,
         sellerId: this.v_detail.sellerId,
         villageCode: this.v_detail.villageCode,
@@ -96,12 +100,17 @@ export default {
       this.v_num--
       
       const params = {
-        id: this.v_id,
-        num: this.v_num
+        memberId: this.$store.state.user.id,
+        count: -1,
+        productId: this.v_id,
+        sellerId: this.v_detail.sellerId,
+        villageCode: this.v_detail.villageCode,
+        unitPrice: this.v_detail.mallPcPrice,
+        specInfo: this.v_detail.name1
       }
 
       await this.$http
-        .post('/admin/cart/changeCart', params)
+        .post('/admin/cart/add', params)
     },
     f_moveIndex () {
       this.$router.push({ name: 'index' })
@@ -110,7 +119,7 @@ export default {
       this.$router.push({ name: 'shopCar' })
     },
     f_getOrder () {
-
+      this.$router.push({ name: 'shopOrderList' })
     }
   }
 }

@@ -2,7 +2,7 @@
   <div class="shop_wrapper">
     <div class="shop_container">
       <div class="shop_header">
-        <img src="http://interfacelift.com/wallpaper/previews/04201_inbloom_672x420.jpg" alt="">
+        <img src="https://w.wallhaven.cc/full/j5/wallhaven-j5kkgp.jpg" alt="">
         <div class="shop_nav">
           <div class="shop_nav_search">
             <i></i>

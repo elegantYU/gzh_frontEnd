@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { Promise } from 'q';
 export default {
   data () {
     return {
@@ -125,6 +126,22 @@ export default {
       let params
       if (this.v_delete) {
         //  删除
+        const delArr = this.v_list.filter(v => v.active)
+        if (delArr.length) {
+          Promise.all(delArr.map(v => {
+            params.id = v.id
+            return this.$http
+              .post('/admin/cart/del', params)
+              .then(res => {
+                console.log('批量删除', res)
+              })
+          }))
+          .then(res => {
+            this.toast('删除完成')
+          })
+        } else {
+          this.$toast('无可删除商品')
+        }
       } else {
         //  下单
         params.orders = this.v_list.filter(v => v.active).map(v => {
@@ -142,12 +159,8 @@ export default {
             specInfo: v.name1
           }
         })
-
-        this.$http
-          .post('admin/order/orders/add', params)
-          .then(res => {
-            console.log('提交订单', res)
-          })
+        console.log('下单', params)
+        this.$store.commit('setOrderParams', params)
       }
     }
   }

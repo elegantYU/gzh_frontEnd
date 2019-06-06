@@ -6,15 +6,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     wxcode: '',
-    user: {},              // id name phoneNum headIcon
-    villageCode: '330105001001001',  // 小区id
-    village: '',          // 小区名
-    currentPlace: {},     // 当前小区的省市区
+    user: {}, // id name phoneNum headIcon
+    villageCode: '330105001001001', // 小区id
+    village: '', // 小区名
+    currentPlace: {}, // 当前小区的省市区
     house: [],
     neighbor: {
       router: ''
     },
-    orderParams: []       // 订单参数
+    orderParams: [] // 订单参数
   },
   mutations: {
     setWxcode: (state, code) => state.wxcode = code,
@@ -27,10 +27,10 @@ export default new Vuex.Store({
     setOrderParams: (state, arr) => state.orderParams.push(...arr)
   },
   actions: {
-    setUser: ({commit}, obj) => commit('setUser', obj),
-    setHouse: ({commit}, arr) => commit('setHouse', arr),
-    setVillageCode: ({commit}, str) => commit('setVillageCode', str),
-    setVillage: ({commit}, str) => commit('setVillage', str),
-    setCurrentPlace: ({commit}, obj) => commit('setCurrentPlace', obj)
+    setUser: ({ commit }, obj) => commit('setUser', obj),
+    setHouse: ({ commit }, arr) => commit('setHouse', arr),
+    setVillageCode: ({ commit }, str) => commit('setVillageCode', str),
+    setVillage: ({ commit }, str) => commit('setVillage', str),
+    setCurrentPlace: ({ commit }, obj) => commit('setCurrentPlace', obj)
   }
 })

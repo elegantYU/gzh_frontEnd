@@ -39,7 +39,8 @@ export default {
       preregion: 'province',
       flag: false,
       preads: '',
-      isrequest: true
+      isrequest: true,
+      currentPlace: {}
     }
   },
   methods: {
@@ -57,6 +58,7 @@ export default {
           })
       }).then(res => {
         console.log('citySynchroKeyres', res)
+        this.currentPlace.province = res[0].name
         this.params = {
           configCode: 'citySynchroKey',
           orgCode: res[0].id
@@ -86,6 +88,7 @@ export default {
           }
           this.ads = `${this.ads}>${v.name}`
           this.preads = this.ads
+          this.currentPlace.city = v.name
           break
         case 'county':
           this.params = {
@@ -100,6 +103,7 @@ export default {
           }
           this.ads = `${this.ads}>${v.name}`
           this.preads = this.ads
+          this.currentPlace.street = v.name
           break
         case 'community':
           this.params = {
@@ -115,24 +119,27 @@ export default {
           this.$store.dispatch('setVillageCode', v.orgCode)
           this.$store.dispatch('setVillage', v.name)
           console.log(this.$store.state)
+          this.currentPlace.residentia = v.name
+          console.log('currentPlace', this.currentPlace)
+          this.$store.dispatch('setCurrentPlace', this.currentPlace)
           this.$router.go(-1)
           break
       }
-      if(this.isrequest) {
+      if (this.isrequest) {
         return new Promise((resolve) => {
-        this.$http
-          .get('/obtain/config/linkage', { params: this.params })
-          .then(res => {
-            console.log(res)
-            if (res.data.success) {
+          this.$http
+            .get('/obtain/config/linkage', { params: this.params })
+            .then(res => {
+              console.log(res)
+              if (res.data.success) {
               // res.data.data.map(v => {
               //   this.left.push(v.name)
               // })
-              this.left = res.data.data
-              this.activeIndex = 0
-            }
-            resolve(res.data.data[0])
-          })
+                this.left = res.data.data
+                this.activeIndex = 0
+              }
+              resolve(res.data.data[0])
+            })
         }).then(v => {
           switch (v.region) {
             case 'city':
@@ -192,6 +199,7 @@ export default {
             orgCode: v.id
           }
           this.ads = v.name
+          this.currentPlace.province = v.name
           break
         case 'city':
           this.params = {
@@ -209,6 +217,7 @@ export default {
           } else {
             this.ads = `${this.preads}>${v.name}`
           }
+          this.currentPlace.county = v.name
           break
         case 'street':
           this.params = {
@@ -226,6 +235,7 @@ export default {
           // } else {
           //   this.ads = `${this.preads}>${v.name}`
           // }
+          this.currentPlace.community = v.name
           break
       }
       this.$http

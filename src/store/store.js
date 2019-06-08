@@ -17,14 +17,14 @@ export default new Vuex.Store({
     orderParams: [] // 订单参数
   },
   mutations: {
-    setWxcode: (state, code) => state.wxcode = code,
-    setUser: (state, obj) => state.user = Object.assign({}, obj),
-    setVillageCode: (state, str) => state.villageCode = str,
-    setVillage: (state, str) => state.village = str,
-    setCurrentPlace: (state, obj) => state.currentPlace = Object.assign(obj),
-    setHouse: (state, arr) => state.house.push(...arr),
-    neighborRouter: (state, r) => state.neighbor.router = r,
-    setOrderParams: (state, arr) => state.orderParams.push(...arr)
+    setWxcode: (state, code) => (state.wxcode = code),
+    setUser: (state, obj) => (state.user = Object.assign({}, obj)),
+    setVillageCode: (state, str) => (state.villageCode = str),
+    setVillage: (state, str) => (state.village = str),
+    setCurrentPlace: (state, obj) => (state.currentPlace = Object.assign(obj)),
+    setHouse: (state, arr) => (state.house.push(...arr)),
+    neighborRouter: (state, r) => (state.neighbor.router = r),
+    setOrderParams: (state, arr) => (state.orderParams.length && state.orderParams.push(...arr))
   },
   actions: {
     setUser: ({ commit }, obj) => commit('setUser', obj),

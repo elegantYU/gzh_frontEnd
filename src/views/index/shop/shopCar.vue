@@ -42,7 +42,8 @@
 </template>
 
 <script>
-import { Promise } from 'q';
+import throttle from '../../../utils/utils'
+
 export default {
   data () {
     return {
@@ -59,7 +60,7 @@ export default {
       const active  = this.v_list.filter(v => v.active)
       let pirce = 0
       active.map(v => {
-        pirce += v.product.mallPcPrice * 1
+        pirce += v.product.mallPcPrice * v.count
       })
 
       return pirce
@@ -132,10 +133,11 @@ export default {
         if (f) {
           const { data: { success } } = await this.$http
             .post('/admin/cart/del', params)
-          success ? this.v_list.splice(i, 1): ''
+
+          success && this.v_list.splice(i, 1)
         }
       } else {
-        params.num = -1
+        params['num'] = -1
       }
       
       await this.$http
@@ -161,7 +163,6 @@ export default {
       if (this.v_delete) {
         //  删除
         const delArr = this.v_list.filter(v => v.active)
-        console.log(delArr)
         if (delArr.length > 0) {
           Promise.all(delArr.map(v => {
             params = { id: v.id }
@@ -179,13 +180,15 @@ export default {
         }
       } else {
         //  下单
+        params = {
+          orders: []
+        }
         params.orders = this.v_list.filter(v => v.active).map(v => {
           return {
             sellerId: v.sellerId,
             memberId: this.$store.state.user.id,
             memberName: this.$store.state.user.name,
-            moneyProduct: v.product.mallPcPrice * 1,
-            addressInfo: this.$store.state.house[0],
+            moneyProduct: v.product.mallPcPrice * v.count,
             mobile: this.$store.state.user.phoneNum,
             moneyPrice: v.product.mallPcPrice,
             productId: v.id,
@@ -195,7 +198,7 @@ export default {
           }
         })
         this.$store.commit('setOrderParams', params)
-        console.log('下单', params)
+        this.$router.push({ name: 'shopOrderList' })
         // 订单页面
       }
     }

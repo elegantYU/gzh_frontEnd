@@ -2,9 +2,10 @@
 const deviceRem = size => {
   const docEl = document.documentElement
   const clientWidth = docEl.clientWidth
-  const reSize = () => docEl.style.fontSize = clientWidth >= size
+  const reSize = () => (docEl.style.fontSize = clientWidth >= size
     ? '100px'
     : 100 * (clientWidth / size) + 'px'
+  )
 
   document.addEventListener('DOMContentLoaded', reSize, false)
 }
@@ -19,6 +20,17 @@ const dateFormat = date => {
   return `${year}-${month}-${day}`
 }
 
+const throttle = (fn, timer = 300, lock) => {
+  return (...args) => {
+    if (!lock) {
+      lock = setTimeout(() => {
+        fn(null, ...args)
+        lock = false
+      }, timer)
+    }
+  }
+}
+
 // 滑动限制
 const stop = () => {
   document.body.style.overflow = 'hidden'
@@ -28,4 +40,4 @@ const move = () => {
   document.body.style.overflow = ''
 }
 
-export { deviceRem, dateFormat, stop, move }
+export { deviceRem, dateFormat, stop, move, throttle }

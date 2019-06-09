@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import axios from 'axios'
 import App from './App.vue'
+import axios from './utils/axios'
 import store from './store/store'
 import Muse from 'muse-ui'
 import { deviceRem } from './utils/utils'

@@ -66,9 +66,7 @@ export default {
           if (res.data.success) {
             this.$toast('登录成功')
             this.$store.dispatch('setUser', res.data.data)
-            this.f_getUserHouse(res.data.data.id)
             this.$router.push({ name: 'pickads' })
-
             // 持久化
             localStorage.setItem('user', JSON.stringify(res.data.data))
           } else {
@@ -84,22 +82,6 @@ export default {
     },
     f_switch () {
       this.v_switch = !this.v_switch
-    },
-    f_getUserHouse (id) {
-      let params = {
-        memberId: id,
-        villageCode: this.$store.state.villageCode
-      }
-
-      this.$http
-        .get('/admin/member/house/all', { params })
-        .then(res => {
-          console.log('房屋', res.data.data)
-          if (res.data.data.length) {
-            this.$store.dispatch('setHouse', res.data.data.map(v => v.searchWord))
-            console.log(this.$store.state.house)
-          }
-        })
     }
   }
 }

@@ -47,6 +47,7 @@ import throttle from '../../../utils/utils'
 export default {
   data () {
     return {
+      v_origin: {},
       v_list: [],
       v_start: 1,
       v_loading: false,
@@ -63,7 +64,7 @@ export default {
         pirce += v.product.mallPcPrice * v.count
       })
 
-      return pirce
+      return pirce.toFixed(2)
     }
   },
   mounted () {
@@ -75,14 +76,22 @@ export default {
         memberId: this.$store.state.user.id,
         villageCode: this.$store.state.villageCode,
         start: this.v_start,
-        pageSize: 10
+        pageSize: 100
       }
       const { data: { data: result } } = await this.$http
         .get(`/admin/cart/list`, { params })
       
-      console.log('购物车', result)
-      this.v_laodAll = result.length > 0 ? false : true
-      this.v_list.push(...result.map(v => ({...v, active: false})))
+      this.v_laodAll = Object.keys(result).length > 0 ? false : true
+      const r = Object.keys(result).reduce((acc, cur) => {
+        const a = result[cur].map(v => {
+          v['active'] = false
+          return v
+        })
+        acc.push(...a)
+        return acc
+      }, [])
+      this.v_origin = result
+      this.v_list.push(...r)
     },
     f_load () {
       this.v_loading = true
@@ -180,24 +189,24 @@ export default {
         }
       } else {
         //  下单
-        params = {
-          orders: []
-        }
-        params.orders = this.v_list.filter(v => v.active).map(v => {
+        
+        const orders = this.v_list.filter(v => v.active).map((v => {
           return {
             sellerId: v.sellerId,
             memberId: this.$store.state.user.id,
             memberName: this.$store.state.user.name,
-            moneyProduct: v.product.mallPcPrice * v.count,
+            moneyProduct: (v.product.mallPcPrice * v.count).toFixed(2) * 1,
             mobile: this.$store.state.user.phoneNum,
             moneyPrice: v.product.mallPcPrice,
             productId: v.id,
-            productName: v.name1,
-            number: 1,
-            specInfo: v.name1
+            productName: v.product.name1,
+            number: v.count,
+            specInfo: v.product.name1,
+            productSku: v.product.masterImg
           }
-        })
-        this.$store.commit('setOrderParams', params)
+        }))
+        console.log(orders)
+        this.$store.commit('setOrderParams', orders)
         this.$router.push({ name: 'shopOrderList' })
         // 订单页面
       }

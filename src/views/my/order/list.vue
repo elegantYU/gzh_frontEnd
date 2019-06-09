@@ -72,6 +72,10 @@ export default {
       const { data: { data: result } } = await this.$http
         .get('/admin/order/orders/list', { params })
 
+      if (!result.length) {
+        this.v_loadAll = true
+      } 
+      this.v_list.push(...result)
       console.log('订单', result)
     },
     f_load () {
@@ -115,6 +119,8 @@ export default {
           .get('/admin/order/orders/delete', { params })
 
         success && this.$toast('已删除')
+        this.v_list = []
+        this.f_getList()
       }
     },
     async f_cancel (v) {
@@ -128,10 +134,12 @@ export default {
           .get('/admin/order/orders/cancel', { params })
         
         success && this.$toast('已取消')
+        this.v_list = []
+        this.f_getList()
       }
     },
     f_comment (v) {
-      this.$router.push({ name: 'orderList', query: { orderSn: v.orderSn } })
+      this.$router.push({ name: 'orderList', query: { orderSn: v.orderSn, orderState: v.orderState } })
     }
   }
 }
@@ -183,6 +191,7 @@ export default {
         height: 1.8rem;
         display: flex;
         align-items: center;
+        background-color: #f5f5f5;
         .mo_item_img{
           width: 1.8rem;
           height: 1.8rem;
@@ -261,8 +270,10 @@ export default {
           border-radius: 0.2rem;
           border: 1px solid #999;
           text-align: center;
-          &.avtive {
+          margin: 0 0.1rem;
+          &.active {
             border: 1px solid #f64682;
+            color: #f64682;
           }
         }
       }

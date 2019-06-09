@@ -116,12 +116,12 @@ export default {
           console.log(v)
           this.isrequest = false
           this.preads = this.ads
+          this.currentPlace.residentia = v.name
           this.$store.dispatch('setVillageCode', v.orgCode)
           this.$store.dispatch('setVillage', v.name)
-          console.log(this.$store.state)
-          this.currentPlace.residentia = v.name
           console.log('currentPlace', this.currentPlace)
           this.$store.dispatch('setCurrentPlace', this.currentPlace)
+          this.f_getUserHouse()
           this.$router.go(-1)
           break
       }
@@ -230,11 +230,6 @@ export default {
             configCode: 'residentiaSynchroKey',
             orgCode: v.id
           }
-          // if (this.flag) {
-          //   this.ads = `${this.ads}>${v.name}`
-          // } else {
-          //   this.ads = `${this.preads}>${v.name}`
-          // }
           this.currentPlace.community = v.name
           break
       }
@@ -246,6 +241,20 @@ export default {
             this.right = res.data.data
           }
         })
+    },
+    async f_getUserHouse () {
+      const params = {
+        memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode
+      }
+      const { data: { data: result }} = await this.$http
+        .get('/admin/member/house/all', { params })
+      
+      if (result.length) {
+        const r = result.map(v => v.searchWord)
+        this.$store.dispatch('setHouse', r)
+        console.log(this.$store.state.house)
+      }
     }
   },
   mounted () {

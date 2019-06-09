@@ -24,10 +24,11 @@ export default {
   },
   methods: {
     f_moveRight (e, start, end) {
+      console.log(start, end)
       const xLength = end.X - start.X
       const yLength = Math.abs(end.Y - start.Y)
       const len = xLength - yLength
-      if (len > 20) {
+      if (len > 100) {
         this.$router.go(-1)
       }
     }

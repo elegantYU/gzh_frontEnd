@@ -116,12 +116,9 @@ export default {
       const _this = this
       return function (e, start, end) {
         const flag = confirm('是否删除?')
-        const params = {
-          id: _this.v_list[i].id
-        }
         if (flag) {
          _this.$http
-            .post('/admin/cart/del', params)
+            .post(`/admin/cart/del?id=${_this.v_list[i].id}`)
             .then(res => {
               if (res.data.success) {
                 _this.v_list.splice(i, 1)
@@ -133,31 +130,22 @@ export default {
       }
     },
     async f_cutNum (i) {
-      let params = {
-        id: this.v_list[i].id
-      }
       this.v_list[i].count--      
       if (this.v_list[i].count === 0) {
         const f = confirm('是否删除?')
         if (f) {
           const { data: { success } } = await this.$http
-            .post('/admin/cart/del', params)
+            .post(`/admin/cart/del?id=${this.v_list[i].id}`)
 
           success && this.v_list.splice(i, 1)
         }
       } else {
-        params['num'] = -1
+        await this.$http
+          .post(`/admin/cart/changeCart?id=${this.v_list[i].id}&num=-1`)
       }
       
-      await this.$http
-        .post('/admin/cart/changeCart', params)
     },
     async f_addNum (i) {
-      const params = {
-        id: this.v_list[i].id,
-        num: 1
-      }
-
       if (this.v_list[i].product.productStock === this.v_list[i].count) {
         this.$toast('暂无库存')
         return
@@ -165,7 +153,7 @@ export default {
       this.v_list[i].count++
 
       await this.$http
-        .post('/admin/cart/changeCart', params)
+        .post(`/admin/cart/changeCart?id=${this.v_list[i].id}&num=1`)
     },
     f_orderAll () {
       let params
@@ -173,16 +161,14 @@ export default {
         //  删除
         const delArr = this.v_list.filter(v => v.active)
         if (delArr.length > 0) {
-          Promise.all(delArr.map(v => {
+          const f = confirm('确认删除?')
+          f && Promise.all(delArr.map(v => {
             params = { id: v.id }
             return this.$http
               .post('/admin/cart/del', params)
-              .then(res => {
-                console.log('批量删除', res)
-              })
           }))
           .then(res => {
-            this.toast('删除完成')
+            this.$toast('删除完成')
           })
         } else {
           this.$toast('无可删除商品')
@@ -192,13 +178,14 @@ export default {
         
         const orders = this.v_list.filter(v => v.active).map((v => {
           return {
+            cartId: v.id,
             sellerId: v.sellerId,
             memberId: this.$store.state.user.id,
             memberName: this.$store.state.user.name,
             moneyProduct: (v.product.mallPcPrice * v.count).toFixed(2) * 1,
             mobile: this.$store.state.user.phoneNum,
             moneyPrice: v.product.mallPcPrice,
-            productId: v.id,
+            productId: v.product.id,
             productName: v.product.name1,
             number: v.count,
             specInfo: v.product.name1,
@@ -206,6 +193,10 @@ export default {
           }
         }))
         console.log(orders)
+        if (!orders.length) {
+          this.$toast('请选择商品')
+          return false
+        }
         this.$store.commit('setOrderParams', orders)
         this.$router.push({ name: 'shopOrderList' })
         // 订单页面
@@ -402,6 +393,7 @@ export default {
       width: 2rem;
       height: 100%;
       line-height: 0.88rem;
+      font-size: 0.28rem;
       color: #fff;
       background-color: #f64682;
     }

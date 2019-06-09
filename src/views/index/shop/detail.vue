@@ -57,6 +57,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$store.state)
     this.v_id = this.$route.query.id
     this.f_getDetail()
   },
@@ -119,6 +120,23 @@ export default {
       this.$router.push({ name: 'shopCar' })
     },
     f_getOrder () {
+      const orders = [
+        {
+          cartId: this.v_id,
+          sellerId: this.v_detail.sellerId,
+          memberId: this.$store.state.user.id,
+          memberName: this.$store.state.user.name,
+          moneyProduct: (this.v_detail.mallPcPrice * this.v_num).toFixed(2) * 1,
+          mobile: this.$store.state.user.phoneNum,
+          moneyPrice: this.v_detail.mallPcPrice,
+          productId: this.v_detail.id,
+          productName: this.v_detail.name1,
+          number: this.v_num || 1,
+          specInfo: this.v_detail.name1,
+          productSku: this.v_detail.masterImg
+        }
+      ]
+      this.$store.commit('setOrderParams', orders)
       this.$router.push({ name: 'shopOrderList' })
     }
   }
@@ -207,6 +225,9 @@ export default {
       .sd_header_detail{
         display: flex;
         justify-content: space-between;
+        span{
+          font-size: 0.26rem;
+        }
       }
     }
     .sd_detail{

@@ -158,7 +158,6 @@ export default {
       border-radius: 0.15rem;
       background-color: #fff;
       margin-bottom: 0.2rem;
-      padding: 0 0.2rem;
       text-align: left;
       .mo_item_header{
         width: 100%;
@@ -167,6 +166,7 @@ export default {
         justify-content: space-between;
         align-items: center;
         font-size: 0.3rem;
+        padding: 0 0.2rem;
         p{
           display: inline-block;
           color: #333;
@@ -192,6 +192,7 @@ export default {
         display: flex;
         align-items: center;
         background-color: #f5f5f5;
+        padding: 0 0.2rem;
         .mo_item_img{
           width: 1.8rem;
           height: 1.8rem;

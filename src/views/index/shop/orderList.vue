@@ -199,7 +199,7 @@ export default {
       height: auto;
       .so_content_item{
         background-color: #fff;
-        padding: 0 0.2rem 0.2rem;
+        padding: 0 0 0.2rem;
         text-align: left;
         margin-bottom: 0.16rem;
         .mod_content_header{
@@ -209,6 +209,7 @@ export default {
           justify-content: space-between;
           align-items: center;
           font-size: 0.3rem;
+          padding: 0 0.2rem;
           p{
             display: inline-block;
             color: #333;
@@ -235,6 +236,7 @@ export default {
           align-items: center;
           background-color: #f5f5f5;
           margin-bottom: 0.25rem;
+          padding: 0 0.2rem;
           .mo_item_img{
             width: 1.8rem;
             height: 1.8rem;
@@ -298,7 +300,7 @@ export default {
       }
     }
     .so_footer{
-      padding: 0 0.3rem;
+      padding: 0.3rem;
       background-color: #fff;
       .mo_item_sub{
         height: 0.32rem;

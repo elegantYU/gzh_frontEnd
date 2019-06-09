@@ -12,7 +12,6 @@ import 'muse-ui/dist/muse-ui.css'
 import router from './router/router'
 deviceRem(750)
 
-// Axios.defaults.baseURL = 'http://wx.feng360.com:9999'
 Vue.prototype.$http = axios
 Vue.prototype.wxsdk = wxsdk
 Vue.use(Muse)

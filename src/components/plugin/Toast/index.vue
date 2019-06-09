@@ -19,6 +19,7 @@ export default {
   position: fixed;
   top: 40%;
   left: 50%;
+  z-index: 9999;
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.7);
   font-size: 0.24rem;

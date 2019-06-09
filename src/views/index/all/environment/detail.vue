@@ -160,6 +160,7 @@ export default {
               })
             } else {
               this.v_noComment = true
+              this.v_loadAll = true
             }
           } else {
             this.$toast('网络错误')
@@ -215,9 +216,11 @@ export default {
         background-color: #fff;
         text-align: left;
         padding: 0 0.3rem;
+        display: flex;
         label{
           display: inline-block;
           font-size: 0.34rem;
+          line-height: 0.9rem;
           width: 2rem;
           height: 100%;
           color: #b2b2b2;
@@ -226,6 +229,7 @@ export default {
           width: calc(100% - 2.25rem);
           height: 100%;
           background-color: transparent;
+          font-size: 0.3rem;
         }
       }
     }

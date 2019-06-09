@@ -3,7 +3,7 @@
     <div class="shop_item_img">
       <img :src="item.productUrl" alt="">
     </div>
-    <b><span>{{ item.name1 }}</span> {{ item.actualSales }}{{ item.unit }}</b>
+    <b><span>{{ item.name1 }}</span> {{ item.productStock }}{{ item.unit }}</b>
     <p>{{ item.keyword }}</p>
     <div class="shop_item_detail">
       <span>￥{{ item.mallPcPrice }}</span>

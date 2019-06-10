@@ -58,7 +58,7 @@ export default {
       v_user: {
         appeal: ['业委会', '物业', '邻里纠纷']
       },
-      v_communityName: '戈雅花苑',
+      v_communityName: '',
       v_from: {
         complaintTarget: '',
         type: '1',
@@ -75,6 +75,7 @@ export default {
     this.v_from.createUserId = this.$store.state.user.id
     this.v_from.createName = this.$store.state.user.name
     this.v_from.villageCode = this.$store.state.villageCode
+    this.v_communityName = this.$store.state.village
   },
   methods: {
     f_openAppeal () {

@@ -1,7 +1,7 @@
 <template>
   <div class="car_wrapper">
     <div class="car_container">
-      <h6>康兴园小区</h6>
+      <h6>{{ place }}</h6>
       <ul>
         <li
           class="car_item"
@@ -37,6 +37,11 @@ export default {
   data () {
     return {
       v_list: []
+    }
+  },
+  computed: {
+    place () {
+      return this.$store.state.village
     }
   },
   mounted () {

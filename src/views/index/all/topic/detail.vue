@@ -10,7 +10,7 @@
           <li :class="v_detail.hasCollect ? 'index_topic_icon_active' : ''" @click="f_getCollect"><i></i>{{ v_detail.collect }}</li>
         </ul>
       </div>
-      <img :src="v_detail.img[0]" alt="">
+      <img :src="v_detail.img && v_detail.img[0]" alt="">
       <div class="td_content">
         {{ v_detail.content }}
       </div>

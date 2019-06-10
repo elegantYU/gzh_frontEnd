@@ -1,7 +1,7 @@
 <template>
   <div class="pet_wrapper">
     <div class="pet_container">
-      <h6>康馨园小区</h6>
+      <h6>{{ place }}</h6>
       <ul>
         <li
           class="pet_item"
@@ -41,6 +41,11 @@ export default {
   data () {
     return {
       v_list: []
+    }
+  },
+  computed: {
+    place () {
+      return this.$store.state.village
     }
   },
   mounted () {

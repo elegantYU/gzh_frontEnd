@@ -2,7 +2,7 @@
   <div class="index_wrapper">
     <div class="index_container">
         <div class="index_swipe">
-        <span class="index_map" @click="f_switchVillage"><i></i>康馨园</span>
+        <span class="index_map" @click="f_switchVillage"><i></i>{{ place }}</span>
         <span class="index_notice" @click="f_viewNotice"></span>
         <mu-carousel hide-controls>
           <mu-carousel-item v-for="(v, i) in v_banner" :key="i">
@@ -86,6 +86,11 @@ export default {
       v_noHouse: false,
     }
   },
+  computed: {
+    place () {
+      return this.$store.state.village
+    }
+  },
   mounted () {
     this.f_getBanner()
     this.f_getTopic()
@@ -105,6 +110,7 @@ export default {
       let params = {
         type: 4,
         memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode,
         pageNum: 1,
         pageSize: 5
       }

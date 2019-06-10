@@ -1,7 +1,7 @@
 <template>
   <div class="ns_wrapper">
     <div class="ns_container">
-      <h6>小区名称</h6>
+      <h6>{{ place }}</h6>
       <div class="ns_from">
         <div class="ns_input">
           <label>分类</label>
@@ -202,7 +202,7 @@ export default {
     }
   },
   computed: {
-    type: function () {
+    type () {
       switch (this.v_from.taskType) {
         case '1':
           console.log('------------')
@@ -219,6 +219,9 @@ export default {
           break
       }
     },
+    place () {
+      return this.$store.state.village
+    }
   },
   watch: {
     'v_from.startTime': function (now, past) {

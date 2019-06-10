@@ -60,7 +60,7 @@ export default {
     return {
       v_typeFlag: false,
       v_from: {
-        communityName: '康馨苑小区',
+        communityName: '',
         type: '',
         detail: '',
         img: ['', ''],
@@ -80,6 +80,9 @@ export default {
         { name: '其他' }
       ]
     }
+  },
+  mounted () {
+    this.v_from.communityName = this.$store.state.village
   },
   methods: {
     f_openType () {

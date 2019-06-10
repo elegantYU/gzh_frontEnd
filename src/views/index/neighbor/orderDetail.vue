@@ -1,7 +1,7 @@
 <template>
   <div class="nd_wrapper">
     <div class="nd_container">
-      <h6>康馨园小区</h6>
+      <h6>{{ place }}</h6>
       <div class="nd_from">
         <div class="nd_input">
           <label>分类</label>
@@ -136,7 +136,7 @@ export default {
     }
   },
   computed: {
-    type: function () {
+    type () {
       switch (this.v_content.taskType) {
         case '1':
           return '拼车'
@@ -152,7 +152,7 @@ export default {
           break
       }
     },
-    shareTime: function () {
+    shareTime () {
       switch (this.v_content.taskType) {
         case '1':
         case '3':
@@ -166,14 +166,14 @@ export default {
           break
       }
     },
-    hasLock: function () {
+    hasLock () {
       return this.v_content.carLock ? '有' : '无'
     },
-    imgJson: function () {
+    imgJson () {
       console.log(this.v_content.imgUrl)
       return eval(this.v_content.imgUrl)
     },
-    submit: function () {
+    submit () {
       if (this.v_content.shareType === '2') {
         this.v_orderText = '立即预约'
         return true
@@ -183,6 +183,9 @@ export default {
       } else {
         return false
       }
+    },
+    place () {
+      return this.$store.state.village
     }
   },
   created () {

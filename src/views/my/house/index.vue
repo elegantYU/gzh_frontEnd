@@ -1,7 +1,7 @@
 <template>
   <div class="house_wrapper">
     <div class="house_container">
-      <h6>康兴园小区</h6>
+      <h6>{{ place }}</h6>
       <ul class="house_list">
         <li
           v-for="(v, i) in v_houseList"
@@ -32,6 +32,11 @@ export default {
   data () {
     return {
       v_houseList: []
+    }
+  },
+  computed: {
+    place () {
+      return this.$store.state.village
     }
   },
   mounted () {

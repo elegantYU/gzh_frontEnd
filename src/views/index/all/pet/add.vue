@@ -1,7 +1,7 @@
 <template>
   <div class="pa_wrapper">
     <div class="pa_container">
-      <h6>康馨园小区</h6>
+      <h6>{{place}}</h6>
       <div class="pa_form">
         <div class="pa_input">
           <label>饲养人</label>
@@ -116,6 +116,11 @@ export default {
         //exemptionImg: []        // 图片数组
       },
       v_address: []
+    }
+  },
+  computed: {
+    place () {
+      return this.$store.state.village
     }
   },
   mounted () {

@@ -98,7 +98,7 @@ export default {
         house: []
       },
       v_from: {
-        communityName: '戈雅花苑',
+        communityName: '',
         houseName: '',
         type: '',
         title: '',
@@ -173,6 +173,7 @@ export default {
   mounted () {
     this.v_from.createUserId = this.$store.state.user.id
     this.v_from.villageCode = this.$store.state.villageCode
+    this.v_from.communityName = this.$store.state.village
     this.f_getHouse()
   },
   methods: {

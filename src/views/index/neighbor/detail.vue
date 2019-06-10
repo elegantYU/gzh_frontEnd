@@ -1,7 +1,7 @@
 <template>
   <div class="nd_wrapper">
     <div class="nd_container">
-      <h6>康馨园小区</h6>
+      <h6>{{ place }}</h6>
       <div class="nd_from">
         <div class="nd_input">
           <label>分类</label>
@@ -184,6 +184,9 @@ export default {
       } else {
         return false
       }
+    },
+    place () {
+      return this.$store.state.village
     }
   },
   created () {

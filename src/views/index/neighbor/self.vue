@@ -298,6 +298,7 @@ export default {
     f_getPark () {
       let params = {
         memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode,
         pageNum: 1,
         pageSize: 100
       }
@@ -311,6 +312,7 @@ export default {
     f_getCar () {
       let params = {
         memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode,
         pageNum: 1,
         pageSize: 100
       }

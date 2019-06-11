@@ -6,27 +6,26 @@
         <div class="ha_input">
           <label>区域</label>
           <div class="ha_input_box">
-            <input type="text" readonly v-model="v_form.region" @click="f_openSelect">
+            <input type="text" readonly v-model="v_form.region" >
           </div>
-          <i></i>
         </div>
         <div class="ha_input">
           <label>街道</label>
           <div class="ha_input_box">
-            <mu-select v-model="v_form.street" :solo="true" placeholder="请选择街道" @change="f_getList('communitySynchroKey', v_form.street)">
+            <!-- <mu-select v-model="v_form.street" :solo="true" placeholder="请选择街道" @change="f_getList('communitySynchroKey', v_form.street)">
               <mu-option v-for="(v,i) in v_street" :key="i" :label="v.name" :value="v.name"></mu-option>
-            </mu-select>
+            </mu-select> -->
+            <input type="text" readonly v-model="v_form.street">
           </div>
-          <i></i>
         </div>
         <div class="ha_input">
           <label>社区</label>
           <div class="ha_input_box">
-            <mu-select v-model="v_form.community" :solo="true" placeholder="请选择社区" @change="f_getList('residentiaSynchroKey', v_form.community)">
+            <!-- <mu-select v-model="v_form.community" :solo="true" placeholder="请选择社区" @change="f_getList('residentiaSynchroKey', v_form.community)">
               <mu-option v-for="(v,i) in v_community" :key="i" :label="v.name" :value="v.name"></mu-option>
-            </mu-select>
+            </mu-select> -->
+            <input type="text" readonly v-model="v_form.community">
           </div>
-          <i></i>
         </div>
         <div class="ha_input">
           <label>小区</label>
@@ -194,6 +193,15 @@ export default {
   mounted () {
     this.v_form.memberId = this.$store.state.user.id
     this.v_form.villageCode = this.$store.state.villageCode
+    this.v_form.regionId = this.$store.state.currentPlace.regionId
+    this.v_form.region = `${this.$store.state.currentPlace.province},${this.$store.state.currentPlace.city},${this.$store.state.currentPlace.county}`
+    this.v_form.streetId = this.$store.state.currentPlace.streetId
+    this.v_form.street = this.$store.state.currentPlace.street
+    this.v_form.communityId = this.$store.state.currentPlace.communityId
+    this.v_form.community = this.$store.state.currentPlace.community
+    this.v_form.villageId = this.$store.state.currentPlace.villageId
+    this.v_form.village = this.$store.state.village
+
     this.f_getList('provinceSynchroKey', {
       id: '0',
       name: '浙江省',
@@ -265,7 +273,8 @@ export default {
       let params
       switch (t) {
         case 'buildingSynchroKey':
-          id = this.v_residentia.filter(v => v.name === c)[0].id
+          // id = this.v_residentia.filter(v => v.name === c)[0].id
+          id = this.$store.state.villageCode
           params = {
             configCode: t,
             relateId: id

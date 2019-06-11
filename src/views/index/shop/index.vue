@@ -6,13 +6,13 @@
         <div class="shop_nav">
           <div class="shop_nav_search">
             <i></i>
-            <input type="text" placeholder="请输入商品名称">
+            <input type="text" placeholder="请输入商品名称" v-model="v_keyword" @blur="f_goSearch">
           </div>
           <div class="shop_nav_car" @click="f_moveCar"></div>
         </div>
       </div>
       <div class="shop_body">
-        <router-view></router-view>
+        <router-view :keyword="v_keyword"></router-view>
       </div>
     </div>
   </div>
@@ -23,7 +23,8 @@ export default {
   name: 'Shop',
   data () {
     return {
-      v_list: []
+      v_list: [],
+      v_keyword: ''
     }
   },
   mounted () {
@@ -32,6 +33,12 @@ export default {
   methods: {
     f_moveCar () {
       this.$router.push({ name: 'shopCar' })
+    },
+    f_goSearch () {
+      if (this.v_keyword) {
+        this.$router.push({ name: 'shopSearch' })
+      }
+      return
     }
   }
 }

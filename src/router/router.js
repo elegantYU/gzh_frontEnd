@@ -28,7 +28,8 @@ const router = new Router({
           component: () => import('../views/index/shop/index.vue'),
           children: [
             { path: '/shop/more', name: 'shopMore', meta: { title: '生活超市' }, component: () => import('../views/index/shop/more.vue') },
-            { path: '/shop/category', name: 'shopCategory', meta: { title: '生活超市' }, component: () => import('../views/index/shop/category.vue') }
+            { path: '/shop/category', name: 'shopCategory', meta: { title: '生活超市' }, component: () => import('../views/index/shop/category.vue') },
+            { path: '/shop/search', name: 'shopSearch', meta: { title: '生活超市' }, component: () => import('../views/index/shop/search.vue') }
           ]
         },
         // 全部

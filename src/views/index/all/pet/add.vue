@@ -136,7 +136,8 @@ export default {
     },
     f_getHouse () {
       let params = {
-        memberId: this.v_form.createUserId
+        memberId: this.v_form.createUserId,
+        villageCode: this.v_form.villageCode
       }
 
       this.$http

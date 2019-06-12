@@ -23,6 +23,6 @@ Axios.interceptors.response.use(res => {
   return res
 })
 
-Axios.defaults.baseURL = 'http://wx.zjphtech.com:9999'
+Axios.defaults.baseURL = 'http://zjphtech.com:9999'
 
 export default Axios

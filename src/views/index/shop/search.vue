@@ -11,6 +11,7 @@
         </mu-list>
       </mu-load-more>
     </ul>
+    <p v-show="v_noGoods">暂无商品资源</p>
   </div>
 </template>
 
@@ -27,6 +28,7 @@ export default {
       v_start: 1,
       v_loading: false,
       v_loadAll: false,
+      v_noGoods: false
     }
   },
   props: {
@@ -56,9 +58,11 @@ export default {
         .get('/admin/product/pageList', { params })
 
       if (result.length) {
+        this.v_noGoods = false
         this.v_item.push(...result)
       } else {
         this.v_loadAll = true
+        this.v_noGoods = true
       }
     },
     f_load () {

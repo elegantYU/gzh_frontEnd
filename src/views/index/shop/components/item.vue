@@ -24,8 +24,24 @@ export default {
   },
   methods: {
     // 加入购物车
-    f_addShopCar () {
-      
+    async f_addShopCar () {
+      if (this.v_detail.productStock) {
+        this.$toast('库存不足')
+        return
+      }
+
+      const params = {
+        memberId: this.$store.state.user.id,
+        count: 1,
+        productId: this.v_id,
+        sellerId: this.item.sellerId,
+        villageCode: this.item.villageCode,
+        unitPrice: this.item.mallPcPrice,
+        specInfo: this.item.name1
+      }
+
+      await this.$http
+        .post('/admin/cart/add', params)
     },
     f_opemDetail () {
       this.$router.push({ name: 'shopItemDetail', query: { id: this.item.id }})

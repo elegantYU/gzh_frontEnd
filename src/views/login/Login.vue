@@ -9,7 +9,7 @@
       <div class="login_input">
         <span></span>
         <input :type="v_switch ? 'text' : 'password'" placeholder="请输入密码" v-model="v_password">
-        <i @click="f_switch"></i>
+        <i @click="f_switch" :class="{'active': v_open}"></i>
       </div>
       <div class="login_submit" @click="f_login">
         登录
@@ -29,7 +29,8 @@ export default {
     return {
       v_phone: '',
       v_password: '',
-      v_switch: false
+      v_switch: false,
+      v_open: false
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -80,6 +81,7 @@ export default {
     },
     f_switch () {
       this.v_switch = !this.v_switch
+      this.v_open = !this.v_open
     }
   }
 }
@@ -131,11 +133,14 @@ export default {
         display: inline-block;
         width: 0.35rem;
         height: 100%;
-        background-image: url('../../assets/images/login/login_icon_eye.png');
+        background-image: url('../../assets/images/login/login_eye.png');
         background-repeat: no-repeat;
         background-size: contain;
         background-position: center center;
         cursor: pointer;
+        &.active{
+          background-image: url('../../assets/images/login/login_icon_eye.png');
+        }
       }
     }
     .login_submit{

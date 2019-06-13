@@ -13,7 +13,7 @@ import router from './router/router'
 deviceRem(750)
 
 Vue.prototype.$http = axios
-Vue.prototype.wxsdk = wxsdk
+Vue.prototype.$wxsdk = wxsdk
 Vue.use(Muse)
 Vue.use(toastMessage)
 Vue.use(touch)

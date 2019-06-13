@@ -175,6 +175,7 @@ export default {
     this.v_from.villageCode = this.$store.state.villageCode
     this.v_from.communityName = this.$store.state.village
     this.f_getHouse()
+    this.$wxsdk.init(window.location.href)
   },
   methods: {
     f_getHouse () {
@@ -212,6 +213,10 @@ export default {
     },
     f_upload () {
       // this.$wxsdk  上传图片获取链接
+      this.$wxsdk.chooseImage(3)
+        .then(res => {
+          console.log('上传', res)
+        })
     },
     f_submit () {
       let params = Object.assign({}, this.v_from)

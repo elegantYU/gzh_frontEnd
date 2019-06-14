@@ -9,7 +9,7 @@
       <span>￥{{ item.mallPcPrice }}</span>
       <s v-if="item.marketPrice">原价:{{ item.marketPrice }}</s>
       <span>销量{{ item.actualSales > 1000 ? '999+' : item.actualSales }}件</span>
-      <i @click.stop="f_addShopCar"></i>
+      <i :class="{'active': v_active }" @click.stop="f_addShopCar"></i>
     </div>
   </div>
 </template>
@@ -19,13 +19,18 @@ export default {
   props: {
     item: Object
   },
+  data () {
+    return {
+      v_active: false
+    }
+  },
   mounted () {
     console.log('detail', this.item)
   },
   methods: {
     // 加入购物车
     async f_addShopCar () {
-      if (this.v_detail.productStock) {
+      if (!this.item.productStock) {
         this.$toast('库存不足')
         return
       }
@@ -33,15 +38,20 @@ export default {
       const params = {
         memberId: this.$store.state.user.id,
         count: 1,
-        productId: this.v_id,
+        productId: this.item.id,
         sellerId: this.item.sellerId,
         villageCode: this.item.villageCode,
         unitPrice: this.item.mallPcPrice,
         specInfo: this.item.name1
       }
 
-      await this.$http
+      const { data } = await this.$http
         .post('/admin/cart/add', params)
+      
+      console.log(data)
+      if (data.success) {
+        this.v_active = true
+      }
     },
     f_opemDetail () {
       this.$router.push({ name: 'shopItemDetail', query: { id: this.item.id }})
@@ -120,6 +130,9 @@ export default {
       background-repeat: no-repeat;
       background-position: center center;
       cursor: pointer;
+      &.active {
+        background-image: url('../../../../assets/images/shop/shopcar2.png');
+      }
     }
   }
 }

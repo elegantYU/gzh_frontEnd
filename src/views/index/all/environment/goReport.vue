@@ -99,8 +99,6 @@ export default {
       // this.$wxsdk  上传图片获取链接
     },
     f_submit () {
-      // let params = Object.assign({}, this.v_from)
-      // params.img = JSON.stringify(params.img)
       if (this.v_from.type && this.v_from.title && this.v_from.detail) {
         // 提交表单
         let params = {

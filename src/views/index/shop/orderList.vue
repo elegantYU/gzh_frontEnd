@@ -43,7 +43,9 @@
         </div>
         <div class="so_footer_last">
           <div>
-            <i></i>
+            <a :href="'tel' + this.v_origin[0].phone">
+              <i></i>
+            </a>
             <div>
               <span>联系商家</span>
               <p>1153153</p>
@@ -65,6 +67,7 @@ export default {
       v_user: [],
       v_origin: [],
       v_list: [{}],
+      v_seller: {},
       v_orderState: 1,
       v_allPrice: 0,
       v_allCount: 0
@@ -88,7 +91,6 @@ export default {
   mounted () {
     this.v_origin = this.$store.state.orderParams
     this.v_house = this.$store.state.house
-    console.log(this.$store.state.house)
     this.v_user = this.$store.state.user
     this.f_getStore()
     this.f_math()
@@ -100,10 +102,11 @@ export default {
         this.v_allCount += v.number
       })
     },
-    async f_getStore () {
+    f_getStore () {
       this.v_origin.forEach(v => {
          this.f_get(v).then(r => {
-           v['sellerName'] =r
+           v['sellerName'] = this.v_seller.sellerName
+           v['tel'] = this.seller.phone
          })
       })
     },
@@ -115,7 +118,7 @@ export default {
       const { data: { data: result }} = await this.$http
         .get('/admin/seller/manage/info', { params })
 
-      return result.sellerName
+      this.v_seller = Object.assign({}, result)
     },
     f_submit () {
       if (this.v_orderState === 1 && this.v_addressInfo) {
@@ -321,15 +324,19 @@ export default {
           height: 100%;
           display: flex;
           align-items: center;
-          i{
-            display: inline-block;
-            width: 0.3rem;
+          a{
+            display: block;
             height: 100%;
-            background-repeat: no-repeat;
-            background-size: 0.3rem 0.33rem;
-            background-position: 50%;
-            background-image: url('../../../assets/images/shop/tel.png');
-            margin-right: 0.1rem;
+            i{
+              display: inline-block;
+              width: 0.3rem;
+              height: 100%;
+              background-repeat: no-repeat;
+              background-size: 0.3rem 0.33rem;
+              background-position: 50%;
+              background-image: url('../../../assets/images/shop/tel.png');
+              margin-right: 0.1rem;
+            }
           }
           &>div{
             text-align: left;

@@ -175,12 +175,12 @@ export default {
     this.v_from.villageCode = this.$store.state.villageCode
     this.v_from.communityName = this.$store.state.village
     this.f_getHouse()
-    this.$wxsdk.init(window.location.href)
   },
   methods: {
     f_getHouse () {
       let params = {
-        memberId: this.$store.state.user.id
+        memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode
       }
 
       this.$http

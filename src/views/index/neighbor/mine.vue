@@ -39,6 +39,12 @@ export default {
   props: {
     taskType: Number
   },
+  watch: {
+    'taskType': function (now, last) {
+      this.v_list = []
+      this.f_getList()
+    }
+  },
   mounted () {
     this.f_getList()
   },

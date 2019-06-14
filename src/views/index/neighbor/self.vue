@@ -445,6 +445,7 @@ export default {
   height: 100%;
   .ns_container{
     background-color: #efeff4;
+    padding-bottom: 1.2rem;
     h6{
       padding: 0.24rem 0;
       font-size: 0.36rem;

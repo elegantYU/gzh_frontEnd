@@ -5,8 +5,8 @@
         <img src="https://w.wallhaven.cc/full/j5/wallhaven-j5kkgp.jpg" alt="">
         <div class="shop_nav">
           <div class="shop_nav_search">
-            <i></i>
-            <input type="text" placeholder="请输入商品名称" v-model="v_keyword" @blur="f_goSearch">
+            <i @click="f_search"></i>
+            <input type="text" placeholder="请输入商品名称" v-model="v_keyword">
           </div>
           <div class="shop_nav_car" @click="f_moveCar"></div>
         </div>
@@ -34,7 +34,7 @@ export default {
     f_moveCar () {
       this.$router.push({ name: 'shopCar' })
     },
-    f_goSearch () {
+    f_search () {
       if (this.v_keyword) {
         this.$router.push({ name: 'shopSearch' })
       }
@@ -81,6 +81,7 @@ export default {
             background-position: center center;
             background-repeat: no-repeat;
             background-size: contain;
+            cursor: pointer;
           }
           input{
             flex: 1;
@@ -94,7 +95,7 @@ export default {
         .shop_nav_car{
           width: 0.28rem;
           height: 0.28rem;
-          background-image: url('../../../assets/images/shop/shopcar.png');
+          background-image: url('../../../assets/images/shop/shopcar2.png');
           background-repeat: no-repeat;
           background-position: center center;
           background-size: contain;

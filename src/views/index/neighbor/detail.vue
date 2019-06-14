@@ -44,7 +44,7 @@
         <!-- 时间互换 -->
         <div class="nd_input" v-if="v_content.taskType === '3'">
           <label>性别</label>
-          <input type="text" readonly v-model="v_content.gender">
+          <input type="text" readonly v-model="gender">
         </div>
         <div class="nd_input" v-if="v_content.taskType === '3'">
           <label>职业</label>
@@ -154,16 +154,15 @@ export default {
     },
     shareTime: function () {
       switch (this.v_content.taskType) {
-        case '1':
         case '3':
-          return this.v_content.startTime.replace(this.v_content.startTime.slice(16), '')
-          break
-        default:
           if (this.v_content.endTime) {
             let time = this.v_content.endTime.split(' ')[1].replace(this.v_content.endTime.split(' ')[1].slice(5), '')
             let start = this.v_content.startTime.replace(this.v_content.startTime.slice(16), '')
             return `${start} ~ ${time}`
           }
+          break
+        default:
+          return this.v_content.startTime.replace(this.v_content.startTime.slice(16), '')
           break
       }
     },
@@ -184,6 +183,12 @@ export default {
       } else {
         return false
       }
+    },
+    gender () {
+      if (this.v_content.gender) {
+        return '男'
+      }
+      return '女'
     },
     place () {
       return this.$store.state.village

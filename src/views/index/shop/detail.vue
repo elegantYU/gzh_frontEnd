@@ -9,7 +9,7 @@
         <p>{{ v_detail.keyword }}</p>
         <b>￥ {{ v_detail.mallPcPrice }}</b>
         <div class="sd_header_shop clearfix">
-          <span class="sd_header_shop_tag">限时促销</span>
+          <span class="sd_header_shop_tag">{{ v_detail.name2 }}</span>
           <div class="sd_header_shopcar_none" v-if="!v_num" @click="f_addNum"></div>
           <div class="sd_header_shopcar_add" v-else>
             <i @click="f_cutNum">-</i><span>{{ v_num }}</span><i @click="f_addNum">+</i>
@@ -28,10 +28,10 @@
     <div class="sd_fixed_bar">
       <ul class="sd_fixed_bar_left clearfix">
         <li @click="f_moveIndex"><i></i><span>首页</span></li>
-        <li @click="f_moveCar"><i :class="shopCar"></i><span>购物车</span></li>
+        <li @click="f_moveCar"><i :class="{'active': v_blue}"></i><span>购物车</span></li>
       </ul>
       <div class="sd_fixed_bar_right">
-        <span @click="f_addNum">加入购物车</span>
+        <span @click="f_addCar" :class="{'active': v_num}">加入购物车</span>
         <span @click="f_getOrder">立即下单</span>
       </div>
     </div>
@@ -45,15 +45,8 @@ export default {
     return {
       v_id: '',
       v_detail: {},
-      v_num: 0
-    }
-  },
-  computed: {
-    shopCar () {
-      if (this.v_num) {
-        return 'active'
-      }
-      return ''
+      v_num: 0,
+      v_blue: false
     }
   },
   mounted () {
@@ -74,35 +67,23 @@ export default {
           this.v_detail = Object.assign({}, res.data.data)
         })
     },
-    async f_addNum () {
+    f_addNum () {
       if (this.v_num > this.v_detail.productStock) {
         this.$toast('库存不足')
         return
       }
       this.v_num++
-
-      const params = {
-        memberId: this.$store.state.user.id,
-        count: 1,
-        productId: this.v_id,
-        sellerId: this.v_detail.sellerId,
-        villageCode: this.v_detail.villageCode,
-        unitPrice: this.v_detail.mallPcPrice,
-        specInfo: this.v_detail.name1
-      }
-
-      await this.$http
-        .post('/admin/cart/add', params)
     },
-    async f_cutNum () {
+    f_cutNum () {
       if (!this.v_num) {
         return false
       }
       this.v_num--
-      
+    },
+    async f_addCar () {
       const params = {
         memberId: this.$store.state.user.id,
-        count: -1,
+        count: this.v_num,
         productId: this.v_id,
         sellerId: this.v_detail.sellerId,
         villageCode: this.v_detail.villageCode,
@@ -112,6 +93,8 @@ export default {
 
       await this.$http
         .post('/admin/cart/add', params)
+      
+      this.v_blue = true
     },
     f_moveIndex () {
       this.$router.push({ name: 'index' })
@@ -212,6 +195,7 @@ export default {
           i{
             color:#f64682;
             font-size: 0.4rem;
+            font-style: normal;
           }
           span{
             display: inline-block;
@@ -316,6 +300,9 @@ export default {
         &:first-of-type{
           border-radius: 0.4rem 0 0 0.4rem;
           background-color: #ff81ac;
+          &.active{
+            background-color: #f64682;
+          }
         }
         &:last-of-type{
           border-radius: 0 0.4rem 0.4rem 0;

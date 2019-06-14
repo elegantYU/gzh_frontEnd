@@ -40,10 +40,10 @@
       </div>
       <!-- <div class="rep_showcomment_btn" @click="f_showcomment">评论</div> -->
       <div class="rep_comment">
-        <div class="rep_comment_area">
+        <div class="rep_comment_area" v-show="v_textareaFlag">
           <textarea placeholder="在这里可以输入评价内容最多200个字" maxlength="200" v-model="v_info.content"></textarea>
         </div>
-        <div class="rep_comment_btn" @click="f_submit">提交评论</div>
+        <div class="rep_comment_btn" @click="f_submit">{{ v_submitText }}</div>
       </div>
       <div class="rep_commentList">
         <p>评论</p>
@@ -106,7 +106,9 @@ export default {
         2: '已完成',
         3: '已超时',
         4: '已督办'
-      }
+      },
+      v_submitText: '评论',
+      v_textareaFlag: false
     }
   },
   methods: {
@@ -119,6 +121,10 @@ export default {
       }, 1000)
     },
     f_submit () {
+      if (this.v_submitText === '评论') {
+        this.v_textareaFlag = true
+        this.v_submitText = '提交评论'
+      }
 
       const params = {
         id: this.v_id,
@@ -135,6 +141,7 @@ export default {
           console.log(res)
           if (res.data.success) {
             this.$toast('评论成功')
+            this.v_info.content = ''
             this.f_getComments()
           } else {
             this.$toast('网络错误')

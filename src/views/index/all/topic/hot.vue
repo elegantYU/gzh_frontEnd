@@ -50,13 +50,12 @@ export default {
       let params = {
         memberId: this.$store.state.user.id,
         villageCode: this.$store.state.villageCode,
-        type: 4,
-        pageNum: this.v_pageNum,
-        pageSize: 10
+        start: this.v_pageNum,
+        size: 10
       }
 
       this.$http
-        .get('/obtain/notice/pageList', { params })
+        .get('/admin/event/page', { params })
         .then(res => {
           if (res.data.data.length) {
             res.data.data.forEach(v => {

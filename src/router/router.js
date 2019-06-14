@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import wxsdk from '../utils/wxsdk'
+const FRONT_BASE = 'zjphtech.com'
 
 Vue.use(Router)
 
@@ -103,6 +105,18 @@ const router = new Router({
 
 router.afterEach((to, from, next) => {
   document.title = to.meta.title
+  // wx
+  if (window.__wxjs_is_wkwebview) {  // IOS
+    if (window.entryUrl === '' || window.entryUrl == undefined) {
+      var url = `${FRONT_BASE}${to.fullPath}`
+      window.entryUrl = url    // 将后面的参数去除
+    }
+    wxsdk.init(to.fullPath, 'ios')
+  } else {
+    setTimeout(function () {
+      wxsdk.init(to.fullPath, 'android')
+    }, 500)
+  }
 })
 
 export default router

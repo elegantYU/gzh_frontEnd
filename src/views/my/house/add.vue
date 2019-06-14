@@ -202,11 +202,6 @@ export default {
     this.v_form.villageId = this.$store.state.currentPlace.villageId
     this.v_form.village = this.$store.state.village
 
-    // this.f_getList('provinceSynchroKey', {
-    //   id: this.v_form.villageId,
-    //   name: this.v_form.village,
-    //   active: true
-    // })
     this.f_getBuilding('buildingSynchroKey')
     this.$toast({
       msg: '请逐级完善所有信息',
@@ -334,9 +329,6 @@ export default {
     f_submit () {
       let reg = /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}$)/
       
-      this.v_form.streetId = this.v_street.filter(v => v.name === this.v_form.street)[0].id
-      this.v_form.communityId = this.v_community.filter(v => v.name === this.v_form.community)[0].id
-      this.v_form.villageId = this.v_residentia.filter(v => v.name === this.v_form.village)[0].id
       this.v_form.buildingId = this.v_building.filter(v => v.name === this.v_form.building)[0].id
       this.v_form.unitId = this.v_unit.filter(v => v.name === this.v_form.unit)[0].id
       this.v_form.roomId = this.v_house.filter(v => v.name === this.v_form.room)[0].id

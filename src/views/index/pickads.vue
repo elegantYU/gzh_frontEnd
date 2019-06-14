@@ -63,10 +63,32 @@ export default {
       v_residentia: []
     }
   },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      if (from.name === 'login') {
+        const params = { memberId: vm.$store.state.user.id } 
+        vm.$http
+          .get('/admin/member/house/cache/get', { params })
+          .then(({ data: { data: res }}) => {
+            if (res) {
+              vm.$store.commit('setCurrentPlace', res)
+              vm.$store.commit('setVillage', res.village)
+              vm.$store.commit('setVillageCode', res.villageCode)
+              vm.$router.push({ name: 'index' })
+            }
+          })
+      }
+    })
+  },
   mounted () {
     this.f_init()
   },
   methods: {
+    async f_savePlace (obj) {
+      const params = { ...obj, memberId: this.$store.state.user.id, villageCode: this.$store.state.villageCode }
+      await this.$http
+        .post('/admin/member/house/cache/save', params)
+    },
     async f_init () {
       const params = {
         configCode: 'provinceSynchroKey',
@@ -158,7 +180,8 @@ export default {
         this.$store.commit('setCurrentPlace', obj)
         this.$store.commit('setVillage', this.v_nav[5].name)
         this.$store.commit('setVillageCode', this.v_nav[5].orgCode)
-        console.log('所有信息', obj, this.v_nav[5].name, this.v_nav[5].orgCode)
+        console.log('所有信息', obj, this.v_nav, obj)
+        this.f_savePlace(obj)
         this.f_getUserHouse()
         this.$router.push({ name: 'index' })
         return
@@ -168,7 +191,6 @@ export default {
       this.f_getList(v, i)
         .then(r => {
           this.v_right = this.v_current.slice(0)
-          console.log('now', this.v_current)
         })
     },
     // 点击nav

@@ -11,9 +11,7 @@
         </ul>
       </div>
       <img :src="v_detail.img && v_detail.img[0]" alt="">
-      <div class="td_content">
-        {{ v_detail.content }}
-      </div>
+      <div class="td_content" v-html="v_detail.content"></div>
       <div class="td_comment">
         <div class="td_comment_header">
           <span>全部评论（{{ v_total }}条）</span>
@@ -231,7 +229,7 @@ export default {
       }
 
       this.$http
-        .get('/obtain/notice/detail', { params })
+        .get('/admin/event/detail', { params })
         .then(res => {
           console.log('detail', res.data);
           this.v_detail = Object.assign({}, res.data.data)

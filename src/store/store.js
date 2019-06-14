@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    wxcode: '',
+    wxInfo: {},
     user: {}, // id name phoneNum headIcon
     villageCode: '330105001001001', // 小区id
     village: '', // 小区名
@@ -17,11 +17,11 @@ export default new Vuex.Store({
     orderParams: [] // 订单参数
   },
   mutations: {
-    setWxcode: (state, code) => (state.wxcode = code),
+    setWxInfo: (state, obj) => (state.wxInfo = Object.assign({}, obj)),
     setUser: (state, obj) => (state.user = Object.assign({}, obj)),
     setVillageCode: (state, str) => (state.villageCode = str),
     setVillage: (state, str) => (state.village = str),
-    setCurrentPlace: (state, obj) => (state.currentPlace = Object.assign(obj)),
+    setCurrentPlace: (state, obj) => (state.currentPlace = Object.assign({}, obj)),
     setHouse: (state, arr) => (state.house.push(...arr)),
     neighborRouter: (state, r) => (state.neighbor.router = r),
     setOrderParams: (state, arr) => {

@@ -1,11 +1,16 @@
 import axios from 'axios'
 // 微信sdk的jsapi
 export default {
-  init: (url, cb) => {
+  init: (fullpath, sys) => {
+    let url = encodeURIComponent(`zjphtech.com${fullpath}`)
+    if (sys === 'ios') {
+      url = encodeURIComponent(window.entryUrl)
+    }
+
     axios.get(`http://zjphtech.com/admin/wx/getWxConfig?url=${url}`).then(({ data: { data } }) => {
       // 获取config
       wx.config({
-        debug: true,
+        debug: false,
         appId: data.appId,
         nonceStr: data.nonceStr,
         timestamp: data.timestamp,
@@ -16,7 +21,6 @@ export default {
           'getLocalImgData'   // 获取本地图片
         ]
       })
-      if (cb) cb()
     })
   },
   chooseImage: (num) => {

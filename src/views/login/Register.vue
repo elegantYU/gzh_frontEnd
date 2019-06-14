@@ -2,10 +2,10 @@
   <div class="reg_wrapper">
     <img src="../../assets/images/start_logo.png" alt="">
     <div class="reg_content">
-      <div class="reg_input">
+      <!-- <div class="reg_input">
         <span></span>
         <input type="text" placeholder="请输入用户名" v-model="v_name">
-      </div>
+      </div> -->
       <div class="reg_input">
         <span></span>
         <input type="text" placeholder="请输入手机号" maxlength="11" v-model="v_phone">
@@ -61,6 +61,7 @@ export default {
     } catch (e) {
       // console.log(e)
     }
+    this.v_name = this.$store.state.wxInfo
   },
   methods: {
     f_submit () {

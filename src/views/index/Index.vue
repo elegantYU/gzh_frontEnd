@@ -94,6 +94,7 @@ export default {
   mounted () {
     this.f_getBanner()
     this.f_getTopic()
+    console.log(this.$store.state)
   },
   methods: {
     f_switchVillage () {
@@ -108,17 +109,19 @@ export default {
     },
     f_getTopic () {
       let params = {
-        type: 4,
         memberId: this.$store.state.user.id,
         villageCode: this.$store.state.villageCode,
-        pageNum: 1,
-        pageSize: 5
+        start: 1,
+        size: 5
       }
 
       this.$http
-        .get('/obtain/notice/pageList', { params })      
-        .then(res => {
-          this.v_topic = res.data.data.map(v => v)
+        .get('/admin/event/page', { params })      
+        .then(({data: {rows: res}}) => {
+          console.log('res', res)
+          if (res) {
+            this.v_topic = [...res]
+          }
         })
     },
     f_moveTopic (v) {

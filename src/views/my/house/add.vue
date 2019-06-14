@@ -30,11 +30,11 @@
         <div class="ha_input">
           <label>小区</label>
           <div class="ha_input_box">
-            <mu-select v-model="v_form.village" :solo="true" placeholder="请选择小区" @change="f_getBuilding('buildingSynchroKey', v_form.village)">
+            <!-- <mu-select v-model="v_form.village" :solo="true" placeholder="请选择小区" @change="f_getBuilding('buildingSynchroKey', v_form.village)">
               <mu-option v-for="(v,i) in v_residentia" :key="i" :label="v.name" :value="v.name"></mu-option>
-            </mu-select>
+            </mu-select> -->
+            <input type="text" readonly v-model="v_form.village">
           </div>
-          <i></i>
         </div>
         <div class="ha_input">
           <label>楼幢</label>
@@ -194,7 +194,7 @@ export default {
     this.v_form.memberId = this.$store.state.user.id
     this.v_form.villageCode = this.$store.state.villageCode
     this.v_form.regionId = this.$store.state.currentPlace.regionId
-    this.v_form.region = `${this.$store.state.currentPlace.province},${this.$store.state.currentPlace.city},${this.$store.state.currentPlace.county}`
+    this.v_form.region = this.$store.state.currentPlace.region
     this.v_form.streetId = this.$store.state.currentPlace.streetId
     this.v_form.street = this.$store.state.currentPlace.street
     this.v_form.communityId = this.$store.state.currentPlace.communityId
@@ -202,11 +202,12 @@ export default {
     this.v_form.villageId = this.$store.state.currentPlace.villageId
     this.v_form.village = this.$store.state.village
 
-    this.f_getList('provinceSynchroKey', {
-      id: '0',
-      name: '浙江省',
-      active: true
-    })
+    // this.f_getList('provinceSynchroKey', {
+    //   id: this.v_form.villageId,
+    //   name: this.v_form.village,
+    //   active: true
+    // })
+    this.f_getBuilding('buildingSynchroKey')
     this.$toast({
       msg: '请逐级完善所有信息',
       time: 2500
@@ -274,7 +275,7 @@ export default {
       switch (t) {
         case 'buildingSynchroKey':
           // id = this.v_residentia.filter(v => v.name === c)[0].id
-          id = this.$store.state.villageCode
+          id = this.$store.state.currentPlace.villageId
           params = {
             configCode: t,
             relateId: id

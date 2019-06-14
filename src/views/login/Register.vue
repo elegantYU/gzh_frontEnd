@@ -81,11 +81,12 @@ export default {
         this.$http
           .post('/admin/user/register', params)
           .then(res => {
-            if (res.data.data) {
+            console.log('注册', res)
+            if (res.data.success) {
               this.$toast('注册成功')
               this.$router.push({ name: 'login' })
             } else {
-              this.$toast('注册失败')
+              this.$toast(res.data.msg)
             }
           })
       } else {

@@ -1,24 +1,30 @@
 <template>
   <div class="wp">
     <div class="search">
-      <input type="text" placeholder="输入小区名称进行搜索">
       <img class="serch-icon" :src="require('@/assets/images/pickads/search.png')" alt="">
+      <input type="text" placeholder="输入小区名称进行搜索">
     </div>
     <div class="ps-wp">
       <img class="ps-icon" :src="require('@/assets/images/pickads/ps.png')" alt="">
-      {{ads}}
+      <ul class="clearfix">
+        <li
+          v-for="(v, i) in v_nav"
+          :key="i"
+          @click="f_nav(v, i)"
+        >{{ v.name }}</li>
+      </ul>
     </div>
     <div class="pick-wp">
       <div class="left">
-        <div class="fa" v-for="(v, index) in left"
-        :key="v.id"
-        :class="{active: index === activeIndex}"
-        @click="f_clickLeft(v, index)"><i></i><span>{{v.name}}</span></div>
+        <div class="fa" v-for="(v, i) in v_left"
+        :key="i"
+        :class="{active: i === activeIndex}"
+        @click="f_left(v, i)"><i></i><span>{{v.name}}</span></div>
       </div>
       <div class="rigth">
-        <div class="child" v-for="(v, i) in right"
-        :key="v.id"
-        @click="f_clickRight(v, i)">{{v.name}}</div>
+        <div class="child" v-for="(v, i) in v_right"
+        :key="i"
+        @click="f_right(v, i)">{{v.name}}</div>
       </div>
     </div>
   </div>
@@ -28,236 +34,170 @@ export default {
   name: 'pickads',
   data () {
     return {
-      params: {
-        configCode: 'provinceSynchroKey',
-        orgCode: '0'
-      },
-      left: [],
-      right: [],
+      // new data
       activeIndex: 0,
-      ads: '',
-      preregion: 'province',
-      flag: false,
-      preads: '',
-      isrequest: true,
-      currentPlace: {},
-      preData: []
+      v_left: [],
+      v_right: [],
+      v_current: [],
+      v_form: {
+        provinceId: '',
+        cityId: '',
+        areaId: '',
+        streetId: '',
+        communityId: '',
+        residentiaId: '',
+        province: '',
+        city: '',
+        area: '',
+        street: '',
+        community: '',
+        residentia: ''
+      },
+      v_nav: [],
+      v_activeIndex: 0,   // 记录用户点击流程
+      v_provice: [],      // 做数据留存
+      v_city: [],
+      v_area: [],
+      v_street: [],
+      v_community: [],
+      v_residentia: []
     }
   },
+  mounted () {
+    this.f_init()
+  },
   methods: {
-    f_getList () {
-      return new Promise((resolve, reject) => {
-        this.$http
-          .get('/obtain/config/linkage', { params: this.params })
-          .then(res => {
-            // console.log(res)
-            if (res.data.success) {
-              this.left = res.data.data
-              this.ads = this.left[0].name
-              resolve(res.data.data)
-            }
-          })
-      }).then(res => {
-        console.log('citySynchroKeyres', res)
-        this.currentPlace.province = res[0].name
-        this.params = {
-          configCode: 'citySynchroKey',
-          orgCode: res[0].id
-        }
-        this.$http
-          .get('/obtain/config/linkage', { params: this.params })
-          .then(res => {
-            // console.log('市', res)
-            if (res.data.success) {
-              this.right = res.data.data
-              this.preData = this.right
-            }
-          })
-      })
-    },
-    f_clickRight (v, i) {
-      console.log('clickRight', v.region)
-      // if (v.region === this.preregion) {
-      //   this.flag = false // 点击同一级别地区
-      // } else {
-      //   this.flag = true // 点击下一级别地区
-      // }
-      switch (v.region) {
-        case 'city':
-          this.params = {
-            configCode: 'areaSynchroKey',
-            orgCode: v.id
-          }
-          this.preads = this.ads
-          this.ads = `${this.ads}>${v.name}`
-          this.currentPlace.city = v.name
-          this.preregion = 'city'
-          break
-        case 'county':
-          this.params = {
-            configCode: 'streetSynchroKey',
-            orgCode: v.id
-          }
-          this.preads = this.ads
-          this.ads = `${this.ads}>${v.name}`
-          this.currentPlace.county = v.name
-          this.preregion = 'county'
-          break
-        case 'street':
-          this.params = {
-            configCode: 'communitySynchroKey',
-            orgCode: v.id
-          }
-          this.preads = this.ads
-          this.ads = `${this.ads}>${v.name}`
-          this.currentPlace.street = v.name
-          this.preregion = 'street'
-          break
-        case 'community':
-          this.params = {
-            configCode: 'residentiaSynchroKey',
-            orgCode: v.id
-          }
-          break
-        case 'residentia':
-          // this.ads = `${this.ads}>${v.name}`
-          console.log(v)
-          this.isrequest = false
-          this.preads = this.ads
-          this.currentPlace.residentia = v.name
-          this.$store.dispatch('setVillageCode', v.orgCode)
-          this.$store.dispatch('setVillage', v.name)
-          console.log('currentPlace', this.currentPlace)
-          this.$store.dispatch('setCurrentPlace', this.currentPlace)
-          this.f_getUserHouse()
-          this.$router.go(-1)
-          break
+    async f_init () {
+      const params = {
+        configCode: 'provinceSynchroKey',
+        orgCode: '0'
       }
-      if (this.isrequest) {
-        return new Promise((resolve) => {
-          this.$http
-            .get('/obtain/config/linkage', { params: this.params })
-            .then(res => {
-              console.log(res)
-              if (res.data.success) {
-                // this.left = res.data.data
-                // this.activeIndex = 0
-                this.left = this.preData
-                this.activeIndex = i
-                this.right = res.data.data
-                this.preData = res.data.data
-              }
-              resolve(res.data.data[0])
-            })
-        }).then(v => {
-          // switch (v.region) {
-          //   case 'city':
-          //     this.params = {
-          //       configCode: 'areaSynchroKey',
-          //       orgCode: v.id
-          //     }
-          //     break
-          //   case 'county':
-          //     this.params = {
-          //       configCode: 'streetSynchroKey',
-          //       orgCode: v.id
-          //     }
-          //     break
-          //   case 'street':
-          //     this.params = {
-          //       configCode: 'communitySynchroKey',
-          //       orgCode: v.id
-          //     }
-          //     break
-          //   case 'community':
-          //     this.params = {
-          //       configCode: 'residentiaSynchroKey',
-          //       orgCode: v.id
-          //     }
-          //     break
-          // }
-          // this.$http
-          //   .get('/obtain/config/linkage', { params: this.params })
-          //   .then(res => {
-          //     console.log(res)
-          //     if (res.data.success) {
-          //       this.right = res.data.data
-          //     }
-          //   })
+      const { data: { data: res }} = await this.$http
+        .get('/obtain/config/linkage', { params })
+      
+      // 初始化 填满左右
+      this.v_left = [...res]
+      this.v_provice = [...res]
+      this.v_nav.push(this.v_left[0])
+      this.f_getList({ id: '1020' })
+        .then(r => {
+          this.v_right = this.v_current.slice(0)
         })
+    },
+    async f_getList (v) {
+      let type
+      switch (this.v_activeIndex) {
+        case 0:
+          type = 'citySynchroKey'
+          break
+        case 1:
+          type = 'areaSynchroKey'
+          break
+        case 2:
+          type = 'streetSynchroKey'
+          break
+        case 3:
+          type = 'communitySynchroKey'
+          break
+        case 4:
+          type = 'residentiaSynchroKey'
+          break
+      }
+      const params = {
+        configCode: type,
+        orgCode: v.id
+      }
+      
+      const { data: { data: res }} = await this.$http
+        .get('/obtain/config/linkage', { params })
+      
+      this.v_current = [...res]
+      switch (this.v_activeIndex) {
+        case 0:
+          this.v_city = [...res]
+          break
+        case 1:
+          this.v_area = [...res]          
+          break
+        case 2:
+          this.v_street = [...res]          
+          break
+        case 3:
+          this.v_community = [...res]          
+          break
+        case 4:
+          this.v_residentia = [...res]
+          break
       }
     },
-    f_clickLeft (v, index) {
-      this.activeIndex = index
-      console.log('this.ads', this.ads)
-      console.log('this.preads', this.preads)
-      console.log('clickLeft', v.region)
-      console.log('region', v.region, 'preregion', this.preregion)
-      if (v.region === this.preregion) {
-        this.flag = false // 点击同一级别地区
-      } else {
-        this.flag = true // 点击下一级别地区
+    f_left (v, i) {
+      this.activeIndex = i
+      // 点击左侧 根据id和v_activeIndex 获取右侧数据和改变nav
+      this.v_nav.splice(this.v_activeIndex, 1, v)
+      this.f_getList(v)
+        .then(r => {
+          this.v_right = this.v_current.slice(0)
+        })
+    },
+    f_right (v, i) {
+      this.activeIndex = 0
+      this.v_activeIndex++
+      this.v_nav.splice(this.v_activeIndex, 1, v)
+      // 点击右侧 前进步数
+      if (this.v_activeIndex > 4) {
+        const obj = {
+          regionId: `${this.v_nav[0].orgCode},${this.v_nav[1].orgCode},${this.v_nav[2].orgCode}`,
+          region: `${this.v_nav[0].name},${this.v_nav[1].name},${this.v_nav[2].name}`,
+          streetId: this.v_nav[3].id,
+          street: this.v_nav[3].name,
+          communityId: this.v_nav[4].id,
+          community: this.v_nav[4].name,
+          villageId: this.v_nav[5].id,
+          village: this.v_nav[5].name,
+        }
+        this.$store.commit('setCurrentPlace', obj)
+        this.$store.commit('setVillage', this.v_nav[5].name)
+        this.$store.commit('setVillageCode', this.v_nav[5].orgCode)
+        console.log('所有信息', obj, this.v_nav[5].name, this.v_nav[5].orgCode)
+        this.f_getUserHouse()
+        this.$router.push({ name: 'index' })
+        return
       }
-      this.preregion = v.region
-      switch (v.region) {
-        case 'province':
-          this.params = {
-            configCode: 'citySynchroKey',
-            orgCode: v.id
-          }
-          this.ads = v.name
-          this.currentPlace.province = v.name
-          break
-        case 'city':
-          this.params = {
-            configCode: 'areaSynchroKey',
-            orgCode: v.id
-          }
-          if (this.flag) {
-            this.ads = `${this.ads}>${v.name}`
-          } else {
-            this.ads = `${this.preads}>${v.name}`
-          }
-          this.currentPlace.city = v.name
-          break
-        case 'county':
-          this.params = {
-            configCode: 'streetSynchroKey',
-            orgCode: v.id
-          }
-          if (this.flag) {
-            this.ads = `${this.ads}>${v.name}`
-          } else {
-            this.ads = `${this.preads}>${v.name}`
-          }
-          this.currentPlace.county = v.name
-          break
-        case 'street':
-          this.params = {
-            configCode: 'communitySynchroKey',
-            orgCode: v.id
-          }
-          if (this.flag) {
-            this.ads = `${this.ads}>${v.name}`
-          } else {
-            this.ads = `${this.preads}>${v.name}`
-          }
-          this.currentPlace.street = v.name
-          break
-        case 'community':
-          this.params = {
-            configCode: 'residentiaSynchroKey',
-            orgCode: v.id
-          }
-          this.currentPlace.community = v.name
-          break
-      }
-      this.$http
-        .get('/obtain/config/linkage', { params: this.params })
-        .then(res => {
-          // console.log(res)
-          if (res.data.success) {
-            this.right = res.data.data
+
+      this.v_left = this.v_right.slice(0)
+      this.f_getList(v, i)
+        .then(r => {
+          this.v_right = this.v_current.slice(0)
+          console.log('now', this.v_current)
+        })
+    },
+    // 点击nav
+    f_nav (v, i) {
+      this.v_nav.splice(i + 1, this.v_nav.length)
+      this.v_activeIndex = i
+      this.f_getList(v)
+        .then(r => {
+          this.v_right = this.v_current.slice(0)
+          this.v_left = []
+          switch (i) {
+            case 0:
+              this.v_left = this.v_provice
+              break
+            case 1:
+              this.v_left = this.v_city
+              break
+            case 2:
+              this.v_left = this.v_area
+              break
+            case 3:
+              this.v_left = this.v_street
+              break
+            case 4:
+              this.v_left = this.v_community
+              break
+            case 5:
+              this.v_left = this.v_residentia
+              break
           }
         })
     },
@@ -272,12 +212,8 @@ export default {
       if (result.length) {
         const r = result.map(v => v.searchWord)
         this.$store.dispatch('setHouse', r)
-        console.log(this.$store.state.house)
       }
     }
-  },
-  mounted () {
-    this.f_getList()
   }
 }
 </script>
@@ -335,23 +271,23 @@ export default {
   }
 }
 .search {
-  position: relative;
+  display: flex;
+  align-items: center;
   width: 6.9rem;
   margin: 0 auto 0.18rem;
+  padding-left: 0.2rem;
+  background: #fff;
   input {
-    text-indent: 1rem;
-    width: 6.9rem;
+    text-indent: 2em;
+    flex: 1;
     height: 0.6rem;
     line-height: 0.6rem;
-    background: #fff;
     border-radius: 0.05rem;
     font-size: 0.2rem;
   }
   .serch-icon {
     width: 0.33rem;
-    position: absolute;
-    left: 0.29rem;
-    top: 0.15rem;
+    height: 0.33rem;
   }
 }
 .ps-wp {
@@ -361,12 +297,37 @@ export default {
   text-align: left;
   background: #fff;
   font-size: 0.26rem;
+  padding-left: 0.3rem;
+  display: flex;
+  align-items: center;
   .ps-icon {
     // position: absolute;
-    vertical-align: middle;
     width: 0.2rem;
-    margin-left: 0.38rem;
-    margin-right: 0.2rem;
+  }
+  ul{
+    height: 0.9rem;
+    flex: 1;
+    li{
+      float: left;
+      height: 100%;
+      line-height: 0.9rem;
+      padding: 0 0.1rem;
+      position: relative;
+      &::after{
+        position: absolute;
+        content: '>';
+        display: inline-block;
+        right: -0.03rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.26rem;
+      }
+      &:last-of-type{
+        &::after{
+          content: ''
+        }
+      }
+    }
   }
 }
 </style>

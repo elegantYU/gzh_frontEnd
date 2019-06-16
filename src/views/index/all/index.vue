@@ -43,7 +43,7 @@ export default {
           this.$router.push({name: ''})
           break;
         case '停车服务':
-          this.$router.push({name: ''})
+          this.$router.push({name: 'parkService'})
           break;
         case '预约服务':
           this.$router.push({name: ''})
@@ -64,7 +64,7 @@ export default {
           this.$router.push({name: 'neighbor'})
           break;
         case '失物招领':
-          this.$router.push({name: ''})
+          this.$router.push({name: 'lostFound'})
           break;
         case '小区头条':
           this.$router.push({name: 'topic'})

@@ -74,7 +74,7 @@ export default {
         { msg: '物业报修', path: 'myRepair', icon: require('../../assets/images/index/index_wy.png') },
         { msg: '访客通行', path: '', icon: require('../../assets/images/index/index_fk.png') },
         { msg: '预约服务', path: '', icon: require('../../assets/images/index/index_fw.png') },
-        { msg: '失物招领', path: '', icon: require('../../assets/images/index/index_sw.png') }
+        { msg: '失物招领', path: 'lostFound', icon: require('../../assets/images/index/index_sw.png') }
       ],
       v_tools2: [
         { msg: '智慧停车', path: '', icon: require('../../assets/images/index/index_zh.png') },

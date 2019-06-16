@@ -187,8 +187,10 @@ export default {
 
       this.$http
         .get('/admin/member/house/all', { params })
-        .then(res => {
-          res.data.data.map(v => this.v_user.house.push(`${v.searchWord}`))
+        .then(({data: {data}}) => {
+          data.map(v => {
+            this.v_user.house.push(`${v.building}${v.unit}${v.room}`)
+          })
         })
     },
     f_openType () {
@@ -230,7 +232,6 @@ export default {
       this.$http
         .post('/admin/file/uploadFiles', form)
         .then(({data: { data }}) => {
-          console.log('图片上航船后的链接', res)
           if (data.length) {
             this.v_from.img.push(...data)
           }
@@ -238,8 +239,7 @@ export default {
     },
     f_submit () {
       let params = Object.assign({}, this.v_from)
-      !params.img.length && delete params.img
-      params.img = JSON.stringify(params.img)
+      params.img = JSON.stringify(this.v_from.img)
 
       console.log(params)
       if (this.v_from.communityName && this.v_from.houseName && this.v_from.type && this.v_from.userName && this.v_from.telPhone && this.v_from.startTime && this.v_from.endTime) {
@@ -368,6 +368,7 @@ export default {
          height: 100%;
          resize: none;
          font-size: 0.26rem;
+         line-height: 1.5em;
         }
       }
     }

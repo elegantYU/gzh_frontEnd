@@ -74,7 +74,7 @@
       <div class="nd_description">
         <b>内容描述</b>
         <div class="nd_input">
-          <textarea readonly v-model="v_content.content"></textarea>
+          {{ v_content.content }}
         </div>
       </div>
       <!-- 图片 -->
@@ -222,7 +222,6 @@ export default {
           villageCode: this.$store.state.villageCode,
           IDCard: '--'
         }
-        console.log('房屋', this.$store.state.house)
         this.$http
           .get('/admin/share/applyShareInfo', { params })
           .then(res => {
@@ -263,6 +262,8 @@ export default {
   background-color: #efeff4;
   .nd_container{
     background-color: #efeff4;
+    padding-bottom: 1.2rem;
+    overflow: auto;
     h6{
       padding: 0.23rem 0 0.26rem;
       font-size: 0.36rem;
@@ -312,15 +313,12 @@ export default {
         font-weight: normal;
       }
       .nd_input{
-        height: 1.48rem;
+        text-align: left;
+        min-height: 1.48rem;
         padding: 0.3rem;
         background-color: #fff;
-        textarea{
-         width: 100%;
-         height: 100%; 
-         resize: none;
-         font-size: 0.26rem;
-        }
+        font-size: 0.26rem;
+        line-height: 1.5em;
       }
     }
     .nd_preview{
@@ -336,7 +334,6 @@ export default {
       .nd_preview_wrapper{
         height: 1.74rem;
         padding: 0.3rem;
-        box-sizing: border-box;
         background-color: #fff;
         .nd_preview_item{
           float: left;

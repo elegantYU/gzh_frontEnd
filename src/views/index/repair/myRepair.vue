@@ -90,7 +90,6 @@ export default {
           }
         })
         .then(res => {
-          console.log('维修列表',res)
           if (!res.data.data.length) {
             this.v_loadAll = true
             return

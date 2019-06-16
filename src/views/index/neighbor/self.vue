@@ -564,6 +564,7 @@ export default {
           height: 100%;
           resize: none;
           font-size: 0.26rem;
+          line-height: 1.5em;
         }
       }
     }

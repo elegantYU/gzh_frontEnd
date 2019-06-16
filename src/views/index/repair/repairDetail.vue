@@ -39,7 +39,7 @@
       <div class="rep_detail">
         <b>内容描述</b>
         <div class="rep_detail_text">
-          <textarea readonly v-model="v_info.detail"></textarea>
+          {{ v_info.detail }}
         </div>
       </div>
       <div class="rep_preview">
@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="rep_comment" v-if="v_info.sts===5 || v_info.sts===6">
+      <div class="rep_comment" v-if="v_info.sts === 5 || v_info.sts === 6">
         <div class="rep_comment_area">
           <textarea placeholder="在这里可以输入评价内容最多200个字" maxlength="200" v-model="v_info.content"></textarea>
         </div>
@@ -110,14 +110,26 @@ export default {
   },
   computed: {
     orderTime: function () {
-      // let str = `${this.v_info.startTime} ~ ${this.v_info.endTime.split(' ')[1]}`
-      return ''
+      const s = this.v_info.startTime.replace(this.v_info.startTime.substr(this.v_info.startTime.length - 3), '')
+      const e = this.v_info.endTime.replace(this.v_info.endTime.substr(this.v_info.endTime.length - 3), '')
+      let str = `${s} ~ ${e.split(' ')[1]}`
+      return str
     },
     status: function () {
       switch (this.v_info.sts) {
         case 1:
         case 2:
-          return '待评价'
+          return '待审核'
+          break
+        case 3:
+          return '未通过'
+          break
+        case 4:
+          return '待上门'
+          break
+        case 5:
+        case 6:
+          return '待评论'
           break
       }
     },
@@ -211,6 +223,8 @@ export default {
   background-color: #efeff4;
   .rep_content{
     background-color: #efeff4;
+    padding-bottom: 1.2rem;
+    overflow: auto;
     h6{
       padding: 0.23rem 0 0.26rem;
       font-size: 0.36rem;
@@ -254,15 +268,12 @@ export default {
         font-weight: normal;
       }
       .rep_detail_text{
-        height: 1.48rem;
+        text-align: left;
+        min-height: 1.48rem;
         padding: 0.3rem;
         background-color: #fff;
-        textarea{
-         width: 100%;
-         height: 100%;
-         resize: none;
-         font-size: 0.26rem;
-        }
+        font-size: 0.26rem;
+        line-height: 1.5em;
       }
     }
     .rep_preview{

@@ -81,7 +81,7 @@ export default {
       this.v_loading = true
       setTimeout(() => {
         this.v_loading = false
-        this.pageNum++
+        this.v_pageNum++
         this.f_getList()
       }, 1000)
     },

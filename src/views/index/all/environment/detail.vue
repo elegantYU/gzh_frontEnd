@@ -23,7 +23,7 @@
       <div class="rep_detail">
         <b>内容描述</b>
         <div class="rep_detail_text">
-          <textarea readonly v-model="v_info.detail"></textarea>
+          {{ v_info.detail }}
         </div>
       </div>
       <div class="rep_preview">
@@ -250,15 +250,12 @@ export default {
         font-weight: normal;
       }
       .rep_detail_text{
-        height: 1.48rem;
+        text-align: left;
+        min-height: 1.48rem;
         padding: 0.3rem;
         background-color: #fff;
-        textarea{
-         width: 100%;
-         height: 100%;
-         resize: none;
-         font-size: 0.26rem;
-        }
+        font-size: 0.26rem;
+        line-height: 1.5em;
       }
     }
     .rep_preview{

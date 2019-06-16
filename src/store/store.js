@@ -11,9 +11,8 @@ export default new Vuex.Store({
     village: '', // 小区名
     currentPlace: {}, // 当前小区的省市区
     house: [],
-    neighbor: {
-      router: ''
-    },
+    neighbor: { router: '' },
+    lostFound: { router: '' },
     orderParams: [] // 订单参数
   },
   mutations: {
@@ -24,6 +23,7 @@ export default new Vuex.Store({
     setCurrentPlace: (state, obj) => (state.currentPlace = Object.assign({}, obj)),
     setHouse: (state, arr) => (state.house.push(...arr)),
     neighborRouter: (state, r) => (state.neighbor.router = r),
+    lostFoundRouter: (state, r) => (state.lostFound.router = r),
     setOrderParams: (state, arr) => {
       state.orderParams = []
       state.orderParams.push(...arr)

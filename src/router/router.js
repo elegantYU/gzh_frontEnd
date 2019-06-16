@@ -21,6 +21,8 @@ const router = new Router({
         { path: '/home/neighbor', name: 'neighbor', component: () => import('../views/index/neighbor/index.vue') },
         // 环境秩序
         { path: '/home/environment', name: 'environment', meta: { title: '环境秩序' }, component: () => import('../views/index/all/environment/index.vue') },
+        // 失物招领
+        { path: '/home/lostFuond', name: 'lostFound', meta: { title: '失物招领' }, component: () => import('../views/index/lostFound/index.vue') },
         // 超市
         { path: '/shop',
           name: 'shop',
@@ -51,6 +53,12 @@ const router = new Router({
     // 环境秩序 详情页面
     { path: '/godetail', name: 'godetail', meta: { title: '详情页面' }, component: () => import('../views/index/all/environment/detail.vue') },
     { path: '/repairdetail/:id', name: 'repairDetail', meta: { title: '报修详情' }, component: () => import('../views/index/repair/repairDetail.vue') },
+    // 失物招领 我要发布
+    { path: '/lostFound/publish', name: 'lfPublish', meta: { title: '我要发布' }, component: () => import('../views/index/lostFound/publish.vue') },
+    { path: '/lostFound/detail', name: 'lfDetail', meta: { title: '详情页' }, component: () => import('../views/index/lostFound/detail.vue') },
+    // 停车服务
+    { path: '/park/service', name: 'parkService', meta: { title: '停车服务' }, component: () => import('../views/index/all/park/index.vue') },
+    { path: '/park/apply', name: 'parkApply', meta: { title: '车位申请' }, component: () => import('../views/index/all/park/add.vue') },
     // 邻里
     { path: '/neighbor/self', name: 'neighborSelf', meta: { title: '我要共享' }, component: () => import('../views/index/neighbor/self.vue') },
     { path: '/neighbor/detail', name: 'neighborDetail', meta: { title: '共享详情' }, component: () => import('../views/index/neighbor/detail.vue') },

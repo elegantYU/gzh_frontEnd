@@ -61,7 +61,6 @@ export default {
     } catch (e) {
       // console.log(e)
     }
-    this.v_name = this.$store.state.wxInfo
   },
   methods: {
     f_submit () {
@@ -69,8 +68,8 @@ export default {
         phoneNum: this.v_phone,
         password: this.v_password,
         smsCode: this.v_code,
-        userName: this.v_name
-        // wxCode: ''
+        userName: this.$store.state.wxInfo.nickname,
+        headIcon: this.$store.state.wxInfo.headimgurl
       }
 
       if (this.v_phone && this.v_code && this.v_password && this.v_again) {

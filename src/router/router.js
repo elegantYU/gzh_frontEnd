@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import wxsdk from '../utils/wxsdk'
-const FRONT_BASE = 'zjphtech.com'
+const FRONT_BASE = 'http://zjphtech.com'
 
 Vue.use(Router)
 

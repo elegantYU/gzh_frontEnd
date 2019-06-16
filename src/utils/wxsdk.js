@@ -6,6 +6,7 @@ export default {
     if (sys === 'ios') {
       url = encodeURIComponent(window.entryUrl)
     }
+    url = JSON.stringify(url)
 
     axios.get(`http://zjphtech.com/admin/wx/getWxConfig?url=${url}`).then(({ data: { data } }) => {
       // 获取config

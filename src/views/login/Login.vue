@@ -66,8 +66,6 @@ export default {
             this.$store.dispatch('setUser', res.data.data)
             console.log(this.$store.state.user)
             this.$router.push({ name: 'pickads' })
-            // 持久化
-            // localStorage.setItem('user', JSON.stringify(res.data.data))
           } else {
             this.$toast(res.data.msg)
           }

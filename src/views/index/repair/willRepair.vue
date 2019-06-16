@@ -47,9 +47,11 @@
             v-for="(v, i) in v_images"
             :key="i"
           >
-            <img :src="v" alt="">
+            <img :src="v.src" alt="">
           </div>
-          <div class="wr_preview_add" @click="f_upload"></div>
+          <div class="wr_preview_add">
+            <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)">
+          </div>
         </div>
       </div>
       <div class="wr_submit" @click="f_submit">
@@ -125,7 +127,7 @@ export default {
       ],
       v_typeFlag: false,
       v_houseFlag: false,
-      v_images: []
+      v_images: [],
     }
   },
   watch: {
@@ -211,17 +213,32 @@ export default {
       let today = new Date().getTime()
       return new Date(date).getTime() < today
     },
-    f_upload () {
-      // this.$wxsdk  上传图片获取链接
-      this.$wxsdk.chooseImage(3)
-        .then(res => {
-          console.log('上传', res)
+    f_upload (e) {
+      if (this.v_images.length > 2) {
+        return false
+      }
+      // 用于预览
+      const reader  = new FileReader()
+      reader.readAsDataURL(e.target.files[0])
+      reader.onload = el => {
+        this.v_images.push({ src: el.target.result, file: e.target.files[0] })
+      }
+      // 用于图片上传
+      const form = new FormData()
+      form.append("files", e.target.files[0])
+      this.$http
+        .post('/admin/file/uploadFiles', form)
+        .then(({data: { data }}) => {
+          console.log('图片上航船后的链接', res)
+          if (data.length) {
+            this.v_from.img.push(...data)
+          }
         })
     },
     f_submit () {
       let params = Object.assign({}, this.v_from)
       !params.img.length && delete params.img
-      // params.img = JSON.stringify(params.img)
+      params.img = JSON.stringify(params.img)
 
       console.log(params)
       if (this.v_from.communityName && this.v_from.houseName && this.v_from.type && this.v_from.userName && this.v_from.telPhone && this.v_from.startTime && this.v_from.endTime) {
@@ -393,6 +410,10 @@ export default {
           background-position: center center;
           background-size: 0.56rem 0.56rem;
           cursor: pointer;
+          input{
+            width: 0;
+            opacity: 0;
+          }
         }
       }
     }

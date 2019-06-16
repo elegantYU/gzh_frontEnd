@@ -6,8 +6,8 @@
 
 <script>
 export default {
-  name: 'Home',
   mounted () {
+    this.f_getWxInfo()
     try {
       document.body.removeChild(document.getElementById('start_wrapper'))
       setTimeout(() => {
@@ -19,8 +19,15 @@ export default {
     }
   },
   methods: {
+    async f_getWxInfo () {
+      const params = { code: this.$route.query.code }
+      const { data: { data: userInfo }} = await this.$http
+        .get('/admin/wx/person', { params })
+      
+      this.$store.commit('setWxInfo', userInfo)
+      localStorage.setItem('wx-count', 0)
+    },
     f_moveRight (e, start, end) {
-      console.log(start, end)
       const xLength = end.X - start.X
       const yLength = Math.abs(end.Y - start.Y)
       const len = xLength - yLength

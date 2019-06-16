@@ -32,8 +32,8 @@ export default {
   data () {
     return {
       user: {
-        avatar: require('@/assets/images/my/avatar.png'),
-        name: '仰天长叹'
+        avatar: '',
+        name: ''
       }
     }
   },

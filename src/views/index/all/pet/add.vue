@@ -86,7 +86,9 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="pa_preview_add" @click="f_upload"></div>
+          <div class="pa_preview_add">
+            <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)">
+          </div>
         </div>
       </div>
       <div class="pa_submit" @click="f_submit">提交</div>
@@ -113,7 +115,7 @@ export default {
         petRegisNum: '',
         createUserId: '',       // user id 
         villageCode: '',        // 小区id
-        //exemptionImg: []        // 图片数组
+        exemptionImg: []        // 图片数组
       },
       v_address: []
     }
@@ -131,8 +133,16 @@ export default {
     this.f_getHouse()
   },
   methods: {
-    f_upload () {
-
+    f_upload (e) {
+      const form = new FormData()
+      form.append('files', e.target.files[0])
+      this.$http
+        .post('/admin/file/uploadFiles', form)
+        .then(({data: { data }}) => {
+          if (data.length) {
+            this.v_from.exemptionImg.push(...data)
+          }
+        })
     },
     f_getHouse () {
       let params = {
@@ -307,6 +317,10 @@ export default {
           background-position: center center;
           background-size: 0.56rem 0.56rem;
           cursor: pointer;
+          input{
+            width: 0;
+            opacity: 0;
+          }
         }
       }
     }

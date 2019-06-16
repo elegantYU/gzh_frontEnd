@@ -108,7 +108,9 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="ns_preview_add" @click="f_upload"></div>
+          <div class="ns_preview_add">
+            <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)">
+          </div>
         </div>
       </div>
       <div class="ns_submit" @click="f_validate">发布</div>
@@ -292,8 +294,16 @@ export default {
       let today = new Date().getTime()
       return new Date(date).getTime() < today
     },
-    f_upload () {
-
+    f_upload (e) {
+      const form = new FormData()
+      form.append('files', e.target.files[0])
+      this.$http
+        .post('/admin/file/uploadFiles', form)
+        .then(({data: { data }}) => {
+          if (data.length) {
+            this.v_from.imgUrl.push(...data)
+          }
+        })
     },
     f_getPark () {
       let params = {
@@ -597,6 +607,10 @@ export default {
           background-position: center center;
           background-size: 0.56rem 0.56rem;
           cursor: pointer;
+          input{
+            width: 0;
+            opacity: 0;
+          }
         }
       }
     }

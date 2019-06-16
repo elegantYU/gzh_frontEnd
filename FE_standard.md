@@ -14,15 +14,13 @@
 
   - 所有文件缩进使用 制表符(tab)2格
 
-  - 个人开发需从master自行创建分支，命名 dev_ + 姓名全拼
+  - 开发使用dev_hy分支, 开发前后记得pull代码
 
   - 使用rem布局，尺寸书写为 (设计图尺寸 / 100)rem
 
-  - 合并分支需提交pr 或 直接和我说
-
   - 其余规范参照 eslint 的 standard 规范
 
-  - 部分使用提示或弹窗地方使用 this.$toast({ msg: String, time: Number}), 对话框使用原生 confirm
+  - 部分使用提示或弹窗地方使用 this.$toast({ msg: String, time: Number})
 
 #### vue文件
 

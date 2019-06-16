@@ -27,9 +27,11 @@
             v-for="(v, i) in v_images"
             :key="i"
           >
-            <img :src="v" alt="">
+            <img :src="v">
           </div>
-          <div class="wr_preview_add" @click="f_upload"></div>
+          <div class="wr_preview_add">
+            <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)">
+          </div>
         </div>
       </div>
       <div class="wr_submit" @click="f_submit">
@@ -63,7 +65,7 @@ export default {
         communityName: '',
         type: '',
         detail: '',
-        img: ['', ''],
+        img: [],
         title: '',
         submitType: ''
       },
@@ -95,8 +97,16 @@ export default {
       this.v_from.submitType = i + 1
       move()
     },
-    f_upload () {
-      // this.$wxsdk  上传图片获取链接
+    f_upload (e) {
+      const form = new FormData()
+      form.append('files', e.target.files[0])
+      this.$http
+        .post('/admin/file/uploadFiles', form)
+        .then(({data: { data }}) => {
+          if (data.length) {
+            this.v_from.img.push(...data)
+          }
+        })
     },
     f_submit () {
       if (this.v_from.type && this.v_from.title && this.v_from.detail) {
@@ -257,6 +267,10 @@ export default {
           background-position: center center;
           background-size: 0.56rem 0.56rem;
           cursor: pointer;
+          input{
+            width: 0;
+            opacity: 0;
+          }
         }
       }
     }

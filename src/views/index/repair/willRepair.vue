@@ -215,6 +215,7 @@ export default {
     },
     f_upload (e) {
       if (this.v_images.length > 2) {
+        this.$toast('最多三张图片')
         return false
       }
       // 用于预览

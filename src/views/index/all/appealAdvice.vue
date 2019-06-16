@@ -25,7 +25,9 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="wr_preview_add" @click="f_upload"></div>
+          <div class="wr_preview_add">
+            <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)">
+          </div>
         </div>
       </div>
       <div class="wr_submit" @click="f_submit">
@@ -93,8 +95,16 @@ export default {
       console.log(this.v_from.complaintTarget)
       move()
     },
-    f_upload () {
-      // this.$wxsdk  上传图片获取链接
+    f_upload (e) {
+      const form = new FormData()
+      form.append('files', e.target.files[0])
+      this.$http
+        .post('/admin/file/uploadFiles', form)
+        .then(({data: { data }}) => {
+          if (data.length) {
+            this.v_images.push(...data)
+          }
+        })
     },
     f_submit () {
       let params = Object.assign({}, this.v_from)
@@ -242,6 +252,10 @@ export default {
           background-position: center center;
           background-size: 0.56rem 0.56rem;
           cursor: pointer;
+          input{
+            width: 0;
+            opacity: 0;
+          }
         }
       }
     }

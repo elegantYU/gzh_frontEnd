@@ -49,8 +49,8 @@
           >
             <img :src="v.src" alt="">
           </div>
-          <div class="wr_preview_add" @click="f_upload">
-            <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
+          <div class="wr_preview_add">
+            <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)">
           </div>
         </div>
       </div>
@@ -163,16 +163,6 @@ export default {
       }
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      vm.$data.v_id = to.query.id || ''
-      if (vm.$data.v_id) {
-        vm.$http.get('/admin/property/repair/add').then(res => {
-          // 信息填充
-        })
-      }
-    })
-  },
   mounted () {
     this.v_from.createUserId = this.$store.state.user.id
     this.v_from.villageCode = this.$store.state.villageCode
@@ -217,30 +207,29 @@ export default {
       return new Date(date).getTime() < today
     },
     f_upload (e) {
-      // if (this.v_images.length > 2) {
-      //   this.$toast('最多三张图片')
-      //   return false
-      // }
-      // // 用于预览
-      // const reader  = new FileReader()
-      // reader.readAsDataURL(e.target.files[0])
-      // reader.onload = el => {
-      //   this.v_images.push({ src: el.target.result, file: e.target.files[0] })
-      // }
-      // // 用于图片上传
-      // const form = new FormData()
-      // form.append("files", e.target.files[0])
-      // this.$http
-      //   .post('/admin/file/uploadFiles', form)
-      //   .then(({data: { data }}) => {
-      //     if (data.length) {
-      //       this.v_from.img.push(...data)
-      //     }
-      //   })
-
-      this.$wxsdk.chooseImage()
-        .then(res => {
-          
+      if (this.v_images.length > 2) {
+        this.$toast('最多三张图片')
+        return false
+      }
+      if (e.target.files[0].size > 5242880) {
+        this.$toast('图片过大请重新选择!')
+        return
+      }
+      // 用于预览
+      const reader  = new FileReader()
+      reader.readAsDataURL(e.target.files[0])
+      reader.onload = el => {
+        this.v_images.push({ src: el.target.result, file: e.target.files[0] })
+      }
+      // 用于图片上传
+      const form = new FormData()
+      form.append("files", e.target.files[0])
+      this.$http
+        .post('/admin/file/uploadFiles', form)
+        .then(({data: { data }}) => {
+          if (data.length) {
+            this.v_from.img.push(...data)
+          }
         })
     },
     f_submit () {
@@ -402,8 +391,12 @@ export default {
           height: 1.16rem;
           box-sizing: border-box;
           margin: 0 0.04rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           img{
-            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
           }
         }
         .wr_preview_add{

@@ -88,6 +88,10 @@ export default {
         this.$toast('最多三张图片')
         return
       }
+      if (e.target.files[0].size > 5242880) {
+        this.$toast('图片过大请重新选择!')
+        return
+      }
 
       const form = new FormData()
       form.append("files", e.target.files[0])
@@ -227,6 +231,9 @@ export default {
           height: 1.16rem;
           box-sizing: border-box;
           margin: 0 0.04rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           img{
             max-width: 100%;
             max-height: 100%;

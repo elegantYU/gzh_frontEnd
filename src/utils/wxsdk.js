@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+// 可惜了 到最后还是没有用上
 const wxsdk = {
   init (url) {
     const params = {
@@ -9,7 +10,7 @@ const wxsdk = {
       .get('/admin/wx/getWxConfig', { params })
       .then(({ data: { data: res }}) => {
         wx.config({
-          debug: true,
+          debug: false,
           appId: res.appId,
           timestamp: res.timestamp,
           nonceStr: res.nonceStr,
@@ -32,6 +33,19 @@ const wxsdk = {
             resolve(res)
           }
         })
+      })
+    })
+  },
+  uploadImage (id) {
+    return new Promise(resolve => {
+      wx.uploadImage({
+        localId: id,
+        isShowProgressTips: 1,
+        success: res => {
+          // 返回图片的serverid
+          console.log('serverid', res)
+          resolve(res)
+        }
       })
     })
   },

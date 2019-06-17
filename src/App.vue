@@ -25,7 +25,6 @@ export default {
         .get('/admin/wx/person', { params })
       
       this.$store.commit('setWxInfo', userInfo)
-      localStorage.setItem('wx-count', 0)
     },
     f_moveRight (e, start, end) {
       const xLength = end.X - start.X

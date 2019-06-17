@@ -4,6 +4,7 @@ import axios from './utils/axios'
 import store from './store/store'
 import Muse from 'muse-ui'
 import { deviceRem } from './utils/utils'
+import wxsdk from './utils/wxsdk'
 import toastMessage from './components/plugin/Toast'
 import touch from 'vue-directive-touch'
 import './assets/css/base.css'
@@ -12,6 +13,7 @@ import router from './router/router'
 deviceRem(750)
 
 Vue.prototype.$http = axios
+Vue.prototype.$wxsdk = wxsdk
 Vue.use(Muse)
 Vue.use(toastMessage)
 Vue.use(touch)

@@ -49,8 +49,8 @@
           >
             <img :src="v.src" alt="">
           </div>
-          <div class="wr_preview_add">
-            <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)">
+          <div class="wr_preview_add" @click="f_upload">
+            <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
           </div>
         </div>
       </div>
@@ -91,6 +91,7 @@
 
 <script>
 import { dateFormat, stop, move } from '../../../utils/utils'
+
 export default {
   name: 'WillRepair',
   data () {
@@ -216,25 +217,30 @@ export default {
       return new Date(date).getTime() < today
     },
     f_upload (e) {
-      if (this.v_images.length > 2) {
-        this.$toast('最多三张图片')
-        return false
-      }
-      // 用于预览
-      const reader  = new FileReader()
-      reader.readAsDataURL(e.target.files[0])
-      reader.onload = el => {
-        this.v_images.push({ src: el.target.result, file: e.target.files[0] })
-      }
-      // 用于图片上传
-      const form = new FormData()
-      form.append("files", e.target.files[0])
-      this.$http
-        .post('/admin/file/uploadFiles', form)
-        .then(({data: { data }}) => {
-          if (data.length) {
-            this.v_from.img.push(...data)
-          }
+      // if (this.v_images.length > 2) {
+      //   this.$toast('最多三张图片')
+      //   return false
+      // }
+      // // 用于预览
+      // const reader  = new FileReader()
+      // reader.readAsDataURL(e.target.files[0])
+      // reader.onload = el => {
+      //   this.v_images.push({ src: el.target.result, file: e.target.files[0] })
+      // }
+      // // 用于图片上传
+      // const form = new FormData()
+      // form.append("files", e.target.files[0])
+      // this.$http
+      //   .post('/admin/file/uploadFiles', form)
+      //   .then(({data: { data }}) => {
+      //     if (data.length) {
+      //       this.v_from.img.push(...data)
+      //     }
+      //   })
+
+      this.$wxsdk.chooseImage()
+        .then(res => {
+          
         })
     },
     f_submit () {

@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <div class="pa_submit">我已缴费</div>
+    <div class="pa_submit" @click="f_applyPark">我已缴费</div>
   </div>
 </template>
 
@@ -72,13 +72,14 @@ export default {
   },
   computed: {
     qrcode () {
-      if (this.v_payInfo.wx) {
+      if (this.v_payInfo.wx !== null) {
         return JSON.parse(this.v_payInfo.wx.qrCode)[0]
       }
     }
   },
   mounted () {
     this.f_getPayInfo()
+    this.f_getCarNum()
   },
   methods: {
     async f_getPayInfo () {
@@ -106,6 +107,10 @@ export default {
       let today = new Date().getTime()
       return new Date(date).getTime() < today
     },
+    f_applyPark () {
+      this.$http
+        .post('/admin/parking/addParking')
+    }
   }
 }
 </script>

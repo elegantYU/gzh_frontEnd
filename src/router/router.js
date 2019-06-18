@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import wxsdk from '../utils/wxsdk'
+// import wxsdk from '../utils/wxsdk'
 
 Vue.use(Router)
-const baseUrl = 'http://zjphtech.com'
+// const baseUrl = 'http://zjphtech.com'
 
 const router = new Router({
   mode: 'history',
@@ -114,7 +114,7 @@ const router = new Router({
 router.afterEach((to, from, next) => {
   document.title = to.meta.title
   // 每个页面都注册config
-  wxsdk.init(`${baseUrl}${to.fullPath}`)
+  // wxsdk.init(`${baseUrl}${to.fullPath}`)
 })
 
 export default router

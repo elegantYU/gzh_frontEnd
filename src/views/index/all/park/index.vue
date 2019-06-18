@@ -24,7 +24,7 @@
             <label>有效期</label>
             <p>{{ f_formatTime(v) }}</p>
           </div>
-          <div class="pi_input" v-if="v.sts == 3">
+          <div class="pi_input" v-if="v.sts == 3" @click="f_renew(v.id)">
             <span>立即续费</span>
           </div>
         </li>
@@ -94,6 +94,22 @@ export default {
         case '4':
           return '已删除'
           break
+      }
+    },
+    async f_renew (id) {
+      const params = {
+        id: id,
+        userId: this.$store.state.user.id,
+        userName: this.$store.state.user.name
+      }
+
+      const { data: { success }} = await this.$http
+        .get('/admin/parking/updateParking', { params })
+
+      if (success) {
+        this.$toast('成功续费')
+        this.v_list = []
+        this.f_getList()
       }
     }
   }

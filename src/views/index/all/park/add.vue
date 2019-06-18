@@ -14,13 +14,15 @@
         <label>费用</label>
         <div class="pa_input_box">
           <input type="text" placeholder="200元">
-          <span>收费标准{{ v_payInfo.price.price }}元/月</span>
+          <span>收费标准{{  }}元/月</span>
         </div>
       </div>
       <div class="pa_input">
         <label>选择时间</label>
-        <div class="pa_input_box">
-          <input type="text">
+        <div class="pa_input_box pa_date">
+          <mu-date-input container="bottomSheet" v-model="v_form.startTime" solo placeholder="开始" type="month" :should-disable-date="f_startTimeRules" no-display></mu-date-input>
+          <i>-</i>
+          <mu-date-input container="bottomSheet" v-model="v_form.endTime" solo placeholder="结束" type="month" no-display></mu-date-input>
         </div>
       </div>
       <div class="pa_input">
@@ -70,11 +72,13 @@ export default {
   },
   computed: {
     qrcode () {
-      return JSON.parse(this.v_payInfo.wx.qrCode)[0]
+      if (this.v_payInfo.wx) {
+        return JSON.parse(this.v_payInfo.wx.qrCode)[0]
+      }
     }
   },
   mounted () {
-
+    this.f_getPayInfo()
   },
   methods: {
     async f_getPayInfo () {
@@ -86,7 +90,22 @@ export default {
         .get('/admin/parking/getPayment', { params })
       
       this.v_payInfo = { wx, price, zfb, yhk }
-    }
+      console.log(this.v_payInfo)
+    },
+    async f_getCarNum () {
+      const params = {
+        phone: this.$store.state.user.phoneNum
+      }
+
+      const { data: { data }} = await this.$http
+        .get('/obtain/config/carSpinner', { params })
+
+      this.v_carNum = data.map(v => v.carNo)
+    },
+    f_startTimeRules (date) {
+      let today = new Date().getTime()
+      return new Date(date).getTime() < today
+    },
   }
 }
 </script>
@@ -135,6 +154,18 @@ export default {
           transform: translateY(-50%);
           color: #e90016;
           font-size: 0.2rem;
+        }
+        &.pa_date{
+          .mu-input{
+            width: 45%;
+            min-height: 0;
+            padding: 0;
+            float: left;
+          }
+          i{
+            float: left;
+            transform: translateY(50%);
+          }
         }
       }
       &>i{

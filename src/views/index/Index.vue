@@ -73,7 +73,7 @@ export default {
       v_tools1: [
         { msg: '物业报修', path: 'myRepair', icon: require('../../assets/images/index/index_wy.png') },
         { msg: '访客通行', path: '', icon: require('../../assets/images/index/index_fk.png') },
-        { msg: '预约服务', path: '', icon: require('../../assets/images/index/index_fw.png') },
+        { msg: '环境秩序', path: '', icon: require('../../assets/images/index/index_fw.png') },
         { msg: '失物招领', path: 'lostFound', icon: require('../../assets/images/index/index_sw.png') }
       ],
       v_tools2: [

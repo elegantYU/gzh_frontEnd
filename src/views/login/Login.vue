@@ -57,7 +57,6 @@ export default {
         password: this.v_password
       }
 
-      // this.$router.push({ name: 'index' })
       this.$http
         .post('/admin/user/login', params)
         .then(res => {
@@ -75,14 +74,7 @@ export default {
       console.log('忘记密码')
     },
     f_register () {
-      const count = localStorage.getItem('wx-count')
-      console.log('count', count)
-      if (!count) {
-        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3ec96b7fb94e38fa&redirect_uri=${encodeURIComponent('http://zjphtech.com')}&response_type=code&scope=snsapi_userinfo#wechat_redirect`
-        localStorage.setItem('wx-count', 1)
-      } else {
-        this.$router.push({ name: 'register' })
-      }
+      this.$router.push({ name: 'register' })
     },
     f_switch () {
       this.v_switch = !this.v_switch

@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 // 可惜了 到最后还是没有用上
+// 图片上传使用的原生input file，之后的地图定位需要使用jssdk
 const wxsdk = {
   init (url) {
     const params = {
@@ -16,7 +17,7 @@ const wxsdk = {
           nonceStr: res.nonceStr,
           signature: res.signature,
           jsApiList: [
-            'chooseImage', 'uploadImage', 'getLocalImgData'
+            'chooseImage', 'uploadImage', 'getLocalImgData', 'getLocation'
           ]
         })
       })
@@ -58,6 +59,22 @@ const wxsdk = {
             console.log('获取本地图片', res)
           }
         })
+      })
+    })
+  },
+  getLocation () {
+    return new Promise(resolve => {
+      wx.getLocation({
+        type: 'wgs84',
+        success: res => {
+          /**
+           * latitude  纬度
+           * longitude 经度
+           * speed 速度 
+           * accuracy 位置精度 
+           */
+          resolve(res)
+        }
       })
     })
   }

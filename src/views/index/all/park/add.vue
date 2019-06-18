@@ -4,8 +4,8 @@
       <div class="pa_input">
         <label>车牌号</label>
         <div class="pa_input_box">
-          <mu-select v-model="v_form.carNum" :solo="true" full-width placeholder="请选择车位">
-            <mu-option v-for="(v,i) in v_parkNum" :key="i" :label="v" :value="v"></mu-option>
+          <mu-select v-model="v_form.carNum" :solo="true" full-width placeholder="请选择车牌号">
+            <mu-option v-for="(v,i) in v_carNum" :key="i" :label="v" :value="v"></mu-option>
           </mu-select>
         </div>
         <i></i>
@@ -13,9 +13,9 @@
       <div class="pa_input">
         <label>费用</label>
         <div class="pa_input_box">
-          <input type="text">
+          <input type="text" placeholder="200元">
+          <span>收费标准{{ v_payInfo.price.price }}元/月</span>
         </div>
-        <span></span>
       </div>
       <div class="pa_input">
         <label>选择时间</label>
@@ -26,13 +26,19 @@
       <div class="pa_input">
         <label>支付宝账号</label>
         <div class="pa_input_box">
-          <input type="text">
+          <input type="text" placeholder='个人支付宝账号'>
         </div>
       </div>
       <div class="pa_input">
         <label>银行卡号</label>
         <div class="pa_input_box">
-          <input type="text">
+          <input type="text" placeholder="个人银行卡号">
+        </div>
+      </div>
+      <div class="pa_input pa_wechat" v-if="v_payInfo.wx">
+        <label>微信收款码</label>
+        <div class="pa_qrcode">
+          <img :src="qrcode" alt="">
         </div>
       </div>
     </div>
@@ -53,12 +59,115 @@ export default {
         createUserName: '',
         villageCode: ''
       },
+      v_payInfo: {
+        wx: {},
+        price: {},
+        zfb: {},
+        yhk: {}
+      },
       v_carNum: []
+    }
+  },
+  computed: {
+    qrcode () {
+      return JSON.parse(this.v_payInfo.wx.qrCode)[0]
+    }
+  },
+  mounted () {
+
+  },
+  methods: {
+    async f_getPayInfo () {
+      const params ={
+        villageCode: this.$store.state.villageCode
+      }
+
+      const { data: { data: { wx, price, zfb, yhk }}} = await this.$http
+        .get('/admin/parking/getPayment', { params })
+      
+      this.v_payInfo = { wx, price, zfb, yhk }
     }
   }
 }
 </script>
 
 <style lang='scss' scoped>
-
+.pa_wrapper{
+  background-color: #efeff4;
+  min-height: 100%;
+  .pa_form{
+    .pa_input{
+      padding: 0 0.3rem;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      height: 0.9rem;;
+      line-height: 0.9rem;
+      border-bottom: 1px solid #e5e5e5;
+      &:last-of-type{
+        border: none;
+      }
+      label{
+        width: 1.8rem;
+        height: 0.9rem;
+        line-height: 0.9rem;
+        font-size: 0.34rem;
+        text-align: left;
+      }
+      .pa_input_box{
+        flex: 1;
+        position: relative;
+        .mu-input{
+          display: block;
+          font-size: 0.3rem;
+        }
+        input{
+          display: block;
+          font-size: 0.3rem;
+          width: 100%;
+          height: 100%;
+          font-size: 0.3rem;
+        }
+        span{
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #e90016;
+          font-size: 0.2rem;
+        }
+      }
+      &>i{
+        width: 0.25rem;
+        height: 100%;
+        background-image: url('../../../../assets/images/repair/repair_arrow.png');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        vertical-align: middle;
+      }
+      &.pa_wechat{
+        height: 300px;
+        .pa_qrcode{
+          width: 200px;
+          height: 200px;
+          img{
+            max-width: 100%;
+          }
+        }
+      }
+    }
+  }
+  .pa_submit{
+    margin: 0.4rem 0.3rem 0;
+    height: 0.9rem;
+    background-color: #f73476;
+    text-align: center;
+    font-size: 0.34rem;
+    color: #fff;
+    line-height: 0.9rem;
+    border-radius: 0.415rem;
+    cursor: pointer;
+  }
+}
 </style>

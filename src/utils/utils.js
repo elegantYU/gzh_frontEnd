@@ -40,4 +40,16 @@ const move = () => {
   document.body.style.overflow = ''
 }
 
-export { deviceRem, dateFormat, stop, move, throttle }
+// 获取url参数
+const getQueryString = () => {
+  const search = window.location.search
+  const query = search.replace('?', '').split('&')
+  let res = {}
+  for (let i = 0; i < query.length; i++) {
+    const temp = query[i].split('=')
+    res[temp[0]] = temp[1]
+  }
+  return res
+}
+
+export { deviceRem, dateFormat, stop, move, throttle, getQueryString }

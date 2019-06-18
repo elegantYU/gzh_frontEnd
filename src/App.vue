@@ -20,10 +20,10 @@ export default {
   },
   methods: {
     async f_getWxInfo () {
-      const params = { code: this.$route.query.code }
-      const { data: { data: userInfo }} = await this.$http
-        .get('/admin/wx/person', { params })
-      
+      const userInfo = {
+          nickname: this.$route.query.userName,
+          headimgurl: this.$route.query.headIcon
+        }
       this.$store.commit('setWxInfo', userInfo)
       localStorage.setItem('wx-count', 0)
     },

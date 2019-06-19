@@ -56,7 +56,7 @@ const wxsdk = {
         wx.getLocalImgData({
           localId: ids,
           success: res => {
-            console.log('获取本地图片', res)
+            resolve(res)
           }
         })
       })

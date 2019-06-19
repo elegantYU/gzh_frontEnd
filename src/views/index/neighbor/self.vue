@@ -299,28 +299,21 @@ export default {
         this.$toast('最多三张图片')
         return
       }
-      // if (e.target.files[0].size > 5242880) {
-      //   this.$toast('图片过大请重新选择!')
-      //   return
-      // }
+      
       this.$wxsdk.chooseImage()
         .then(({ localIds }) => {
           localIds.map(v => {
             this.$wxsdk.getLocalImgData(v)
               .then(({ localData }) => {
-
+                const form = new FormData()
+                form.append("base64", localData)
+                this.$http
+                  .post('/admin/file/upload2', form)
+                  .then(({data: { data }}) => {
+                    this.v_from.imgUrl.push(data)
+                  })
               })
           })
-        })
-
-      const form = new FormData()
-      form.append('files', e.target.files[0])
-      this.$http
-        .post('/admin/file/uploadFiles', form)
-        .then(({data: { data }}) => {
-          if (data.length) {
-            this.v_from.imgUrl.push(...data)
-          }
         })
     },
     f_getPark () {

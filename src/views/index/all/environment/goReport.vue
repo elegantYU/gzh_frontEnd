@@ -24,7 +24,7 @@
         <div class="wr_preview">
           <div
             class="wr_preview_list"
-            v-for="(v, i) in v_images"
+            v-for="(v, i) in v_from.img"
             :key="i"
           >
             <img :src="v">
@@ -108,7 +108,13 @@ export default {
           localIds.map(v => {
             this.$wxsdk.getLocalImgData(v)
               .then(({ localData }) => {
-                
+                const form = new FormData()
+                form.append("base64", localData)
+                this.$http
+                  .post('/admin/file/upload2', form)
+                  .then(({data: { data }}) => {
+                    this.v_from.img.push(data)
+                  })
               })
           })
         })

@@ -8,14 +8,14 @@
 export default {
   mounted () {
     // 微信授权
-    // this.$nextTick(x => {
-    //   const count = localStorage.getItem('wx-auth-count')
-    //   if (count == 1) {
-    //     return
-    //   }
-    //   localStorage.setItem('wx-auth-count', 1)
-    //   window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3ec96b7fb94e38fa&redirect_uri=${encodeURIComponent('http://zjphtech.com/admin/wx/person')}&response_type=code&scope=snsapi_userinfo#wechat_redirect`
-    // })
+    this.$nextTick(x => {
+      const count = localStorage.getItem('wx-auth-count')
+      if (count == 1) {
+        return
+      }
+      localStorage.setItem('wx-auth-count', 1)
+      window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3ec96b7fb94e38fa&redirect_uri=${encodeURIComponent('http://zjphtech.com/admin/wx/person')}&response_type=code&scope=snsapi_userinfo#wechat_redirect`
+    })
     this.f_getWxInfo()
     try {
       document.body.removeChild(document.getElementById('start_wrapper'))

@@ -143,19 +143,15 @@ export default {
           localIds.map(v => {
             this.$wxsdk.getLocalImgData(v)
               .then(({ localData }) => {
-
+                const form = new FormData()
+                form.append("base64", localData)
+                this.$http
+                  .post('/admin/file/upload2', form)
+                  .then(({data: { data }}) => {
+                    this.v_from.exemptionImg.push(data)
+                  })
               })
           })
-        })
-      
-      const form = new FormData()
-      form.append('files', e.target.files[0])
-      this.$http
-        .post('/admin/file/uploadFiles', form)
-        .then(({data: { data }}) => {
-          if (data.length) {
-            this.v_from.exemptionImg.push(...data)
-          }
         })
     },
     f_getHouse () {

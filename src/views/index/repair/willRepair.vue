@@ -44,10 +44,10 @@
         <div class="wr_preview">
           <div
             class="wr_preview_list"
-            v-for="(v, i) in v_images"
+            v-for="(v, i) in v_from.img"
             :key="i"
           >
-            <img :src="v.src" alt="">
+            <img :src="v" alt="">
           </div>
           <div class="wr_preview_add" @click="f_upload">
             <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
@@ -219,14 +219,11 @@ export default {
             this.$wxsdk.getLocalImgData(v)
               .then(r => {
                 const form = new FormData()
-                const img = baseToBlob(r.localData)
-                cacheImg.map(v => form.append("files", img.files[0]))
+                form.append("base64", r.localData)
                 this.$http
-                  .post('/admin/file/uploadFiles', form)
+                  .post('/admin/file/upload2', form)
                   .then(({data: { data }}) => {
-                    if (data.length) {
-                      this.v_from.img.push(...data)
-                    }
+                    this.v_from.img.push(data)
                   })
               })
           })

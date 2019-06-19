@@ -232,7 +232,7 @@ export default {
         .get('/admin/member/house/all', { params })
       
       if (result.length) {
-        const r = result.map(v => v.searchWord)
+        const r = result.map(v => `${v.building}${v.unit}${v.room}`)
         this.$store.dispatch('setHouse', r)
       }
     }

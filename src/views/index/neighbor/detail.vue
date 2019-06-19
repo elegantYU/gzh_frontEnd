@@ -185,10 +185,11 @@ export default {
       }
     },
     gender () {
-      if (this.v_content.gender) {
+      if (this.v_content.gender == 1) {
         return '男'
+      } else {
+        return '女'
       }
-      return '女'
     },
     place () {
       return this.$store.state.village

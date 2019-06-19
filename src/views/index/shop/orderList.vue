@@ -96,6 +96,7 @@ export default {
     this.f_math()
   },
   methods: {
+
     f_math () {
       this.v_origin.map(v => {
         this.v_allPrice += v.moneyProduct

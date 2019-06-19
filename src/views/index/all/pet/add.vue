@@ -162,7 +162,7 @@ export default {
       this.$http
         .get('/admin/member/house/all', { params })
         .then(res => {
-          this.v_address = res.data.data.map(v => `${v.community}${v.street}${v.village}${v.unit}${v.room}`)
+          this.v_address = res.data.data.map(v => `${v.building}${v.unit}${v.room}`)
         })
     },
     f_checkGender (n) {

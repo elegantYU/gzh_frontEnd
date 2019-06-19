@@ -52,4 +52,16 @@ const getQueryString = () => {
   return res
 }
 
-export { deviceRem, dateFormat, stop, move, throttle, getQueryString }
+const baseToBlob = base => {
+  const bytes = window.atob(base.split(','[1]))
+
+  let ab = new ArrayBuffer(bytes.length)
+  let ia = new Uint8Array(ab)
+  for (let i = 0; i < bytes.length; i++) {
+    ia[i] = bytes.charCodeAt(i)    
+  }
+
+  return new Blob([ab], { type: 'image/png' })
+}
+
+export { deviceRem, dateFormat, stop, move, throttle, getQueryString, baseToBlob }

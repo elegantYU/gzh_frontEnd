@@ -204,7 +204,7 @@ export default {
         .get('/admin/member/house/all', { params })
         .then(res => {
           if (res.data.data) {
-           this.v_houseList = res.data.data.map(v => `${v.region}${v.street}${v.community}${v.village}${v.building}${v.unit}${v.room}`)
+           this.v_houseList = res.data.data.map(v => `${v.building}${v.unit}${v.room}`)
           }
         })
     },

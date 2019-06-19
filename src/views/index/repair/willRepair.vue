@@ -207,20 +207,29 @@ export default {
       return new Date(date).getTime() < today
     },
     f_upload (e) {
-      if (this.v_images.length > 2) {
-        this.$toast('最多三张图片')
-        return false
-      }
-      if (e.target.files[0].size > 5242880) {
-        this.$toast('图片过大请重新选择!')
-        return
-      }
-      // 用于预览
-      const reader  = new FileReader()
-      reader.readAsDataURL(e.target.files[0])
-      reader.onload = el => {
-        this.v_images.push({ src: el.target.result, file: e.target.files[0] })
-      }
+      // if (this.v_images.length > 2) {
+      //   this.$toast('最多三张图片')
+      //   return false
+      // }
+      // if (e.target.files[0].size > 5242880) {
+      //   this.$toast('图片过大请重新选择!')
+      //   return
+      // }
+      // // 用于预览
+      // const reader  = new FileReader()
+      // reader.readAsDataURL(e.target.files[0])
+      // reader.onload = el => {
+      //   this.v_images.push({ src: el.target.result, file: e.target.files[0] })
+      // }
+
+      // wx img
+      this.$wxsdk.chooseImage()
+        .then(r => {
+          console.log('微信', r)
+
+          // this.$wxsdk.getLocalImgData()
+        })
+
       // 用于图片上传
       const form = new FormData()
       form.append("files", e.target.files[0])

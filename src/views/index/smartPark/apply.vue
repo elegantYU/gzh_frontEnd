@@ -15,11 +15,16 @@
         <span></span>
       </li>
     </ul>
+    <div  class="popup">
+      <popup></popup>
+    </div>
   </div>
 </template>
 
 <script>
+import Popup from "../all/carLock/popup";
 export default {
+  components: {Popup},
   data () {
     return {
       v_list: [
@@ -29,13 +34,16 @@ export default {
   },
   methods: {
     f_getList () {
-      
+
     }
   }
 }
 </script>
 
 <style lang='scss' scoped>
+  .popup{
+    margin: auto;
+  }
 .sa_wrapper{
   background-color: #efeff4;
   ul{

@@ -51,10 +51,10 @@ export default {
       const params = {
         id: this.v_park.id
       }
-      
+
       const { data: { data }} = await this.$http
         .get('/admin/lock/getLockStatus', { params })
-      
+
       this.v_sts = data == 0 ? '已锁' : '解锁'
     },
     async f_getUnlock () {
@@ -68,7 +68,7 @@ export default {
 
       const { data: { success }} = await this.$http
         .get('/admin/lock/unLock', { params })
-      
+
       success ? this.$toast('解锁成功') : this.$toast('解锁失败')
     }
   }

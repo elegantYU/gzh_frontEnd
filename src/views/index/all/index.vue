@@ -33,7 +33,7 @@ export default {
           this.$router.push({name: 'myRepair'})
           break;
         case '访客通行':
-          this.$router.push({name: ''})
+          this.$router.push({name: 'visitorpass'})
           break;
         case '联系物业':
           this.$router.push({name: 'contact'})

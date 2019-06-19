@@ -125,7 +125,6 @@ export default {
       .n_nav{
         height: 0.9rem;
         background-color: #fff;
-        box-sizing: border-box;
         padding: 0.2rem 0.3rem 0.1rem;
         .n_nav_bar{
           width: calc(100% - 0.5rem);

@@ -25,6 +25,10 @@ const router = new Router({
         { path: '/home/environment', name: 'environment', meta: { title: '环境秩序' }, component: () => import('../views/index/all/environment/index.vue') },
         // 失物招领
         { path: '/home/lostFuond', name: 'lostFound', meta: { title: '失物招领' }, component: () => import('../views/index/lostFound/index.vue') },
+        // 智慧停车
+        { path: '/home/smartPark', name: 'smartPark', meta: { title: '智慧停车' }, component: () => import('../views/index/smartPark/index.vue') },
+        // 车位锁
+        { path: '/home/parkLock', name: 'parkLock', meta: { title: '车位锁' }, component: () => import('../views/index/all/carLock/index.vue') },
         // 超市
         { path: '/shop',
           name: 'shop',

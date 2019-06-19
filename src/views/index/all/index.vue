@@ -21,13 +21,12 @@ export default {
   name: 'allIndex',
   data () {
     return {
-      data: ['物业报修', '访客通行', '联系物业', '智慧停车', '停车服务', '预约服务', '车位锁', '环境秩序', '智慧政务', '生活超市', '邻里共享', '失物招领', '小区头条', '宠物登记'],
+      data: ['物业报修', '环境秩序', '智慧停车', '停车服务', '邻里共享', '失物招领', '车位锁', '访客通行', '生活超市', '宠物登记', '智慧政务', '小区头条', '联系物业' ],
       moreServe: ['诉求建议', '快递服务']
     }
   },
   methods: {
     switchRoute (d) {
-      console.log(d)
       switch(d)
       {
         case '物业报修':
@@ -40,16 +39,13 @@ export default {
           this.$router.push({name: 'contact'})
           break;
         case '智慧停车':
-          this.$router.push({name: ''})
+          this.$router.push({name: 'smartPark'})
           break;
         case '停车服务':
           this.$router.push({name: 'parkService'})
           break;
-        case '预约服务':
-          this.$router.push({name: ''})
-          break;
         case '车位锁':
-          this.$router.push({name: ''})
+          this.$router.push({name: 'parkLock'})
           break;
         case '环境秩序':
           this.$router.push({name: 'environment'})

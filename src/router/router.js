@@ -17,6 +17,8 @@ const router = new Router({
         { path: '/home/index', name: 'index', meta: { title: '首页' }, component: () => import('../views/index/Index.vue') },
         // 报修
         { path: '/home/myrepair', name: 'myRepair', meta: { title: '我的报修' }, component: () => import('../views/index/repair/myRepair.vue') },
+        // 访客
+        { path: '/home/visitorpass', name: 'visitorpass', meta: { title: '访客通行' }, component: () => import('../views/index/visitorPass/visitorpass.vue') },
         // 我的
         { path: '/home/my', name: 'my', meta: { title: '我的' }, component: () => import('../views/my/index.vue') },
         // 邻里共享

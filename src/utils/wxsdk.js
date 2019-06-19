@@ -11,7 +11,7 @@ const wxsdk = {
       .get('/admin/wx/getWxConfig', { params })
       .then(({ data: { data: res }}) => {
         wx.config({
-          debug: false,
+          debug: true,
           appId: res.appId,
           timestamp: res.timestamp,
           nonceStr: res.nonceStr,
@@ -28,7 +28,7 @@ const wxsdk = {
         wx.chooseImage({
           count: 3,
           sizeType: ['compressed'],
-          sourceType: ['album', 'camera'],
+          sourceType: ['album'],
           success: res => {
             console.log('选取的图片', res)
             resolve(res)

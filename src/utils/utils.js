@@ -52,16 +52,17 @@ const getQueryString = () => {
   return res
 }
 
-const baseToBlob = base => {
-  const bytes = window.atob(base.split(','[1]))
-
-  let ab = new ArrayBuffer(bytes.length)
-  let ia = new Uint8Array(ab)
-  for (let i = 0; i < bytes.length; i++) {
-    ia[i] = bytes.charCodeAt(i)    
+const baseToBlob = (dataurl) => {
+  const arr = dataurl.split(',')
+  const mime = arr[0].match(/:(.*?);/)[1]
+  const bstr = atob(arr[1])
+  const n = bstr.length
+  let u8arr = new Uint8Array(n)
+  while(n--){
+      u8arr[n] = bstr.charCodeAt(n)
   }
-
-  return new Blob([ab], { type: 'image/png' })
+  
+  return new File([u8arr], 'image', {type:mime})
 }
 
 export { deviceRem, dateFormat, stop, move, throttle, getQueryString, baseToBlob }

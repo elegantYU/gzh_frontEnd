@@ -25,8 +25,8 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="wr_preview_add">
-            <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)">
+          <div class="wr_preview_add" @click="f_upload">
+            <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
           </div>
         </div>
       </div>
@@ -96,6 +96,21 @@ export default {
       move()
     },
     f_upload (e) {
+      if (this.v_images.length > 2) {
+        this.$toast('最多三张图片')
+        return
+      }
+
+      this.$wxsdk.chooseImage()
+        .then(({ localIds }) => {
+          localIds.map(v => {
+            this.$wxsdk.getLocalImgData(v)
+              .then(({ localData }) => {
+                
+              })
+          })
+        })
+
       const form = new FormData()
       form.append('files', e.target.files[0])
       this.$http

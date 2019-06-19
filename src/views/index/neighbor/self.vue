@@ -108,8 +108,8 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="ns_preview_add">
-            <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)">
+          <div class="ns_preview_add" @click="f_upload">
+            <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
           </div>
         </div>
       </div>
@@ -299,10 +299,19 @@ export default {
         this.$toast('最多三张图片')
         return
       }
-      if (e.target.files[0].size > 5242880) {
-        this.$toast('图片过大请重新选择!')
-        return
-      }
+      // if (e.target.files[0].size > 5242880) {
+      //   this.$toast('图片过大请重新选择!')
+      //   return
+      // }
+      this.$wxsdk.chooseImage()
+        .then(({ localIds }) => {
+          localIds.map(v => {
+            this.$wxsdk.getLocalImgData(v)
+              .then(({ localData }) => {
+
+              })
+          })
+        })
 
       const form = new FormData()
       form.append('files', e.target.files[0])

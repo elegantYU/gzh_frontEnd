@@ -49,8 +49,8 @@
           >
             <img :src="v.src" alt="">
           </div>
-          <div class="wr_preview_add">
-            <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)">
+          <div class="wr_preview_add" @click="f_upload">
+            <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
           </div>
         </div>
       </div>
@@ -90,7 +90,8 @@
 </template>
 
 <script>
-import { dateFormat, stop, move } from '../../../utils/utils'
+import { dateFormat, stop, move, baseToBlob } from '../../../utils/utils'
+import { setTimeout } from 'timers';
 
 export default {
   name: 'WillRepair',
@@ -207,39 +208,31 @@ export default {
       return new Date(date).getTime() < today
     },
     f_upload (e) {
-      // if (this.v_images.length > 2) {
-      //   this.$toast('最多三张图片')
-      //   return false
-      // }
-      // if (e.target.files[0].size > 5242880) {
-      //   this.$toast('图片过大请重新选择!')
-      //   return
-      // }
-      // // 用于预览
-      // const reader  = new FileReader()
-      // reader.readAsDataURL(e.target.files[0])
-      // reader.onload = el => {
-      //   this.v_images.push({ src: el.target.result, file: e.target.files[0] })
-      // }
-
+      if (this.v_from.img.length > 2) {
+        this.$toast('最多三张图片')
+        return
+      }
       // wx img
       this.$wxsdk.chooseImage()
         .then(r => {
-          console.log('微信', r)
-
-          // this.$wxsdk.getLocalImgData()
+          r.localIds.map(v => {
+            this.$wxsdk.getLocalImgData(v)
+              .then(r => {
+                const form = new FormData()
+                const img = baseToBlob(r.localData)
+                cacheImg.map(v => form.append("files", img.files[0]))
+                this.$http
+                  .post('/admin/file/uploadFiles', form)
+                  .then(({data: { data }}) => {
+                    if (data.length) {
+                      this.v_from.img.push(...data)
+                    }
+                  })
+              })
+          })
         })
 
       // 用于图片上传
-      const form = new FormData()
-      form.append("files", e.target.files[0])
-      this.$http
-        .post('/admin/file/uploadFiles', form)
-        .then(({data: { data }}) => {
-          if (data.length) {
-            this.v_from.img.push(...data)
-          }
-        })
     },
     f_submit () {
       let params = Object.assign({}, this.v_from)

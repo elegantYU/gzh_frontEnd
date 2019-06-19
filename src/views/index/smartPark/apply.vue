@@ -23,13 +23,15 @@
 
 <script>
 import Popup from "../all/carLock/popup";
+import Surplus from "./surplus";
 export default {
-  components: {Popup},
+  components: { Popup},
   data () {
     return {
       v_list: [
 
-      ]
+      ],
+      msg: false
     }
   },
   methods: {

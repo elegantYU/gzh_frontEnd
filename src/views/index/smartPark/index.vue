@@ -26,9 +26,9 @@ export default {
     return {
       v_nav: [
         { name: '剩余车位', component: 'Surplus', active: false },
-        { name: '车位预约', component: 'Apply', active: true },
+        { name: '车位预约', component: 'Apply', active: true }
       ],
-      v_component: 'Apply'
+      v_component: 'Surplus'
     }
   },
   components: {

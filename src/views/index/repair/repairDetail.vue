@@ -54,13 +54,13 @@
           </div>
         </div>
       </div>
-      <div class="rep_comment" v-if="v_info.sts === 5 || v_info.sts === 6">
-        <div class="rep_comment_area">
+      <div class="rep_comment">
+        <div class="rep_comment_area" v-if="v_info.sts === 5">
           <textarea placeholder="在这里可以输入评价内容最多200个字" maxlength="200" v-model="v_info.content"></textarea>
         </div>
-        <div class="rep_comment_btn" @click="f_submit">{{ commentBtn }}</div>
+        <div class="rep_comment_btn" @click="f_submit">{{ v_btnText }}</div>
       </div>
-      <div class="rep_commentList">
+      <div class="rep_commentList" v-show="v_noComment">
         <p>评论</p>
         <mu-load-more :loading="v_loading" @load='f_loadComments' :loaded-all="v_loadAll">
           <mu-list>
@@ -80,9 +80,6 @@
             </template>
           </mu-list>
         </mu-load-more>
-        <div class="rep_nothing" v-show="v_noComment">
-          暂无评价
-        </div>
       </div>
     </div>
   </div>
@@ -100,7 +97,8 @@ export default {
       v_commmentNum: 1,
       v_loading: false,
       v_loadAll: false,
-      v_noComment: false
+      v_noComment: false,
+      v_btnText: '立即评价'
     }
   },
   mounted () {
@@ -128,22 +126,13 @@ export default {
           return '待上门'
           break
         case 5:
-        case 6:
           return '待评论'
+          break
+        case 6:
+          return '已评论'
           break
       }
     },
-    commentBtn: function () {
-      console.log(this.v_info.sts)
-      switch (this.v_info.sts) {
-        case 5:
-          return '立即评价'
-          break
-        case 6:
-          return '继续评价'
-          break
-      }
-    }
   },
   methods: {
     f_getInfo () {
@@ -185,6 +174,11 @@ export default {
       }, 1000)
     },
     f_submit () {
+      if (v_btnText === '立即评价') {
+        this.v_btnText = '提交评价'
+        return
+      }
+
       let params = {
         rId: this.v_id,
         rtype: 'repair',
@@ -203,6 +197,7 @@ export default {
                 time: 1000
               })
               this.f_getComments()
+              this.f_getInfo()
             }
           })
       } else {

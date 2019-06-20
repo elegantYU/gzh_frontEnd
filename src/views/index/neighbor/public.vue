@@ -55,12 +55,12 @@ export default {
             taskType: this.taskType,
             villageCode: this.$store.state.villageCode,
             pageNum: this.v_pageNum,
-            pageSize: 5
+            pageSize: 10
           } 
         : params = {
             villageCode: this.$store.state.villageCode,
             pageNum: this.v_pageNum,
-            pageSize: 5
+            pageSize: 10
           }
 
       this.$http

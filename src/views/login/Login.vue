@@ -69,6 +69,9 @@ export default {
             this.$toast(res.data.msg)
           }
         })
+      
+      // 下次进入重新授权
+      localStorage.clear()
     },
     f_forget () {
       console.log('忘记密码')

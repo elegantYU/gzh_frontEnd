@@ -46,7 +46,6 @@
                   v-for="(val, ind) in v.childrenComments"
                   :key="ind"
                   :class="v.openComment ? '' : 'td_comment_content_list_more'"
-                  @click="f_openSubmitComments(v.mianComment.id)"
                 >
                   <span>{{ val.createUserName }}:</span>
                   <p>{{ val.content }}</p>
@@ -181,7 +180,8 @@ export default {
           noticeId: this.v_id,
           type: this.v_detail.type,
           memberId: this.$store.state.user.id,
-          phone: this.$store.state.user.phoneNum
+          phone: this.$store.state.user.phoneNum,
+          villageCode: this.$store.state.villageCode
         }
 
         this.$http
@@ -420,7 +420,7 @@ export default {
       }
       .td_comment_list{
         background-color: #fff;
-        padding: 0 0.3rem;
+        padding: 0.1rem 0.3rem;
         .td_comment_item{
           display: flex;
           .td_comment_item_left{

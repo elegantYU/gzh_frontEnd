@@ -77,8 +77,8 @@
         <div class="ns_input ns_shareTime" v-if="v_taskType === '3'">
           <label>互换时间</label>
           <span>
-            <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_from.startTime" type="dateTime" landscape></mu-date-input>
-            <mu-date-input container="bottomSheet" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_from.endTime" type="time" landscape></mu-date-input>
+            <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_start" type="dateTime" landscape></mu-date-input>
+            <mu-date-input container="bottomSheet" :should-disable-date="f_endTimeRules" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_end" type="dateTime" landscape></mu-date-input>
           </span>
         </div>
         <!-- 资源共享 -->
@@ -209,7 +209,6 @@ export default {
     type () {
       switch (this.v_from.taskType) {
         case '1':
-          console.log('------------')
           return '拼车'
           break
         case '2':
@@ -293,8 +292,15 @@ export default {
       this.v_from.gender = n
     },
     f_startTimeRules (date) {
-      let today = new Date().getTime()
+      const today = new Date().getTime()
       return new Date(date).getTime() < today
+    },
+    f_endTimeRules (date) {
+      if (!this.v_start) {
+        return
+      }
+      const start = new Date(this.v_start).getTime()
+      return new Date(date).getTime() < (start - 1000*60*60*24)
     },
     f_upload (e) {
       if (this.v_from.imgUrl.length > 2) {
@@ -469,6 +475,7 @@ export default {
   .ns_container{
     background-color: #efeff4;
     padding-bottom: 1.2rem;
+    overflow: auto;
     h6{
       padding: 0.24rem 0;
       font-size: 0.36rem;
@@ -514,6 +521,9 @@ export default {
         &>.mu-input{
           display: block;
           width: calc(100% - 2.25rem);
+          padding: 0;
+          min-height: 0;
+          height: 100%;
         }
         &.ns_shareTime{
           height: 1.8rem;

@@ -72,14 +72,14 @@ export default {
       v_banner: [],
       v_tools1: [
         { msg: '物业报修', path: 'myRepair', icon: require('../../assets/images/index/index_wy.png') },
+        { msg: '环境秩序', path: 'environment', icon: require('../../assets/images/all/2.png') },
         { msg: '访客通行', path: 'visitorpass', icon: require('../../assets/images/index/index_fk.png') },
-        { msg: '环境秩序', path: 'environment', icon: require('../../assets/images/all/8.png') },
-        { msg: '失物招领', path: 'lostFound', icon: require('../../assets/images/index/index_sw.png') }
+        { msg: '智慧停车', path: 'smartPark', icon: require('../../assets/images/index/index_zh.png') },
       ],
       v_tools2: [
-        { msg: '智慧停车', path: 'smartPark', icon: require('../../assets/images/index/index_zh.png') },
-        { msg: '生活超市', path: 'shop', icon: require('../../assets/images/index/index_sh.png') },
+        { msg: '失物招领', path: 'lostFound', icon: require('../../assets/images/index/index_sw.png') },
         { msg: '邻里共享', path: 'neighbor', icon: require('../../assets/images/index/index_ll.png') },
+        { msg: '生活超市', path: 'shop', icon: require('../../assets/images/index/index_sh.png') },
         { msg: '全部', path: 'all', icon: require('../../assets/images/index/index_qb.png') }
       ],
       v_topic: [],

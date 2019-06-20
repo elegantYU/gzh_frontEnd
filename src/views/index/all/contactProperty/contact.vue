@@ -6,7 +6,7 @@
 </template>
 <script>
 import panel from '@/components/panel'
-import { setPriority } from 'os';
+
 export default {
   name: 'contact',
   data () {

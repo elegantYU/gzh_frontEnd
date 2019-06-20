@@ -82,6 +82,9 @@ const router = new Router({
     // 宠物
     { path: '/pet', name: 'pet', meta: { title: '我的宠物' }, component: () => import('../views/index/all/pet/index.vue') },
     { path: '/pet/add', name: 'petAdd', meta: { title: '宠物登记' }, component: () => import('../views/index/all/pet/add.vue') },
+    // 政务
+    { path: '/home/affairs', name: 'affairs', meta: { title: '智慧政务' }, component: () => import('../views/index/all/affairs/index.vue') },
+    { path: '/home/affairs/detailss', name: 'detailss', meta: { title: '详情' }, component: () => import('../views/index/all/affairs/details.vue') },
     // 我的房屋
     { path: '/my/house/index', name: 'house', meta: { title: '我的房屋' }, component: () => import('../views/my/house/index.vue') },
     { path: '/my/house/add', name: 'houseAdd', meta: { title: '房屋认证' }, component: () => import('../views/my/house/add.vue') },

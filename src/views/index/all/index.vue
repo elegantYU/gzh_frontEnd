@@ -51,7 +51,7 @@ export default {
           this.$router.push({name: 'environment'})
           break;
         case '智慧政务':
-          this.$router.push({name: ''})
+          this.$router.push({name: 'affairs'})
           break;
         case '生活超市':
           this.$router.push({name: 'shop'})

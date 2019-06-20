@@ -28,7 +28,7 @@ export default {
         { name: '剩余车位', component: 'Surplus', active: false },
         { name: '车位预约', component: 'Apply', active: true }
       ],
-      v_component: 'Surplus'
+      v_component: 'Apply'
     }
   },
   components: {

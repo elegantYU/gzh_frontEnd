@@ -48,7 +48,7 @@ export default {
   methods: {
     f_getList () {
       let params
-      this.type > 1
+      this.type > 0
         ? params = {
             userId: this.$store.state.user.id,
             type: this.type,
@@ -62,6 +62,8 @@ export default {
             pageNum: this.v_pageNum,
             pageSize: 10
           }
+
+      console.log('type参数', params, this.type)
 
       this.$http
         .get('/admin/lost/getMeLostFound', { params })
@@ -178,8 +180,8 @@ export default {
       display: flex;
       align-items: center;
       img{
-        vertical-align: middle;
-        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
       }
     }
   }

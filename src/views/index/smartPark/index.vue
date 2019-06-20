@@ -26,7 +26,7 @@ export default {
     return {
       v_nav: [
         { name: '剩余车位', component: 'Surplus', active: false },
-        { name: '车位预约', component: 'Apply', active: true },
+        { name: '车位预约', component: 'Apply', active: true }
       ],
       v_component: 'Apply'
     }
@@ -39,6 +39,7 @@ export default {
     f_moveNav (i) {
       this.v_nav.map(v => v.active = false)
       this.v_nav[i].active = true
+      this.v_component = this.v_nav[i].component
     }
   }
 }
@@ -59,6 +60,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    background-color: #fff;
     .si_nav_item{
       border-bottom-color: transparent;
       border-bottom-style: solid;

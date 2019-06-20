@@ -80,7 +80,7 @@ export default {
       }
     },
     f_startFilter (i) {
-      this.v_filterProp = i + 1
+      this.v_filterProp = i
       this.v_now.map(v => v.active = false)
       this.v_now[i].active = true
     }

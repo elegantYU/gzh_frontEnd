@@ -1,7 +1,7 @@
 <template>
   <div class="sa_wrapper">
     <ul>
-      <li>
+      <li class="sa_first">
         <span>车位编号</span>
         <span>车位类型</span>
         <span>操作</span>
@@ -9,6 +9,7 @@
       <li
         v-for="(v, i) in v_list"
         :key="i"
+        class="sa_item"
       >
         <span>{{ v.code }}</span>
         <span>{{ f_formatType(v) }}</span>
@@ -23,21 +24,23 @@
 
 <script>
 import Popup from "./popup.vue"
-
 export default {
   components: {
     Popup
   },
   data () {
     return {
-      v_list: []
+      v_list: [],
+      msg: false
     }
+  },
+  mounted () {
+    this.f_getList()
   },
   methods: {
     async f_getList () {
       const params = {
-        userId: this.$store.state.user.id,
-        villageCode: this.$store.state.villageCode
+        villageCode: '330105001009002001'
       }
 
       const { data: { data }} = await this.$http
@@ -47,13 +50,10 @@ export default {
     },
     f_formatType (v) {
       switch (v.type) {
-        case 'A':
-          return '孝心车位'
-          break
         case 'B':
           return '访客车位'
           break
-        case 'C':
+        default:
           return '孝心车位'
           break
       }
@@ -70,7 +70,7 @@ export default {
         const params = {
           userId: this.$store.state.user.id,
           userName: this.$store.state.user.name,
-          startTime: '',
+          startTime: new Date().toLocaleString('chinese', { hour12: false }).replace(/\//g, '-'),
           id: v.id
         }
 
@@ -104,16 +104,26 @@ export default {
       align-items: center;
       justify-content: space-between;
       padding-left: 0.35rem;
-      &:not(1){
+      span{
+        &:first-of-type{
+          display: block;
+          width: 2.1rem;
+          text-align: left;
+        }
+        &:last-of-type{
+          width: 1.2rem;
+        }
+      }
+      &.sa_item{
         span{
           &:last-of-type{
             display: block;
-            width: 1.2rem;
             height: 0.6rem;
             border-radius: 0.06rem;
             border: 2px solid #1aad19;
             color: #1aad19;
             line-height: 0.6rem;
+            cursor: pointer;
             &.active{
               border: 2px solid #f64682;
               color: #f64682;

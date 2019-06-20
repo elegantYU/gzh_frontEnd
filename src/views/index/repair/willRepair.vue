@@ -28,8 +28,8 @@
         <div class="wr_input wr_datetime">
           <label>预约时间</label>
           <div class="wr_datetime_item">
-            <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" :solo='true' :full-width="true" prefix="开始" clock-type='24hr' view-type='list' v-model="v_from.startTime" type="dateTime" landscape></mu-date-input>
-            <mu-date-input container="bottomSheet" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_from.endTime" type="time" landscape></mu-date-input>
+            <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" solo full-width prefix="开始" clock-type='24hr' view-type='list' v-model="v_start" type="dateTime" landscape></mu-date-input>
+            <mu-date-input container="bottomSheet" solo full-width prefix="结束" clock-type='24hr' view-type='list' v-model="v_end" type="time" landscape></mu-date-input>
           </div>
         </div>
       </div>
@@ -91,7 +91,6 @@
 
 <script>
 import { dateFormat, stop, move, baseToBlob } from '../../../utils/utils'
-import { setTimeout } from 'timers';
 
 export default {
   name: 'WillRepair',
@@ -130,11 +129,13 @@ export default {
       v_typeFlag: false,
       v_houseFlag: false,
       v_images: [],
+      v_start: '',
+      v_end: ''
     }
   },
   watch: {
     // 时间修正
-    'v_from.startTime': function (now, past) {
+    'v_start': function (now, past) {
       let date = dateFormat(now)
       this.v_from.startTime = `${new Date(now).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')}`
       if (this.v_from.endTime) {
@@ -142,8 +143,8 @@ export default {
         this.v_from.endTime = `${date} ${time}`
       }
     },
-    'v_from.endTime': function (now, past) {
-      let start = this.v_from.startTime
+    'v_end': function (now, past) {
+      let start = this.v_start
       let startTime = new Date(start).toLocaleTimeString('chinese', { hour12: false })
       if (now && start) {
         let date = dateFormat(start)
@@ -156,7 +157,7 @@ export default {
           this.v_from.endTime = `${date} ${endTime}`
         }
       } else {
-        this.v_from.endTime = ''
+        this.v_from.endTime = this.v_end = ''
         this.$toast({
           msg: '请先选择开始时间',
           time: 1500

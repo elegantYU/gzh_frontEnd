@@ -1,7 +1,7 @@
 <template>
   <div class="si_wrapper" @click="f_opemDetail">
     <div class="shop_item_img">
-      <img :src="item.productUrl" alt="">
+      <img :src="item.masterImg" alt="">
     </div>
     <b><span>{{ item.name1 }}</span> {{ item.productStock }}{{ item.unit }}</b>
     <p>{{ item.keyword }}</p>

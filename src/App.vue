@@ -36,6 +36,7 @@ export default {
           nickname: this.$route.query.userName,
           headimgurl: this.$route.query.headIcon
         }
+      console.log('微信信息', userInfo)
       this.$store.commit('setWxInfo', userInfo)
     },
     f_moveRight (e, start, end) {

@@ -85,8 +85,8 @@
         <div class="ns_input ns_shareTime" v-if="v_taskType === '4'">
           <label>共享时间</label>
           <span>
-            <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_from.startTime" type="dateTime" landscape></mu-date-input>
-            <mu-date-input container="bottomSheet" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_from.endTime" type="time" landscape></mu-date-input>
+            <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_start" type="dateTime" landscape></mu-date-input>
+            <mu-date-input container="bottomSheet" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_end" type="time" landscape></mu-date-input>
           </span>
         </div>
       </div>
@@ -200,7 +200,9 @@ export default {
         createUserId: 1,
         imgUrl: [],
         villageCode: ''     // 小区code
-      }
+      },
+      v_start: '',
+      v_end: ''
     }
   },
   computed: {
@@ -226,7 +228,7 @@ export default {
     }
   },
   watch: {
-    'v_from.startTime': function (now, past) {
+    'v_start': function (now, past) {
       let date = dateFormat(now)
       this.v_from.startTime = `${new Date(now).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')}`
       if (this.v_from.endTime) {
@@ -234,7 +236,7 @@ export default {
         this.v_from.endTime = `${date} ${time}`
       }
     },
-    'v_from.endTime': function (now, past) {
+    'v_end': function (now, past) {
       let start = this.v_from.startTime
       let startTime = new Date(start).toLocaleTimeString('chinese', { hour12: false })
       if (now && start) {
@@ -248,7 +250,7 @@ export default {
           this.v_from.endTime = `${date} ${endTime}`
         }
       } else {
-        this.v_from.endTime = ''
+        this.v_from.endTime = this.v_end = ''
         this.$toast({
           msg: '请先选择开始时间',
           time: 1500

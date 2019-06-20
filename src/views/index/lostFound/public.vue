@@ -47,7 +47,7 @@ export default {
   methods: {
     f_getList () {
       let params
-      this.type > 1
+      this.type > 0
         ? params = {
             type: this.type,
             villageCode: this.$store.state.villageCode,
@@ -145,8 +145,8 @@ export default {
       width: 1.6rem;
       height: 100%;
       img{
-        vertical-align: middle;
-        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
       }
     }
   }

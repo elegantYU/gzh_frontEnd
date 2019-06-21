@@ -1,47 +1,47 @@
 <template>
     <div class="visitor">
       <div class="visitor-name">{{v_from.communityName}}</div>
-        <div class="wr_input">
+        <div class="vi_input">
           <label>有效时长</label>
           <input type="text" readonly v-model="v_from.time" @click="f_openType" placeholder="请选择有效时长">
           <i></i>
         </div>
-        <div class="wr_input">
+        <div class="vi_input">
           <label>有效次数</label>
           <input type="text" v-model="v_from.title" placeholder="1次">
         </div>
-        <div class="wr_input">
+        <div class="vi_input">
           <label>邀请方</label>
           <input type="text" readonly v-model="v_from.houseName" placeholder="请选择房屋">
           <i></i>
         </div>
-        <div class="wr_input">
+        <div class="vi_input">
           <label>访客姓名</label>
           <input type="text"  v-model="v_from.prpname" placeholder="请输入访客姓名">
         </div>
-        <div class="wr_input">
+        <div class="vi_input">
           <label>联系方式</label>
           <input type="text" v-model="v_from.phone" placeholder="请输入访客联系方式">
         </div>
-        <div class="wr_input">
+        <div class="vi_input">
           <label>性别</label>
-            <input type="radio" name="sex" value="male" class="wr_input-tb"><p>男</p><br>
-            <input type="radio" name="sex" value="female" class="wr_input-tb"><p>女</p>
+            <input type="radio" name="sex" value="male" class="vi_input-tb"><p>男</p><br>
+            <input type="radio" name="sex" value="female" class="vi_input-tb"><p>女</p>
         </div>
-        <div class="wr_input">
+        <div class="vi_input">
           <label>访客身份</label>
           <input type="text" readonly v-model="v_from.identity" @click="f_openIden" placeholder="请选择访客身份">
           <i></i>
         </div>
-        <div class="wr_input">
+        <div class="vi_input">
           <label>到访时间</label>
-          <div class="wr_input-time">
+          <div class="vi_input-time">
               <mu-col span="9" md="1" sm="1">
                 <mu-date-input v-model="value1"  full-width container="dialog" underline-color="white" placeholder="请选择到访时间"  :solo="true"></mu-date-input>
               </mu-col>
           </div>
         </div>
-        <div class="wr_input">
+        <div class="vi_input">
           <label>密码类型</label>
           <input type="text" readonly v-model="v_from.password" @click="f_openPass" placeholder="请选择密码类型">
           <i></i>
@@ -49,16 +49,16 @@
       <div class="visitor-commonStyle-img">
         <div class="visitor-commonStyle-cont">
           访客照片
-          <div class="wr_upload">
-            <div class="wr_preview">
+          <div class="vi_upload">
+            <div class="vi_preview">
               <div
-                class="wr_preview_list"
+                class="vi_preview_list"
                 v-for="(v, i) in v_images"
                 :key="i"
               >
                 <img :src="v.src" alt="">
               </div>
-              <div class="wr_preview_add">
+              <div class="vi_preview_add">
                 <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)">
               </div>
             </div>
@@ -202,7 +202,7 @@ export default {
     overflow: auto !important;
   }
 
-  .wr_input {
+  .vi_input {
     width: 100%;
     height: 0.8rem;
     line-height: 0.8rem;
@@ -229,7 +229,7 @@ export default {
       height: 100%;
       background-color: transparent;
     }
-    .wr_input-tb{
+    .vi_input-tb{
       display: block;
       font-size: 0.3rem;
       flex: 1;
@@ -244,7 +244,7 @@ export default {
       background-color: transparent;
       font-size: 0.3rem;
     }
-    .wr_input-time{
+    .vi_input-time{
       position: absolute;
       top: 50%;
       left: 50%;
@@ -293,7 +293,7 @@ export default {
   .nulldiv{
     height: 2rem;
   }
-  .wr_upload{
+  .vi_upload{
     display: flex;
     margin-bottom: 0.4rem;
     position: absolute;
@@ -305,11 +305,11 @@ export default {
       line-height: 1.2rem;
       color: rgb(178,178,178);
     }
-    .wr_preview{
+    .vi_preview{
       height: 1.2rem;
       box-sizing: border-box;
       background-color: #fff;
-      .wr_preview_list{
+      .vi_preview_list{
         float: left;
         width: 1.16rem;
         height: 1.16rem;
@@ -323,7 +323,7 @@ export default {
           max-height: 100%;
         }
       }
-      .wr_preview_add{
+      .vi_preview_add{
         float: left;
         width: 1.16rem;
         height: 1.16rem;

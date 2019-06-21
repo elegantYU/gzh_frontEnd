@@ -1,23 +1,22 @@
 <template>
     <div class="detailss">
       <div class="detailss-cont">
-        <div class="detailss-tit">社会保险职工参保信息变更登记</div>
+        <div class="detailss-tit"  v-model ="v_from.affName">{{v_from.affName}}</div>
         <div class="detailss-locn">
           <img :src="Lcon">
           <p>申请条件</p>
         </div>
-        <div class="detailss-condition">111111111111111111111111111111111111111111111111111111111111111111111111111
-        </div>
+        <div class="detailss-condition" v-model="v_from.affCont">{{v_from.affCont}}</div>
         <div class="detailss-download">
           <p>附件下载</p>
           <div class="detailss-download-img">
             <div class="detailss-download-img-cont">
               <img :src="Word" alt="">
-              <p>文档名称11</p>
+              <p v-model="v_from.affWord">{{}}</p>
             </div>
             <div class="detailss-download-img-cont">
               <img :src="Tet" alt="">
-              <p>表格名称11</p>
+              <p v-model="v_from.affText">{{}}</p>
             </div>
           </div>
         </div>
@@ -35,7 +34,13 @@ export default {
     return {
       Lcon: Lcon,
       Word: Word,
-      Tet: Tet
+      Tet: Tet,
+      v_from: {
+        affName: '社会保险职工参保信息变更登记',
+        affCont: '111111111111111111111111111111111111111111111111111111111111111111111111111',
+        affWord: '文档名称11',
+        affText: '表格名称11'
+      }
     }
   }
 }

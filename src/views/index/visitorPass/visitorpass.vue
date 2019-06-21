@@ -1,58 +1,51 @@
 <template>
     <div class="visitor">
       <div class="visitor-name">{{v_from.communityName}}</div>
-      <div class="visitor-commonStyle">
-        <div class="visitor-commonStyle-cont">有效时长</div>
-        <select>
-           <option v-for="item in mun" value="">{{item}}</option>
-        </select>
-      </div>
-      <div class="visitor-commonStyle">
-        <div class="visitor-commonStyle-cont">有效次数</div>
-        <input type="number" placeholder="1次">
-      </div>
-      <div class="visitor-commonStyle">
-        <div class="visitor-commonStyle-cont">邀请方</div>
-        <select>
-          <option value="">请选择房屋</option>
-        </select>
-      </div>
-      <div class="visitor-commonStyle">
-        <div class="visitor-commonStyle-cont">访客姓名</div>
-        <input type="text" placeholder="请输入访客姓名">
-      </div>
-      <div class="visitor-commonStyle">
-        <div class="visitor-commonStyle-cont">联系方式</div>
-        <input type="number" placeholder="请输入访客联系方式">
-      </div>
-      <div class="visitor-commonStyle">
-        <div class="visitor-commonStyle-cont">性别</div>
-        <form>
-          <input type="radio" name="sex" value="male"><p>男</p><br>
-          <input type="radio" name="sex" value="female"><p>女</p>
-        </form>
-      </div>
-      <div class="visitor-commonStyle">
-        <div class="visitor-commonStyle-cont">访客身份</div>
-        <select>
-          <option v-for="item in cnt" value="">{{item}}</option>
-        </select>
-      </div>
-      <div class="visitor-commonStyle">
-        <div class="visitor-commonStyle-cont">到访时间</div>
-        <div class="visitor-commonStyle-data">
-            <mu-col span="9" md="1" sm="1">
-              <mu-date-input v-model="value1"  full-width container="dialog" underline-color="white" placeholder="请选择到访时间"  :solo="true"></mu-date-input>
-            </mu-col>
+        <div class="wr_input">
+          <label>有效时长</label>
+          <input type="text" readonly v-model="v_from.time" @click="f_openType" placeholder="请选择有效时长">
+          <i></i>
         </div>
-      </div>
-      <div class="visitor-commonStyle">
-        <div class="visitor-commonStyle-cont">密码类型</div>
-        <select>
-          <option  value="二维码">二维码</option>
-          <option  value="数字密码">数字密码</option>
-        </select>
-      </div>
+        <div class="wr_input">
+          <label>有效次数</label>
+          <input type="text" v-model="v_from.title" placeholder="1次">
+        </div>
+        <div class="wr_input">
+          <label>邀请方</label>
+          <input type="text" readonly v-model="v_from.houseName" placeholder="请选择房屋">
+          <i></i>
+        </div>
+        <div class="wr_input">
+          <label>访客姓名</label>
+          <input type="text"  v-model="v_from.prpname" placeholder="请输入访客姓名">
+        </div>
+        <div class="wr_input">
+          <label>联系方式</label>
+          <input type="text" v-model="v_from.phone" placeholder="请输入访客联系方式">
+        </div>
+        <div class="wr_input">
+          <label>性别</label>
+            <input type="radio" name="sex" value="male" class="wr_input-tb"><p>男</p><br>
+            <input type="radio" name="sex" value="female" class="wr_input-tb"><p>女</p>
+        </div>
+        <div class="wr_input">
+          <label>访客身份</label>
+          <input type="text" readonly v-model="v_from.identity" @click="f_openIden" placeholder="请选择访客身份">
+          <i></i>
+        </div>
+        <div class="wr_input">
+          <label>到访时间</label>
+          <div class="wr_input-time">
+              <mu-col span="9" md="1" sm="1">
+                <mu-date-input v-model="value1"  full-width container="dialog" underline-color="white" placeholder="请选择到访时间"  :solo="true"></mu-date-input>
+              </mu-col>
+          </div>
+        </div>
+        <div class="wr_input">
+          <label>密码类型</label>
+          <input type="text" readonly v-model="v_from.password" @click="f_openPass" placeholder="请选择密码类型">
+          <i></i>
+        </div>
       <div class="visitor-commonStyle-img">
         <div class="visitor-commonStyle-cont">
           访客照片
@@ -73,6 +66,52 @@
           </div>
         </div>
       </div>
+
+<!--      选择时间类型-->
+      <mu-bottom-sheet :open.sync="v_timeFlag">
+        <mu-list>
+          <mu-sub-header>选择有效时间</mu-sub-header>
+          <mu-list-item
+            button
+            v-for="(v, i) in v_times"
+            :key="i"
+            @click="f_chooseType(v.name)"
+          >
+            <mu-list-item-title>{{ v.name }}</mu-list-item-title>
+          </mu-list-item>
+        </mu-list>
+      </mu-bottom-sheet>
+
+<!--      选择关系-->
+      <mu-bottom-sheet :open.sync="v_idenFlag">
+        <mu-list>
+          <mu-sub-header>选择到访身份</mu-sub-header>
+          <mu-list-item
+            button
+            v-for="(v, i) in v_idens"
+            :key="i"
+            @click="f_chooseIden(v.name)"
+          >
+            <mu-list-item-title>{{ v.name }}</mu-list-item-title>
+          </mu-list-item>
+        </mu-list>
+      </mu-bottom-sheet>
+
+<!--      选择密码-->
+      <mu-bottom-sheet :open.sync="v_passFlag">
+        <mu-list>
+          <mu-sub-header>选择密码类型</mu-sub-header>
+          <mu-list-item
+            button
+            v-for="(v, i) in v_passs"
+            :key="i"
+            @click="f_choosePass(v.name)"
+          >
+            <mu-list-item-title>{{ v.name }}</mu-list-item-title>
+          </mu-list-item>
+        </mu-list>
+      </mu-bottom-sheet>
+
       <div class="visitor-password">生成访客密码</div>
       <div class="visitor-password-cont">二维码或数字密码</div>
       <div class="visitor-password sendout">发送给好友</div>
@@ -81,85 +120,145 @@
 </template>
 
 <script>
+import { stop, move } from '../../../utils/utils'
 export default {
   name: "visitorpass",
   data () {
     return {
-      mun: ['请选择时间', '5分钟', '10分钟', '15分钟', '20分钟', '30分钟', '45分钟', '60分钟'],
-      cnt: ['请选择访客与住户的关系', '父母', '子女', '亲戚', '朋友', '其他'],
       value1: undefined,
       v_images: [],
       v_from: {
-        communityName: ''
-      }
+        communityName: '',
+        time: '',
+        title: '',
+        houseName: '',
+        prpname: '',
+        phone: '',
+        identity: '',
+        password: ''
+      },
+      v_times: [
+        { name: '5分钟' },
+        { name: '10分钟' },
+        { name: '15分钟' },
+        { name: '20分钟' },
+        { name: '30分钟' },
+        { name: '45分钟' },
+        { name: '60分钟' }
+      ],
+      v_idens: [
+        { name: '父母' },
+        { name: '子女' },
+        { name: '亲戚' },
+        { name: '朋友' },
+        { name: '其他' }
+      ],
+      v_passs: [
+        { name: '二维码' },
+        { name: '数字密码' }
+      ],
+      v_timeFlag: false,
+      v_idenFlag: false,
+      v_passFlag: false
     }
   },
-  mounted() {
+  mounted () {
     this.v_from.communityName = this.$store.state.village
+  },
+  methods: {
+    f_openType () {
+      this.v_timeFlag = true
+      // stop()
+    },
+    f_chooseType (name) {
+      this.v_timeFlag = false
+      this.v_from.time = name
+      move()
+    },
+    f_openIden () {
+      this.v_idenFlag = true
+      // stop()
+    },
+    f_chooseIden (name) {
+      this.v_idenFlag = false
+      this.v_from.identity = name
+      move()
+    },
+    f_openPass () {
+      this.v_passFlag = true
+      // stop()
+    },
+    f_choosePass (name) {
+      this.v_passFlag = false
+      this.v_from.password = name
+      move()
+    }
   }
 }
 </script>
 
 <style lang='scss' scoped>
-  select{
-    border: none;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 70%;
-    height: 90%;
-    margin-left: auto;
+  body{
+    overflow: auto !important;
+  }
+
+  .wr_input {
+    width: 100%;
+    height: 0.8rem;
     line-height: 0.8rem;
-    color: rgb(178,178,178);
-  }
-  input{
-    margin-left: 0.6rem;
-    height: 80%;
-    margin-top: 0.08rem;
-    font-size: 0.4rem;
-    color: rgb(178,178,178);
-  }
-  form{
+    box-sizing: border-box;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #fff;
+    text-align: left;
+    padding: 0 0.3rem;
     display: flex;
-    margin-left: 0.8rem;
+    align-items: center;
+    position: relative;
+    label {
+      display: block;
+      font-size: 0.34rem;
+      line-height: 0.8rem;
+      width: 2rem;
+      height: 100%;
+    }
+
+    input {
+      display: block;
+      font-size: 0.3rem;
+      flex: 1;
+      height: 100%;
+      background-color: transparent;
+    }
+    .wr_input-tb{
+      display: block;
+      font-size: 0.3rem;
+      flex: 1;
+      width: 10%;
+      height: 50%;
+      background-color: transparent;
+    }
+
     p{
       line-height: 0.8rem;
-      margin-left: 0.3rem;
-      color: rgb(178,178,178);
+      margin-right: 1.2rem;
+      background-color: transparent;
+      font-size: 0.3rem;
+    }
+    .wr_input-time{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
     }
   }
+
+
   .visitor{
     background-color: #efeff4;
     .visitor-name{
       height: 0.8rem;
       line-height: 0.8rem;
       font-size: 0.37rem;
-    }
-    .visitor-commonStyle{
-      width: 100vw;
-      height: 0.8rem;
-      background-color: #ffffff;
-      display: flex;
-      font-size: 0.35rem;
-      border-bottom: 0.01rem solid #eeeeee;
-      .visitor-commonStyle-cont{
-        margin-left: 0.3rem;
-        line-height: 0.8rem;
-        position: relative;
-      }
-      .visitor-commonStyle-data{
-        height: 0.8rem;
-        padding-left: 0.1rem;
-        overflow: hidden;
-        .mu-text-field-input{
-          color: rgb(178,178,178);
-        }
-        .mu-input.is-solo{
-          padding: 0;
-          margin-top: 0.1rem;
-        }
-      }
     }
   }
   .visitor-commonStyle-img{
@@ -242,5 +341,15 @@ export default {
         }
       }
     }
+  }
+  i{
+    display: inline-block;
+    width: 0.25rem;
+    height: 100%;
+    background-image: url('../../../assets/images/repair/repair_arrow.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    vertical-align: middle;
   }
 </style>

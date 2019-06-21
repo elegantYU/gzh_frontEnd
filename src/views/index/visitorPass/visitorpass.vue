@@ -179,7 +179,7 @@ export default {
       this.v_idenFlag = true
       // stop()
     },
-    f_chooseIden (name) {
+    f_chooseIden: function (name) {
       this.v_idenFlag = false
       this.v_from.identity = name
       move()
@@ -266,6 +266,7 @@ export default {
     width: 100vw;
     height: 1.6rem;
     font-size: 0.35rem;
+    position: relative;
     background-color: #ffffff;
     .visitor-commonStyle-cont{
       margin-left: 0.3rem;
@@ -295,14 +296,15 @@ export default {
   }
   .vi_upload{
     display: flex;
-    margin-bottom: 0.4rem;
+    width: 60%;
     position: absolute;
-    left: 30%;
-    top: 61.5%;
+    left: 60%;
+    top: 50%;
+    transform: translate(-50%,-50%);
     p{
-      font-size: 0.25rem;
-      margin-left: 0.3rem;
+      font-size: 0.2rem;
       line-height: 1.2rem;
+      margin-left: 0.3rem;
       color: rgb(178,178,178);
     }
     .vi_preview{

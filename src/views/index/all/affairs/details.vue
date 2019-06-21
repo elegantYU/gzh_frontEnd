@@ -12,11 +12,11 @@
           <div class="detailss-download-img">
             <div class="detailss-download-img-cont">
               <img :src="Word" alt="">
-              <p v-model="v_from.affWord">{{}}</p>
+              <p v-model="v_from.affWord">{{v_from.affWord}}</p>
             </div>
             <div class="detailss-download-img-cont">
               <img :src="Tet" alt="">
-              <p v-model="v_from.affText">{{}}</p>
+              <p v-model="v_from.affText">{{v_from.affText}}</p>
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@ export default {
       Tet: Tet,
       v_from: {
         affName: '社会保险职工参保信息变更登记',
-        affCont: '111111111111111111111111111111111111111111111111111111111111111111111111111',
+        affCont: '当年的加大发疯呢反反复复反反复复方法你发反复烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦发发发发发发发发发发发发发发发发发发发发发发发发',
         affWord: '文档名称11',
         affText: '表格名称11'
       }

@@ -33,7 +33,7 @@
         <div class="pa_input">
           <label>体重</label>
           <div class="pa_input_box">
-            <input type="text" v-model="v_form.weight" placeholder="请输入宠物体重">
+            <input type="text" v-model="v_form.weight" @change="changeWeight" placeholder="请输入宠物体重">
           </div>
         </div>
         <div class="pa_input">
@@ -113,7 +113,7 @@ export default {
         exemptionTime: '',
         vaccineType: '',
         petRegisNum: '',
-        createUserId: '',       // user id 
+        createUserId: '',       // user id
         villageCode: '',        // 小区id
         exemptionImg: []        // 图片数组
       },
@@ -192,6 +192,15 @@ export default {
       } else {
         this.$toast('请完善基本信息')
         return
+      }
+    },
+
+    //输入体重默认单位kg
+    changeWeight () {
+      if (this.v_form.weight=='') {
+        this.v_form.weight=''
+      }else {
+        this.v_form.weight = this.v_form.weight + 'kg'
       }
     }
   }

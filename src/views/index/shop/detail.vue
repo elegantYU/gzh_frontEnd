@@ -45,7 +45,7 @@ export default {
     return {
       v_id: '',
       v_detail: {},
-      v_num: 0,
+      v_num: 1,
       v_blue: false
     }
   },
@@ -93,11 +93,11 @@ export default {
 
       await this.$http
         .post('/admin/cart/add', params)
-      
-      this.v_blue = true
+
+        this.v_blue = true
     },
     f_moveIndex () {
-      this.$router.push({ name: 'index' })
+      this.$router.push({ name: 'i  ndex' })
     },
     f_moveCar () {
       this.$router.push({ name: 'shopCar' })

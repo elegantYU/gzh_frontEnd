@@ -43,7 +43,7 @@
         </div>
         <div class="so_footer_last">
           <div>
-            <a :href="'tel' + this.v_origin[0].phone">
+            <a :href="'tel' + this.v_seller.phone">
               <i></i>
             </a>
             <div>
@@ -55,15 +55,17 @@
         </div>
       </div>
     </div>
-  </div>
-</template>
+      </div>
+      </template>
 
-<script>
-export default {
-  data () {
-    return {
-      v_addressInfo: '',
-      v_house: [],
+      <script>
+import Axios from 'axios'
+
+    export default {
+      data () {
+        return {
+          v_addressInfo: '',
+          v_house: [],
       v_user: [],
       v_origin: [],
       v_list: [{}],
@@ -87,6 +89,19 @@ export default {
           break
       }
     }
+  },
+  created(){
+
+      this.$http.get("/admin/order/orders/address",{params: { memberId: 4885 }} ).then(res=>{
+        console.log(res.data);
+        if(res.data=='') {
+          this.v_addressInfo=''
+        }else {
+          this.v_addressInfo=res.data.data
+        }
+      });
+
+
   },
   mounted () {
     this.v_origin = this.$store.state.orderParams
@@ -118,8 +133,12 @@ export default {
 
       const { data: { data: result }} = await this.$http
         .get('/admin/seller/manage/info', { params })
-
-      this.v_seller = Object.assign({}, result)
+        if (Object.keys(result).length>0){
+          this.v_seller = Object.assign({}, result)
+        }else {
+          this.v_seller = { phone:'',sellerName:''}
+        }
+      // this.v_seller = Object.assign({}, result)
     },
     f_submit () {
       if (this.v_orderState === 1 && this.v_addressInfo) {

@@ -14,7 +14,7 @@
                   <i :class="v.active ? 'active' : ''" @click="f_checkOne(i)"></i>
                 </div>
                 <div class="sc_list_img">
-                  <img src="" alt="">
+                  <img :src="v.product.masterImg" alt="">
                 </div>
                 <div class="sc_list_detail">
                   <h6>{{ v.product.name1 }}</h6>
@@ -80,7 +80,10 @@ export default {
       }
       const { data: { data: result } } = await this.$http
         .get(`/admin/cart/list`, { params })
-      
+        // .then(res=>{
+        //   console.log(res)
+        // })
+
       this.v_laodAll = Object.keys(result).length > 0 ? false : true
       const r = Object.keys(result).reduce((acc, cur) => {
         const a = result[cur].map(v => {
@@ -130,7 +133,7 @@ export default {
       }
     },
     async f_cutNum (i) {
-      this.v_list[i].count--      
+      this.v_list[i].count--
       if (this.v_list[i].count === 0) {
         const f = confirm('是否删除?')
         if (f) {
@@ -143,7 +146,7 @@ export default {
         await this.$http
           .post(`/admin/cart/changeCart?id=${this.v_list[i].id}&num=-1`)
       }
-      
+
     },
     async f_addNum (i) {
       if (this.v_list[i].product.productStock === this.v_list[i].count) {
@@ -175,7 +178,7 @@ export default {
         }
       } else {
         //  下单
-        
+
         const orders = this.v_list.filter(v => v.active).map((v => {
           return {
             cartId: v.id,

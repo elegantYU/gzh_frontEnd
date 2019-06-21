@@ -43,29 +43,29 @@
         </div>
         <div class="so_footer_last">
           <div>
-            <a :href="'tel' + this.v_seller.phone">
+            <a :href="'tel' + v_seller.phone">
               <i></i>
             </a>
             <div>
               <span>联系商家</span>
-              <p>1153153</p>
+              <p>{{ v_seller.phone }}</p>
             </div>
           </div>
           <span @click="f_submit">提交</span>
         </div>
       </div>
     </div>
-      </div>
-      </template>
+  </div>
+</template>
 
-      <script>
+<script>
 import Axios from 'axios'
 
-    export default {
-      data () {
-        return {
-          v_addressInfo: '',
-          v_house: [],
+export default {
+  data () {
+    return {
+      v_addressInfo: '',
+      v_house: [],
       v_user: [],
       v_origin: [],
       v_list: [{}],
@@ -90,28 +90,28 @@ import Axios from 'axios'
       }
     }
   },
-  created(){
-
-      this.$http.get("/admin/order/orders/address",{params: { memberId: 4885 }} ).then(res=>{
-        console.log(res.data);
-        if(res.data=='') {
-          this.v_addressInfo=''
-        }else {
-          this.v_addressInfo=res.data.data
-        }
-      });
-
-
-  },
   mounted () {
-    this.v_origin = this.$store.state.orderParams
+    
     this.v_house = this.$store.state.house
     this.v_user = this.$store.state.user
     this.f_getStore()
     this.f_math()
   },
   methods: {
+    f_getAddress () {
+      const params = {
+        memberId: this.$store.state.user.id
+      }
 
+      this.$http.get("/admin/order/orders/address", { params })
+        .then(res => {
+          if(res.data == '') {
+            this.v_addressInfo = ''
+          }else {
+            this.v_addressInfo = res.data.data
+          }
+        })
+    },
     f_math () {
       this.v_origin.map(v => {
         this.v_allPrice += v.moneyProduct
@@ -119,12 +119,14 @@ import Axios from 'axios'
       })
     },
     f_getStore () {
-      this.v_origin.forEach(v => {
+      const orders = this.$store.state.orderParams
+      orders.forEach(v => {
          this.f_get(v).then(r => {
            v['sellerName'] = this.v_seller.sellerName
            v['tel'] = this.seller.phone
          })
       })
+      this.v_origin.push(...orders)
     },
     async f_get (v) {
       const params = {
@@ -133,12 +135,11 @@ import Axios from 'axios'
 
       const { data: { data: result }} = await this.$http
         .get('/admin/seller/manage/info', { params })
-        if (Object.keys(result).length>0){
+        if (Object.keys(result).length > 0){
           this.v_seller = Object.assign({}, result)
         }else {
           this.v_seller = { phone:'',sellerName:''}
         }
-      // this.v_seller = Object.assign({}, result)
     },
     f_submit () {
       if (this.v_orderState === 1 && this.v_addressInfo) {
@@ -151,7 +152,6 @@ import Axios from 'axios'
           }
         })
 
-        console.log(params)
         this.$http
           .post('/admin/order/orders/add', params)
           .then(({data: {data}}) => {

@@ -39,34 +39,25 @@
         </div>
       </div>
       <!-- <div class="rep_showcomment_btn" @click="f_showcomment">评论</div> -->
-      <div class="rep_comment">
+      <div class="rep_comment" v-if="v_info.status == 5">
         <div class="rep_comment_area" v-show="v_textareaFlag">
           <textarea placeholder="在这里可以输入评价内容最多200个字" maxlength="200" v-model="v_info.content"></textarea>
         </div>
         <div class="rep_comment_btn" @click="f_submit">{{ v_submitText }}</div>
       </div>
-      <div class="rep_commentList">
+      <div class="rep_commentList" v-if="v_commments.length">
         <p>评论</p>
-        <mu-load-more :loading="v_loading" @load='f_loadComments' :loaded-all="v_loadAll">
-          <mu-list>
-            <template v-for="(v, i) in v_commments">
-              <div class="rep_comments_item" :key="i">
-                <div class="rep_comments_item_top clearfix">
-                  <div class="rep_comments_item_avatar">
-                    <img :src="v.headIcon" alt="">
-                  </div>
-                  <div class="rep_comments_item_info">
-                    <p>{{ v.createUserName }}</p>
-                    <span>{{ v.createTime }}</span>
-                  </div>
-                </div>
-                <div class="rep_comments_item_bottom">{{ v.content }}</div>
-              </div>
-            </template>
-          </mu-list>
-        </mu-load-more>
-        <div class="rep_nothing" v-show="v_noComment">
-          暂无评价
+        <div class="rep_comments_item" v-for="(v, i) in v_commments" :key="i">
+          <div class="rep_comments_item_top clearfix">
+            <div class="rep_comments_item_avatar">
+              <img :src="v.headIcon" alt="">
+            </div>
+            <div class="rep_comments_item_info">
+              <p>{{ v.createUserName }}</p>
+              <span>{{ v.createTime }}</span>
+            </div>
+          </div>
+          <div class="rep_comments_item_bottom">{{ v.content }}</div>
         </div>
       </div>
     </div>
@@ -88,9 +79,6 @@ export default {
       },
       v_commments: [],
       v_commmentNum: 1,
-      v_loading: false,
-      v_loadAll: false,
-      v_noComment: false,
       typeObj: {
         1: '垃圾散乱',
         2: '绿化损坏',
@@ -98,28 +86,23 @@ export default {
         4: '井盖缺失',
         5: '路面破损',
         6: '违章搭建',
-        7: '违规停车'
+        7: '违规停车',
+        8: '宠物问题',
+        9: '其他问题',
       },
       status: {
         0: '待处理',
         1: '处理中',
         2: '已完成',
         3: '已超时',
-        4: '已督办'
+        4: '已督办',
+        5: '已评论'
       },
       v_submitText: '评论',
       v_textareaFlag: false
     }
   },
   methods: {
-    f_loadComments () {
-      this.v_loading = true
-      setTimeout(() => {
-        this.v_loading = false
-        this.v_commmentNum++
-        this.f_getComments()
-      }, 1000)
-    },
     f_submit () {
       if (this.v_submitText === '评论') {
         this.v_textareaFlag = true
@@ -138,7 +121,6 @@ export default {
         this.$http
         .post('/admin/environ/addComment', params)
         .then(res => {
-          console.log(res)
           if (res.data.success) {
             this.$toast('评论成功')
             this.v_info.content = ''
@@ -153,10 +135,9 @@ export default {
       this.$http
         .post(`/admin/comment/noticeList?rId=${this.v_id}&rtype=environ`)
         .then(res => {
-          console.log('getComments', res)
           if (res.data.success) {
             const data = res.data.data
-            if(data) {
+            if(data.length) {
               data.map(v => {
                 this.v_commments.push({
                   createUserName: v.mianComment.createUserName,
@@ -165,9 +146,6 @@ export default {
                   rid: v.mianComment.rid
                 })
               })
-            } else {
-              this.v_noComment = true
-              this.v_loadAll = true
             }
           } else {
             this.$toast('网络错误')

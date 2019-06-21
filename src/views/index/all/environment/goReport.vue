@@ -1,22 +1,22 @@
 <template>
   <div class="wr_wrapper">
     <div class="wr_content">
-      <h6>{{ v_from.communityName }}</h6>
+      <h6>{{ v_form.communityName }}</h6>
       <div class="wr_form">
         <div class="wr_input">
           <label>分类</label>
-          <input type="text" readonly v-model="v_from.type" @click="f_openType" placeholder="请选择分类">
+          <input type="text" readonly v-model="v_form.type" @click="f_openType" placeholder="请选择分类">
           <i></i>
         </div>
         <div class="wr_input">
           <label>标题</label>
-          <input type="text" v-model="v_from.title" placeholder="请输入标题(15个字以内)" maxlength="15">
+          <input type="text" v-model="v_form.title" placeholder="请输入标题(15个字以内)" maxlength="15">
         </div>
       </div>
       <div class="wr_detail">
         <b>内容描述</b>
         <div class="wr_input">
-          <textarea placeholder="内容不超过200字" maxlength="200" v-model="v_from.detail"></textarea>
+          <textarea placeholder="内容不超过200字" maxlength="200" v-model="v_form.detail"></textarea>
         </div>
       </div>
       <div class="wr_upload">
@@ -24,7 +24,7 @@
         <div class="wr_preview">
           <div
             class="wr_preview_list"
-            v-for="(v, i) in v_from.img"
+            v-for="(v, i) in v_form.img"
             :key="i"
           >
             <img :src="v">
@@ -61,7 +61,7 @@ export default {
   data () {
     return {
       v_typeFlag: false,
-      v_from: {
+      v_form: {
         communityName: '',
         type: '',
         detail: '',
@@ -69,7 +69,6 @@ export default {
         title: '',
         submitType: ''
       },
-      v_images: [],
       v_types: [
         { name: '垃圾散落' },
         { name: '绿化损坏' },
@@ -84,7 +83,7 @@ export default {
     }
   },
   mounted () {
-    this.v_from.communityName = this.$store.state.village
+    this.v_form.communityName = this.$store.state.village
   },
   methods: {
     f_openType () {
@@ -93,8 +92,8 @@ export default {
     },
     f_chooseType (name, i) {
       this.v_typeFlag = false
-      this.v_from.type = name
-      this.v_from.submitType = i + 1
+      this.v_form.type = name
+      this.v_form.submitType = i + 1
       move()
     },
     f_upload (e) {
@@ -113,7 +112,7 @@ export default {
                 this.$http
                   .post('/admin/file/upload2', form)
                   .then(({data: { data }}) => {
-                    this.v_from.img.push(data)
+                    this.v_form.img.push(data)
                   })
               })
           })
@@ -126,17 +125,17 @@ export default {
         .post('/admin/file/uploadFiles', form)
         .then(({data: { data }}) => {
           if (data.length) {
-            this.v_from.img.push(...data)
+            this.v_form.img.push(...data)
           }
         })
     },
     f_submit () {
-      if (this.v_from.type && this.v_from.title && this.v_from.detail) {
+      if (this.v_form.type && this.v_form.title && this.v_form.detail) {
         // 提交表单
         let params = {
-          classify: this.v_from.submitType,
-          title: this.v_from.title,
-          content: this.v_from.detail,
+          classify: this.v_form.submitType,
+          title: this.v_form.title,
+          content: this.v_form.detail,
           imgUrl: [],
           createUserId: this.$store.state.user.id,
           createUserName: this.$store.state.user.name,

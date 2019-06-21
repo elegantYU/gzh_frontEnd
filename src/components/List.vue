@@ -46,6 +46,12 @@ export default {
         case '7':
           return '违规停车'
           break
+        case '8':
+          return '宠物问题'
+          break
+        case '9':
+          return '其它问题'
+          break
       }
     }
   },

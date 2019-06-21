@@ -94,7 +94,6 @@ export default {
   mounted () {
     this.f_getBanner()
     this.f_getTopic()
-    console.log(this.$store.state)
   },
   methods: {
     f_switchVillage () {

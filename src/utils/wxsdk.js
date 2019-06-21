@@ -9,7 +9,7 @@ const wxsdk = {
     }
     axios
       .get('/admin/wx/getWxConfig', { params })
-      .then(({ data: { data: res }}) => {
+      .then(({ data: { data: res } }) => {
         wx.config({
           debug: false,
           appId: res.appId,

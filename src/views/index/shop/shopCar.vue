@@ -14,14 +14,14 @@
                   <i :class="v.active ? 'active' : ''" @click="f_checkOne(i)"></i>
                 </div>
                 <div class="sc_list_img">
-                  <img :src="v.product.masterImg" alt="">
+                  <img :src="v.product && v.product.masterImg" alt="">
                 </div>
                 <div class="sc_list_detail">
-                  <h6>{{ v.product.name1 }}</h6>
-                  <div class="sc_list_detail_desc">{{ v.product.name1 }}</div>
+                  <h6>{{ v.product && v.product.name1 }}</h6>
+                  <div class="sc_list_detail_desc">{{  v.product && v.product.name1 }}</div>
                   <div class="sc_list_detail_footer">
-                    <b>￥ {{ v.product.mallPcPrice }}</b>
-                    <s v-if="v.product.marketPrice">{{ v.product.marketPrice }}</s>
+                    <b>￥ {{ v.product && v.product.mallPcPrice }}</b>
+                    <s v-if="v.product && v.product.marketPrice">{{ v.product && v.product.marketPrice }}</s>
                     <div class="sc_list_count">
                       <i @click="f_cutNum(i)">-</i><span>{{ v.count }}</span><i @click="f_addNum(i)">+</i>
                     </div>
@@ -63,7 +63,6 @@ export default {
       active.map(v => {
         pirce += v.product.mallPcPrice * v.count
       })
-
       return pirce.toFixed(2)
     }
   },
@@ -80,9 +79,6 @@ export default {
       }
       const { data: { data: result } } = await this.$http
         .get(`/admin/cart/list`, { params })
-        // .then(res=>{
-        //   console.log(res)
-        // })
 
       this.v_laodAll = Object.keys(result).length > 0 ? false : true
       const r = Object.keys(result).reduce((acc, cur) => {

@@ -65,6 +65,7 @@ export default {
             this.$store.dispatch('setUser', res.data.data)
             console.log(this.$store.state.user)
             this.$router.push({ name: 'pickads' })
+            localStorage.clear()
           } else {
             this.$toast(res.data.msg)
           }

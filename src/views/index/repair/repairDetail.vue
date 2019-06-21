@@ -54,13 +54,13 @@
           </div>
         </div>
       </div>
-      <div class="rep_comment">
-        <div class="rep_comment_area" v-if="v_info.sts === 5">
+      <div class="rep_comment" v-if="v_info.sts === 5">
+        <div class="rep_comment_area" >
           <textarea placeholder="在这里可以输入评价内容最多200个字" maxlength="200" v-model="v_info.content"></textarea>
         </div>
         <div class="rep_comment_btn" @click="f_submit">{{ v_btnText }}</div>
       </div>
-      <div class="rep_commentList" v-show="v_noComment">
+      <div class="rep_commentList" v-show="v_commments.length">
         <p>评论</p>
         <mu-load-more :loading="v_loading" @load='f_loadComments' :loaded-all="v_loadAll">
           <mu-list>
@@ -97,7 +97,6 @@ export default {
       v_commmentNum: 1,
       v_loading: false,
       v_loadAll: false,
-      v_noComment: false,
       v_btnText: '立即评价'
     }
   },
@@ -150,7 +149,7 @@ export default {
           params: {
             rId: this.v_id,
             pageNum: this.v_commmentNum,
-            pageSize: 10
+            pageSize: 100
           }
         })
         .then(res => {
@@ -160,9 +159,6 @@ export default {
           res.data.data.forEach(v => {
             this.v_commments.push(v)
           })
-          if (!this.v_commments.length) {
-            this.v_noComment = true
-          }
         })
     },
     f_loadComments () {
@@ -207,7 +203,7 @@ export default {
           time: 1500
         })
       }
-    }
+    },
   }
 }
 </script>
@@ -216,10 +212,10 @@ export default {
 .rep_wrapper{
   height: 100%;
   background-color: #efeff4;
+  overflow: auto;
   .rep_content{
     background-color: #efeff4;
     padding-bottom: 1.2rem;
-    overflow: auto;
     h6{
       padding: 0.23rem 0 0.26rem;
       font-size: 0.36rem;
@@ -293,7 +289,8 @@ export default {
           box-sizing: border-box;
           margin: 0 0.04rem;
           img{
-            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
           }
         }
       }

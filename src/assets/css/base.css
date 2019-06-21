@@ -100,6 +100,11 @@ img {
   border: 0;
 }
 
+/* 去除img边框 */
+img[src=''], img:not([src]){
+  opacity: 0;
+}
+
 abbr,
 acronym {
   font-variant: normal;

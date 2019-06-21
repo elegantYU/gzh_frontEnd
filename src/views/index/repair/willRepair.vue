@@ -54,9 +54,9 @@
           </div>
         </div>
       </div>
-      <div class="wr_submit" @click="f_submit">
+      <button class="wr_submit" @click="f_submit">
         报修
-      </div>
+      </button>
       <!-- 哪间屋子 -->
       <mu-bottom-sheet :open.sync="v_houseFlag">
         <mu-list>
@@ -230,40 +230,23 @@ export default {
           })
         })
 
-      // 用于图片上传
     },
     f_submit () {
       let params = Object.assign({}, this.v_from)
       params.img = JSON.stringify(this.v_from.img)
 
-      console.log(params)
       if (this.v_from.communityName && this.v_from.houseName && this.v_from.type && this.v_from.userName && this.v_from.telPhone && this.v_from.startTime && this.v_from.endTime) {
-        if (this.v_id) {
-          params = { ...params, id: this.v_id }
-          this.$http
-            .post('/admin/property/repair/add', params)
-            .then(res => {
-              if (res.data.success) {
-                this.$toast({
-                  msg: '修改成功',
-                  time: 1000
-                })
-                this.$router.go(-1)
-              }
-            })
-        } else {
-          this.$http
-            .post('/admin/property/repair/add', params)
-            .then(res => {
-              if (res.data.success) {
-                this.$toast({
-                  msg: '提交成功',
-                  time: 1000
-                })
-                this.$router.go(-1)
-              }
-            })
-        }
+        this.$http
+          .post('/admin/property/repair/add', params)
+          .then(res => {
+            if (res.data.success) {
+              this.$toast({
+                msg: '提交成功',
+                time: 1000
+              })
+              this.$router.go(-1)
+            }
+          })
       } else {
         this.$toast({
           msg: '所填信息不完整',
@@ -279,7 +262,12 @@ export default {
 .wr_wrapper{
   height: 100%;
   background-color: #efeff4;
+  position: relative;
   .wr_content{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     padding-bottom: 1.2rem;
     background-color: #efeff4;
     overflow: auto;
@@ -420,6 +408,8 @@ export default {
       }
     }
     .wr_submit{
+      display: block;
+      width: 6.8rem;
       margin: 0 0.3rem;
       height: 0.9rem;
       background-color: #f73476;

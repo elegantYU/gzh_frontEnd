@@ -24,14 +24,12 @@
         <div class="wr_preview">
           <div
             class="wr_preview_list"
-            v-for="(v, i) in v_form.img"
+            v-for="(v, i) in v_form.imgUrl"
             :key="i"
           >
             <img :src="v">
           </div>
-          <div class="wr_preview_add" @click="f_upload">
-            <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
-          </div>
+          <div class="wr_preview_add" @click="f_upload"></div>
         </div>
       </div>
       <div class="wr_submit" @click="f_submit">
@@ -65,7 +63,7 @@ export default {
         communityName: '',
         type: '',
         detail: '',
-        img: [],
+        imgUrl: [],
         title: '',
         submitType: ''
       },
@@ -97,7 +95,7 @@ export default {
       move()
     },
     f_upload (e) {
-      if (this.v_form.img.length > 2) {
+      if (this.v_form.imgUrl.length > 2) {
         this.$toast('最多三张图片')
         return
       }
@@ -112,21 +110,10 @@ export default {
                 this.$http
                   .post('/admin/file/upload2', form)
                   .then(({data: { data }}) => {
-                    this.v_form.img.push(data)
+                    this.v_form.imgUrl.push(data)
                   })
               })
           })
-        })
-
-
-      const form = new FormData()
-      form.append('files', e.target.files[0])
-      this.$http
-        .post('/admin/file/uploadFiles', form)
-        .then(({data: { data }}) => {
-          if (data.length) {
-            this.v_form.img.push(...data)
-          }
         })
     },
     f_submit () {
@@ -136,16 +123,15 @@ export default {
           classify: this.v_form.submitType,
           title: this.v_form.title,
           content: this.v_form.detail,
-          imgUrl: [],
+          imgUrl: JSON.stringify(this.v_form.imgUrl),
           createUserId: this.$store.state.user.id,
           createUserName: this.$store.state.user.name,
           villageCode: this.$store.state.villageCode
         }
-        params.imgUrl = JSON.stringify(params.imgUrl)
+
         this.$http
           .post('/admin/environ/add', params)
           .then(res => {
-            console.log(res)
             if (res.data.success) {
               this.$toast('上报成功')
               this.$router.go(-1)

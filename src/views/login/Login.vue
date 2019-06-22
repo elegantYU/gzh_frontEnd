@@ -78,6 +78,14 @@ export default {
       console.log('忘记密码')
     },
     f_register () {
+      this.$nextTick(x => {
+        const count = localStorage.getItem('wx-auth-count')
+        if (count == 1) {
+          return
+        }
+        localStorage.setItem('wx-auth-count', 1)
+        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3ec96b7fb94e38fa&redirect_uri=${encodeURIComponent('http://zjphtech.com/admin/wx/person')}&response_type=code&scope=snsapi_userinfo#wechat_redirect`
+      })
       this.$router.push({ name: 'register' })
     },
     f_switch () {

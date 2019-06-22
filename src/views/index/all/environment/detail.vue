@@ -31,7 +31,7 @@
         <div class="rep_preview_wrapper">
           <div
             class="rep_preview_item"
-            v-for="(v, i) in v_info.img"
+            v-for="(v, i) in v_info.imgUrl"
             :key="i"
           >
             <img :src="v" alt="">
@@ -75,7 +75,8 @@ export default {
         status: '',
         time: '',
         detail: '',
-        content: ''
+        content: '',
+        imgUrl: ''
       },
       v_commments: [],
       v_commmentNum: 1,
@@ -167,6 +168,7 @@ export default {
             this.v_info.time = data.createTime
             this.v_info.detail = data.content
             this.v_info.status = this.status[data.status]
+            this.v_info.imgUrl = JSON.parse(data.imgUrl)
           } else {
             this.$toast('网络错误')
           }
@@ -257,8 +259,12 @@ export default {
           height: 1.16rem;
           box-sizing: border-box;
           margin: 0 0.04rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           img{
-            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
           }
         }
       }
@@ -309,10 +315,11 @@ export default {
             height: 0.6rem;
             margin-right: 0.18rem;
             box-sizing: border-box;
-            border: 1px solid #036ff5;
+            border: 1px solid #242425;
             border-radius: 50%;
             img{
-              width: 100%;
+              max-width: 100%;
+              max-height: 100%;
             }
           }
           .rep_comments_item_info{

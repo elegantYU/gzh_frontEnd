@@ -10,7 +10,7 @@
           <span class="type">{{ type }}</span>
         </p>
       </div>
-      <img :src="data.imgUrl" alt="" class="rtimg">
+      <img :src="img" alt="" class="rtimg">
     </div>
   </div>
 </template>
@@ -53,6 +53,10 @@ export default {
           return '其它问题'
           break
       }
+    },
+    img () {
+      const imgs = JSON.parse(this.data.imgUrl)
+      return imgs.length && imgs[0]
     }
   },
   methods: {

@@ -58,11 +58,16 @@ const baseToBlob = (dataurl) => {
   const bstr = atob(arr[1])
   const n = bstr.length
   let u8arr = new Uint8Array(n)
-  while(n--){
-      u8arr[n] = bstr.charCodeAt(n)
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n)
   }
-  
-  return new File([u8arr], 'image', {type:mime})
+
+  return new File([u8arr], 'image', { type: mime })
 }
 
-export { deviceRem, dateFormat, stop, move, throttle, getQueryString, baseToBlob }
+function isIos () {
+  const u = navigator.userAgent
+  return u.indexOf('iPhone') > -1 || u.indexOf('Mac OS') > -1
+}
+
+export { deviceRem, dateFormat, stop, move, throttle, getQueryString, baseToBlob, isIos }

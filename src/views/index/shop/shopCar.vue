@@ -168,6 +168,7 @@ export default {
           }))
           .then(res => {
             this.$toast('删除完成')
+            this.f_getList()
           })
         } else {
           this.$toast('无可删除商品')

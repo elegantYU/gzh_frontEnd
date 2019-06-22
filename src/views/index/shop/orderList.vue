@@ -7,7 +7,7 @@
           <p>{{ v_user.name }} {{ v_user.phoneNum }}</p>
           <div class="so_header_place">
             <mu-select v-model="v_addressInfo" :solo="true" placeholder="请先选择收货地址">
-              <mu-option v-for="(v,i) in v_house" :key="i" :label="v" :value="v"></mu-option>
+              <mu-option v-for="(v, i) in v_house" :key="i" :label="v" :value="v"></mu-option>
             </mu-select>
           </div>
         </div>
@@ -91,16 +91,17 @@ export default {
     }
   },
   mounted () {
-    
     this.v_house = this.$store.state.house
     this.v_user = this.$store.state.user
     this.f_getStore()
+    this.f_getAddress()
     this.f_math()
   },
   methods: {
     f_getAddress () {
       const params = {
-        memberId: this.$store.state.user.id
+        memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode
       }
 
       this.$http.get("/admin/order/orders/address", { params })
@@ -356,6 +357,7 @@ export default {
               background-position: 50%;
               background-image: url('../../../assets/images/shop/tel.png');
               margin-right: 0.1rem;
+              vertical-align: super;
             }
           }
           &>div{

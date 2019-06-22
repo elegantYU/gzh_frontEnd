@@ -182,7 +182,6 @@ export default {
         this.$store.commit('setVillageCode', this.v_nav[5].orgCode)
         console.log('所有信息', obj, this.v_nav, obj)
         this.f_savePlace(obj)
-        this.f_getUserHouse()
         this.$router.push({ name: 'index' })
         return
       }
@@ -223,19 +222,6 @@ export default {
           }
         })
     },
-    async f_getUserHouse () {
-      const params = {
-        memberId: this.$store.state.user.id,
-        villageCode: this.$store.state.villageCode
-      }
-      const { data: { data: result }} = await this.$http
-        .get('/admin/member/house/all', { params })
-      
-      if (result.length) {
-        const r = result.map(v => `${v.building}${v.unit}${v.room}`)
-        this.$store.dispatch('setHouse', r)
-      }
-    }
   }
 }
 </script>

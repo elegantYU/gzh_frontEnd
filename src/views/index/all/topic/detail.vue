@@ -10,7 +10,7 @@
           <li :class="v_detail.hasCollect ? 'index_topic_icon_active' : ''" @click="f_getCollect"><i></i>{{ v_detail.collect }}</li>
         </ul>
       </div>
-      <img :src="v_detail.img && v_detail.img[0]" alt="">
+      <img :src="v_detail.img" alt="">
       <div class="td_content" v-html="v_detail.content"></div>
       <div class="td_comment">
         <div class="td_comment_header">
@@ -178,7 +178,7 @@ export default {
       } else {
         params = {
           noticeId: this.v_id,
-          type: this.v_detail.type,
+          type: 4,
           memberId: this.$store.state.user.id,
           phone: this.$store.state.user.phoneNum,
           villageCode: this.$store.state.villageCode

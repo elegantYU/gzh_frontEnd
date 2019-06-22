@@ -3,7 +3,6 @@
     <div class="index_container">
         <div class="index_swipe">
         <span class="index_map" @click="f_switchVillage"><i></i>{{ place }}</span>
-        <span class="index_notice" @click="f_viewNotice"></span>
         <mu-carousel hide-controls>
           <mu-carousel-item v-for="(v, i) in v_banner" :key="i">
             <img :src="v" alt="">
@@ -55,7 +54,7 @@
               </div>
             </div>
             <div class="index_topic_img">
-              <img :src="v.img[0]" alt="" v-if='v.img'>
+              <img :src="v.img" alt="" v-if='v.img'>
             </div>
           </li>
         </ul>
@@ -94,6 +93,7 @@ export default {
   mounted () {
     this.f_getBanner()
     this.f_getTopic()
+    this.f_getUserHouse()
   },
   methods: {
     f_switchVillage () {
@@ -141,6 +141,20 @@ export default {
         .then(res => {
           this.v_banner = res.data.data
         })
+    },
+    async f_getUserHouse () {
+      const params = {
+        memberId: this.$store.state.user.id,
+        villageCode: this.$store.state.villageCode
+      }
+      const { data: { data: result }} = await this.$http
+        .get('/admin/member/house/all', { params })
+      
+      if (result.length) {
+        const r = result.map(v => `${v.building}${v.unit}${v.room}`)
+        this.$store.dispatch('setHouse', r)
+        console.log('房屋', this.$store.state.house)
+      }
     }
   }
 }
@@ -172,7 +186,7 @@ export default {
         width: auto;
         height: 0.21rem;
         z-index: 1;
-        font-size: 0.18rem;
+        font-size: 0.22rem;
         line-height: 0.21rem;
         color: #fff;
         i{
@@ -361,8 +375,10 @@ export default {
             height: 100%;
             display: flex;
             align-items: center;
+            justify-content: center;
             img{
-              width: 100%
+              max-width: 100%;
+              max-height: 100%;
             }
           }
         }

@@ -47,7 +47,7 @@ export default {
   methods: {
     async f_getTotal () {
       const params = {
-        villageCode: "330105001009002001"
+        villageCode: this.$store.state.villageCode
       }
       const { data: { data }} = await this.$http
         .get('/admin/member/parking/lot/surplus/getSurplusParkingLotNum', { params })
@@ -56,7 +56,7 @@ export default {
     },
     async f_getSurpulsPark () {
       const params = {
-        villageCode: "330105001009002001"
+        villageCode: this.$store.state.villageCode
       }
 
       const { data: { data }} = await this.$http

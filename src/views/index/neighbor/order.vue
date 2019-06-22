@@ -151,9 +151,10 @@ export default {
         height: 100%;
         display: flex;
         align-items: center;
+        justify-content: center;
         img{
-          vertical-align: middle;
-          width: 100%;
+          max-width: 100%;
+          max-height: 100%;
         }
       }
     }

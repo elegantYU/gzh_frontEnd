@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="rep_comment" v-if="v_info.sts === 5">
-        <div class="rep_comment_area" >
+        <div class="rep_comment_area" v-if="v_btnText === '提交评价'">
           <textarea placeholder="在这里可以输入评价内容最多200个字" maxlength="200" v-model="v_info.content"></textarea>
         </div>
         <div class="rep_comment_btn" @click="f_submit">{{ v_btnText }}</div>
@@ -138,7 +138,6 @@ export default {
       this.$http
         .get('/admin/property/repair/detail', { params: { id: this.v_id } })
         .then(res => {
-          console.log(res)
           res.data.data.img = JSON.parse(res.data.data.img)
           this.v_info = Object.assign({}, res.data.data)
         })
@@ -170,7 +169,7 @@ export default {
       }, 1000)
     },
     f_submit () {
-      if (v_btnText === '立即评价') {
+      if (this.v_btnText === '立即评价') {
         this.v_btnText = '提交评价'
         return
       }
@@ -192,8 +191,10 @@ export default {
                 msg: '评价成功',
                 time: 1000
               })
+              this.v_commmentNum = 1
+              this.v_commments = []
               this.f_getComments()
-              this.f_getInfo()
+              this.f_updateCommmentStatus()
             }
           })
       } else {
@@ -204,6 +205,17 @@ export default {
         })
       }
     },
+    async f_updateCommmentStatus () {
+      const params = {
+        id: this.v_id,
+        sts: 6
+      }
+
+      const { data } = await this.$http
+        .post('/admin/property/repair/update', params)
+      
+      if (data.success) this.v_info.sts = 6
+    }
   }
 }
 </script>

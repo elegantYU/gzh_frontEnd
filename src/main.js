@@ -10,7 +10,9 @@ import touch from 'vue-directive-touch'
 import './assets/css/base.css'
 import 'muse-ui/dist/muse-ui.css'
 import router from './router/router'
+import Vconsole from 'vconsole'
 deviceRem(750)
+const vConsole = new Vconsole()
 
 Vue.prototype.$http = axios
 Vue.prototype.$wxsdk = wxsdk

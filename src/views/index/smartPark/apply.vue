@@ -40,7 +40,8 @@ export default {
   methods: {
     async f_getList () {
       const params = {
-        villageCode: '330105001009002001'
+        villageCode: this.$store.state.villageCode,
+        userId: this.$store.state.user.id
       }
 
       const { data: { data }} = await this.$http
@@ -78,9 +79,25 @@ export default {
           .get('/admin/member/parking/lot/applyParkingLot', { params })
           .then(({ data: { success }}) => {
             success && this.$toast('预约成功')
+            this.v_list = []
+            this.f_getList()
           })
       } else {
-        
+        const params = {
+          id: v.id
+        }
+
+        this.$http
+          .get('/admin/lock/unLock', { params })
+          .then(({ data }) => {
+            if (data.success) {
+              this.$toast('解锁成功')
+            } else {
+              this.$toast('解锁失败')
+            }
+            this.v_list = []
+            this.f_getList()
+          })
       }
     }
   }

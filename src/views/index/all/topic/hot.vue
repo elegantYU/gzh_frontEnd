@@ -22,7 +22,7 @@
                 </div>
               </div>
               <div class="index_topic_img">
-                <img :src="v.image" alt="">
+                <img :src="v.img" alt="">
               </div>
             </div>
           </template>
@@ -57,10 +57,11 @@ export default {
       this.$http
         .get('/admin/event/page', { params })
         .then(res => {
-          if (res.data.data.length) {
-            res.data.data.forEach(v => {
+          if (res.data.rows.length) {
+            res.data.rows.forEach(v => {
               this.v_topic.push(v) 
             })
+            console.log('所有头条', this.v_topic)
           } else {
             this.v_loadAll = true
           }
@@ -78,7 +79,7 @@ export default {
       this.$router.push({ name: 'topicDetail', query: { id: v.id }})
     },
     f_formatDate (time) {
-      return time.split(' ')[0]
+      return time && time.split(' ')[0]
     }
   }
 }
@@ -189,8 +190,10 @@ export default {
         height: 100%;
         display: flex;
         align-items: center;
+        justify-content: center;
         img{
-          width: 100%
+          max-width: 100%;
+          max-height: 100%;
         }
       }
     }

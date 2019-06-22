@@ -21,7 +21,7 @@
         <div class="lp_input">
           <label>发布人</label>
           <div class="lp_input_box">
-            <input type="text" placeholder="请输入姓名" v-model="v_form.createUserName">
+            <input type="text" placeholder="请输入姓名" readonly v-model="v_form.createUserName">
           </div>
         </div>
         <div class="lp_input">
@@ -42,14 +42,12 @@
         <div class="lp_preview">
           <div 
             class="lp_preview_list"
-            v-for="(v, i) in v_form.imgUrl"  
+            v-for="(v, i) in v_form.imgUrl"
             :key="i"
           >
             <img :src="v" alt="">
           </div>
-          <div class="lp_preview_add" @click="f_upload">
-            <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
-          </div>
+          <div class="lp_preview_add" @click="f_upload"></div>
         </div>
       </div>
       <div class="lp_submit" @click="f_submit">发布</div>
@@ -82,6 +80,9 @@ export default {
       return this.$store.state.village
     }
   },
+  mounted () {
+    this.v_form.createUserName = this.$store.state.user.name
+  },
   methods: {
     f_upload (e) {
       if (this.v_form.imgUrl.length > 2) {
@@ -99,7 +100,7 @@ export default {
                 this.$http
                   .post('/admin/file/upload2', form)
                   .then(({data: { data }}) => {
-                    this.v_from.imgUrl.push(data)
+                    this.v_form.imgUrl.push(data)
                   })
               })
           })
@@ -117,7 +118,7 @@ export default {
         this.$toast('请完善基本信息')
         return
       }
-
+      console.log('环境秩序', params)
       this.$http
         .post('/admin/lost/addLostFound', params)
         .then(({data: {success}}) => {

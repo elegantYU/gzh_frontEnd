@@ -2,7 +2,7 @@
   <div class="shop_wrapper">
     <div class="shop_container">
       <div class="shop_header">
-        <img src="https://w.wallhaven.cc/full/j5/wallhaven-j5kkgp.jpg" alt="">
+        <img src="../../../assets/images/shop/banner.png" alt="">
         <div class="shop_nav">
           <div class="shop_nav_search">
             <i @click="f_search"></i>
@@ -48,6 +48,7 @@ export default {
 .shop_wrapper{
   background-color: #efeff4;
   height: 100%;
+  overflow: auto;
   .shop_container{
     background-color: #efeff4;
     padding-bottom: 1.2rem;

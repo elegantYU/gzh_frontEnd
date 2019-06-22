@@ -9,7 +9,7 @@
         <p>{{ v_detail.keyword }}</p>
         <b>￥ {{ v_detail.mallPcPrice }}</b>
         <div class="sd_header_shop clearfix">
-          <span class="sd_header_shop_tag" v-if="v_detail.name2 !== '无促销'">{{ v_detail.name2 }}</span>
+          <span class="sd_header_shop_tag" v-if="v_detail.name2">{{ v_detail.name2 }}</span>
           <div class="sd_header_shopcar_none" v-if="!v_num" @click="f_addNum"></div>
           <div class="sd_header_shopcar_add" v-else>
             <i @click="f_cutNum">-</i><span>{{ v_num }}</span><i @click="f_addNum">+</i>
@@ -97,7 +97,7 @@ export default {
         this.v_blue = true
     },
     f_moveIndex () {
-      this.$router.push({ name: 'i  ndex' })
+      this.$router.push({ name: 'index' })
     },
     f_moveCar () {
       this.$router.push({ name: 'shopCar' })

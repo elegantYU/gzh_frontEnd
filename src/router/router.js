@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import wxsdk from '../utils/wxsdk'
+// import { isIos } from '../utils/utils'
 
 Vue.use(Router)
 const baseUrl = 'http://zjphtech.com'

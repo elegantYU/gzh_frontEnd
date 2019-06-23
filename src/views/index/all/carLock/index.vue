@@ -63,7 +63,8 @@ export default {
         return
       }
       const params = {
-        id: this.v_park.id
+        id: this.v_park.id,
+        type: 1
       }
 
       const { data: { success }} = await this.$http

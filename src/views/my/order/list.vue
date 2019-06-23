@@ -27,16 +27,19 @@
               </div>
               <div class="mo_item_sub">
                 <span>共计{{ v.productNum }}件商品</span>
-                <span>合计：￥{{ v.moneyProduct }}</span>
+                <span>合计：￥{{ v.totalPrice }}</span>
               </div>
               <div class="mo_item_footer">
-                <div class="mo_item_btn" v-show="v.orderState < 4" @click="f_cancel(v)">
+                <div class="mo_item_btn active" v-show="v.orderState === 2" @click="f_updateState(v)">
+                  确认收货
+                </div>
+                <div class="mo_item_btn" v-show="v.orderState < 2" @click="f_cancel(v)">
                   取消订单
                 </div>
                 <div class="mo_item_btn" v-show="v.orderState > 3" @click="f_delete(v)">
                   删除订单
                 </div>
-                <div class="mo_item_btn active" v-show="v.orderState === 4" @click="f_comment">
+                <div class="mo_item_btn active" v-show="false" @click="f_comment(v)">
                   评价
                 </div>
               </div>
@@ -92,9 +95,6 @@ export default {
           return '进行中'
           break
         case 2:
-          return '待发货'
-          break
-        case 3:
           return '待收货'
           break
         case 4:
@@ -139,7 +139,19 @@ export default {
       }
     },
     f_comment (v) {
-      this.$router.push({ name: 'orderList', query: { orderSn: v.orderSn, orderState: v.orderState } })
+      this.$router.push({ name: 'orderList', query: { orderSn: v.orderSn, orderState: v.orderState, item: v } })
+    },
+    // 更新订单状态
+    async f_updateState (v) {
+      v.orderState = 4
+      const params = {
+        orderSn: v.orderSn,
+        state: 4
+      }
+
+      const { data } = await this.$http
+        .get('/admin/order/orders/updateState', { params })
+
     }
   }
 }
@@ -251,13 +263,16 @@ export default {
         }
       }
       .mo_item_sub{
-        height: 0.32rem;
+        padding: 0 0.2rem;
+        height: 0.4rem;
         margin-bottom: 0.3rem;
         font-size: 0.24rem;
         color: #282828;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        span{
+          float: right;
+          line-height: 0.6rem;
+          margin-left: 0.25rem;
+        }
       }
       .mo_item_footer{
         display: flex;

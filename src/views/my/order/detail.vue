@@ -5,12 +5,12 @@
         <i></i>
         <div class="mod_header_detail">
           <p>{{ v_user.name }} <span>{{ v_user.phoneNum }}</span></p>
-          <b>{{ firModel.addressInfo }}</b>
+          <b>{{ v_item.addressInfo }}</b>
         </div>
       </div>
       <div class="mod_content">
         <div class="mod_content_header">
-          <p @click="f_moveStore"><i></i>xax大家奥斯卡了大师级 ></p>
+          <p @click="f_moveStore"><i></i>{{ v_item.sellerName }} ></p>
           <span>{{ status }}</span>
         </div>
         <div class="mo_item_content" v-for="(v, i) in v_list" :key="i">
@@ -30,22 +30,22 @@
           </div>
         </div>
         <div class="mo_item_sub">
-          <span>共计{{ firModel.productNum }}件商品</span>
-          <span>合计：￥{{ firModel.moneyProduct }}</span>
+          <span>共计{{ v_item.productNum }}件商品</span>
+          <span>合计：￥{{ v_item.totalPrice }}</span>
         </div>
         <div class="mo_item_footer">
-          <div class="mo_item_btn" v-show="v_orderState < 4" @click="f_cancel">
+          <div class="mo_item_btn" v-show="v_orderState < 2" @click="f_cancel">
             取消订单
           </div>
           <div class="mo_item_btn" v-show="v_orderState > 3" @click="f_delete">
             删除订单
           </div>
-          <div class="mo_item_btn active" v-show="v_orderState === 4" @click="f_openComment">
+          <div class="mo_item_btn active" v-show="false" @click="f_openComment">
             评价
           </div>
         </div>
       </div>
-      <div class="rep_commentList">
+      <div class="rep_commentList" v-show="false">
         <p>评论</p>
         <mu-load-more :loading="v_loading" @load='f_loadComments' :loaded-all="v_loadAll">
           <mu-list>
@@ -91,18 +91,12 @@ export default {
       v_comments: [],
       v_comment: '',
       v_commmentNum: 1,
+      v_item: {},
       v_loading: false,
       v_loadAll: false,
       v_switch: false,
       v_noComment: false
     }
-  },
-  mounted () {
-    this.v_id = this.$route.query.orderSn
-    this.v_orderState = this.$route.query.orderState
-    this.v_user = this.$store.state.user
-    this.f_getDetail()
-    this.f_getComments()
   },
   computed: {
     firModel() {
@@ -114,9 +108,6 @@ export default {
           return '进行中'
           break
         case 2:
-          return '待发货'
-          break
-        case 3:
           return '待收货'
           break
         case 4:
@@ -131,6 +122,15 @@ export default {
       }
     }
   },
+  mounted () {
+    this.v_id = this.$route.query.orderSn
+    this.v_orderState = this.$route.query.orderState
+    this.v_user = this.$store.state.user
+    this.v_item = Object.assign({}, this.$route.query.item)
+    console.log('详情', this.v_item)
+    this.f_getDetail()
+    this.f_getComments()
+  },
   methods: {
     async f_getDetail () {
       const params = {
@@ -141,6 +141,7 @@ export default {
         .get('/admin/order/orders/detail', { params })
 
       this.v_list.push(...result)
+      console.log('list', this.v_list)
     },
     f_moveStore () {
       return false
@@ -265,6 +266,7 @@ export default {
           height: 0.6rem;
           color: #000;
           line-height: 0.6rem;
+          font-weight: normal;
         }
       }
     }
@@ -473,7 +475,7 @@ export default {
         width: 100%;
         height: 0.4rem;
         line-height: 0.4rem;
-        flex-direction: column-reverse;
+        flex-direction: row-reverse;
         span{
           font-size: 0.26rem;
           line-height: 0.4rem;

@@ -282,6 +282,7 @@ export default {
     text-align: center;
     line-height: 0.8rem;
     color: #ffffff;
+    font-size: 0.3rem;
   }
   .visitor-password-cont{
     width: 100vw;
@@ -290,6 +291,7 @@ export default {
     text-align: center;
     line-height: 2rem;
     color: rgb(178,178,178);
+    font-size: 0.3rem;
   }
   .nulldiv{
     height: 2rem;

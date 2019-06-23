@@ -43,7 +43,7 @@
         </div>
         <div class="so_footer_last">
           <div>
-            <a :href="'tel' + v_seller.phone">
+            <a :href="'tel:' + (v_seller.phone)">
               <i></i>
             </a>
             <div>
@@ -128,6 +128,7 @@ export default {
          })
       })
       this.v_origin.push(...orders)
+      console.log(this.v_origin)
     },
     async f_get (v) {
       const params = {
@@ -136,11 +137,12 @@ export default {
 
       const { data: { data: result }} = await this.$http
         .get('/admin/seller/manage/info', { params })
-        if (Object.keys(result).length > 0){
-          this.v_seller = Object.assign({}, result)
-        }else {
-          this.v_seller = { phone:'',sellerName:''}
-        }
+        
+      if (Object.keys(result).length > 0){
+        this.v_seller = Object.assign({}, result)
+      }else {
+        this.v_seller = { phone:'',sellerName:''}
+      }
     },
     f_submit () {
       if (this.v_orderState === 1 && this.v_addressInfo) {
@@ -247,6 +249,7 @@ export default {
               background-image: url('../../../assets/images/shop/store.png');
               margin-right: 0.2rem;
               vertical-align: bottom;
+              font-style: normal;
             }
           }
           span{

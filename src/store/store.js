@@ -21,12 +21,11 @@ export default new Vuex.Store({
     setVillageCode: (state, str) => (state.villageCode = str),
     setVillage: (state, str) => (state.village = str),
     setCurrentPlace: (state, obj) => (state.currentPlace = Object.assign({}, obj)),
-    setHouse: (state, arr) => (state.house.push(...arr)),
+    setHouse: (state, arr) => (state.house = arr.slice()),
     neighborRouter: (state, r) => (state.neighbor.router = r),
     lostFoundRouter: (state, r) => (state.lostFound.router = r),
     setOrderParams: (state, arr) => {
-      state.orderParams = []
-      state.orderParams.push(...arr)
+      state.orderParams = arr.slice(0)
     }
   },
   actions: {

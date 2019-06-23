@@ -327,14 +327,15 @@ export default {
               text-align: left;
             }
             .sc_list_count{
-              height: 0.3rem;
+              height: 0.4rem;
               border: 1px solid #aeaeae;
               font-size: 0.24rem;
               i{
                 padding: 0 0.15rem;
-                line-height: 0.3rem;
+                line-height: 0.4rem;
                 color: #666666;
                 cursor: pointer;
+                font-style: normal;
               }
               span{
                 padding: 0 0.2rem;

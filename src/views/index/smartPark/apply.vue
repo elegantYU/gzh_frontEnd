@@ -84,7 +84,8 @@ export default {
           })
       } else {
         const params = {
-          id: v.id
+          id: v.id,
+          type: 2
         }
 
         this.$http

@@ -107,10 +107,12 @@ export default {
   },
   computed: {
     orderTime: function () {
-      const s = this.v_info.startTime.replace(this.v_info.startTime.substr(this.v_info.startTime.length - 3), '')
-      const e = this.v_info.endTime.replace(this.v_info.endTime.substr(this.v_info.endTime.length - 3), '')
-      let str = `${s} ~ ${e.split(' ')[1]}`
-      return str
+      if (this.v_info.startTime) {
+        const s =  this.v_info.startTime.replace(this.v_info.startTime.substr(this.v_info.startTime.length - 3), '')
+        const e =  this.v_info.endTime.replace(this.v_info.endTime.substr(this.v_info.endTime.length - 3), '')
+        let str = `${s} ~ ${e.split(' ')[1]}`
+        return str
+      }
     },
     status: function () {
       switch (this.v_info.sts) {

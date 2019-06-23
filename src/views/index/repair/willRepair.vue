@@ -148,15 +148,14 @@ export default {
       let startTime = new Date(start).toLocaleTimeString('chinese', { hour12: false })
       if (now && start) {
         let date = dateFormat(start)
-        let endStamp = new Date(now).getTime()
         let endTime = new Date(now).toLocaleTimeString('chinese', { hour12: false })
-        if (endStamp > new Date(start).getTime()) {
+        let endStamp =new Date(`${date} ${endTime}`).getTime()
+        if (endStamp < new Date(start).getTime()) {
           this.v_from.endTime = this.v_from.startTime
           this.v_from.startTime = `${date} ${endTime}`
         } else {
           this.v_from.endTime = `${date} ${endTime}`
         }
-        // console.log('结束时间', new Date(start).getTime(),endStamp);
       } else {
         this.v_from.endTime = this.v_end = ''
         this.$toast({

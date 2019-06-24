@@ -94,23 +94,25 @@ export default {
         float: left;
         i{
           background-image: url('../assets/images/tabs/tab_home.png');
+          background-size: 0.5rem 0.5rem;
         }
-        &.tab_active{
-          i{
-            background-image: url('../assets/images/tabs/tab_home_active.png');
-          }
-        }
+        /*&.tab_active{*/
+        /*  i{*/
+        /*    background-image: url('../assets/images/tabs/tab_home_active.png');*/
+        /*  }*/
+        /*}*/
       }
       &.tab_my{
         float: right;
         i{
           background-image: url('../assets/images/tabs/tab_my.png');
+          background-size: 0.5rem 0.5rem;
         }
-        &.tab_active{
-          i{
-            background-image: url('../assets/images/tabs/tab_my_active.png');
-          }
-        }
+        /*&.tab_active{*/
+        /*  i{*/
+        /*    background-image: url('../assets/images/tabs/tab_my_active.png');*/
+        /*  }*/
+        /*}*/
       }
     }
     .tab_add{
@@ -124,11 +126,10 @@ export default {
       border-radius: 50%;
       box-sizing: border-box;
       border: 8px solid #fff;
-      background-color: #f73476;
       background-image: url('../assets/images/tabs/tab_add.png');
       background-repeat: no-repeat;
       background-position: center center;
-      background-size: 0.5rem 0.5rem;
+      background-size: 0.8rem 0.8rem;
     }
   }
 }

@@ -70,7 +70,7 @@ export default {
             this.$toast(res.data.msg)
           }
         })
-      
+
       // 下次进入重新授权
       localStorage.clear()
     },
@@ -137,6 +137,7 @@ export default {
         width: 4.9rem;
         height: 100%;
         font-size: 0.28rem;
+        border: none;
       }
       i{
         display: inline-block;

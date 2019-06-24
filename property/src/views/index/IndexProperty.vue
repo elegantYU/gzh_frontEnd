@@ -225,8 +225,8 @@ export default {
               text-align: center;
               cursor: pointer;
               img{
-                width: 0.88rem;
-                height: 0.82rem;
+                width: 1rem;
+                height:0.82rem;
                 margin-bottom: 0.22rem;
               }
               span{

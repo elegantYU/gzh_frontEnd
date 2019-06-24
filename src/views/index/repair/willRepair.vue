@@ -65,8 +65,7 @@
             button
             v-for="(v, i) in v_user.house"
             :key="i"
-            @click="f_chooseHouse(v)"
-          >
+          @click="f_chooseHouse(v)">
             <mu-list-item-title>{{ v }}</mu-list-item-title>
           </mu-list-item>
         </mu-list>

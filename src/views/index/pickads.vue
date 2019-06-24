@@ -66,7 +66,7 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => {
       if (from.name === 'login') {
-        const params = { memberId: vm.$store.state.user.id } 
+        const params = { memberId: vm.$store.state.user.id }
         vm.$http
           .get('/admin/member/house/cache/get', { params })
           .then(({ data: { data: res }}) => {
@@ -74,7 +74,7 @@ export default {
               vm.$store.commit('setCurrentPlace', res)
               vm.$store.commit('setVillage', res.village)
               vm.$store.commit('setVillageCode', res.villageCode)
-              vm.$router.push({ name: 'index' })
+              vm.$router.push({ name: 'indexProperty' })
             }
           })
       }
@@ -96,7 +96,7 @@ export default {
       }
       const { data: { data: res }} = await this.$http
         .get('/obtain/config/linkage', { params })
-      
+
       // 初始化 填满左右
       this.v_left = [...res]
       this.v_provice = [...res]
@@ -129,23 +129,23 @@ export default {
         configCode: type,
         orgCode: v.id
       }
-      
+
       const { data: { data: res }} = await this.$http
         .get('/obtain/config/linkage', { params })
-      
+
       this.v_current = [...res]
       switch (this.v_activeIndex) {
         case 0:
           this.v_city = [...res]
           break
         case 1:
-          this.v_area = [...res]          
+          this.v_area = [...res]
           break
         case 2:
-          this.v_street = [...res]          
+          this.v_street = [...res]
           break
         case 3:
-          this.v_community = [...res]          
+          this.v_community = [...res]
           break
         case 4:
           this.v_residentia = [...res]

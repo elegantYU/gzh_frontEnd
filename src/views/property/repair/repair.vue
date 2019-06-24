@@ -51,22 +51,23 @@ export default {
 <style scoped lang="scss">
 .repair{
   height: 100%;
+  background-color: #efeff4;
   position: relative;
   .repair-tab{
     display: flex;
     width: 90%;
-    margin: 0.3rem auto 0.2rem;
+    margin: auto;
     .repair-tab_item{
       width: 1.2rem;
       height: 0.6rem;
       line-height: 0.6rem;
-      font-size: 0.25rem;
-      border: 0.02rem solid black;
-      border-radius: 0.3rem;
-      margin: auto;
+      font-size: 0.28rem;
+      border-radius: 0.1rem;
+      border: 0.02rem solid white;
+      background-color: white;
+      margin: 0.2rem auto;
       &.active{
-        background-color: #58c3fb;
-        color: #ffffff;
+        color: #58c3fb;
       }
     }
   }

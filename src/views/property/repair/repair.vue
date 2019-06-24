@@ -13,35 +13,26 @@
 
 <script>
 import Whole from './Whole.vue'
-import Confirmed from './Confirmed.vue'
-import Processed from './Processed.vue'
-import Evaluated from './Evaluated.vue'
-import Completed from './Completed.vue'
 
 export default {
   data () {
     return {
       v_tabs: [
-        { name: '全部', component: 'Whole', active: true },
-        { name: '待确认', component: 'Confirmed', active: false },
-        { name: '待处理', component: 'Processed', active: false },
-        { name: '待评价', component: 'Evaluated', active: false },
-        { name: '已完成', component: 'Completed', active: false }
+        { name: '全部', active: true },
+        { name: '待确认', active: false },
+        { name: '待处理', active: false },
+        { name: '待评价', active: false },
+        { name: '已完成', active: false }
       ],
       v_component: 'Whole'
     }
   },
   components: {
-    Whole,
-    Confirmed,
-    Processed,
-    Evaluated,
-    Completed
+    Whole
   },
   methods: {
     f_changeTabs (v) {
       this.v_tabs.map(v => v.active = false)
-      this.v_component = v.component
       v.active = true
     }
   }

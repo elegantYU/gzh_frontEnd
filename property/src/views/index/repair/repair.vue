@@ -6,7 +6,7 @@
         </div>
       </div>
       <div class="repair_router_wrapper">
-        <component :is="v_component"></component>
+        <component :is="v_component" :sts="v_status"></component>
       </div>
     </div>
 </template>
@@ -18,13 +18,14 @@ export default {
   data () {
     return {
       v_tabs: [
-        { name: '全部', active: true },
-        { name: '待确认', active: false },
-        { name: '待处理', active: false },
-        { name: '待评价', active: false },
-        { name: '已完成', active: false }
+        { name: '全部', active: true, status: 0 },
+        { name: '待确认', active: false, status: 1 },
+        { name: '待处理', active: false, status: 4 },
+        { name: '待评价', active: false, status: 5 },
+        { name: '已完成', active: false, status: 6 }
       ],
-      v_component: 'Whole'
+      v_component: 'Whole',
+      v_status: 0
     }
   },
   components: {
@@ -34,6 +35,7 @@ export default {
     f_changeTabs (v) {
       this.v_tabs.map(v => v.active = false)
       v.active = true
+      this.v_status = v.status
     }
   }
 }
@@ -61,6 +63,9 @@ export default {
         color: #58c3fb;
       }
     }
+  }
+  .repair_router_wrapper{
+    height: 100%;
   }
 }
 </style>

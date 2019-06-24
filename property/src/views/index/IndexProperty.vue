@@ -3,7 +3,6 @@
     <div class="index_container">
       <div class="index_swipe">
         <span class="index_map" @click="f_switchVillage"><i></i>{{ place }}</span>
-        <span class="index_notice" @click="f_viewNotice"></span>
         <mu-carousel hide-controls>
           <mu-carousel-item v-for="(v, i) in v_banner" :key="i">
             <img :src="v" alt="">
@@ -71,15 +70,15 @@ export default {
       v_banner: [],
       v_tools1: [
         { msg: '物业报修', path: 'repair', icon: require('../../assets/images/index/index_wy.png') },
-        { msg: '预警事件', path: '', icon: require('../../assets/images/all/2.png') },
-        { msg: '邻里共享', path: '', icon: require('../../assets/images/index/index_fk.png') },
-        { msg: '失物招领', path: '', icon: require('../../assets/images/index/index_zh.png') },
+        { msg: '预警事件', path: '', icon: require('../../assets/images/index/index_yj.png') },
+        { msg: '邻里共享', path: '', icon: require('../../assets/images/index/index_ll.png') },
+        { msg: '失物招领', path: '', icon: require('../../assets/images/index/index_sw.png') },
       ],
       v_tools2: [
-        { msg: '智慧停车', path: '', icon: require('../../assets/images/index/index_sw.png') },
-        { msg: '停车服务', path: '', icon: require('../../assets/images/index/index_ll.png') },
-        { msg: '宠物管理', path: '', icon: require('../../assets/images/index/index_sh.png') },
-        { msg: '小区超市', path: '', icon: require('../../assets/images/index/index_qb.png') }
+        { msg: '智慧停车', path: '', icon: require('../../assets/images/index/index_zh.png') },
+        { msg: '停车服务', path: '', icon: require('../../assets/images/index/index_tc.png') },
+        { msg: '宠物管理', path: '', icon: require('../../assets/images/index/index_cw.png') },
+        { msg: '小区超市', path: '', icon: require('../../assets/images/index/index_xq.png') }
       ],
       v_topic: [],
       v_noHouse: false,
@@ -187,22 +186,6 @@ export default {
             vertical-align: middle;
           }
         }
-        .index_notice{
-          position: absolute;
-          top: 0.1rem;
-          right: 0.3rem;
-          width: 0.23rem;
-          height: 0.26rem;
-          z-index: 1;
-          background-image: url('../../assets/images/index/index_notice.png');
-          background-repeat: no-repeat;
-          background-size: contain;
-          background-position: center center;
-          cursor: pointer;
-          &.index_noticed{
-            background-image: url('../../assets/images/index/index_noticed.png');
-          }
-        }
       }
       .index_tools{
         h5{
@@ -225,8 +208,7 @@ export default {
               text-align: center;
               cursor: pointer;
               img{
-                width: 1rem;
-                height:0.82rem;
+                width: 0.52rem;
                 margin-bottom: 0.22rem;
               }
               span{

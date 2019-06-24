@@ -26,7 +26,7 @@ const router = new Router({
     // 发布
     { path: '/publish', name: 'publish', meta: { title: '发布' }, component: () => import('../views/index/publish.vue') },
     // 报修详情
-    { path: '/home/repair/details', name: 'repairDetails', meta: { title: '详情页' }, component: () => import('../views/index/repair/repairDetails.vue') },
+    { path: '/home/repair/details', name: 'repairDetail', meta: { title: '详情页' }, component: () => import('../views/index/repair/repairDetail.vue') },
     // 首页头条详情
     { path: '/topicProperty/detailProperty', name: 'detailProperty', meta: { title: '详情' }, component: () => import('../views/index/topicProperty/detailProperty.vue') },
     // 登录注册

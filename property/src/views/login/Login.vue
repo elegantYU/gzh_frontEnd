@@ -4,7 +4,7 @@
     <div class="login_content">
       <div class="login_input">
         <span></span>
-        <input type="text" placeholder="请输入手机号" maxlength="11" v-model="v_phone">
+        <input type="text" placeholder="请输入用户名" v-model="v_name">
       </div>
       <div class="login_input">
         <span></span>
@@ -27,7 +27,7 @@ export default {
   name: 'Login',
   data () {
     return {
-      v_phone: '',
+      v_name: '',
       v_password: '',
       v_switch: false,
       v_open: false
@@ -36,7 +36,7 @@ export default {
   methods: {
     f_login () {
       let params = {
-        phoneNum: this.v_phone,
+        name: this.v_name,
         password: this.v_password
       }
 

@@ -37,12 +37,24 @@ export default {
       v_loadAll: true
     }
   },
+  props: {
+    sts: {
+      type: Number
+    }
+  },
+  watch: {
+    'sts' () {
+      this.v_repairList = []
+      this.f_getList()
+    }
+  },
   mounted () {
     this.f_getList()
   },
   methods: {
-    f_detail () {
-      this.$router.push({name:'repairDetails'})
+    f_detail (v) {
+      this.$store.commit('setCurrentRepair', v)
+      this.$router.push({name:'repairDetail'})
     },
     f_formatSts (v) {
       switch (v.sts) {
@@ -61,17 +73,15 @@ export default {
           break
       }
     },
-    f_moveRepair () {
-      this.$router.push({ name: 'repairDetails' })
-    },
     f_getList () {
       this.$http
         .get('/admin/property/repair/list', {
           params: {
-            villageCode: this.$store.state.villageCode,
-            createUserId: this.$store.state.user.id,
+            villageCode: 330105001001004, //this.$store.state.villageCode
+            createUserId: 4906, // this.$store.state.user.id
             pageNum: this.v_listNum,
-            pageSize: 10
+            pageSize: 10,
+            status: this.sts ? this.sts : '' 
           }
         })
         .then(res => {
@@ -88,6 +98,7 @@ export default {
             }
             this.v_repairList.push(v)
           })
+          console.log(this.v_repairList)
         })
     },
     f_load () {
@@ -104,44 +115,55 @@ export default {
 
 <style scoped lang="scss">
 .whole{
+  height: 100%;
+  background-color: #efeff4;
   .whole_list{
-    display: flex;
-    height: 1.6rem;
-    background-color: white;
-    .whole_list_cont{
+    li{
+      display: flex;
+      height: 1.6rem;
       padding: 0.1rem 0.2rem;
-      .whole_list_cont_tit{
-        text-align: left;
-        font-size: 0.3rem;
-        margin-bottom: 0.1rem;
-        font-weight: bold;
-      }
-      .whole_list_cont_subject{
-        width: 4.7rem;
-        height: 0.5rem;
-        font-size: 0.27rem;
-        overflow: hidden;
-        text-align: left;
-        -webkit-line-clamp: 2;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        margin-bottom: 0.2rem;
-      }
-      .whole_list_cont_date{
-        display: flex;
-        width: 4.7rem;
-        text-align: left;
-        span{
-          margin-left: auto;
+      margin-bottom: 0.2rem;
+      background-color: white;
+      .whole_list_cont{
+        flex: 1;
+        padding-right: 0.2rem;
+        .whole_list_cont_tit{
+          text-align: left;
+          font-size: 0.3rem;
+          margin-bottom: 0.1rem;
+          font-weight: bold;
+        }
+        .whole_list_cont_subject{
+          width: 100%;
+          height: 0.5rem;
+          color: #a9a9a9;
+          font-size: 0.27rem;
+          overflow: hidden;
+          text-align: left;
+          -webkit-line-clamp: 2;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          margin-bottom: 0.2rem;
+        }
+        .whole_list_cont_date{
+          display: flex;
+          width: 100%;
+          text-align: left;
+          span{
+            margin-left: auto;
+          }
         }
       }
-    }
-    .whole_list_img{
-      width: 1.4rem;
-      height: 1.4rem;
-      background-color: black;
-      margin: 0.1rem 0.3rem 0;
+      .whole_list_img{
+        width: 1.4rem;
+        height: 1.4rem;
+        background-color: black;
+        img{
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
     }
   }
 }

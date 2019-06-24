@@ -13,7 +13,8 @@ export default new Vuex.Store({
     house: [],
     neighbor: { router: '' },
     lostFound: { router: '' },
-    orderParams: [] // 订单参数
+    orderParams: [], // 订单参数,
+    currentRepair: {}
   },
   mutations: {
     setWxInfo: (state, obj) => (state.wxInfo = Object.assign({}, obj)),
@@ -26,7 +27,8 @@ export default new Vuex.Store({
     lostFoundRouter: (state, r) => (state.lostFound.router = r),
     setOrderParams: (state, arr) => {
       state.orderParams = arr.slice(0)
-    }
+    },
+    setCurrentRepair: (state, obj) => (state.currentRepair = Object.assign({}, obj))
   },
   actions: {
     setUser: ({ commit }, obj) => commit('setUser', obj),

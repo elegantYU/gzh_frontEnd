@@ -34,11 +34,13 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    next(vm => {
-      if (vm.$store.state.user.id) {
-        vm.$router.push({ name: 'index' })
-      }
-    })
+    // next(vm => {
+    //   if (vm.$store.state.user.id) {
+    //     vm.$router.push({ name: 'index' })
+    //   }
+    // })
+
+    next()
   },
   methods: {
     f_login () {

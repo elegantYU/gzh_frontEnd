@@ -116,6 +116,9 @@ export default {
          h6{
             font-size: 0.34rem;
             margin-bottom: 0.05rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
          }
          p{
             color: #a9a9a9;

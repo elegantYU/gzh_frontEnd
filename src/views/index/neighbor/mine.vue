@@ -135,6 +135,9 @@ export default {
         text-align: left;
         position: relative;
          h6{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             font-size: 0.34rem;
             margin-bottom: 0.05rem;
          }

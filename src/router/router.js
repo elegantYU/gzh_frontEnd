@@ -16,8 +16,14 @@ const router = new Router({
       component: () => import('../views/Home.vue'),
       children: [
         { path: '/home/index', name: 'index', meta: { title: '首页' }, component: () => import('../views/index/Index.vue') },
+        // 物业版首页
+        { path: '/home/indexProperty', name: 'indexProperty', meta: { title: '物业首页' }, component: () => import('../views/property/IndexProperty.vue') },
+        // 街道版首页
+        { path: '/home/indexStreet', name: 'indexStreet', meta: { title: '街道首页' }, component: () => import('../views/street/indexStreet.vue') },
         // 报修
         { path: '/home/myrepair', name: 'myRepair', meta: { title: '我的报修' }, component: () => import('../views/index/repair/myRepair.vue') },
+        // 物业版报修
+        { path: '/home/repair', name: 'repair', meta: { title: '物业维修' }, component: () => import('../views/property/repair/repair.vue') },
         // 访客
         { path: '/home/visitorpass', name: 'visitorpass', meta: { title: '访客通行' }, component: () => import('../views/index/visitorPass/visitorpass.vue') },
         // 我的
@@ -47,6 +53,10 @@ const router = new Router({
         { path: '/home/all', name: 'all', meta: { title: '我的' }, component: () => import('../views/index/all/index.vue') },
         // 头条
         { path: '/home/topic', name: 'topic', meta: { title: '小区头条' }, component: () => import('../views/index/all/topic/index.vue') },
+        // 物业版小区头条
+        { path: '/home/topicProperty', name: 'topicProperty', meta: { title: '小区头条' }, component: () => import('../views/property/topicProperty/index.vue') },
+        // 街道版小区头条
+        { path: '/home/topicStreet', name: 'topicStreet', meta: { title: '小区头条' }, component: () => import('../views/street/topicStreet/index.vue') },
         // 联系物业
         { path: '/home/contact', name: 'contact', meta: { title: '联系物业' }, component: () => import('../views/index/all/contactProperty/contact.vue') }
       ]
@@ -62,6 +72,8 @@ const router = new Router({
     // 环境秩序 详情页面
     { path: '/godetail', name: 'godetail', meta: { title: '详情页面' }, component: () => import('../views/index/all/environment/detail.vue') },
     { path: '/repairdetail/:id', name: 'repairDetail', meta: { title: '报修详情' }, component: () => import('../views/index/repair/repairDetail.vue') },
+    // 物业版报修详情
+    { path: '/home/repair/details', name: 'repairDetails', meta: { title: '详情页' }, component: () => import('../views/property/repair/repairDetails.vue') },
     // 失物招领 我要发布
     { path: '/lostFound/publish', name: 'lfPublish', meta: { title: '我要发布' }, component: () => import('../views/index/lostFound/publish.vue') },
     { path: '/lostFound/detail', name: 'lfDetail', meta: { title: '详情页' }, component: () => import('../views/index/lostFound/detail.vue') },
@@ -76,6 +88,10 @@ const router = new Router({
     { path: '/topic/detail', name: 'topicDetail', meta: { title: '详情' }, component: () => import('../views/index/all/topic/detail.vue') },
     { path: '/topic/otherDetail', name: 'noticeDetail', meta: { title: '详情' }, component: () => import('../views/index/all/topic/policyDetail.vue') },
     { path: '/topic/policydetail', name: 'policyDetail', meta: { title: '详情' }, component: () => import('../views/index/all/topic/policyDetail.vue') },
+    // 物业版头条
+    { path: '/topicProperty/detailProperty', name: 'detailProperty', meta: { title: '详情' }, component: () => import('../views/property/topicProperty/detailProperty.vue') },
+    // 街道办头条
+    { path: '/topicStreet/detailStreet', name: 'detailStreet', meta: { title: '详情' }, component: () => import('../views/street/topicStreet/detailStreet.vue') },
     // 超市
     { path: '/shop/detail', name: 'shopItemDetail', meta: { title: '商品详情' }, component: () => import('../views/index/shop/detail.vue') },
     { path: '/shop/car', name: 'shopCar', meta: { title: '购物车' }, component: () => import('../views/index/shop/shopCar.vue') },

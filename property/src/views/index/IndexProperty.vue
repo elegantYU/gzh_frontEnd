@@ -70,7 +70,7 @@ export default {
       v_banner: [],
       v_tools1: [
         { msg: '物业报修', path: 'repair', icon: require('../../assets/images/index/index_wy.png') },
-        { msg: '预警事件', path: '', icon: require('../../assets/images/index/index_yj.png') },
+        { msg: '预警事件', path: 'earlyWarning', icon: require('../../assets/images/index/index_yj.png') },
         { msg: '邻里共享', path: '', icon: require('../../assets/images/index/index_ll.png') },
         { msg: '失物招领', path: '', icon: require('../../assets/images/index/index_sw.png') },
       ],

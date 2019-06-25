@@ -38,7 +38,7 @@ export default {
     .affairs-cont-lie{
       display: flex;
       margin-top: 0.2rem;
-      font-size: 0.2rem;
+      font-size: 0.3rem;
     }
   }
 }

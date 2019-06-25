@@ -17,6 +17,8 @@ const router = new Router({
         { path: '/home/index', name: 'index', meta: { title: '物业首页' }, component: () => import('../views/index/IndexProperty.vue') },
         // 报修
         { path: '/home/repair', name: 'repair', meta: { title: '物业维修' }, component: () => import('../views/index/repair/repair.vue') },
+        // 预警
+        { path:'/home/earlyWarning', name: 'earlyWarning', meta: { title: '预警处理'}, component: () => import('../views/index/earlyWarning/index.vue' )},
         // 小区头条
         { path: '/home/topicProperty', name: 'topicProperty', meta: { title: '小区头条' }, component: () => import('../views/index/topicProperty/index.vue') },
       ]
@@ -27,6 +29,8 @@ const router = new Router({
     { path: '/publish', name: 'publish', meta: { title: '发布' }, component: () => import('../views/index/publish.vue') },
     // 报修详情
     { path: '/home/repair/details', name: 'repairDetail', meta: { title: '详情页' }, component: () => import('../views/index/repair/repairDetail.vue') },
+    // 预警事件
+    { path: '/home/earlyWarning/detail', name:'earlyDetail', meta: { title: '详情页'}, component: () => import('../views/index/earlyWarning/earlyDetail.vue')},
     // 首页头条详情
     { path: '/topicProperty/detailProperty', name: 'detailProperty', meta: { title: '详情' }, component: () => import('../views/index/topicProperty/detailProperty.vue') },
     // 登录注册

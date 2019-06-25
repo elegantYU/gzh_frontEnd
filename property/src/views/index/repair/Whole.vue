@@ -13,7 +13,7 @@
                   <div class="whole_list_cont_subject">{{ v.detail }}</div>
                   <div class="whole_list_cont_date">
                     <div>{{ v.createTime }}</div>
-                    <span  :class="v.sts === 3 ? 'myRep_status_warn' : v.sts === 6 ? 'myRep_status_success' : ''">{{ f_formatSts(v) }}</span>
+                    <span  class="myRep_detail_status" :class="v.sts === 3 ? 'myRep_status_warn' : v.sts === 6 ? 'myRep_status_success' : ''">{{ f_formatSts(v) }}</span>
                   </div>
                 </div>
                 <div class="whole_list_img">
@@ -81,7 +81,7 @@ export default {
             createUserId: 4906, // this.$store.state.user.id
             pageNum: this.v_listNum,
             pageSize: 10,
-            status: this.sts ? this.sts : '' 
+            status: this.sts ? this.sts : ''
           }
         })
         .then(res => {
@@ -150,8 +150,14 @@ export default {
           display: flex;
           width: 100%;
           text-align: left;
-          span{
+          .myRep_detail_status{
             margin-left: auto;
+            &.myRep_status_warn{
+              color: #f64682;
+            }
+            &.myRep_status_success{
+              color: #07C160;
+            }
           }
         }
       }

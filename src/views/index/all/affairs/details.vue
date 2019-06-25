@@ -1,22 +1,22 @@
 <template>
     <div class="detailss">
       <div class="detailss-cont">
-        <div class="detailss-tit"  v-model ="v_from.affName">{{v_from.affName}}</div>
+        <div class="detailss-tit">{{v_from.affName}}</div>
         <div class="detailss-locn">
           <img :src="Lcon">
           <p>申请条件</p>
         </div>
-        <div class="detailss-condition" v-model="v_from.affCont">{{v_from.affCont}}</div>
+        <div class="detailss-condition">{{v_from.affCont}}</div>
         <div class="detailss-download">
           <p>附件下载</p>
           <div class="detailss-download-img">
             <div class="detailss-download-img-cont">
               <img :src="Word" alt="">
-              <p v-model="v_from.affWord">{{v_from.affWord}}</p>
+              <p>{{v_from.affWord}}</p>
             </div>
             <div class="detailss-download-img-cont">
               <img :src="Tet" alt="">
-              <p v-model="v_from.affText">{{v_from.affText}}</p>
+              <p>{{v_from.affText}}</p>
             </div>
           </div>
         </div>
@@ -37,10 +37,11 @@ export default {
       Tet: Tet,
       v_from: {
         affName: '社会保险职工参保信息变更登记',
-        affCont: '当年的加大发疯呢反反复复反反复复方法你发反复烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦发发发发发发发发发发发发发发发发发发发发发发发发',
+        affCont: '',
         affWord: '文档名称11',
         affText: '表格名称11'
-      }
+      },
+      v_loadall:false
     }
   }
 }
@@ -69,7 +70,7 @@ export default {
       }
     }
     .detailss-condition{
-      height: 5rem;
+      height: 7rem;
       text-align: left;
       word-wrap:break-word;
     }

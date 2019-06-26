@@ -1,7 +1,9 @@
 <template>
   <div class="contact-wp">
-    <p class="village">{{village}}</p>
-    <panel v-for="c in contact" :key="c.id" :data="c"></panel>
+    <div class="contact-con">
+      <p class="village">{{village}}</p>
+      <panel v-for="c in contact" :key="c.id" :data="c"></panel>
+    </div>
   </div>
 </template>
 <script>
@@ -107,13 +109,16 @@ export default {
   width: 100%;
   height: 100%;
   background: #efeff4;
-  .village {
-    height: 0.9rem;
-    line-height: 0.9rem;
-    font-size: 0.34rem;
-    color: #999999;
-    background: #fff;
-    margin-bottom: 0.2rem;
+  .contact-con{
+    height: 1.2rem;
+    .village {
+      height: 0.9rem;
+      line-height: 0.9rem;
+      font-size: 0.34rem;
+      color: #999999;
+      background: #fff;
+      margin-bottom: 0.2rem;
+    }
   }
 }
 </style>

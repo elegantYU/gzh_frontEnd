@@ -71,8 +71,8 @@ export default {
       v_tools1: [
         { msg: '物业报修', path: 'repair', icon: require('../../assets/images/index/index_wy.png') },
         { msg: '预警事件', path: 'earlyWarning', icon: require('../../assets/images/index/index_yj.png') },
-        { msg: '邻里共享', path: '', icon: require('../../assets/images/index/index_ll.png') },
-        { msg: '失物招领', path: '', icon: require('../../assets/images/index/index_sw.png') },
+        { msg: '邻里共享', path: 'neighbor', icon: require('../../assets/images/index/index_ll.png') },
+        { msg: '失物招领', path: 'lostFound', icon: require('../../assets/images/index/index_sw.png') },
       ],
       v_tools2: [
         { msg: '智慧停车', path: '', icon: require('../../assets/images/index/index_zh.png') },

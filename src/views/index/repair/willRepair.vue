@@ -49,9 +49,7 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="wr_preview_add" @click="f_upload">
-            <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
-          </div>
+          <div class="wr_preview_add" @click="f_upload"></div>
         </div>
       </div>
       <button class="wr_submit" @click="f_submit">
@@ -65,7 +63,7 @@
             button
             v-for="(v, i) in v_user.house"
             :key="i"
-          @click="f_chooseHouse(v)">
+            @click="f_chooseHouse(v)">
             <mu-list-item-title>{{ v }}</mu-list-item-title>
           </mu-list-item>
         </mu-list>

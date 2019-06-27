@@ -10,8 +10,10 @@ import 'muse-ui/dist/muse-ui.css'
 import { deviceRem } from './utils/utils'
 import wxsdk from './utils/wxsdk'
 import toastMessage from './components/plugin/Toast'
+import Vconsole from 'vconsole'
 
 deviceRem(750)
+const clg = new Vconsole()
 
 Vue.prototype.$http = axios
 Vue.prototype.$wxsdk = wxsdk

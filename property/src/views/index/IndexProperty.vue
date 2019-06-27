@@ -76,9 +76,9 @@ export default {
       ],
       v_tools2: [
         { msg: '智慧停车', path: '', icon: require('../../assets/images/index/index_zh.png') },
-        { msg: '停车服务', path: '', icon: require('../../assets/images/index/index_tc.png') },
-        { msg: '宠物管理', path: '', icon: require('../../assets/images/index/index_cw.png') },
-        { msg: '小区超市', path: '', icon: require('../../assets/images/index/index_xq.png') }
+        { msg: '停车服务', path: 'parkService', icon: require('../../assets/images/index/index_tc.png') },
+        { msg: '宠物管理', path: 'pet', icon: require('../../assets/images/index/index_cw.png') },
+        { msg: '小区超市', path: 'shop', icon: require('../../assets/images/index/index_xq.png') }
       ],
       v_topic: [],
       v_noHouse: false,

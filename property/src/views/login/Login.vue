@@ -35,14 +35,13 @@ export default {
   },
   methods: {
     f_login () {
-
-      this.$http
-        .get('/admin/wy/login', {
-          params :{
+      const params = {
             name: this.v_name,
             password: this.v_password
           }
-        })
+
+      this.$http
+        .get('/admin/user/wy/login', { params })
         .then(res => {
           if (res.data.success) {
             this.$toast('登录成功')

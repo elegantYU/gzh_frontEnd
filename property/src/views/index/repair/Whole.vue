@@ -150,6 +150,7 @@ export default {
           display: flex;
           width: 100%;
           text-align: left;
+          font-size: 0.2rem;
           .myRep_detail_status{
             margin-left: auto;
             &.myRep_status_warn{

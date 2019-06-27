@@ -71,7 +71,7 @@ export default {
       this.v_nav.map(v => v.active = false)
       this.v_filterFlag = false
       // 
-      if (i === 2) {
+      if (i === 1) {
         this.v_nav.map(v => v.router === this.$store.state.neighbor.router ? v.active = true : '')
         this.$router.push({ name: this.v_nav[i].router })
       } else {

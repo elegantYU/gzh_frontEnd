@@ -70,8 +70,8 @@ const wxsdk = {
           /**
            * latitude  纬度
            * longitude 经度
-           * speed 速度 
-           * accuracy 位置精度 
+           * speed 速度
+           * accuracy 位置精度
            */
           resolve(res)
         }

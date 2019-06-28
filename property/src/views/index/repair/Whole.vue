@@ -135,16 +135,17 @@ export default {
         }
         .whole_list_cont_subject{
           width: 100%;
-          height: 0.5rem;
+          height: 0.7rem;
           color: #a9a9a9;
-          font-size: 0.27rem;
+          font-size: 0.25rem;
           overflow: hidden;
           text-align: left;
           -webkit-line-clamp: 2;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-box-orient: vertical;
-          margin-bottom: 0.2rem;
+          padding-top: 0.02rem;
+          margin-bottom: 0.1rem;
         }
         .whole_list_cont_date{
           display: flex;

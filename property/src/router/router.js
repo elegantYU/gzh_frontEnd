@@ -44,8 +44,9 @@ const router = new Router({
     { path: '/publish', name: 'publish', meta: { title: '发布' }, component: () => import('../views/index/publish.vue') },
     // 报修详情
     { path: '/home/repair/details', name: 'repairDetail', meta: { title: '详情页' }, component: () => import('../views/index/repair/repairDetail.vue') },
-    // 预警事件
-    { path: '/home/earlyWarning/detail', name: 'earlyDetail', meta: { title: '详情页' }, component: () => import('../views/index/earlyWarning/earlyDetail.vue') },
+    // 预警事件详情
+    { path: '/home/earlyWarning/equipment', name: 'equipment', meta: { title: '详情页' }, component: () => import('../views/index/earlyWarning/earlyDetail.vue') },
+    { path: '/home/earlyWarning/detailIn', name: 'detailIn', meta: { title: '详情页' }, component: () => import('../views/index/earlyWarning/detailIn.vue') },
     // 首页头条详情
     { path: '/topicProperty/detailProperty', name: 'detailProperty', meta: { title: '详情' }, component: () => import('../views/index/topicProperty/detailProperty.vue') },
     // 共享

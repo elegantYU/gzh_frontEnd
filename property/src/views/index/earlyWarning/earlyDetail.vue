@@ -19,19 +19,19 @@
           <input type="text" readonly v-model="v_from.pos">
         </div>
         <div class="earlyDetali_input">
-          <label>居民姓名</label>
+          <label>设备类型</label>
           <input type="text" readonly v-model="v_from.jName">
         </div>
         <div class="earlyDetali_input">
-          <label>身份证号</label>
+          <label>报警类型</label>
           <input type="text" readonly v-model="v_from.num">
         </div>
         <div class="earlyDetali_input">
-          <label>居民电话</label>
+          <label>设备名称</label>
           <input type="text" readonly v-model="v_from.jPhone">
         </div>
         <div class="earlyDetali_input">
-          <label>人员类型</label>
+          <label>报警原因</label>
           <input type="text" readonly v-model="v_from.prp">
         </div>
         <div class="earlyDetali_input">
@@ -50,11 +50,15 @@
           <label>承办人员</label>
           <input type="text" readonly v-model="v_from.undertakeprp">
         </div>
+        <div class="earlyDetali_input">
+          <label>处理时间</label>
+          <input type="text" readonly v-model="v_from.ondate">
+        </div>
         <div class="earlyDetali_div">
           <label>事件内容</label>
-          <div v-model="v_from.eventCont">{{v_from.eventCont}}</div>
+            <div>{{v_from.eventCont}}</div>
         </div>
-        <div class="earlyDetali-bnt">办理</div>
+        <div class="earlyDetali-bnt" @click="f_handle">办理</div>
       </div>
     </div>
 </template>
@@ -63,24 +67,30 @@
 export default {
   data () {
     return {
-      v_from:{
-        communityName:'小区名字',
-        lab:'人员预警测试',
-        dcl:'待处理',
-        lex:'人员预警',
-        pos:'南大门',
-        jName:'张三',
-        num:'330327199709093030',
-        jPhone:'13382774448',
-        prp:'残疾人',
-        overtime:'否',
-        supervise:'未督办',
-        undertake:'客户服务部',
-        undertakeprp:'物业人员',
-        eventCont:'内容内容内容容内容内容容内容内容内容内容内容内容容内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容'
+      v_from: {
+        communityName: '小区名字',
+        lab: '设备预警测试',
+        dcl: '待处理',
+        lex: '设备预警',
+        pos: '南大门',
+        jName: '张三',
+        num: '330327199709093030',
+        jPhone: '13382774448',
+        prp: '残疾人',
+        overtime: '否',
+        supervise: '未督办',
+        undertake: '客户服务部',
+        undertakeprp: '物业人员',
+        ondate: '2019-05-06 14: 27: 29',
+        eventCont: '内容内容内容内容内容容内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容'
       }
     }
   },
+  methods: {
+    f_handle () {
+      console.log(1)
+    }
+  }
 }
 </script>
 

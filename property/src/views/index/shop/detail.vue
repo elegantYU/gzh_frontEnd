@@ -257,7 +257,7 @@ export default {
         float: left;
         &:first-of-type{
           i{
-            background-image: url('../../../assets/images/tabs/tab_home_active.png');
+            background-image: url('../../../assets/images/tabs/tab_home.png');
           }
         }
         &:last-of-type{

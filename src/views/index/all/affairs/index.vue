@@ -1,25 +1,46 @@
 <template>
   <div class="affairs">
     <div  class="affairs-cont">
-      <div v-for="(item,index) in num" class="affairs-cont-lie" @click="jump">
-        <p>{{index+1}}、</p>
-        <p>{{item}}</p>
+      <div v-for="(v,i) in num" class="affairs-cont-lie" @click="jump(v)">
+        <p>{{i+1}}、</p>
+        <p>{{v.title}}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Axios from 'axios'
+
 export default {
   name: "index",
-  data () {
+  data() {
     return {
-      num: ['社会保险职工参保信息变更登记服务指南', '申请补缴基本养老保险费服务指南', '参保单位查询打印社会保险信息服务指南', '参保单位查询打印社会保险信息服务指南']
+      num: []
     }
   },
+  mounted() {
+    this.f_addair()
+  },
   methods: {
-    jump () {
-      this.$router.push({ name:"detailss"})
+    f_addair() {
+      const params = {
+        memberId: this.$store.state.user.id,
+        type: 3,
+        villageCode: '330105001001003',
+        pageNum: 1,
+        pageSize: 6
+      }
+
+      this.$http.get('/obtain/notice/pageList', {params})
+        .then(res => {
+          console.log(res.data)
+          this.num = res.data.data
+        })
+    },
+    jump(v) {
+      console.log(v)
+      this.$router.push({name: "detailss", query: v})
     }
   }
 }

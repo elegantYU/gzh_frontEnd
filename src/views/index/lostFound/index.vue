@@ -2,7 +2,7 @@
   <div class="li_wrapper">
     <div class="li_nav">
       <div class="li_nav_bar">
-        <div 
+        <div
           v-for="(v, i) in v_nav"
           :key="i"
           class="li_nav_bar_item"
@@ -43,12 +43,12 @@ export default {
         'Public': [
           { name: '全部', active: true },
           { name: '失物', active: false },
-          { name: '招领', active: false },
+          { name: '招领', active: false }
         ],
         'Mine': [
           { name: '全部', active: true },
           { name: '失物', active: false },
-          { name: '招领', active: false },
+          { name: '招领', active: false }
         ]
       },
       v_now: [],
@@ -68,7 +68,7 @@ export default {
     f_moveNav (i) {
       this.v_nav.map(v => v.active = false)
       this.v_filterFlag = false
-      // 
+      //
       if (i === 2) {
         this.v_nav.map(v => v.router === this.$store.state.neighbor.router ? v.active = true : '')
         this.$router.push({ name: this.v_nav[i].router })

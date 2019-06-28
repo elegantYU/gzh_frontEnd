@@ -3,12 +3,12 @@
       <div class="visitor-name">{{v_from.communityName}}</div>
         <div class="vi_input">
           <label>有效时长</label>
-          <input type="text" readonly v-model="v_from.time" @click="f_openType" placeholder="请选择有效时长">
+          <input type="text" readonly v-model="v_timeNum" @click="f_openType" placeholder="请选择有效时长">
           <i></i>
         </div>
         <div class="vi_input">
           <label>有效次数</label>
-          <input type="text" v-model="v_from.title" placeholder="1次">
+          <input type="text" v-model="v_forr" readonly>
         </div>
         <div class="vi_input">
           <label>邀请方</label>
@@ -25,8 +25,8 @@
         </div>
         <div class="vi_input">
           <label>性别</label>
-            <input type="radio" name="sex" value="male" class="vi_input-tb"><p>男</p><br>
-            <input type="radio" name="sex" value="female" class="vi_input-tb"><p>女</p>
+            <input type="radio" name="sex" value="male" class="vi_input-tb" @focus="f_gender"><p>男</p><br>
+            <input type="radio" name="sex" value="female" class="vi_input-tb" @focus="f_genders"><p>女</p>
         </div>
         <div class="vi_input">
           <label>访客身份</label>
@@ -46,26 +46,21 @@
           <input type="text" readonly v-model="v_from.password" @click="f_openPass" placeholder="请选择密码类型">
           <i></i>
         </div>
-      <div class="visitor-commonStyle-img">
-        <div class="visitor-commonStyle-cont">
-          访客照片
-          <div class="vi_upload">
-            <div class="vi_preview">
-              <div
-                class="vi_preview_list"
-                v-for="(v, i) in v_images"
-                :key="i"
-              >
-                <img :src="v.src" alt="">
-              </div>
-              <div class="vi_preview_add">
-                <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)">
-              </div>
+        <div class="wr_upload">
+          <div class="wr_preview">
+            <b>访客照片</b>
+            <div
+              class="wr_preview_list"
+              v-for="(v, i) in v_from.imgUrl"
+              :key="i"
+            >
+              <img :src="v">
             </div>
+            <div class="wr_preview_add" @click="f_upload"></div>
             <p>请上传清晰的访客人脸照片</p>
           </div>
         </div>
-      </div>
+
 
 <!--      选择时间类型-->
       <mu-bottom-sheet :open.sync="v_timeFlag">
@@ -77,7 +72,7 @@
             :key="i"
             @click="f_chooseType(v.name)"
           >
-            <mu-list-item-title>{{ v.name }}</mu-list-item-title>
+            <mu-list-item-title>{{ v.name }}{{v.Minute}}</mu-list-item-title>
           </mu-list-item>
         </mu-list>
       </mu-bottom-sheet>
@@ -90,7 +85,7 @@
             button
             v-for="(v, i) in v_idens"
             :key="i"
-            @click="f_chooseIden(v.name)"
+            @click="f_chooseIden(v.name,i)"
           >
             <mu-list-item-title>{{ v.name }}</mu-list-item-title>
           </mu-list-item>
@@ -105,14 +100,14 @@
             button
             v-for="(v, i) in v_passs"
             :key="i"
-            @click="f_choosePass(v.name)"
+            @click="f_choosePass(v.name,i)"
           >
             <mu-list-item-title>{{ v.name }}</mu-list-item-title>
           </mu-list-item>
         </mu-list>
       </mu-bottom-sheet>
 
-      <div class="visitor-password">生成访客密码</div>
+      <div class="visitor-password" @click="f_passWord">生成访客密码</div>
       <div class="visitor-password-cont">二维码或数字密码</div>
       <div class="visitor-password sendout">发送给好友</div>
       <div class="nulldiv"></div>
@@ -121,78 +116,182 @@
 
 <script>
 import { stop, move } from '../../../utils/utils'
+import Axios from 'axios'
+
 export default {
   name: "visitorpass",
   data () {
     return {
       value1: undefined,
       v_images: [],
+      v_forr:'',
       v_from: {
         communityName: '',
         time: '',
         title: '',
-        houseName: '',
+        houseName: this.$store.state.house,
         prpname: '',
         phone: '',
         identity: '',
-        password: ''
+        password: '',
+        imgUrl: [],
       },
       v_times: [
-        { name: '5分钟' },
-        { name: '10分钟' },
-        { name: '15分钟' },
-        { name: '20分钟' },
-        { name: '30分钟' },
-        { name: '45分钟' },
-        { name: '60分钟' }
+        { name: '5',Minute:'分钟' },
+        { name: '10',Minute:'分钟'},
+        { name: '15',Minute:'分钟' },
+        { name: '20',Minute:'分钟' },
+        { name: '30',Minute:'分钟' },
+        { name: '45',Minute:'分钟' },
+        { name: '60',Minute:'分钟' }
       ],
       v_idens: [
-        { name: '父母' },
-        { name: '子女' },
-        { name: '亲戚' },
-        { name: '朋友' },
-        { name: '其他' }
+        { name: '亲戚',num:'1' },
+        { name: '子女',num:'2'  },
+        { name: '朋友',num:'3' },
+        { name: '其他',num:'4'  },
       ],
       v_passs: [
         { name: '二维码' },
         { name: '数字密码' }
       ],
+      v_pasnbm:'',
+      v_gender:'',
       v_timeFlag: false,
       v_idenFlag: false,
-      v_passFlag: false
+      v_passFlag: false,
+      v_timeNum:'',
+      v_identityNum:'',
+      v_passwordNum:''
     }
   },
   mounted () {
+    this.f_frequency()
+    // this.formartTime(time)
     this.v_from.communityName = this.$store.state.village
   },
+  wacth: {
+
+  },
   methods: {
+
+    // formartTime(time){
+    //   return new Date(time.replace(/-/g,"/")).Format("yyyy/MM/dd")
+    // },
+    f_upload (e) {
+      if (this.v_from.imgUrl.length > 2) {
+        this.$toast('最多三张图片')
+        return
+      }
+
+      this.$wxsdk.chooseImage()
+        .then(({ localIds }) => {
+          localIds.map(v => {
+            this.$wxsdk.getLocalImgData(v)
+              .then(({ localData }) => {
+                const from = new FromData()
+                from.append("base64", localData)
+                this.$http
+                  .post('/admin/file/upload2', from)
+                  .then(({data: { data }}) => {
+                    this.v_from.imgUrl.push(data)
+                  })
+              })
+          })
+        })
+    },
+
+    //访客次数
+    f_frequency () {
+      const params = {
+        villageCode : '330105001001001'
+      }
+
+      this.$http.get('/admin/visit/getVisitTime', {params} )
+        .then(res=>{
+          console.log(res.data.data.applyNum.overTime)
+          this.v_forr=res.data.data.applyNum.overTime
+        })
+    },
+    // 申请访客通行密码
+    f_passWord () {
+      if(this.v_from.time && this.v_from.prpname && this.v_from.phone && this.v_gender && this.v_from.identity && this.value1 ) {
+
+        let params = {
+          time: this.v_from.time,
+          overNum: this.v_forr,
+          houseId: "17-1-302",
+          houseName: this.$store.state.village,
+          visitorName: this.v_from.prpname,
+          telephone: this.v_from.phone,
+          gender: this.v_gender,
+          visitorType: this.v_identityNum,
+          applyTime: '2019-07-07 11:11:11',
+          passwordType: this.v_passwordNum,
+          createUserId: this.$store.state.user.id,
+          createUserName: this.$store.state.user.name,
+          imgurl: JSON.stringify(this.v_from.imgUrl),
+          villageCode: this.$store.state.villageCode
+        }
+
+        this.$http.post('/admin/visit/addVisit', params)
+          .then(res => {
+            if (res.data.success) {
+              this.$toast('获取成功')
+              console.log(res)
+            } else {
+              this.$toast('网络错误')
+            }
+          })
+      }else {
+        this.$toast({
+          msg: '所填信息不完整',
+          time: 1500
+        })
+      }
+    },
+    f_gender () {
+      this.v_gender='1'
+    },
+    f_genders () {
+      this.v_gender='2'
+    },
     f_openType () {
       this.v_timeFlag = true
       // stop()
     },
-    f_chooseType (name) {
+    f_chooseType (name,Minute) {
       this.v_timeFlag = false
       this.v_from.time = name
+
+      if (this.v_from.time!='') {
+        this.v_timeNum=this.v_from.time+'分钟'
+      }
       move()
     },
     f_openIden () {
       this.v_idenFlag = true
       // stop()
     },
-    f_chooseIden: function (name) {
+    f_chooseIden: function (name,i) {
       this.v_idenFlag = false
       this.v_from.identity = name
+      this.v_identityNum=i+1
+
+
       move()
     },
     f_openPass () {
       this.v_passFlag = true
       // stop()
     },
-    f_choosePass (name) {
+    f_choosePass (name,i) {
       this.v_passFlag = false
       this.v_from.password = name
+      this.v_passwordNum=i+1
+      console.log(this.v_passwordNum)
       move()
-    }
+    },
   }
 }
 </script>
@@ -355,5 +454,64 @@ export default {
     background-position: center center;
     background-size: contain;
     vertical-align: middle;
+  }
+
+
+  .wr_upload{
+    margin-bottom: 0.4rem;
+    b{
+      display: block;
+      font-size: 0.34rem;
+      color: #000;
+      line-height: 1.12rem;
+      text-align: left;
+      font-weight: normal;
+    }
+    p{
+      display: block;
+      font-size: 0.25rem;
+      color: darkgrey;
+      line-height: 1.12rem;
+      text-align: left;
+      font-weight: normal;
+    }
+    .wr_preview{
+      display: flex;
+      height: 1.74rem;
+      padding: 0.3rem;
+      box-sizing: border-box;
+      background-color: #fff;
+      .wr_preview_list{
+        float: left;
+        width: 1.16rem;
+        height: 1.16rem;
+        box-sizing: border-box;
+        margin: 0 0.04rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img{
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+      .wr_preview_add{
+        float: left;
+        width: 1.16rem;
+        height: 1.16rem;
+        box-sizing: border-box;
+        margin: 0 0.5rem;
+        border: 0.01rem solid #cccccc;
+        background-image: url('../../../assets/images/environment/repair_add.png');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 0.56rem 0.56rem;
+        cursor: pointer;
+        input{
+          width: 0;
+          opacity: 0;
+        }
+      }
+    }
   }
 </style>

@@ -43,21 +43,23 @@ export default {
     this.f_getList()
   },
   methods: {
-    f_getList () {
-      let params = {
+    async f_getList () {
+      const params = {
         memberId: this.$store.state.user.id,
         villageCode: this.$store.state.villageCode
       }
-
-      this.$http
+      const { data: { data: result }} = await this.$http
         .get('/admin/member/house/all', { params })
-        .then(res => {
-          if (res.data.data.length) {
-            this.v_houseList = res.data.data.map(v => v)
-            this.$store.state.house = this.v_houseList
-          }
-
-        })
+      
+      if (result.length) {
+        this.v_houseList.push(...result)
+        //  获取房屋地址和其对应的houseId
+        const r = result.map(v => ({
+          name: `${v.building}${v.unit}${v.room}`,
+          houseId: v.houseId
+        }))
+        this.$store.dispatch('setHouse', r)
+      }
     },
     f_house (v) {
       return `${v.building}${v.unit}${v.room}`

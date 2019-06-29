@@ -1,7 +1,7 @@
 <template>
   <div class="affairs">
     <div  class="affairs-cont">
-      <div v-for="(v,i) in num" class="affairs-cont-lie" @click="jump(v)">
+      <div v-for="(v,i) in num" class="affairs-cont-lie" :key="i" @click="jump(v)">
         <p>{{i+1}}、</p>
         <p>{{v.title}}</p>
       </div>

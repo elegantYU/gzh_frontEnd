@@ -14,38 +14,7 @@ export default {
   data () {
     return {
       village: '康馨苑小区',
-      contact: [
-        {
-          partment: '工程部',
-          leader: {
-            name: '诸葛亮',
-            tel: '12345678909'
-          },
-          watchman: [
-            {
-              name: '刘备12',
-              tel: '12345678909'
-            },
-            {
-              name: '刘备2',
-              tel: '12345678909'
-            }
-          ]
-        },
-        {
-          partment: '施工部',
-          leader: {
-            name: '诸葛亮',
-            tel: '12345678909'
-          },
-          watchman: [
-            {
-              name: '刘备12',
-              tel: '12345678909'
-            }
-          ]
-        }
-      ]
+      contact: []
     }
   },
   props: {},
@@ -110,7 +79,8 @@ export default {
   height: 100%;
   background: #efeff4;
   .contact-con{
-    height: 1.2rem;
+    padding-bottom: 1.2rem;
+    background: #efeff4;
     .village {
       height: 0.9rem;
       line-height: 0.9rem;

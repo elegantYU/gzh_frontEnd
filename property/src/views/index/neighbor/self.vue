@@ -20,69 +20,14 @@
           <label>联系方式</label>
           <input type="text" placeholder="手机号、微信、QQ" v-model="v_from.telephone">
         </div>
-        <!-- 车位共享 -->
-        <div class="ns_input" v-if="v_taskType === '2'" @click="v_parkFlag = true">
-          <label>车位编号</label>
-          <input type="text" readonly placeholder="请选择车位" v-model="v_from.carNum">
-          <i></i>
-        </div>
-        <div class="ns_input" v-if="v_taskType === '2'">
-          <label>收费标准</label>
-          <input type="text" placeholder="10元/时" v-model="v_from.price">
-        </div>
-        <div class="ns_input ns_input_check" v-if="v_taskType === '2'">
-          <label>车位锁</label>
-          <span @click="f_changeLock(1)"><i :class="v_from.carLock === 1 ? 'ns_checked' : ''"></i>有</span>
-          <span @click="f_changeLock(0)"><i :class="v_from.carLock === 0 ? 'ns_checked' : ''"></i>无</span>
-        </div>
-        <div class="ns_input ns_shareTime" v-if="v_taskType === '2'">
-          <label>共享时间</label>
-          <span>
-            <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_from.startTime" type="dateTime" landscape></mu-date-input>
-            <mu-date-input container="bottomSheet" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_from.endTime" type="time" landscape></mu-date-input>
-          </span>
-        </div>
-        <!-- 拼车 -->
-        <div class="ns_input" v-if="v_taskType === '1'" @click="f_openCarNum">
-          <label>车牌号</label>
-          <input type="text" readonly placeholder="请选择车牌号" v-model="v_from.carNum">
-          <i></i>
-        </div>
-        <div class="ns_input" v-if="v_taskType === '1'">
-          <label>发车地点</label>
-          <input type="text" placeholder="请输入发车地点" v-model="v_from.departPlace">
-        </div>
-        <div class="ns_input" v-if="v_taskType === '1'">
-          <label>目的地</label>
-          <input type="text" placeholder="请输入目的地" v-model="v_from.destination">
-        </div>
-        <div class="ns_input" v-if="v_taskType === '1'">
-          <label>发车时间</label>
-          <mu-date-input v-model="v_from.startTime" underline-color="red" label="请输入发车时间" view-type='list' container="bottomSheet" :should-disable-date="f_startTimeRules" type="dateTime" :solo='true' clock-type='24hr' label-float full-width landscape></mu-date-input>
-        </div>
-        <!-- 时间互换 -->
-        <div class="ns_input ns_input_check" v-if="v_taskType === '3'">
-          <label>性别</label>
-          <span @click="f_changeSex(1)"><i :class="v_from.gender === 1 ? 'ns_checked' : ''"></i>男</span>
-          <span @click="f_changeSex(0)"><i :class="v_from.gender === 0 ? 'ns_checked' : ''"></i>女</span>
-        </div>
-        <div class="ns_input" v-if="v_taskType === '3'">
-          <label>职业</label>
-          <input type="text" placeholder="请输入职业" v-model="v_from.profession">
-        </div>
-        <div class="ns_input" v-if="v_taskType === '3'">
-          <label>技能</label>
-          <input type="text" placeholder="请输入技能" v-model="v_from.skill">
-        </div>
-        <div class="ns_input ns_shareTime" v-if="v_taskType === '3'">
-          <label>互换时间</label>
-          <span>
-            <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_start" type="dateTime" landscape></mu-date-input>
-            <mu-date-input container="bottomSheet" :should-disable-date="f_endTimeRules" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_end" type="dateTime" landscape></mu-date-input>
-          </span>
-        </div>
         <!-- 资源共享 -->
-        <div class="ns_input ns_shareTime" v-if="v_taskType === '4'">
+        <div class="ns_input ns_input_check">
+          <label>人脸门禁</label>
+          <span @click="f_changeDoor(1)"><i :class="v_from.doorLock === 1 ? 'ns_checked' : ''"></i>有</span>
+          <span @click="f_changeDoor(0)"><i :class="v_from.doorLock === 0 ? 'ns_checked' : ''"></i>无</span>
+          <p v-if="v_from.doorLock === 1">※需要携带本人身份证在进门处登记人脸识别照片</p>
+        </div>
+        <div class="ns_input ns_shareTime">
           <label>共享时间</label>
           <span>
             <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_start" type="dateTime" landscape></mu-date-input>
@@ -172,9 +117,6 @@ export default {
       v_carFlag: false,
       v_parkFlag: false,
       v_types: [
-        { name: '拼车', taskType: '1' },
-        { name: '车位共享', taskType: '2' },
-        { name: '时间互换', taskType: '3' },
         { name: '资源共享', taskType: '4' }
       ],
       v_carNum: [],
@@ -185,7 +127,7 @@ export default {
         contact: '',
         telephone: '',
         title: '',
-        doorLock: '',
+        doorLock: 0,
         content: '',
         startTime: '',
         endTime: '',
@@ -240,11 +182,14 @@ export default {
       let startTime = new Date(start).toLocaleTimeString('chinese', { hour12: false })
       if (now && start) {
         let date = dateFormat(start)
-        let endStamp = new Date(now).getTime()
         let endTime = new Date(now).toLocaleTimeString('chinese', { hour12: false })
+        let endStamp = new Date(`${date} ${endTime}`).getTime()
         if (endStamp < new Date(start).getTime()) {
           this.v_from.endTime = start
           this.v_from.startTime = `${date} ${endTime}`
+          const cache = this.v_start
+          this.v_start = this.v_end
+          this.v_end = cache
         } else {
           this.v_from.endTime = `${date} ${endTime}`
         }
@@ -290,6 +235,9 @@ export default {
     },
     f_changeSex (n) {
       this.v_from.gender = n
+    },
+    f_changeDoor (n) {
+      this.v_from.doorLock = n
     },
     f_startTimeRules (date) {
       const today = new Date().getTime()
@@ -452,8 +400,9 @@ export default {
       }
     },
     f_submit (params) {
+      console.log('共享参数', params);
       this.$http
-        .post('/admin/share/publishShareInfo', params)
+        .post('/admin/share/system/wx/addShare', params)
         .then(res => {
           console.log(res)
           if (res.data.success) {
@@ -544,6 +493,7 @@ export default {
           }
         }
         &.ns_input_check{
+          position: relative;
           span{
             display: flex;
             font-size: 0.3rem;
@@ -566,6 +516,13 @@ export default {
                 background-size: 100% 100%;
               }
             }
+          }
+          p{
+            position: absolute;
+            bottom: 0;
+            left: 2.2rem;
+            font-size: 0.18rem;
+            color: #f73476;
           }
         }
       }

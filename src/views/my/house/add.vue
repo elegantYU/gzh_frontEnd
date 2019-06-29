@@ -174,7 +174,8 @@ export default {
         idNumber: '',               // 身份证
         phone: '',                  // 联系电话啊
         searchWord: '',             //将上述省市区街道小区楼幢室组合起来
-        villageCode: ''
+        villageCode: '',
+        houseCode: ''               // 点击室后出现的code 
       },
       v_provice: [],
       v_city: [],
@@ -332,6 +333,7 @@ export default {
       this.v_form.buildingId = this.v_building.filter(v => v.name === this.v_form.building)[0].id
       this.v_form.unitId = this.v_unit.filter(v => v.name === this.v_form.unit)[0].id
       this.v_form.roomId = this.v_house.filter(v => v.name === this.v_form.room)[0].id
+      this.v_form.houseCode = this.v_house.filter(v => v.name === this.v_form.room)[0].code
       this.v_form.searchWord = `${this.v_form.region}${this.v_form.street}${this.v_form.community}${this.v_form.village}${this.v_form.building}${this.v_form.unit}${this.v_form.room}`
 
       for (const key in this.v_form) {

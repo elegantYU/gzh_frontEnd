@@ -51,23 +51,23 @@ export default {
         ? params = {
             type: this.type,
             villageCode: this.$store.state.villageCode,
-            pageNum: this.v_pageNum,
-            pageSize: 5
+            page: this.v_pageNum,
+            rows: 10
           } 
         : params = {
             villageCode: this.$store.state.villageCode,
-            pageNum: this.v_pageNum,
-            pageSize: 5
+            page: this.v_pageNum,
+            rows: 10
           }
 
       this.$http
-        .get('/admin/lost/getAllLostFoundList', { params })
-        .then(({data: {data: res}}) => {
-          if (!res.list.length) {
+        .get('/admin/lost/system/wx/getSystemLostFoundList', { params })
+        .then(({data: {rows}}) => {
+          if (!rows.length) {
             this.v_laodAll = true
             return
           }
-          res.list.forEach(v => {
+          rows.forEach(v => {
             this.v_list.push(v)
           })
         })

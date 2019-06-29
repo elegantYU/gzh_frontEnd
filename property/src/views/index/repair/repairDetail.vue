@@ -47,7 +47,7 @@
         <div class="rep_preview_wrapper">
           <div
             class="rep_preview_item"
-            v-for="(v, i) in v_info.img"
+            v-for="(v, i) in imgs"
             :key="i"
           >
             <img :src="v" alt="">
@@ -137,6 +137,9 @@ export default {
         this.v_sts = 5
         return '完成'
       }
+    },
+    imgs () {
+      return JSON.parse(v_info.img)
     }
   },
   methods: {

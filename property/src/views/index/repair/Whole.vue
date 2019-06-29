@@ -78,7 +78,7 @@ export default {
         .get('/admin/property/repair/list', {
           params: {
             villageCode: 330105001001004, //this.$store.state.villageCode
-            createUserId: 4906, // this.$store.state.user.id
+            repairId: 4906, // this.$store.state.user.id
             pageNum: this.v_listNum,
             pageSize: 10,
             status: this.sts ? this.sts : ''

@@ -14,7 +14,8 @@ export default new Vuex.Store({
     neighbor: { router: '' },
     lostFound: { router: '' },
     orderParams: [], // 订单参数,
-    currentRepair: {}
+    currentRepair: {},
+    currentPark: {}
   },
   mutations: {
     setWxInfo: (state, obj) => (state.wxInfo = Object.assign({}, obj)),
@@ -28,7 +29,8 @@ export default new Vuex.Store({
     setOrderParams: (state, arr) => {
       state.orderParams = arr.slice(0)
     },
-    setCurrentRepair: (state, obj) => (state.currentRepair = Object.assign({}, obj))
+    setCurrentRepair: (state, obj) => (state.currentRepair = Object.assign({}, obj)),
+    setCurrentParkCheck: (state, obj) => (state.currentPark = Object.assign({}, obj))
   },
   actions: {
     setUser: ({ commit }, obj) => commit('setUser', obj),

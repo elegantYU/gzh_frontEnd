@@ -2,13 +2,12 @@
   <div class="home_wrapper">
     <router-view></router-view>
     <Tabs></Tabs>
-    <!-- <div class="index_judge_mask" v-if="v_noHouse" @click="f_moveAddHouse"></div> -->
+    <div class="index_judge_mask" v-if="v_noHouse" @click="f_moveAddHouse"></div>
   </div>
 </template>
 
 <script>
 import Tabs from '../components/Tab.vue'
-import { setTimeout } from 'timers';
 
 export default {
   name: 'Home',
@@ -25,7 +24,7 @@ export default {
       this.$store.state.house.length > 0
         ? this.v_noHouse = false
         : this.v_noHouse = true
-    }, 500)
+    }, 1000)
   },
   methods: {
     f_moveAddHouse () {

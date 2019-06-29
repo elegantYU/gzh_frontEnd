@@ -151,7 +151,11 @@ export default {
         .get('/admin/member/house/all', { params })
       
       if (result.length) {
-        const r = result.map(v => `${v.building}${v.unit}${v.room}`)
+        //  获取房屋地址和其对应的houseId
+        const r = result.map(v => ({
+          name: `${v.building}${v.unit}${v.room}`,
+          houseId: v.houseCode
+        }))
         this.$store.dispatch('setHouse', r)
         console.log('房屋', this.$store.state.house)
       }

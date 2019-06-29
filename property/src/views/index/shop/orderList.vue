@@ -7,7 +7,7 @@
           <p>{{ v_user.name }} {{ v_user.phoneNum }}</p>
           <div class="so_header_place">
             <mu-select v-model="v_addressInfo" :solo="true" placeholder="请先选择收货地址">
-              <mu-option v-for="(v, i) in v_house" :key="i" :label="v" :value="v"></mu-option>
+              <mu-option v-for="(v, i) in v_house" :key="i" :label="v.name" :value="v.name"></mu-option>
             </mu-select>
           </div>
         </div>

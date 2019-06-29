@@ -6,7 +6,7 @@
           <img :src="Lcon">
           <p>申请条件</p>
         </div>
-        <div class="detailss-condition">{{num.content}}</div>
+        <div class="detailss-condition" v-html="num.content"></div>
         <div class="detailss-download">
           <p>附件下载</p>
           <div class="detailss-download-img">
@@ -24,7 +24,6 @@
 import Lcon from '../../../../assets/images/all/detailss/show_less.png'
 import Word from '../../../../assets/images/all/detailss/images/word_03.gif'
 import Tet from '../../../../assets/images/all/detailss/images/text_03.gif'
-import Axios from 'axios'
 
 export default {
   data () {

@@ -75,7 +75,7 @@ export default {
         { msg: '失物招领', path: 'lostFound', icon: require('../../assets/images/index/index_sw.png') },
       ],
       v_tools2: [
-        { msg: '智慧停车', path: '', icon: require('../../assets/images/index/index_zh.png') },
+        { msg: '智慧停车', path: 'smartPark', icon: require('../../assets/images/index/index_zh.png') },
         { msg: '停车服务', path: 'parkService', icon: require('../../assets/images/index/index_tc.png') },
         { msg: '宠物管理', path: 'pet', icon: require('../../assets/images/index/index_cw.png') },
         { msg: '小区超市', path: 'shop', icon: require('../../assets/images/index/index_xq.png') }

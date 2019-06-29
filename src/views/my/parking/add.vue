@@ -79,16 +79,16 @@ export default {
   },
   methods: {
     f_getCarNum () {
-      let params = {
+      const params = {
         phone: this.$store.state.user.phoneNum
       }
 
       this.$http
-      .get('/obtain/config/carportSpinner', { params })
-        .then(res => {
-          console.log(res)
-          res.data.data.map(v => this.v_parkNum.push(v.code))
-        })
+        .get('/obtain/config/carportSpinner', { params })
+          .then(res => {
+            console.log(res)
+            res.data.data.map(v => this.v_parkNum.push(v.code))
+          })
       this.$http
         .get('/obtain/config/carSpinner', { params })
         .then(res => {

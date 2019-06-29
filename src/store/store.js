@@ -6,14 +6,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     wxInfo: {},
-    user: {}, // id name phoneNum headIcon
+    user: {},               // id name phoneNum headIcon
     villageCode: '330105001001001', // 小区id
-    village: '', // 小区名
-    currentPlace: {}, // 当前小区的省市区
-    house: [],
+    village: '',            // 小区名
+    currentPlace: {},       // 当前小区的省市区
+    house: [],              // name house
     neighbor: { router: '' },
     lostFound: { router: '' },
-    orderParams: [] // 订单参数
+    orderParams: [],        // 订单参数
   },
   mutations: {
     setWxInfo: (state, obj) => (state.wxInfo = Object.assign({}, obj)),

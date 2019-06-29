@@ -13,7 +13,7 @@
       >
         <span>{{ v.code }}</span>
         <span>{{ f_formatType(v) }}</span>
-        <span @click="f_getOrder(v)" :class="{'active': v.sts == '1'}">{{ f_sts(v) }}</span>
+        <span :class="{'active': v.sts == '1'}">{{ f_sts(v) }}</span>
       </li>
     </ul>
     <popup v-if="v_pop" :parkInfo='v_currentItem' @order="f_closePop" @close="f_closePop"></popup>
@@ -30,7 +30,9 @@ export default {
     return {
       v_list: [],
       v_currentItem: {},
-      v_pop: false
+      v_pop: false,
+      v_pageNum: 1,
+      v_pageSize: 50
     }
   },
   mounted () {
@@ -40,13 +42,15 @@ export default {
     async f_getList () {
       const params = {
         villageCode: this.$store.state.villageCode, // this.$store.state.villageCode,
-        userId: this.$store.state.user.id
+        userId: this.$store.state.user.id,
+        page: this.v_pageNum,
+        rows: this.v_pageSize
       }
 
       const { data: { data }} = await this.$http
-        .get('/admin/member/parking/lot/surplus/lots', { params })
+        .get('/admin/member/parking/lot/systemParkingLot', { params })
       
-      this.v_list.push(...data)
+      this.v_list.push(...data.list)
     },
     f_formatType (v) {
       switch (v.type) {

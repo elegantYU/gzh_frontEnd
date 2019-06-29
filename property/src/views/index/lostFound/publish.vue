@@ -120,7 +120,7 @@ export default {
       }
       console.log('环境秩序', params)
       this.$http
-        .post('/admin/lost/addLostFound', params)
+        .post('/admin/lost/system/wx/addLostFound', params)
         .then(({data: {success}}) => {
           if (success) {
             this.$toast('发布成功')

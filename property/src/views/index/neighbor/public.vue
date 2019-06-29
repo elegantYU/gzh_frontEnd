@@ -54,23 +54,23 @@ export default {
         ? params = {
             taskType: this.taskType,
             villageCode: this.$store.state.villageCode,
-            pageNum: this.v_pageNum,
-            pageSize: 10
+            page : this.v_pageNum,
+            rows: 10
           } 
         : params = {
             villageCode: this.$store.state.villageCode,
-            pageNum: this.v_pageNum,
-            pageSize: 10
+            page : this.v_pageNum,
+            rows: 10
           }
 
       this.$http
-        .get('/admin/share/getAllShareInfo', { params })
+        .get('/admin/share/wx/getShareInfoList', { params })
         .then(res => {
           console.log(res)
-          if (!res.data.data.length) {
+          if (!res.data.rows.length) {
             this.v_laodAll = true
           }
-          res.data.data.list.forEach(v => {
+          res.data.rows.forEach(v => {
             this.v_list.push(v)
           })
         })

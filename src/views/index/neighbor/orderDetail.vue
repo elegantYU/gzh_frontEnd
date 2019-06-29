@@ -228,7 +228,7 @@ export default {
           userId: this.$store.state.user.id,
           telephone: this.v_content.telephone,
           villageCode: this.$store.state.villageCode,
-          address: this.$store.state.house[0],
+          address: this.$store.state.house[0].name,
           IDCard: '--'
         }
         this.$http

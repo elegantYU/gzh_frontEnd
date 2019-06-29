@@ -146,10 +146,13 @@ export default {
       if (now && start) {
         let date = dateFormat(start)
         let endTime = new Date(now).toLocaleTimeString('chinese', { hour12: false })
-        let endStamp =new Date(`${date} ${endTime}`).getTime()
+        let endStamp = new Date(`${date} ${endTime}`).getTime()
         if (endStamp < new Date(start).getTime()) {
           this.v_from.endTime = this.v_from.startTime
           this.v_from.startTime = `${date} ${endTime}`
+          const cache = this.v_start
+          this.v_start = this.v_end
+          this.v_end = cache
         } else {
           this.v_from.endTime = `${date} ${endTime}`
         }

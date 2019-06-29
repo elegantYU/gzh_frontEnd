@@ -111,7 +111,7 @@
                 <li><label>姓名</label>：{{ $store.state.user.name }}</li>
                 <li><label>联系方式</label>：{{ $store.state.user.phoneNum }}</li>
                 <li><label>身份证号</label>：</li>
-                <li><label>房屋信息</label>：{{ $store.state.house[0] }}</li>
+                <li><label>房屋信息</label>：{{ $store.state.house[0].name }}</li>
                 <li><label>预约时间</label>：{{ new Date().toLocaleString('chinese', { hour12: false }).replace(/\//g, '-') }}</li>
               </ul>
             </div>
@@ -155,6 +155,7 @@ export default {
     shareTime: function () {
       switch (this.v_content.taskType) {
         case '3':
+        case '4':
           if (this.v_content.endTime) {
             let time = this.v_content.endTime.split(' ')[1].replace(this.v_content.endTime.split(' ')[1].slice(5), '')
             let start = this.v_content.startTime.replace(this.v_content.startTime.slice(16), '')
@@ -170,8 +171,7 @@ export default {
       return this.v_content.carLock ? '有' : '无'
     },
     imgJson: function () {
-      console.log(this.v_content.imgUrl)
-      return eval(this.v_content.imgUrl)
+      return JSON.parse(this.v_content.imgUrl)
     },
     submit: function () {
       if (this.v_content.shareType == 2) {
@@ -219,7 +219,7 @@ export default {
           userId: this.$store.state.user.id,
           userName: this.$store.state.user.name,
           telephone: this.$store.state.user.phoneNum,
-          address: this.$store.state.house[0],
+          address: this.$store.state.house[0].name,
           villageCode: this.$store.state.villageCode,
           IDCard: '--'
         }

@@ -74,7 +74,7 @@ export default {
               vm.$store.commit('setCurrentPlace', res)
               vm.$store.commit('setVillage', res.village)
               vm.$store.commit('setVillageCode', res.villageCode)
-              vm.$router.push({ name: 'indexProperty' })
+              vm.$router.push({ name: 'index' })
             }
           })
       }

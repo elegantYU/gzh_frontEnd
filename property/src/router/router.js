@@ -57,14 +57,16 @@ const router = new Router({
     { path: '/lostFound/detail', name: 'lfDetail', meta: { title: '详情页' }, component: () => import('../views/index/lostFound/detail.vue') },
     // 停车服务
     { path: '/park/service', name: 'parkService', meta: { title: '停车服务' }, component: () => import('../views/index/park/index.vue') },
-    { path: '/park/apply', name: 'parkApply', meta: { title: '车位申请' }, component: () => import('../views/index/park/add.vue') },
+    { path: '/park/detail', name: 'parkDetail', meta: { title: '详情页' }, component: () => import('../views/index/park/detail.vue') },
     // 超市
     { path: '/shop/detail', name: 'shopItemDetail', meta: { title: '商品详情' }, component: () => import('../views/index/shop/detail.vue') },
     { path: '/shop/car', name: 'shopCar', meta: { title: '购物车' }, component: () => import('../views/index/shop/shopCar.vue') },
     { path: '/shop/order', name: 'shopOrderList', meta: { title: '订单' }, component: () => import('../views/index/shop/orderList.vue') },
     // 宠物
     { path: '/pet', name: 'pet', meta: { title: '我的宠物' }, component: () => import('../views/index/pet/index.vue') },
-    { path: '/pet/add', name: 'petAdd', meta: { title: '宠物登记' }, component: () => import('../views/index/pet/add.vue') },
+    { path: '/pet/detail', name: 'petDetail', meta: { title: '宠物详情' }, component: () => import('../views/index/pet/detail.vue') },
+    // 智慧停车
+    { path: '/home/smartPark', name: 'smartPark', meta: { title: '智慧停车' }, component: () => import('../views/index/smartPark/index.vue') },
     // 登录注册
     { path: '/login', name: 'login', meta: { title: '登录' }, component: () => import('../views/login/Login.vue') },
     { path: '/register', name: 'register', meta: { title: '注册' }, component: () => import('../views/login/Register.vue') }

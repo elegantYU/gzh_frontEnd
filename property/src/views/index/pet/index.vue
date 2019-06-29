@@ -7,30 +7,18 @@
           class="pet_item"
           v-for="(v, i) in v_list"
           :key="i"
+          @click="f_getDetail(v)"
         >
-          <div class="pet_input">
-            <label>宠物品种</label>
-            <p>{{ v.petBreed }}</p>
+          <div>
+            <span>{{ v.raiser }}</span>
+            <span>{{ v.petBreed }}</span>
           </div>
-          <div class="pet_input">
-            <label>昵称</label>
-            <p>{{ v.petName }}</p>
-          </div>
-          <div class="pet_input">
-            <label>性别</label>
-            <p>{{ v.gender }}</p>
-          </div>
-          <div class="pet_input">
-            <label>健康免疫证编号</label>
-            <p>{{ v.exemptionNum }}</p>
-          </div>
-          <div class="pet_input">
-            <label>状态</label>
-            <p :class="v.sts === '已登记' ? 'house_unchecked' : ''">{{ v.sts }}</p>
+          <div>
+            <span>{{ v.address }}</span>
+            <span>{{ v.createTime }}</span>
           </div>
         </li>
       </ul>
-      <div class="pet_submit" @click="f_submit">添加宠物登记</div>
     </div>
   </div>
 </template>
@@ -54,19 +42,19 @@ export default {
   methods: {
     f_getList () {
       let params = {
-        userId: this.$store.state.user.id,
         villageCode: this.$store.state.villageCode,
-        pageNum: 1,
-        pageSize: 10
+        page: 1,
+        rows: 100
       }
+
       this.$http
-        .get('/admin/member/pet/getMePetListByPage', { params })
+        .get('/admin/member/pet/system/wx/getAllPetList', { params })
         .then(res => {
-          this.v_list = res.data.data.list
+          this.v_list = res.data.rows
         })
     },
-    f_submit () {
-      this.$router.push({ name: 'petAdd' })
+    f_getDetail (v) {
+      this.$router.push({ name: 'petDetail', query: { id: v.id }})
     }
   }
 }
@@ -87,41 +75,23 @@ export default {
       line-height: 0.9rem;
     }
     ul{
-      padding: 0.2rem 0.25rem 0;
+      padding: 0.2rem 0 0;
       margin-bottom: 1rem;
       .pet_item{
-        width: 7rem;
-        height: 4.5rem;
-        border-radius: 0.15rem;
+        height: 1.2rem;
         background-color: white;
-        box-shadow: 0.1rem 0 0.3rem 0 rgba(0, 0, 0, 0.05);
         margin: 0 auto 0.5rem;
-        .pet_input{
-          border-bottom: 1px solid #e5e5e5;
-          height: 0.9rem;
-          font-size: 0.34rem;
-          padding: 0 0.4rem;
+        div{
+          height: 0.6rem;
+          line-height: 0.6rem;
           display: flex;
-          &:last-of-type{
-            border: none;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 0.2rem;
+          span{
+            font-size: 0.28rem;
           }
-          label{
-            width: 2.4rem;
-            height: 100%;
-            line-height: 0.9rem;
-            color: #b2b2b2;
-            text-align: left;
-          }
-          p{
-            flex: 1;
-            height: 100%;
-            line-height: 0.9rem;
-            text-align: right;
-            &.house_unchecked{
-              color: #0000ff;
-            }
-          }
-        }
+        }        
       }
     }
     .pet_submit{

@@ -36,7 +36,7 @@
         <b>图片</b>
         <div class="ld_img_wrapper">
           <div
-            v-for="(v, i) in v_form.imgUrl"
+            v-for="(v, i) in imgs"
             :key="i"
           >
             <img :src="v" alt="">
@@ -73,6 +73,9 @@ export default {
         ? s = '已删除'
         : s = '进行中'
       return s
+    },
+    imgs () {
+      return JSON.parse(v_form.imgUrl)
     }
   },
   mounted () {

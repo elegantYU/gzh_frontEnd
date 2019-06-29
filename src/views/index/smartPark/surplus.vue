@@ -19,7 +19,7 @@
         <div>{{v.NAME}}</div>
         <div class="surplus-nearby-red">{{v.num}}</div>个,距离
         <div class="surplus-nearby-red">{{distance}}</div>
-        <div><span class="arrow-km">km</span><img :src="Arrow" class="arrow" /></div>
+        <div><span class="arrow-km">km</span><img :src="Arrow" class="arrow" @click="f_gaode" /></div>
       </div>
     </div>
   </div>
@@ -28,6 +28,10 @@
 <script>
 import Catimg from '../../../assets/images/all/13_02.gif'
 import Arrow from '../../../assets/images/all/20_03.gif'
+import Axios from 'axios'
+import AMap from 'AMap' // 引入高德地图
+
+
 export default {
   data () {
     return {
@@ -37,7 +41,7 @@ export default {
       snamenum: '20',
       distance: '1',
       Arrow: Arrow,
-      v_list: []
+      v_list: [],
     }
   },
   mounted () {
@@ -45,13 +49,24 @@ export default {
     this.f_getSurpulsPark()
   },
   methods: {
+    // f_gaode () {
+    //   const params = {
+    //     position:'121.287689,31.234527'
+    //   }
+    //
+    //   this.$http.get('/marker',{ params })
+    //     .then(res=>{
+    //       console.log(res)
+    //     })
+    // },
+
     async f_getTotal () {
       const params = {
         villageCode: this.$store.state.villageCode
       }
       const { data: { data }} = await this.$http
         .get('/admin/member/parking/lot/surplus/getSurplusParkingLotNum', { params })
-      
+
       this.catnum = data
     },
     async f_getSurpulsPark () {
@@ -61,7 +76,7 @@ export default {
 
       const { data: { data }} = await this.$http
         .get('/admin/member/parking/lot/getAllNearbyParkingLot', { params })
-      
+
       data.length && this.v_list.push(...data)
     }
   }

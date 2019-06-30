@@ -50,6 +50,9 @@ export default {
       // console.log(e)
     }
   },
+  mounted () {
+    this.f_getCookie()
+  },
   methods: {
     f_login () {
       let params = {
@@ -61,6 +64,7 @@ export default {
         .post('/admin/user/login', params)
         .then(res => {
           if (res.data.success) {
+            this.f_setCookie(this.v_phone, this.v_password)
             this.$toast('登录成功')
             this.$store.dispatch('setUser', res.data.data)
             console.log(this.$store.state.user)
@@ -75,6 +79,7 @@ export default {
       localStorage.clear()
     },
     f_forget () {
+      this.$router.push({ name: 'forget' })
       console.log('忘记密码')
     },
     f_register () {
@@ -91,6 +96,28 @@ export default {
     f_switch () {
       this.v_switch = !this.v_switch
       this.v_open = !this.v_open
+    },
+    f_setCookie (phone, pwd, exdays = 1) {
+      let exdate = new Date()
+      exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays)
+      window.document.cookie = "userName" + "=" + phone + ";path=/;expires=" + exdate.toGMTString()
+      window.document.cookie = "userPwd" + "=" + pwd + ";path=/;expires=" + exdate.toGMTString()
+    },
+    f_getCookie () {
+      if (document.cookie.length > 0) {
+        const arr = document.cookie.split('; ')
+        for (let i = 0; i < arr.length; i++) {
+          const arr2 = arr[i].split('=')
+          if (arr2[0] == 'userName') {
+              this.v_phone = arr2[1]
+          } else if (arr2[0] == 'userPwd') {
+              this.v_password = arr2[1]
+          }
+        }
+      }
+      if (this.v_phone && this.v_password) {
+        this.f_login()
+      }
     }
   }
 }

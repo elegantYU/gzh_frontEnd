@@ -15,10 +15,6 @@
         登录
       </div>
     </div>
-    <!-- <div class="login_detail clearfix">
-      <span @click="f_forget">忘记密码</span>
-      <span>没有账号？<i @click="f_register">立即注册</i></span>
-    </div> -->
   </div>
 </template>
 
@@ -72,7 +68,7 @@ export default {
     f_switch () {
       this.v_switch = !this.v_switch
       this.v_open = !this.v_open
-    }
+    },
   }
 }
 </script>

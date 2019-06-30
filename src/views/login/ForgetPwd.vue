@@ -2,10 +2,6 @@
   <div class="reg_wrapper">
     <img src="../../assets/images/start_logo.png" alt="">
     <div class="reg_content">
-      <!-- <div class="reg_input">
-        <span></span>
-        <input type="text" placeholder="请输入用户名" v-model="v_name">
-      </div> -->
       <div class="reg_input">
         <span></span>
         <input type="text" placeholder="请输入手机号" maxlength="11" v-model="v_phone">
@@ -24,16 +20,14 @@
         <input type="password" placeholder="确认密码" v-model="v_again">
       </div>
       <div class="reg_submit" @click="f_submit">
-        注册
+        重新注册
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { setTimeout, clearTimeout } from 'timers';
 export default {
-  name: 'Register',
   data () {
     return {
       v_name: '',
@@ -61,6 +55,7 @@ export default {
     } catch (e) {
       // console.log(e)
     }
+    this.f_setCookie('', '', -1)
   },
   methods: {
     f_submit () {
@@ -68,8 +63,6 @@ export default {
         phoneNum: this.v_phone,
         password: this.v_password,
         smsCode: this.v_code,
-        userName: this.$store.state.wxInfo.nickname,
-        headIcon: this.$store.state.wxInfo.headimgurl
       }
 
       if (this.v_phone && this.v_code && this.v_password && this.v_again) {
@@ -79,9 +72,8 @@ export default {
           return
         }
         this.$http
-          .post('/admin/user/register', params)
+          .post('/admin/user/forget/password', params)
           .then(res => {
-            console.log('注册', res)
             if (res.data.success) {
               this.$toast('注册成功')
               this.$router.push({ name: 'login' })
@@ -122,7 +114,13 @@ export default {
         this.v_time--
         this.f_countDown()
       }, 1000)
-    }
+    },
+    f_setCookie (phone, pwd, exdays = 1) {
+      let exdate = new Date()
+      exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays)
+      window.document.cookie = "userName" + "=" + phone + ";path=/;expires=" + exdate.toGMTString()
+      window.document.cookie = "userPwd" + "=" + pwd + ";path=/;expires=" + exdate.toGMTString()
+    },
   }
 }
 </script>

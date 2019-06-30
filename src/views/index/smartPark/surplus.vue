@@ -19,7 +19,11 @@
         <div>{{v.NAME}}</div>
         <div class="surplus-nearby-red">{{v.num}}</div>个,距离
         <div class="surplus-nearby-red">{{distance}}</div>
-        <div><span class="arrow-km">km</span><img :src="Arrow" class="arrow" /></div>
+        <div>
+          <span class="arrow-km">km</span>
+          <img :src="Arrow" class="arrow"/>
+          <a :href="'https://uri.amap.com/marker?position='+ v.longitude + ',' + v.latitude +'&name='"></a>
+        </div>
       </div>
     </div>
   </div>

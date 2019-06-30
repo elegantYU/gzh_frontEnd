@@ -120,9 +120,10 @@ const router = new Router({
     { path: '/my/help/guide', name: 'helpGuide', meta: { title: '新手指引' }, component: () => import('../views/my/help/guide.vue') },
     // 缺省页 用户登录注册但是没有房子就出现这个
     { path: '/my/house/no', name: 'no', meta: { title: '我的房屋' }, component: () => import('../views/my/house/noHouse.vue') },
-    // 登录注册
+    // 登录注册 忘记尼玛
     { path: '/login', name: 'login', meta: { title: '登录' }, component: () => import('../views/login/Login.vue') },
     { path: '/register', name: 'register', meta: { title: '注册' }, component: () => import('../views/login/Register.vue') },
+    { path: '/forget', name: 'forget', meta: { title: '重新注册' }, component: () => import('../views/login/ForgetPwd.vue') },
     // 意见反馈
     { path: '/feedback', name: 'feedback', meta: { title: '意见反馈' }, component: () => import('../views/my/aboutus/feedback.vue') },
     { path: '/success', name: 'success', meta: { title: '反馈成功' }, component: () => import('../views/my/aboutus/success.vue') },

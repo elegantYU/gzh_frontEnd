@@ -46,7 +46,7 @@
       <div class="ns_upload">
         <b>图片<span>（最多三张）</span></b>
         <div class="ns_preview">
-          <div 
+          <div
             class="ns_preview_list"
             v-for="(v, i) in v_from.imgUrl"
             :key="i"

@@ -16,14 +16,15 @@
         v-for="(v, i) in v_list"
         :key="i"
       >
-        <div>{{v.NAME}}</div>
-        <div class="surplus-nearby-red">{{v.num}}</div>个,距离
-        <div class="surplus-nearby-red">{{distance}}</div>
-        <div>
-          <span class="arrow-km">km</span>
-          <img :src="Arrow" class="arrow"/>
-          <a :href="'https://uri.amap.com/marker?position='+ v.longitude + ',' + v.latitude +'&name='"></a>
-        </div>
+        <a :href="'https://uri.amap.com/marker?position='+ v.longitude + ',' + v.latitude +'&name='">
+          <div>{{v.NAME}}</div>
+          <div class="surplus-nearby-red">{{v.num}}</div>个,距离
+          <div class="surplus-nearby-red">{{distance}}</div>
+          <div>
+            <span class="arrow-km">km</span>
+            <img :src="Arrow" class="arrow"/>
+          </div>
+        </a>
       </div>
     </div>
   </div>
@@ -122,9 +123,12 @@ export default {
     font-size: 0.4rem;
   }
   .surplus-nearby-text-cont{
-    display: flex;
     margin-top: 0.3rem;
     font-size: 0.36rem;
+    a{
+      display: flex;
+      color: #333;
+    }
     .surplus-nearby-red{
       color: red;
     }

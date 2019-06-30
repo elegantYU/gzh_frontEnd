@@ -20,7 +20,7 @@ const router = new Router({
         // 预警
         { path: '/home/earlyWarning', name: 'earlyWarning', meta: { title: '预警处理' }, component: () => import('../views/index/earlyWarning/index.vue') },
         // 小区头条
-        { path: '/home/topicProperty', name: 'topicProperty', meta: { title: '小区头条' }, component: () => import('../views/index/topicProperty/index.vue') },
+        { path: '/home/topic', name: 'topic', meta: { title: '小区头条' }, component: () => import('../views/index/topic/index.vue') },
         // 邻里共享
         { path: '/home/neighbor', name: 'neighbor', component: () => import('../views/index/neighbor/index.vue') },
         // 失物招领
@@ -36,6 +36,8 @@ const router = new Router({
             { path: '/shop/search', name: 'shopSearch', meta: { title: '生活超市' }, component: () => import('../views/index/shop/search.vue') }
           ]
         },
+        // 联系物业
+        { path: '/home/contact', name: 'contact', meta: { title: '联系物业' }, component: () => import('../views/index/contactProperty/contact.vue') }
       ]
     },
     // 选择地址
@@ -47,8 +49,11 @@ const router = new Router({
     // 预警事件详情
     { path: '/home/earlyWarning/equipment', name: 'equipment', meta: { title: '详情页' }, component: () => import('../views/index/earlyWarning/earlyDetail.vue') },
     { path: '/home/earlyWarning/detailIn', name: 'detailIn', meta: { title: '详情页' }, component: () => import('../views/index/earlyWarning/detailIn.vue') },
-    // 首页头条详情
-    { path: '/topicProperty/detailProperty', name: 'detailProperty', meta: { title: '详情' }, component: () => import('../views/index/topicProperty/detailProperty.vue') },
+    // 头条
+    { path: '/topic/detail', name: 'topicDetail', meta: { title: '详情' }, component: () => import('../views/index/topic/detail.vue') },
+    { path: '/topic/otherDetail', name: 'noticeDetail', meta: { title: '详情' }, component: () => import('../views/index/topic/policyDetail.vue') },
+    { path: '/topic/policydetail', name: 'policyDetail', meta: { title: '详情' }, component: () => import('../views/index/topic/policyDetail.vue') },
+    { path: '/topic/publish', name: 'topicPublish', meta: { title: '发布头条' }, component: () => import('../views/index/topic/publish.vue') },
     // 共享
     { path: '/neighbor/self', name: 'neighborSelf', meta: { title: '我要共享' }, component: () => import('../views/index/neighbor/self.vue') },
     { path: '/neighbor/detail', name: 'neighborDetail', meta: { title: '共享详情' }, component: () => import('../views/index/neighbor/detail.vue') },

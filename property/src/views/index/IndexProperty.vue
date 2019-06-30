@@ -103,14 +103,14 @@ export default {
       console.log('打开通知页面')
     },
     f_moreTopic () {
-      this.$router.push({ name: 'topicProperty' })
+      this.$router.push({ name: 'topic' })
     },
     f_moveto (v) {
       this.$router.push({ name: v.path })
     },
     f_moveTopic (v) {
       console.log(v)
-      this.$router.push({ name: 'detailProperty', query: { id: v.id }})
+      this.$router.push({ name: 'topicDetail', query: { id: v.id }})
     },
     f_getTopic () {
       let params = {

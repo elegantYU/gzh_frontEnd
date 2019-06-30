@@ -8,7 +8,7 @@
       </div>
       <div class="tab_side tab_my" :class="v_home ? '' : 'tab_active'" @click="f_gomy">
         <i></i>
-        <span>我的</span>
+        <span>值班表</span>
       </div>
       <div class="tab_add" @click="f_publish"></div>
     </div>
@@ -29,8 +29,7 @@ export default {
       this.v_home = true
     },
     f_gomy () {
-      // 先验证登录状态
-      this.$router.replace({ name: 'my' })
+      this.$router.replace({ name: 'contact' })
       this.v_home = false
     },
     f_publish () {

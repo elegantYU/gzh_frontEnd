@@ -21,7 +21,18 @@ module.exports = {
         target: 'http://zjphtech.com',
         ws: true,
         changeOrigin: true
+      },
+      '/marker': {
+        target: 'https://uri.amap.com',
+        ws: true,
+        changeOrigin: true
       }
     }
+  },
+  configureWebpack: {
+    externals: {
+      'AMap': 'AMap' // 高德地图配置
+    }
   }
+
 }

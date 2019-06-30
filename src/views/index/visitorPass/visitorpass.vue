@@ -108,7 +108,7 @@
       </mu-bottom-sheet>
 
       <div class="visitor-password" @click="f_passWord">生成访客密码</div>
-      <div class="visitor-password-cont">二维码或数字密码</div>
+      <div class="visitor-password-cont">{{v_passType}}</div>
       <div class="visitor-password sendout">发送给好友</div>
       <div class="nulldiv"></div>
     </div>
@@ -117,6 +117,7 @@
 <script>
 import { stop, move } from '../../../utils/utils'
 import Axios from 'axios'
+import moment from 'moment'
 
 export default {
   name: "visitorpass",
@@ -125,11 +126,12 @@ export default {
       value1: undefined,
       v_images: [],
       v_forr:'',
+      v_passType:'生成二维码或数字密码',
       v_from: {
         communityName: '',
         time: '',
         title: '',
-        houseName: this.$store.state.house,
+        houseName: '',
         prpname: '',
         phone: '',
         identity: '',
@@ -169,6 +171,9 @@ export default {
     this.f_frequency()
     // this.formartTime(time)
     this.v_from.communityName = this.$store.state.village
+    this.v_from.houseName= this.$store.state.house[0].name
+    this.Value1 = moment(this.Value1).format('YYYY-MM-DD HH:mm:ss')
+    console.log(this.Value1)
   },
   wacth: {
 
@@ -216,17 +221,16 @@ export default {
     // 申请访客通行密码
     f_passWord () {
       if(this.v_from.time && this.v_from.prpname && this.v_from.phone && this.v_gender && this.v_from.identity && this.value1 ) {
-
         let params = {
           time: this.v_from.time,
           overNum: this.v_forr,
-          houseId: "17-1-302",
+          houseId: this.v_from.houseName,
           houseName: this.$store.state.village,
           visitorName: this.v_from.prpname,
           telephone: this.v_from.phone,
           gender: this.v_gender,
           visitorType: this.v_identityNum,
-          applyTime: '2019-07-07 11:11:11',
+          applyTime: this.Value1,
           passwordType: this.v_passwordNum,
           createUserId: this.$store.state.user.id,
           createUserName: this.$store.state.user.name,
@@ -239,6 +243,7 @@ export default {
             if (res.data.success) {
               this.$toast('获取成功')
               console.log(res)
+              this.v_passType=res.data.data.password
             } else {
               this.$toast('网络错误')
             }

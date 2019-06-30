@@ -126,7 +126,7 @@ export default {
       const params = Object.assign({}, this.v_form, { img: img, postBegin: start, postEnd: end })
 
       this.$http
-        .post('/admin/event/detail', params)
+        .post('/admin/event/wxCreate', params)
         .then(({ data: { success }}) => {
           if (success) {
             this.$toast('发布成功')

@@ -48,7 +48,7 @@
       </div>
       <div class="earlyDetali_div">
         <label>事件内容</label>
-        <div v-model="v_from.eventCont">{{v_from.eventCont}}</div>
+        <div>{{v_from.eventCont}}</div>
       </div>
       <div class="earlyDetali-bnt" @click="f_handle">办理</div>
     </div>

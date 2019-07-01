@@ -22,6 +22,11 @@ module.exports = {
         target: 'http://zjphtech.com',
         ws: true,
         changeOrigin: true
+      },
+      '/event': {
+        target: 'http://112.17.164.97:8856',
+        ws: true,
+        changeOrigin: true
       }
     }
   }

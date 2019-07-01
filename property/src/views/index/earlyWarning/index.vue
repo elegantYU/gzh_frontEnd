@@ -14,7 +14,7 @@
     <div class="early-tab-last" v-if="v_filterFlag" :class="{'active': v_filterFlag}">
       <div
           class="early-tab-lastitem"
-          v-for="(v, i) in v_tablast"
+          v-for="(v, i) in v_tablist"
           :key="i" :class="v.active ? 'active' : ''"
           @click="f_changeTablast(i)"
       >
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="early_router_wrapper" :class="v_filterFlag ? 'active' : ''">
-      <component :is="v_component"></component>
+      <component :is="v_component" :status="v_status"></component>
     </div>
   </div>
 </template>
@@ -40,19 +40,18 @@ export default {
       ],
       v_handle: {
         'Earlylist': [
-          { name: '全部', active: true },
-          { name: '待处理', active: false },
-          { name: '处理中', active: false },
-          { name: '已完成', active: false }
+          { name: '待处理', active: true, status: 1 },
+          { name: '处理中', active: false, status: 2 },
+          { name: '已完成', active: false, status: 0 }
         ],
         'Comprehensive': [
-          { name: '全部', active: true },
-          { name: '待处理', active: false },
-          { name: '处理中', active: false },
-          { name: '已完成', active: false }
+          { name: '待处理', active: true, status: 1 },
+          { name: '处理中', active: false, status: 2 },
+          { name: '已完成', active: false, status: 0 }
         ]
       },
-      v_tablast: [],
+      v_tablist: [],
+      v_status: 1,
       v_component: 'Earlylist',
       v_filterProp: 0,
       v_filterFlag: false
@@ -65,7 +64,7 @@ export default {
   methods: {
     f_filter () {
       this.v_filterFlag = !this.v_filterFlag
-      this.v_tablast = this.v_handle[this.v_component].slice()
+      this.v_tablist = this.v_handle[this.v_component].slice()
     },
     f_changeTabs (i) {
       this.v_filterFlag = false
@@ -75,8 +74,9 @@ export default {
     },
     f_changeTablast (i) {
       this.v_filterProp = i
-      this.v_tablast.map(v => v.active = false)
-      this.v_tablast[i].active = true
+      this.v_tablist.map(v => v.active = false)
+      this.v_tablist[i].active = true
+      this.v_status = this.v_tablist[i].status
     }
   }
 }

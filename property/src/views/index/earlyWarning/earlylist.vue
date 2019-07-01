@@ -1,50 +1,64 @@
 <template>
-    <div class="earlylist">
-      <ul class="earlylist-list" rel="container">
-        <mu-load-more :loading="v_loading" @load="f_load" :loaded-all="v_loadAll">
-          <mu-list>
-            <template v-for="(v,i) in v_earlylist">
-              <li :key="i" @click="f_detail">
-                <div class="earlylist-list-tit">{{v.name}}</div>
-                <div class="earlylist-list-cont">{{v.cont}}</div>
-                <div class="earlylist-list-date">
-                  <div>{{v.date}}</div>
-                  <span  class="myRep_detail_status" :class="v.sts === 3 ? 'myRep_status_warn' : v.sts === 6 ? 'myRep_status_success' : ''">{{v.sta}}</span>
-                </div>
-              </li>
-            </template>
-          </mu-list>
-        </mu-load-more>
-      </ul>
-    </div>
+  <div class="earlylist">
+    <ul class="earlylist-list" rel="container">
+      <li v-for="(v,i) in v_earlylist" :key="i" @click="f_detail(v)">
+        <div class="earlylist-list-tit">{{v.title}}</div>
+        <div class="earlylist-list-cont">{{v.content}}</div>
+        <div class="earlylist-list-date">
+          <div>{{v.startTime}}</div>
+          <span  class="myRep_detail_status">{{v.statusName}}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
 export default {
   data () {
     return {
-      v_earlylist: [
-        { name: '标题一', cont: '我是内容我是内容我是内容我是内容我是内容我是内容我是内容', date: '2019-06-24 10:54:53', sta: '待处理' },
-        { name: '标题二', cont: '内容是我内容是我内容是我内容是我内容是我内容是我内容是我', date: '2019-06-24 10:54:53', sta: '待处理' },
-        { name: '标题三', cont: '谁是内容谁是内容谁是内容谁是内容谁是内容谁是内容谁是内容', date: '2019-06-24 10:54:53', sta: '处理中' },
-        { name: '标题四', cont: '内容在哪内容在哪内容在哪内容在哪内容在哪内容在哪内容在哪', date: '2019-06-24 10:54:53', sta: '已完成' }
-      ],
-      v_loading: false,
-      v_loadAll: true
+      v_earlylist: [],
     }
   },
-  methods: {
-    f_detail () {
-      this.$router.push({ name: 'equipment' })
-    },
-    f_load () {
-      this.v_loading = true
-      setTimeout(() => {
-        this.v_loading = false
-        this.v_listNum++
-        this.f_getList()
-      }, 1000)
+  props: {
+    status: {
+      type: Number
     }
+  },
+  watch: {
+    status: {
+      handler (now) {
+        this.v_earlylist = []
+        this.f_getList()
+      }
+    }
+  },
+  mounted () {
+    this.f_getList()
+  },
+  methods: {
+    f_getList () {
+      const params = this.status === 0 
+      ? {
+          userId: this.$store.state.user.id,
+          orgCode: this.$store.state.villageCode,
+        }
+      : {
+          userId: this.$store.state.user.id,
+          orgCode: this.$store.state.villageCode,
+          status: this.status
+        }
+
+      this.$http
+        .post('/event/current/mobile/device/deviceWarningList', { params })
+        .then(({ data: { rows }}) => {
+          this.v_earlylist.push(...rows)
+          console.log('返回的是什么玩意', rows)
+        })
+    },
+    f_detail (v) {
+      this.$router.push({ name: 'equipment', query: { id: v.id, status: this.status }})
+    },
   }
 }
 </script>
@@ -56,7 +70,7 @@ export default {
   .earlylist-list{
     li{
       background-color: white;
-      height: 1.6rem;
+      height: 1.8rem;
       padding: 0.1rem 0.2rem;
       margin-bottom: 0.2rem;
       .earlylist-list-tit{

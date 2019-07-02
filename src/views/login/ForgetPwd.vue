@@ -118,8 +118,8 @@ export default {
     f_setCookie (phone, pwd, exdays = 1) {
       let exdate = new Date()
       exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays)
-      window.document.cookie = "userName" + "=" + phone + ";path=/;expires=" + exdate.toGMTString()
-      window.document.cookie = "userPwd" + "=" + pwd + ";path=/;expires=" + exdate.toGMTString()
+      window.document.cookie = "userPhone" + "=" + phone + ";path=/;expires=" + exdate.toGMTString()
+      window.document.cookie = "userPsd" + "=" + pwd + ";path=/;expires=" + exdate.toGMTString()
     },
   }
 }

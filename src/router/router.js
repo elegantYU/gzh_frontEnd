@@ -48,7 +48,9 @@ const router = new Router({
         // 头条
         { path: '/home/topic', name: 'topic', meta: { title: '小区头条' }, component: () => import('../views/index/all/topic/index.vue') },
         // 联系物业
-        { path: '/home/contact', name: 'contact', meta: { title: '联系物业' }, component: () => import('../views/index/all/contactProperty/contact.vue') }
+        { path: '/home/contact', name: 'contact', meta: { title: '联系物业' }, component: () => import('../views/index/all/contactProperty/contact.vue') },
+        // 诉求建议
+        { path: '/home/appealList', name: 'appealList', meta: { title: '我的诉求' }, component: () => import('../views/index/all/advance/list.vue') }
       ]
     },
     // 选择地址
@@ -116,7 +118,8 @@ const router = new Router({
     // 功能介绍
     { path: '/function', name: 'function', meta: { title: '功能介绍' }, component: () => import('../views/my/aboutus/function.vue') },
     // 诉求建议
-    { path: '/appeal', name: 'appeal', meta: { title: '诉求建议' }, component: () => import('../views/index/all/appealAdvice.vue') },
+    { path: '/appeal', name: 'appeal', meta: { title: '诉求建议' }, component: () => import('../views/index/all/advance/appealAdvice.vue') },
+    { path: '/appeal/detail', name: 'appealDetail', meta: { title: '诉求详情' }, component: () => import('../views/index/all/advance/detail.vue') },
     //  我的活动
     { path: '/active', name: 'active', meta: { title: '我的活动' }, component: () => import('../views/my/active/index.vue') }
   ]

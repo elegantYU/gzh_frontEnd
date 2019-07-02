@@ -70,6 +70,9 @@ export default {
       this.v_filterFlag = false
       this.v_tabs.map(v => v.active = false)
       this.v_tabs[i].active = true
+      // this.v_tablist.map(v => v.active = false)
+      // this.v_tablist[0].active = true
+      // this.v_status = this.v_tablist[0].status
       this.v_component = this.v_tabs[i].component
     },
     f_changeTablast (i) {
@@ -140,7 +143,8 @@ export default {
       }
     }
     .early_router_wrapper{
-      height: 100%;
+      background-color: #efeff4;
+      padding-bottom: 1.2rem;
       &.active{
         top: 1.9rem;
       }

@@ -100,17 +100,17 @@ export default {
     f_setCookie (phone, pwd, exdays = 1) {
       let exdate = new Date()
       exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays)
-      window.document.cookie = "userName" + "=" + phone + ";path=/;expires=" + exdate.toGMTString()
-      window.document.cookie = "userPwd" + "=" + pwd + ";path=/;expires=" + exdate.toGMTString()
+      window.document.cookie = "userPhone" + "=" + phone + ";path=/;expires=" + exdate.toGMTString()
+      window.document.cookie = "userPsd" + "=" + pwd + ";path=/;expires=" + exdate.toGMTString()
     },
     f_getCookie () {
       if (document.cookie.length > 0) {
         const arr = document.cookie.split('; ')
         for (let i = 0; i < arr.length; i++) {
           const arr2 = arr[i].split('=')
-          if (arr2[0] == 'userName') {
+          if (arr2[0] == 'userPhone') {
               this.v_phone = arr2[1]
-          } else if (arr2[0] == 'userPwd') {
+          } else if (arr2[0] == 'userPsd') {
               this.v_password = arr2[1]
           }
         }

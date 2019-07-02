@@ -23,7 +23,7 @@ module.exports = {
         ws: true,
         changeOrigin: true
       },
-      '/event': {
+      '/applet': {
         target: 'http://112.17.164.97:8856',
         ws: true,
         changeOrigin: true

@@ -38,23 +38,25 @@ export default {
   },
   methods: {
     f_getList () {
-      const params = this.status === 0 
-      ? {
-          userId: this.$store.state.user.id,
-          orgCode: this.$store.state.villageCode,
-        }
-      : {
+      const params = {
           userId: this.$store.state.user.id,
           orgCode: this.$store.state.villageCode,
           status: this.status
         }
 
-      this.$http
-        .post('/event/current/mobile/device/deviceWarningList', { params })
-        .then(({ data: { rows }}) => {
-          this.v_earlylist.push(...rows)
-          console.log('返回的是什么玩意', rows)
-        })
+      if (this.status === 0) {
+        this.$http
+          .post(`/applet/event/current/mobile/device/completeWarningList?userId=${this.$store.state.user.id}&orgCode=${this.$store.state.villageCode}`)
+          .then(({ data: { rows }}) => {
+            this.v_earlylist.push(...rows)
+          })
+      } else {
+        this.$http
+          .get('/applet/event/current/mobile/device/deviceWarningList', { params })
+          .then(({ data: { rows }}) => {
+            this.v_earlylist.push(...rows)
+          })
+      }
     },
     f_detail (v) {
       this.$router.push({ name: 'equipment', query: { id: v.id, status: this.status }})

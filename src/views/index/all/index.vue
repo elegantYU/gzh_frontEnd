@@ -69,7 +69,7 @@ export default {
           this.$router.push({name: 'pet'})
           break;
         case '诉求建议':
-          this.$router.push({name: 'appeal'})
+          this.$router.push({name: 'appealList'})
           break;
         case '快递服务':
           window.location.href = 'https://m.kuaidi100.com/app/?coname=chenjunqi'

@@ -41,7 +41,7 @@
           </div>
           <div class="earlyDetali_input">
             <label>督办状态</label>
-            <input type="text" readonly v-model="v_from.oversee_status_name">
+            <input type="text" readonly v-model="v_from.overseeStatusName">
           </div>
           <div class="earlyDetali_input">
             <label>承办部门</label>
@@ -57,7 +57,7 @@
           </div>
           <div class="earlyDetali_div">
             <label>事件内容</label>
-              <div>{{v_from.content}}</div>
+            <div>{{v_from.content}}</div>
           </div>
           <div class="earlyDetali-bnt" @click="f_submit" v-if="status">{{ btnText }}</div>
           <!-- popup -->
@@ -79,7 +79,7 @@
               <p>TIPS: 提交后无法更改，请确保信息的正确</p>
               <span @click="f_handle">提交</span>
             </div>
-            <div class="pop_close"></div>
+            <div class="pop_close"  @click="f_close"></div>
           </div>
         </div>
       </div>
@@ -123,9 +123,9 @@ export default {
       }
 
       this.$http
-        .get('/event/current/mobile/device/deviceWarningShow', { params })
-        .then(res => {
-          console.log('设备预警的详情', )
+        .get('/applet/event/current/mobile/device/deviceWarningShow', { params })
+        .then(({ data }) => {
+          this.v_from = Object.assign({}, data)
         })
     },
     f_submit () {
@@ -136,7 +136,7 @@ export default {
         }
 
         this.$http
-          .get('/event/current/mobile/device/deviceDomainAccept', { params })
+          .post('/applet/event/current/mobile/device/deviceDomainAccept', params)
           .then(res => {
             if (res.data.flag) {
               this.$router.back()
@@ -182,6 +182,7 @@ export default {
   background-color: #efeff4;
   .e_content{
     height: auto;
+    background-color: #efeff4;
     padding-bottom: 1.2rem;
     overflow: auto;
   }
@@ -255,6 +256,7 @@ export default {
     padding: 0.3rem 0;
     margin-left: auto;
     font-size: 0.28rem;
+    line-height: 1.5em;
   }
 }
 

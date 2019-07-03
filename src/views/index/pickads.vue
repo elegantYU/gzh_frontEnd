@@ -60,7 +60,8 @@ export default {
       v_area: [],
       v_street: [],
       v_community: [],
-      v_residentia: []
+      v_residentia: [],
+      v_rightThrottle: true
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -164,7 +165,10 @@ export default {
     f_right (v, i) {
       this.activeIndex = 0
       this.v_activeIndex++
-      this.v_nav.splice(this.v_activeIndex, 1, v)
+      if (this.v_rightThrottle) {
+        this.v_nav.splice(this.v_activeIndex, 1, v)
+        this.v_rightThrottle = false
+      }
       // 点击右侧 前进步数
       if (this.v_activeIndex > 4) {
         const obj = {
@@ -180,7 +184,6 @@ export default {
         this.$store.commit('setCurrentPlace', obj)
         this.$store.commit('setVillage', this.v_nav[5].name)
         this.$store.commit('setVillageCode', this.v_nav[5].orgCode)
-        console.log('所有信息', obj, this.v_nav, obj)
         this.f_savePlace(obj)
         this.$router.push({ name: 'index' })
         return
@@ -190,6 +193,7 @@ export default {
       this.f_getList(v, i)
         .then(r => {
           this.v_right = this.v_current.slice(0)
+          this.v_rightThrottle = true
         })
     },
     // 点击nav

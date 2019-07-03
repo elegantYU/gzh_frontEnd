@@ -78,7 +78,7 @@
           <label>互换时间</label>
           <span>
             <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_start" type="dateTime" landscape></mu-date-input>
-            <mu-date-input container="bottomSheet" :should-disable-date="f_endTimeRules" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_end" type="dateTime" landscape></mu-date-input>
+            <mu-date-input container="bottomSheet" :should-disable-date="f_endTimeRules" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_endDate" type="dateTime" landscape></mu-date-input>
           </span>
         </div>
         <!-- 资源共享 -->
@@ -108,12 +108,10 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="ns_preview_add" @click="f_upload">
-            <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
-          </div>
+          <div class="ns_preview_add" @click="f_upload"></div>
         </div>
       </div>
-      <div class="ns_submit" @click="f_validate">发布</div>
+      <a class="ns_submit" @click="f_validate">发布</a>
       <!-- 类型 -->
       <mu-bottom-sheet :open.sync="v_typeFlag">
         <mu-list>
@@ -202,7 +200,8 @@ export default {
         villageCode: ''     // 小区code
       },
       v_start: '',
-      v_end: ''
+      v_end: '',
+      v_endDate: ''
     }
   },
   computed: {
@@ -253,6 +252,28 @@ export default {
         }
       } else {
         this.v_from.endTime = this.v_end = ''
+        this.$toast({
+          msg: '请先选择开始时间',
+          time: 1500
+        })
+      }
+    },
+    'v_endDate': function (now, past) {
+      let start = this.v_from.startTime
+      let startTime = new Date(start).getTime()
+      if (now && start) {
+        let endTime = new Date(now).getTime()
+        if (endTime < startTime) {
+          this.v_from.endTime = start
+          this.v_from.startTime = new Date(endTime).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
+          const cache = this.v_start
+          this.v_start = this.v_endDate
+          this.v_endDate = cache
+        } else {
+          this.v_from.endTime = `${date} ${endTime}`
+        }
+      } else {
+        this.v_from.endTime = this.v_endDate = ''
         this.$toast({
           msg: '请先选择开始时间',
           time: 1500
@@ -646,6 +667,7 @@ export default {
       }
     }
     .ns_submit{
+      display: block;
       margin: 0 0.3rem; 
       height: 0.9rem;
       background-color: #f73476;

@@ -34,12 +34,10 @@ export default {
 
       this.$http.get('/obtain/notice/pageList', {params})
         .then(res => {
-          console.log(res.data)
           this.num = res.data.data
         })
     },
     jump(v) {
-      console.log(v)
       this.$router.push({name: "detailss", query: v})
     }
   }

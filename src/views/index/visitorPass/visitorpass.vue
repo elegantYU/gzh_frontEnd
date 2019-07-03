@@ -108,7 +108,10 @@
       </mu-bottom-sheet>
 
       <div class="visitor-password" @click="f_passWord">生成访客密码</div>
-      <div class="visitor-password-cont">{{v_passType}}</div>
+      <div class="visitor-password-cont" v-if="v_passType == 2">{{v_password}}</div>
+      <div class="visitor-password-cont" v-if="v_passType == 1">
+        <img :src="v_password" alt="">
+      </div>
       <div class="visitor-password sendout">发送给好友</div>
       <div class="nulldiv"></div>
     </div>
@@ -116,7 +119,6 @@
 
 <script>
 import { stop, move } from '../../../utils/utils'
-import Axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -124,9 +126,9 @@ export default {
   data () {
     return {
       value1: undefined,
-      v_images: [],
       v_forr:'',
-      v_passType:'生成二维码或数字密码',
+      v_password:'生成二维码或数字密码',
+      v_passType: 1,
       v_from: {
         communityName: '',
         time: '',
@@ -175,14 +177,7 @@ export default {
     this.Value1 = moment(this.Value1).format('YYYY-MM-DD HH:mm:ss')
     console.log(this.Value1)
   },
-  wacth: {
-
-  },
   methods: {
-
-    // formartTime(time){
-    //   return new Date(time.replace(/-/g,"/")).Format("yyyy/MM/dd")
-    // },
     f_upload (e) {
       if (this.v_from.imgUrl.length > 2) {
         this.$toast('最多三张图片')
@@ -209,12 +204,11 @@ export default {
     //访客次数
     f_frequency () {
       const params = {
-        villageCode : '330105001001001'
+        villageCode : this.$store.state.villageCode
       }
 
       this.$http.get('/admin/visit/getVisitTime', {params} )
         .then(res=>{
-          console.log(res.data.data.applyNum.overTime)
           this.v_forr=res.data.data.applyNum.overTime
         })
     },
@@ -234,7 +228,7 @@ export default {
           passwordType: this.v_passwordNum,
           createUserId: this.$store.state.user.id,
           createUserName: this.$store.state.user.name,
-          imgurl: JSON.stringify(this.v_from.imgUrl),
+          imgUrl: JSON.stringify(this.v_from.imgUrl),
           villageCode: this.$store.state.villageCode
         }
 
@@ -242,8 +236,7 @@ export default {
           .then(res => {
             if (res.data.success) {
               this.$toast('获取成功')
-              console.log(res)
-              this.v_passType=res.data.data.password
+              this.v_password = res.data.data.password
             } else {
               this.$toast('网络错误')
             }
@@ -396,6 +389,13 @@ export default {
     line-height: 2rem;
     color: rgb(178,178,178);
     font-size: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+      width: 1.8rem;
+      height: 1.8rem;
+    }
   }
   .nulldiv{
     height: 2rem;

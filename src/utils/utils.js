@@ -65,9 +65,22 @@ const baseToBlob = (dataurl) => {
   return new File([u8arr], 'image', { type: mime })
 }
 
-function isIos () {
+const isIos = () => {
   const u = navigator.userAgent
   return u.indexOf('iPhone') > -1 || u.indexOf('Mac OS') > -1
 }
 
-export { deviceRem, dateFormat, stop, move, throttle, getQueryString, baseToBlob, isIos }
+const initConfirm = () => {
+  window.confirm = function (message) {
+    let iframe = document.createElement('iframe')
+    iframe.style.display = 'none'
+    iframe.setAttribute('src', 'data:text/plain,')
+    document.documentElement.appendChild(iframe)
+    const alertFrame = window.frames[0]
+    const result = alertFrame.window.confirm(message)
+    iframe.parentNode.removeChild(iframe)
+    return result
+  }
+}
+
+export { deviceRem, dateFormat, stop, move, throttle, getQueryString, baseToBlob, isIos, initConfirm }

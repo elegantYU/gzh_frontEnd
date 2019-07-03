@@ -294,6 +294,7 @@ export default {
         input{
           width: calc(100% - 2.25rem);
           height: 100%;
+          font-size: 0.3rem;
           background-color: transparent;
         }
         span{

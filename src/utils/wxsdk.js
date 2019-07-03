@@ -22,11 +22,11 @@ const wxsdk = {
         })
       })
   },
-  chooseImage () {
+  chooseImage (num = 3) {
     return new Promise(resolve => {
       wx.ready(() => {
         wx.chooseImage({
-          count: 3,
+          count: num,
           sizeType: ['compressed'],
           sourceType: ['album'],
           success: res => {

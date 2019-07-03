@@ -75,7 +75,7 @@ export default {
               vm.$store.commit('setCurrentPlace', res)
               vm.$store.commit('setVillage', res.village)
               vm.$store.commit('setVillageCode', res.villageCode)
-              vm.$router.push({ name: 'index' })
+              vm.$router.replace({ name: 'index' })
             }
           })
       }
@@ -185,7 +185,7 @@ export default {
         this.$store.commit('setVillage', this.v_nav[5].name)
         this.$store.commit('setVillageCode', this.v_nav[5].orgCode)
         this.f_savePlace(obj)
-        this.$router.push({ name: 'index' })
+        this.$router.replace({ name: 'index' })
         return
       }
 

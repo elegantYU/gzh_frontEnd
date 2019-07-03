@@ -52,10 +52,11 @@ export default {
       return this.$store.state.village
     },
     sts () {
-      if (this.v_form.sts) {
+      if (this.v_form.sts == 1) {
         return '已处理'
+      } else {
+        return '待审核'
       }
-      return '待审核'
     }
   },
   mounted () {

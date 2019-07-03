@@ -35,7 +35,7 @@ export default {
       this.$router.push({ name: this.v_list[i].path })
     },
     f_back () {
-      this.$router.go(-1)
+      this.$router.replace({ name: 'index' })
     }
   }
 }

@@ -7,7 +7,7 @@ Vue.use(Router)
 const baseUrl = 'http://zjphtech.com'
 
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes: [
     { path: '/', name: 'app', meta: { title: '首页' }, components: () => import('../App.vue') },

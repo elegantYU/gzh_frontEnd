@@ -12,7 +12,10 @@
         </div>
         <div class="vi_input">
           <label>邀请方</label>
-          <input type="text" readonly v-model="v_from.houseName" placeholder="请选择房屋">
+          <mu-select v-model="v_from.houseId" :solo="true" placeholder="请选择房屋">
+            <mu-option v-for="(v,i) in v_house" :key="i" :label="v.name" :value="v.house"></mu-option>
+          </mu-select>
+          <!-- <input type="text" readonly v-model="v_from.houseName" placeholder="请选择房屋"> -->
           <i></i>
         </div>
         <div class="vi_input">
@@ -36,9 +39,7 @@
         <div class="vi_input">
           <label>到访时间</label>
           <div class="vi_input-time">
-              <mu-col span="9" md="1" sm="1">
-                <mu-date-input v-model="value1"  full-width container="dialog" underline-color="white" placeholder="请选择到访时间"  :solo="true"></mu-date-input>
-              </mu-col>
+            <mu-date-input v-model="value1"  full-width container="dialog" underline-color="white" placeholder="请选择到访时间"  :solo="true"></mu-date-input>
           </div>
         </div>
         <div class="vi_input">
@@ -133,7 +134,7 @@ export default {
         communityName: '',
         time: '',
         title: '',
-        houseName: '',
+        houseId: '',
         prpname: '',
         phone: '',
         identity: '',
@@ -166,34 +167,40 @@ export default {
       v_passFlag: false,
       v_timeNum:'',
       v_identityNum:'',
-      v_passwordNum:''
+      v_passwordNum:'',
+      v_house: []
     }
   },
   mounted () {
     this.f_frequency()
     // this.formartTime(time)
     this.v_from.communityName = this.$store.state.village
-    this.v_from.houseName= this.$store.state.house[0].name
+    this.v_house = this.$store.state.house
     this.Value1 = moment(this.Value1).format('YYYY-MM-DD HH:mm:ss')
     console.log(this.Value1)
   },
   methods: {
     f_upload (e) {
-      if (this.v_from.imgUrl.length > 2) {
-        this.$toast('最多三张图片')
+      if (this.v_from.imgUrl.length > 0) {
+        this.$toast('最多一张图片')
         return
       }
 
-      this.$wxsdk.chooseImage()
+      this.$wxsdk.chooseImage(1)
         .then(({ localIds }) => {
+          this.$toast({
+            time: 3000,
+            msg: '图片加载中...'
+          })
           localIds.map(v => {
             this.$wxsdk.getLocalImgData(v)
               .then(({ localData }) => {
-                const from = new FromData()
+                const from = new FormData()
                 from.append("base64", localData)
                 this.$http
                   .post('/admin/file/upload2', from)
                   .then(({data: { data }}) => {
+                    this.$toast('加载完毕')
                     this.v_from.imgUrl.push(data)
                   })
               })
@@ -204,12 +211,12 @@ export default {
     //访客次数
     f_frequency () {
       const params = {
-        villageCode : this.$store.state.villageCode
+        villageCode : 330105001001001 // this.$store.state.villageCode
       }
 
-      this.$http.get('/admin/visit/getVisitTime', {params} )
+      this.$http.get('/admin/visit/getVisitTime', { params })
         .then(res=>{
-          this.v_forr=res.data.data.applyNum.overTime
+          this.v_forr = res.data.data.applyNum.overTime
         })
     },
     // 申请访客通行密码
@@ -326,6 +333,12 @@ export default {
       height: 100%;
       background-color: transparent;
     }
+    .mu-input{
+      padding: 0;
+      min-height: 0;
+      height: 100%;
+      font-size: 0.3rem;
+    }
     .vi_input-tb{
       display: block;
       font-size: 0.3rem;
@@ -334,7 +347,6 @@ export default {
       height: 50%;
       background-color: transparent;
     }
-
     p{
       line-height: 0.8rem;
       margin-right: 1.2rem;
@@ -346,9 +358,9 @@ export default {
       top: 50%;
       left: 50%;
       transform: translate(-50%,-50%);
+      display: flex;
     }
   }
-
 
   .visitor{
     background-color: #efeff4;
@@ -464,30 +476,32 @@ export default {
 
   .wr_upload{
     margin-bottom: 0.4rem;
-    b{
-      display: block;
-      font-size: 0.34rem;
-      color: #000;
-      line-height: 1.12rem;
-      text-align: left;
-      font-weight: normal;
-    }
-    p{
-      display: block;
-      font-size: 0.25rem;
-      color: darkgrey;
-      line-height: 1.12rem;
-      text-align: left;
-      font-weight: normal;
-    }
     .wr_preview{
       display: flex;
-      height: 1.74rem;
+      align-items: center;
+      height: 1.8rem;
       padding: 0.3rem;
       box-sizing: border-box;
       background-color: #fff;
+      position: relative;
+      b{
+        width: 2rem;
+        font-size: 0.34rem;
+        color: #000;
+        text-align: left;
+        font-weight: normal;
+      }
+      p{
+        position: absolute;
+        right: 0.3rem;
+        bottom:0;
+        font-size: 0.25rem;
+        color: darkgrey;
+        line-height: 1.75em;
+        text-align: left;
+        font-weight: normal;
+      }
       .wr_preview_list{
-        float: left;
         width: 1.16rem;
         height: 1.16rem;
         box-sizing: border-box;
@@ -501,11 +515,10 @@ export default {
         }
       }
       .wr_preview_add{
-        float: left;
         width: 1.16rem;
         height: 1.16rem;
         box-sizing: border-box;
-        margin: 0 0.5rem;
+        margin: 0 0.05rem;
         border: 0.01rem solid #cccccc;
         background-image: url('../../../assets/images/environment/repair_add.png');
         background-repeat: no-repeat;

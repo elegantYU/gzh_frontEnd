@@ -68,7 +68,7 @@ export default {
             this.$toast('登录成功')
             this.$store.dispatch('setUser', res.data.data)
             console.log(this.$store.state.user)
-            this.$router.push({ name: 'pickads' })
+            this.$router.replace({ name: 'pickads' })
             localStorage.setItem('wx-auth-count', 0)
           } else {
             this.$toast(res.data.msg)

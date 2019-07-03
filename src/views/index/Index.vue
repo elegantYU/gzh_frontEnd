@@ -150,14 +150,14 @@ export default {
       const { data: { data: result }} = await this.$http
         .get('/admin/member/house/all', { params })
       
+      console.log('房屋', result)
       if (result.length) {
         //  获取房屋地址和其对应的houseId
         const r = result.map(v => ({
           name: `${v.building}${v.unit}${v.room}`,
-          houseId: v.houseCode
+          house: v.houseCode
         }))
         this.$store.dispatch('setHouse', r)
-        console.log('房屋', this.$store.state.house)
       }
     }
   }

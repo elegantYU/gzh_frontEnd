@@ -13,7 +13,7 @@ export default {
       document.body.removeChild(document.getElementById('start_wrapper'))
       setTimeout(() => {
         document.getElementById('app').style.display = 'block'
-        this.$router.push({ name: 'login' })
+        this.$router.replace({ name: 'login' })
       }, 500)
     } catch (e) {
       console.log(e)
@@ -36,7 +36,7 @@ export default {
       const yLength = Math.abs(end.Y - start.Y)
       const len = xLength - yLength
       if (len > 100) {
-        this.$router.go(-1)
+        this.$router.back()
       }
     }
   }

@@ -39,11 +39,13 @@ export default {
         pageSize: 1000
       }
 
-      console.log('params', params)
       this.$http
         .get('/admin/complaint/getAllMeComSugg', { params })
         .then(({ data: { data: { list }}}) => {
-          list.length && this.v_list.push(...list)
+          if (list.length) {
+            list.reverse()
+            this.v_list.push(...list)
+          } 
         })
     },
     f_moveMy () {
@@ -93,11 +95,14 @@ export default {
     ul{
       margin-top: 1rem;
       width: 100%;
+      background-color: #fff;
       li{
         width: 100%;
         height: 0.9rem;
         line-height: 0.9rem;
         padding: 0 0.2rem;
+        background-color: #fff;
+        border-bottom: 1px solid #eee;
         display: flex;
         align-items: center;
         justify-content: space-between;

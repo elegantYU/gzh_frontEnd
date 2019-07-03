@@ -56,7 +56,7 @@ export default {
         //  获取房屋地址和其对应的houseId
         const r = result.map(v => ({
           name: `${v.building}${v.unit}${v.room}`,
-          houseId: v.houseId
+          houseId: v.house
         }))
         this.$store.dispatch('setHouse', r)
       }

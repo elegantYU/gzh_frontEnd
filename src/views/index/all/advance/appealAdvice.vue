@@ -120,12 +120,14 @@ export default {
     f_submit () {
       let params = Object.assign({}, this.v_from)
       params.imgUrl = JSON.stringify(this.v_images)
+
+      console.log('params', params)
       if (this.v_from.complaintTarget && this.v_from.content) {
         this.$http
           .post('/admin/complaint/addComOrSugg', params)
           .then(res => {
             this.$toast('已发送')
-            this.$router.go(-1)
+            this.$router.replace({ name: 'appealList' })
           })
       } else {
         this.$toast({
@@ -247,8 +249,12 @@ export default {
           height: 1.16rem;
           box-sizing: border-box;
           margin: 0 0.04rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           img{
-            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
           }
         }
         .wr_preview_add{

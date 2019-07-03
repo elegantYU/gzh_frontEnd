@@ -29,7 +29,7 @@
           <label>住户房屋</label>
           <div class="pop_box">
             <mu-select v-model="v_form.houseId" full-width  placeholder="请选择房屋">
-              <mu-option v-for="(v,i) in v_house" :key="i" :label="v.name" :value="v.houseId"></mu-option>
+              <mu-option v-for="(v,i) in v_house" :key="i" :label="v.name" :value="v.house"></mu-option>
             </mu-select>
           </div>
           <!-- <i></i> -->

@@ -69,14 +69,11 @@ export default {
             this.$store.dispatch('setUser', res.data.data)
             console.log(this.$store.state.user)
             this.$router.push({ name: 'pickads' })
-            localStorage.clear()
+            localStorage.setItem('wx-auth-count', 0)
           } else {
             this.$toast(res.data.msg)
           }
         })
-
-      // 下次进入重新授权
-      localStorage.clear()
     },
     f_forget () {
       this.$router.push({ name: 'forget' })

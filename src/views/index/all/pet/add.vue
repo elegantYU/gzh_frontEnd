@@ -140,6 +140,10 @@ export default {
       }
       this.$wxsdk.chooseImage()
         .then(({ localIds }) => {
+          this.$toast({
+            time: 3000,
+            msg: '图片加载中...'
+          })
           localIds.map(v => {
             this.$wxsdk.getLocalImgData(v)
               .then(({ localData }) => {
@@ -148,6 +152,7 @@ export default {
                 this.$http
                   .post('/admin/file/upload2', form)
                   .then(({data: { data }}) => {
+                    this.$toast('加载完成')
                     this.v_from.exemptionImg.push(data)
                   })
               })
@@ -174,6 +179,7 @@ export default {
     },
     f_submit () {
       let params = Object.assign({}, this.v_form)
+      params.exemptionImg = JSON.stringify(this.v_form.exemptionImg)
       params.exemptionTime = new Date(params.exemptionTime).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
       console.log(params)
 

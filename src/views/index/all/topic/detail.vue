@@ -82,7 +82,7 @@
             <label>房屋信息</label>
             <div class="td_sign_box">
               <mu-select label="Normal" solo v-model="v_house" full-width>
-                <mu-option v-for="(v, i) in v_houseList" :key="i" :label="v" :value="v"></mu-option>
+                <mu-option v-for="(v, i) in v_houseList" :key="i" :label="v.name" :value="v.name"></mu-option>
               </mu-select>
             </div>
             <i></i>
@@ -148,7 +148,7 @@ export default {
     this.v_id = this.$route.query.id
     this.f_addRate()
     this.f_getComments()
-    this.f_getHouse()
+    this.v_houseList = this.$store.state.house
   },
   methods: {
     f_addRate () {
@@ -194,19 +194,6 @@ export default {
           })
       }
       
-    },
-    f_getHouse () {
-      let params = {
-        memberId: this.$store.state.user.id
-      }
-
-      this.$http
-        .get('/admin/member/house/all', { params })
-        .then(res => {
-          if (res.data.data) {
-           this.v_houseList = res.data.data.map(v => `${v.building}${v.unit}${v.room}`)
-          }
-        })
     },
     f_getStatus () {
       let params = {

@@ -153,7 +153,7 @@ export default {
                   .post('/admin/file/upload2', form)
                   .then(({data: { data }}) => {
                     this.$toast('加载完成')
-                    this.v_from.exemptionImg.push(data)
+                    this.v_form.exemptionImg.push(data)
                   })
               })
           })

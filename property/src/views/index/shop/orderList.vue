@@ -137,7 +137,7 @@ export default {
 
       const { data: { data: result }} = await this.$http
         .get('/admin/seller/manage/info', { params })
-        
+
       if (Object.keys(result).length > 0){
         this.v_seller = Object.assign({}, result)
       }else {

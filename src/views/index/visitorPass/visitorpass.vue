@@ -20,7 +20,7 @@
         </div>
         <div class="vi_input">
           <label>访客姓名</label>
-          <input type="text"  v-model="v_from.prpname" placeholder="请输入访客姓名">
+          <input type="text" v-model="v_from.prpname" placeholder="请输入访客姓名">
         </div>
         <div class="vi_input">
           <label>联系方式</label>
@@ -61,7 +61,6 @@
             <p>请上传清晰的访客人脸照片</p>
           </div>
         </div>
-
 
 <!--      选择时间类型-->
       <mu-bottom-sheet :open.sync="v_timeFlag">
@@ -129,7 +128,7 @@ export default {
       value1: undefined,
       v_forr:'',
       v_password:'生成二维码或数字密码',
-      v_passType: 1,
+      v_passType: 2,
       v_from: {
         communityName: '',
         time: '',
@@ -181,7 +180,8 @@ export default {
   },
   methods: {
     f_upload (e) {
-      if (this.v_from.imgUrl.length > 0) {
+      console.log('进入上传', this.v_from.imgUrl)
+      if (this.v_from.imgUrl.length > 1) {
         this.$toast('最多一张图片')
         return
       }
@@ -211,7 +211,7 @@ export default {
     //访客次数
     f_frequency () {
       const params = {
-        villageCode : 330105001001001 // this.$store.state.villageCode
+        villageCode : this.$store.state.villageCode
       }
 
       this.$http.get('/admin/visit/getVisitTime', { params })
@@ -235,15 +235,17 @@ export default {
           passwordType: this.v_passwordNum,
           createUserId: this.$store.state.user.id,
           createUserName: this.$store.state.user.name,
-          imgUrl: JSON.stringify(this.v_from.imgUrl),
+          imgurl: JSON.stringify(this.v_from.imgUrl),
           villageCode: this.$store.state.villageCode
         }
 
+        console.log('所有参数', params)
         this.$http.post('/admin/visit/addVisit', params)
           .then(res => {
             if (res.data.success) {
               this.$toast('获取成功')
               this.v_password = res.data.data.password
+              this.v_passType = res.data.data.type
             } else {
               this.$toast('网络错误')
             }

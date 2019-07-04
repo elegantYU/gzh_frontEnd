@@ -22,7 +22,8 @@ const wxsdk = {
         })
       })
   },
-  chooseImage (num = 3) {
+  chooseImage (num) {
+    num = num || 3
     return new Promise(resolve => {
       wx.ready(() => {
         wx.chooseImage({

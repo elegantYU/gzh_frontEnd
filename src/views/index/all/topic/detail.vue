@@ -202,7 +202,7 @@ export default {
       }
 
       this.$http
-        .get('/notice/activity/detail', { params })
+        .get('/admin/event/detail', { params })
         .then(res => {
           if (res.data.result) {
             this.v_status = res.data.result.sts

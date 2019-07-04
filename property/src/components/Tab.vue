@@ -33,7 +33,7 @@ export default {
       this.v_home = false
     },
     f_publish () {
-      this.$router.replace({ name: 'publish' })
+      this.$router.replace({ name: 'earlyWarning' })
     }
   }
 }

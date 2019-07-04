@@ -28,7 +28,7 @@ export default {
     }
   },
   mounted () {
-    this.$router.push({ name: 'shopCategory' })
+    this.$router.replace({ name: 'shopCategory' })
   },
   methods: {
     f_moveCar () {

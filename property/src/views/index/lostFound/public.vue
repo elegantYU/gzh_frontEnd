@@ -13,7 +13,7 @@
               </div>
             </div>
             <div class="pub_item_right">
-              <img :src="JSON.parse(v.imgUrl)[0]" alt="">
+              <img :src="JSON.parse(v.imgUrl) && JSON.parse(v.imgUrl)[0]" alt="">
             </div>
           </div>
         </template>

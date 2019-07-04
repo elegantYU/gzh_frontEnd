@@ -120,6 +120,7 @@ export default {
       if (this.v_form.type && this.v_form.title && this.v_form.detail) {
         // 提交表单
         let params = {
+          address: this.$store.state.village,
           classify: this.v_form.submitType,
           title: this.v_form.title,
           content: this.v_form.detail,

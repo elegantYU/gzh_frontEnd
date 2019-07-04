@@ -155,19 +155,18 @@ export default {
         .post(`/admin/cart/changeCart?id=${this.v_list[i].id}&num=1`)
     },
     f_orderAll () {
-      let params
       if (this.v_delete) {
         //  删除
         const delArr = this.v_list.filter(v => v.active)
         if (delArr.length > 0) {
           const f = confirm('确认删除?')
           f && Promise.all(delArr.map(v => {
-            params = { id: v.id }
             return this.$http
-              .post('/admin/cart/del', params)
+              .post(`/admin/cart/del?id=${v.id}`)
           }))
           .then(res => {
             this.$toast('删除完成')
+            this.v_list = []
             this.f_getList()
           })
         } else {

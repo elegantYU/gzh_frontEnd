@@ -53,7 +53,7 @@ export default {
     },
     sts () {
       if (this.v_form.sts == 1) {
-        return '已处理'
+        return '已审核'
       } else {
         return '待审核'
       }

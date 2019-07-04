@@ -67,7 +67,8 @@ export default {
         createUserId: 0,
         createName: '',
         content: '',
-        villageCode: ''
+        villageCode: '',
+        imgUrl: ''
       },
       v_appealFlag: false,
       v_images: []

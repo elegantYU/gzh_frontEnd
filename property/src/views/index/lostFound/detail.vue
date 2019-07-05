@@ -36,7 +36,7 @@
         <b>图片</b>
         <div class="ld_img_wrapper">
           <div
-            v-for="(v, i) in imgs"
+            v-for="(v, i) in v_form.imgUrl"
             :key="i"
           >
             <img :src="v" alt="">
@@ -74,9 +74,6 @@ export default {
         : s = '进行中'
       return s
     },
-    imgs () {
-      return JSON.parse(v_form.imgUrl)
-    }
   },
   mounted () {
     this.f_getDetail()
@@ -90,7 +87,6 @@ export default {
       this.$http
         .get('/admin/lost/getLostFoundDetail', { params })
         .then(({data: {data}}) => {
-
           this.v_form = Object.assign({}, data)
           this.v_form.imgUrl = JSON.parse(data.imgUrl)
           this.$store.state.user.id == data.createUserId

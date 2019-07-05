@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import wxsdk from '../utils/wxsdk'
+// import { isIos } from '../utils/utils'
 
 Vue.use(Router)
-const baseUrl = 'http://zjphtech.com'
+const baseUrl = 'http://zjphtech.com/wy'
 
 const router = new Router({
   mode: 'history',
@@ -81,6 +82,12 @@ const router = new Router({
 router.afterEach((to, from, next) => {
   document.title = to.meta.title
   // 每个页面都注册config
+  if (window.__wxjs_is_wkwebview) {
+    if (window.entryUrl === '' || window.entryUrl === undefined) {
+      var url = `${baseUrl}${to.fullPath}`
+      window.entryUrl = url
+    }
+  }
   wxsdk.init(`${baseUrl}${to.fullPath}`)
 })
 

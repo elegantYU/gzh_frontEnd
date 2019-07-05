@@ -174,6 +174,7 @@ export default {
         rId: this.v_id,
         sts: this.v_sts
       }
+      
       this.$http
         .post('/admin/property/repair/changeStatus', params)
         .then(({ data }) => {

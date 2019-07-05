@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-// 可惜了 到最后还是没有用上
-// 图片上传使用的原生input file，之后的地图定位需要使用jssdk
 const wxsdk = {
   init (url) {
     const params = {

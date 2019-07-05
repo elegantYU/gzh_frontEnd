@@ -39,7 +39,7 @@
         <div class="vi_input">
           <label>到访时间</label>
           <div class="vi_input-time">
-            <mu-date-input v-model="value1"  full-width container="dialog" underline-color="white" placeholder="请选择到访时间"  :solo="true"></mu-date-input>
+            <mu-date-input v-model="visiteTime"  full-width container="dialog" underline-color="white" placeholder="请选择到访时间"  :solo="true"></mu-date-input>
           </div>
         </div>
         <div class="vi_input">
@@ -119,13 +119,12 @@
 
 <script>
 import { stop, move } from '../../../utils/utils'
-import moment from 'moment'
 
 export default {
   name: "visitorpass",
   data () {
     return {
-      value1: undefined,
+      visiteTime: '',
       v_forr:'',
       v_password:'生成二维码或数字密码',
       v_passType: 2,
@@ -175,12 +174,9 @@ export default {
     // this.formartTime(time)
     this.v_from.communityName = this.$store.state.village
     this.v_house = this.$store.state.house
-    this.Value1 = moment(this.Value1).format('YYYY-MM-DD HH:mm:ss')
-    console.log(this.Value1)
   },
   methods: {
     f_upload (e) {
-      console.log('进入上传', this.v_from.imgUrl)
       if (this.v_from.imgUrl.length > 1) {
         this.$toast('最多一张图片')
         return
@@ -221,7 +217,9 @@ export default {
     },
     // 申请访客通行密码
     f_passWord () {
-      if(this.v_from.time && this.v_from.prpname && this.v_from.phone && this.v_gender && this.v_from.identity && this.value1 ) {
+      const applyTime = new Date(this.visiteTime).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
+      console.log('时间格式化', applyTime)
+      if(this.v_from.time && this.v_from.prpname && this.v_from.phone && this.v_gender && this.v_from.identity && applyTime ) {
         let params = {
           time: this.v_from.time,
           overNum: this.v_forr,
@@ -231,7 +229,7 @@ export default {
           telephone: this.v_from.phone,
           gender: this.v_gender,
           visitorType: this.v_identityNum,
-          applyTime: this.Value1,
+          applyTime: applyTime,
           passwordType: this.v_passwordNum,
           createUserId: this.$store.state.user.id,
           createUserName: this.$store.state.user.name,
@@ -251,6 +249,7 @@ export default {
             }
           })
       }else {
+        console.log('判定字段', this.v_from.time , this.v_from.prpname , this.v_from.phone , this.v_gender , this.v_from.identity , applyTime)
         this.$toast({
           msg: '所填信息不完整',
           time: 1500

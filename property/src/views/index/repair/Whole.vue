@@ -71,14 +71,17 @@ export default {
         case 5:
           return '已完成'
           break
+        case 6: 
+          return '已评论'
+          break
       }
     },
     f_getList () {
       this.$http
         .get('/admin/property/repair/list', {
           params: {
-            villageCode: 330105001001004, //this.$store.state.villageCode
-            repairId: 4906, // this.$store.state.user.id
+            villageCode: this.$store.state.villageCode, //this.$store.state.villageCode
+            repairId: this.$store.state.user.id, // this.$store.state.user.id
             pageNum: this.v_listNum,
             pageSize: 10,
             status: this.sts ? this.sts : ''

@@ -92,6 +92,10 @@ export default {
 
       this.$wxsdk.chooseImage()
         .then(({ localIds }) => {
+          this.$toast({
+            msg: '图片加载中...',
+            time: 3000
+          })
           localIds.map(v => {
             this.$wxsdk.getLocalImgData(v)
               .then(({ localData }) => {
@@ -100,6 +104,7 @@ export default {
                 this.$http
                   .post('/admin/file/upload2', form)
                   .then(({data: { data }}) => {
+                    this.$toast('加载完成')
                     this.v_form.imgUrl.push(data)
                   })
               })
@@ -118,7 +123,7 @@ export default {
         this.$toast('请完善基本信息')
         return
       }
-      console.log('环境秩序', params)
+      console.log('失物招领', params)
       this.$http
         .post('/admin/lost/system/wx/addLostFound', params)
         .then(({data: {success}}) => {

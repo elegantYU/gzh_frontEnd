@@ -6,11 +6,11 @@
         <label>投诉对象:</label>
         <input type="text" readonly v-model="v_form.complaintTarget">
       </div>
-      <div class="d_input">
+      <div class="d_other" v-if="v_form.content">
         <span>详细描述:</span>
         <div>{{ v_form.content }}</div>
       </div>
-      <div class="d_input" v-if="v_img.length">
+      <div class="d_other" v-if="v_img.length">
         <span>图片:</span>
         <div class="d_imgs">
           <ul>
@@ -85,20 +85,23 @@ export default {
   height: 100%;
   background-color: #efeff4;
   h6{
-    background-color: #fff;
     font-size: 0.32rem;
     color: #999;
     line-height: 0.8rem;
   }
   .d_content{
     background-color: #efeff4;
-    padding: 0.2rem;
     .d_input{
       width: 100%;
       min-height: 0.9rem;
+      padding: 0 0.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
       label{
         display: block;
-        float: left;
         width: 2rem;
         height: 100%;
         font-size: 0.3rem;
@@ -106,20 +109,25 @@ export default {
         text-align: left;
       }
       input{
+        flex: 1;
         display: block;
         height: 0.9rem;
-        width: calc(100% - 2rem);
         font-size: 0.3rem;
         background-color: transparent;
       }
+    }
+    .d_other{
+      border-bottom: 1px solid #eee;
       span{
         display: block;
+        padding: 0 0.2rem;
         text-align: left;
         font-size: 0.3rem;
         height: 0.6rem;
         line-height: 0.6rem;
       }
       div{
+        background-color: #fff;
         text-align: left;
         text-indent: 2em;
         line-height: 1.5em;
@@ -127,9 +135,12 @@ export default {
         padding: 0.2rem 0;
       }
       .d_imgs{
-        height: 1.6rem;
+        background-color: #fff;
+        height: 2rem;
         ul{
+          width: 100%;
           height: 100%;
+          padding: 0.2rem;
           li{
             float: left;
             margin-right: 0.1rem;

@@ -122,13 +122,8 @@ export default {
     },
     f_submit () {
       if (this.status === 1) {
-        const params = {
-          id: this.v_from.id,
-          userId: this.$store.state.user.id
-        }
-
         this.$http
-          .post('/applet/event/current/mobile/comprehensive/comprehensiveAccept', params)
+          .post(`/applet/event/current/mobile/comprehensive/comprehensiveAccept?id=${this.v_from.id}&idNumber=${this.$store.state.user.idNo}`)
           .then(res => {
             if (res.data.flag) {
               this.$router.back()
@@ -148,14 +143,8 @@ export default {
         return
       }
 
-      const params = {
-        eventId: this.v_from.id,
-        dealUserId: this.$store.state.user.id,
-        ...this.v_popForm
-      }
-
       this.$http
-        .post('/applet/event/current/mobile/comprehensive/commentComprehensive', params)
+        .post(`/applet/event/current/mobile/comprehensive/commentComprehensive?dealUserName=${this.v_popForm.dealUserName}&mobile=${this.v_popForm.mobile}&content=${this.v_popForm.content}&eventId=${this.v_from.id}&idNumber=${this.$store.state.user.idNo}`)
         .then(res => {
           if (res.data.flag) {
             this.$router.back()

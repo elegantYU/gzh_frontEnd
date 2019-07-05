@@ -116,7 +116,7 @@ export default {
       v_detail: {},
       v_comments: [],
       v_total: 0,
-      v_status: 3,
+      v_status: 0,  // 报名状态
       v_submit: false,
       v_signup: false,
       v_houseList: [],
@@ -134,8 +134,11 @@ export default {
         case 2:
           return 'td_signup_3'
           break
-        case 0:
+        case 3:
           return 'td_signup_4'
+          break
+        case 0:
+          return ''
           break
       }
 
@@ -202,10 +205,12 @@ export default {
       }
 
       this.$http
-        .get('/admin/event/detail', { params })
+        .get('/notice/activity/detail', { params })
         .then(res => {
-          if (res.data.result) {
+          if (Object.keys(res.data.result).length) {
             this.v_status = res.data.result.sts
+          } else {
+            this.v_status = 0
           }
         })
     },
@@ -220,7 +225,6 @@ export default {
         .then(res => {
           console.log('detail', res.data);
           this.v_detail = Object.assign({}, res.data.data)
-          this.v_status = res.data.data.status
           this.f_getStatus()
         })
     },

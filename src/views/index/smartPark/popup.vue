@@ -209,18 +209,15 @@ export default {
             border-bottom: 1px solid #999999;
           }
           .mu-input{
+            display: block;
+            box-sizing: border-box;
+            margin: 0;
             padding: 0;
+            min-height: 0;
+            height: 0.7rem;
+            font-size: 0.3rem;
           }
         }
-        // &>i{
-        //   width: 0.25rem;
-        //   height: 100%;
-        //   background-image: url('../../../assets/images/repair/repair_arrow.png');
-        //   background-repeat: no-repeat;
-        //   background-position: center center;
-        //   background-size: contain;
-        //   vertical-align: middle;
-        // }
       }
     }
     .pop_btn{

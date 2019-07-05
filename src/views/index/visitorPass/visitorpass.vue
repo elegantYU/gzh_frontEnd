@@ -26,10 +26,10 @@
           <label>联系方式</label>
           <input type="text" v-model="v_from.phone" placeholder="请输入访客联系方式">
         </div>
-        <div class="vi_input">
+        <div class="vi_input ns_input_check">
           <label>性别</label>
-            <input type="radio" name="sex" value="male" class="vi_input-tb" @focus="f_gender"><p>男</p><br>
-            <input type="radio" name="sex" value="female" class="vi_input-tb" @focus="f_genders"><p>女</p>
+          <span @click="f_gender(1)"><i :class="v_gender === 1 ? 'ns_checked' : ''"></i>男</span>
+          <span @click="f_gender(0)"><i :class="v_gender === 0 ? 'ns_checked' : ''"></i>女</span>
         </div>
         <div class="vi_input">
           <label>访客身份</label>
@@ -112,7 +112,7 @@
       <div class="visitor-password-cont" v-if="v_passType == 1">
         <img :src="v_password" alt="">
       </div>
-      <div class="visitor-password sendout">发送给好友</div>
+      <!-- <div class="visitor-password sendout">发送给好友</div> -->
       <div class="nulldiv"></div>
     </div>
 </template>
@@ -159,7 +159,7 @@ export default {
         { name: '数字密码' }
       ],
       v_pasnbm:'',
-      v_gender:'',
+      v_gender: 1,
       v_timeFlag: false,
       v_idenFlag: false,
       v_passFlag: false,
@@ -256,11 +256,8 @@ export default {
         })
       }
     },
-    f_gender () {
-      this.v_gender='1'
-    },
-    f_genders () {
-      this.v_gender='2'
+    f_gender (n) {
+      this.v_gender = n
     },
     f_openType () {
       this.v_timeFlag = true
@@ -360,6 +357,32 @@ export default {
       left: 50%;
       transform: translate(-50%,-50%);
       display: flex;
+    }
+    &.ns_input_check{
+      span{
+        display: flex;
+        font-size: 0.3rem;
+        align-items: center;
+        width: 1.38rem;
+        height: 100%;
+        i{
+          display: inline-block;
+          width: 0.46rem;
+          height: 0.46rem;
+          border-radius: 50%;
+          border: 1px solid #cacaca;
+          vertical-align: -0.11rem;
+          margin-right: 0.2rem;
+          background: none;
+          &.ns_checked{
+            border: none;
+            background-image: url('../../../assets/images/neighbor/neighbor_checked.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 100% 100%;
+          }
+        }
+      }
     }
   }
 

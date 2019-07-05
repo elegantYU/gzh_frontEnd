@@ -344,7 +344,8 @@ export default {
           display: flex;
           align-items: center;
           img{
-            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
           }
         }
       }

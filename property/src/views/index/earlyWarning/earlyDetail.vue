@@ -130,13 +130,8 @@ export default {
     },
     f_submit () {
       if (this.status === 1) {
-        const params = {
-          id: this.v_from.id,
-          userId: this.$store.state.user.id
-        }
-
         this.$http
-          .post('/applet/event/current/mobile/device/deviceDomainAccept', params)
+          .post(`/applet/event/current/mobile/device/deviceDomainAccept?id=${this.v_from.id}&idNumber=${this.$store.state.user.idNo}`)
           .then(res => {
             if (res.data.flag) {
               this.$router.back()
@@ -155,15 +150,9 @@ export default {
         this.$toast('请填写完整')
         return
       }
-
-      const params = {
-        eventId: this.v_from.id,
-        dealUserId: this.$store.state.user.id,
-        ...this.v_popForm
-      }
-
+      
       this.$http
-        .post('/event/current/mobile/device/commentDevice', params)
+        .post(`/event/current/mobile/device/commentDevice?dealUserName=${this.v_popForm.dealUserName}&mobile=${this.v_popForm.mobile}&content=${this.v_popForm.content}&eventId=${this.v_from.id}&idNumber=${this.$store.state.user.idNo}`)
         .then(res => {
           if (res.data.flag) {
             this.$router.back()

@@ -34,6 +34,12 @@
           </div>
           <!-- <i></i> -->
         </div>
+        <div class="pop">
+          <label>住户身份</label>
+          <div class="pop_box">
+            <input type="text" readonly v-model="v_form.applyType">
+          </div>
+        </div>
         <div class="pop_item" v-if="parkInfo.type === 'B'">
           <label>访客身份</label>
           <div class="pop_box">
@@ -83,6 +89,7 @@ export default {
         type: '',
         houseId: '',
         relationship: '',
+        applyType: '物业办公室',
         orderTime: '',
         wechatUserId: '',
         orgCode: ''
@@ -138,7 +145,7 @@ export default {
       }
 
       this.$http
-        .post('/admin/member/parking/lot/applyParkingLot', params)
+        .post('/admin/member/parking/lot/systemApply', params)
         .then(({ data: { success }}) => {
           success ? this.$toast('预约成功') : this.$toast('预约失败')
           this.$emit('order')
@@ -209,18 +216,15 @@ export default {
             border-bottom: 1px solid #999999;
           }
           .mu-input{
+            display: block;
+            box-sizing: border-box;
+            margin: 0;
             padding: 0;
+            min-height: 0;
+            height: 0.7rem;
+            font-size: 0.3rem;
           }
         }
-        // &>i{
-        //   width: 0.25rem;
-        //   height: 100%;
-        //   background-image: url('../../../assets/images/repair/repair_arrow.png');
-        //   background-repeat: no-repeat;
-        //   background-position: center center;
-        //   background-size: contain;
-        //   vertical-align: middle;
-        // }
       }
     }
     .pop_btn{

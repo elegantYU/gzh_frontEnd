@@ -93,7 +93,7 @@
         <div class="ha_input">
           <label>联系方式</label>
           <div class="ha_input_box">
-            <input type="text" placeholder="请填写对应的联系方式" v-model="v_form.phone">
+            <input type="number" placeholder="请填写对应的联系方式" v-model="v_form.phone">
           </div>
         </div>
       </div>

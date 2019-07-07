@@ -1,19 +1,19 @@
 <template>
   <div class="panel">
-    <div class="partment">{{data.partment}}</div>
-    <div class="contact-leader">
+    <div class="partment">{{data.department}}</div>
+    <div class="contact-leader" v-if="data.leaderName && data.leaderPhone">
       <span>上级领导</span>
-      <span>{{data.leader.name}}</span>
-      <span>{{data.leader.tel}}</span>
-      <a :href="'tel:'+data.leader.tel">
+      <span>{{data.leaderName}}</span>
+      <span>{{data.leaderPhone}}</span>
+      <a :href="'tel:'+data.leaderPhone">
         <img class="telicon" :src="require('@/assets/images/contactProperty/tel.png')" alt="">
       </a>
     </div>
-    <div class="contact-li" v-for="li in data.watchman" :key="li.id">
+    <div class="contact-li">
       <span>值班人</span>
-      <span>{{li.name}}</span>
-      <span>{{li.tel}}</span>
-      <a class="tel-a" :href="'tel:'+li.tel">
+      <span>{{data.name}}</span>
+      <span>{{data.phone}}</span>
+      <a class="tel-a" :href="'tel:'+data.phone">
         <img class="telicon" :src="require('@/assets/images/contactProperty/tel.png')" alt="">
       </a>
     </div>
@@ -28,25 +28,6 @@ export default {
   props: {
     data: {
       type: Object,
-      default: () => {
-        return {
-          partment: '工程部',
-          leader: {
-            name: '诸葛亮',
-            tel: '12345678909'
-          },
-          watchman: [
-            {
-              name: '刘备12',
-              tel: '12345678909'
-            },
-            {
-              name: '刘备2',
-              tel: '12345678909'
-            }
-          ]
-        }
-      }
     }
   }
 }

@@ -18,7 +18,7 @@
         </div>
         <div class="ns_input">
           <label>联系方式</label>
-          <input type="text" placeholder="手机号、微信、QQ" v-model="v_from.telephone">
+          <input type="number" placeholder="手机号、微信、QQ" v-model="v_from.telephone">
         </div>
         <!-- 车位共享 -->
         <div class="ns_input" v-if="v_taskType === '2'" @click="v_parkFlag = true">

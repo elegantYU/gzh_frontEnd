@@ -13,7 +13,7 @@
       >
         <span>{{ v.code }}</span>
         <span>{{ f_formatType(v) }}</span>
-        <span :class="{'active': v.sts == '1'}">{{ f_sts(v) }}</span>
+        <span :class="{'active': v.sts == '1'}" @click="f_getOrder(v)">{{ f_sts(v) }}</span>
       </li>
     </ul>
     <popup v-if="v_pop" :parkInfo='v_currentItem' @order="f_closePop" @close="f_closePop"></popup>

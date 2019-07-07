@@ -19,7 +19,7 @@
           <div class="pa_input">
             <label>联系方式</label>
             <div class="pa_input_box">
-              <input type="text" placeholder="请输入联系方式" v-model="v.phoneNum">
+              <input type="number" placeholder="请输入联系方式" v-model="v.phoneNum">
             </div>
           </div>
           <div class="pa_input">

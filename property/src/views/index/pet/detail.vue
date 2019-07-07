@@ -56,7 +56,7 @@
         <div class="rep_preview_wrapper">
           <div
             class="rep_preview_item"
-            v-for="(v, i) in imgs"
+            v-for="(v, i) in v_images"
             :key="i"
           >
             <img :src="v" alt="">
@@ -87,17 +87,14 @@ export default {
     return {
       v_id: 0,
       v_detail: {},
+      v_images: [],
       v_pop: false,
       v_desc: ''
     }
   },
-  computed: {
-    imgs () {
-      return JSON.parse(v_detail.exemptionImg)
-    }
-  },
   mounted () {
     this.v_id = this.$route.query.id
+    this.f_getDetail()
   },
   methods: {
     async f_getDetail () {
@@ -109,6 +106,7 @@ export default {
         .get('/admin/member/pet/getPetDetail', { params })
       
       this.v_detail = Object.assign({}, data)
+      this.v_images = JSON.parse(this.v_detail.exemptionImg)
     },
     f_passNot () {
       this.v_pop = true
@@ -233,6 +231,7 @@ export default {
           height: 1.16rem;
           box-sizing: border-box;
           margin: 0 0.04rem;
+          align-items: center;
           img{
             max-width: 100%;
             max-height: 100%;
@@ -256,6 +255,7 @@ export default {
         color: #fff;
         line-height: 0.8rem;
         cursor: pointer;
+        font-size: 0.3rem;
         &:first-of-type{
           border-radius: 0.1rem 0 0 0.1rem;
         }

@@ -24,7 +24,7 @@
         </div>
         <div class="vi_input">
           <label>联系方式</label>
-          <input type="text" v-model="v_from.phone" placeholder="请输入访客联系方式">
+          <input type="number" v-model="v_from.phone" placeholder="请输入访客联系方式">
         </div>
         <div class="vi_input ns_input_check">
           <label>性别</label>

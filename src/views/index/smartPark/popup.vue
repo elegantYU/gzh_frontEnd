@@ -13,7 +13,7 @@
         <div class="pop_item">
           <label>联系方式</label>
           <div class="pop_box">
-            <input type="text" placeholder="请输入联系方式" v-model="v_form.phone">
+            <input type="number" placeholder="请输入联系方式" v-model="v_form.phone">
           </div>
         </div>
         <div class="pop_item">

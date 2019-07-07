@@ -152,7 +152,7 @@ export default {
       }
       
       this.$http
-        .post(`/event/current/mobile/device/commentDevice?dealUserName=${this.v_popForm.dealUserName}&mobile=${this.v_popForm.mobile}&content=${this.v_popForm.content}&eventId=${this.v_from.id}&idNumber=${this.$store.state.user.idNo}`)
+        .post(`/applet/event/current/mobile/device/commentDevice?dealUserName=${this.v_popForm.dealUserName}&mobile=${this.v_popForm.mobile}&content=${this.v_popForm.content}&eventId=${this.v_from.id}&idNumber=${this.$store.state.user.idNo}`)
         .then(res => {
           if (res.data.flag) {
             this.$router.back()

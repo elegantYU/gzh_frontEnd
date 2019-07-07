@@ -178,6 +178,7 @@ export default {
           font-size: 0.3rem;
         }
         .mu-input{
+          display: block;
           padding: 0;
           font-size: 0.3rem;
           height: 100%;

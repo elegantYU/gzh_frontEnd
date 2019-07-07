@@ -13,8 +13,12 @@ export default {
   name: 'contact',
   data () {
     return {
-      village: '康馨苑小区',
       contact: []
+    }
+  },
+  computed: {
+    village () {
+      return this.$store.state.village
     }
   },
   props: {},

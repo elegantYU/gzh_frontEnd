@@ -89,6 +89,7 @@ export default {
         .earlylist-list-date{
           display: flex;
           text-align: left;
+          font-size: 0.3rem;
           span{
             margin-left: auto;
           }

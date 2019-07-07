@@ -27,7 +27,7 @@
         <div class="lp_input">
           <label>联系方式</label>
           <div class="lp_input_box">
-            <input type="text" placeholder="手机号、微信、QQ" v-model="v_form.telephone">
+            <input type="number" placeholder="手机号、微信、QQ" v-model="v_form.telephone">
           </div>
         </div>
       </div>

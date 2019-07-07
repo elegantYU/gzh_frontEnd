@@ -23,7 +23,7 @@
         </div>
         <div class="wr_input">
           <label>联系方式</label>
-          <input type="text" v-model="v_from.telPhone" placeholder="手机号、微信、QQ">
+          <input type="number" v-model="v_from.telPhone" placeholder="手机号、微信、QQ">
         </div>
         <div class="wr_input wr_datetime">
           <label>预约时间</label>

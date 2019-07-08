@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <div class="pa_submit" @click="f_applyPark">我已缴费</div>
+    <button class="pa_submit" @click="f_applyPark">我已缴费</button>
   </div>
 </template>
 
@@ -267,7 +267,9 @@ export default {
     }
   }
   .pa_submit{
-    margin: 0.4rem 0.3rem 0;
+    display: block;
+    margin: 0.4rem auto 0;
+    width: 6.5rem;
     height: 0.9rem;
     background-color: #f73476;
     text-align: center;

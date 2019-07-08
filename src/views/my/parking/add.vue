@@ -55,7 +55,7 @@
           </div>
         </li>
       </ul>
-      <div class="pa_submit" @click="f_submit">提交</div>
+      <button class="pa_submit" @click="f_submit">提交</button>
     </div>
   </div>
 </template>
@@ -262,7 +262,9 @@ export default {
       }
     }
     .pa_submit{
-      margin: 0.4rem 0.3rem 0;
+      display: block;
+      width: 6.5rem;
+      margin: 0.4rem auto 0;
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;

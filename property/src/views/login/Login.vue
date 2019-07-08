@@ -46,7 +46,10 @@ export default {
             this.f_setCookie(this.v_name, this.v_password, 1)
             this.$toast('登录成功')
             this.$store.dispatch('setUser', res.data.data)
-            this.$router.push({ name: 'pickads' })
+            // this.$store.commit('setVillage', res.data.data.village)
+            this.$store.dispatch('setVillageCode', res.data.data.villageCode)
+            this.f_getVillage(res.data.data.villageCode)
+            this.$router.replace({ name: 'index' })
             localStorage.clear()
           } else {
             this.$toast(res.data.msg)
@@ -57,6 +60,17 @@ export default {
     },
     f_forget () {
       console.log('忘记密码')
+    },
+    f_getVillage (code) {
+      const params = {
+        villageCode: code
+      }
+      this.$http
+        .get('/obtain/config/getVillageName', { params })
+        .then(res => {
+          this.$store.dispatch('setVillage', res.data.data)
+        })
+
     },
     f_register () {
       this.$nextTick(x => {
@@ -76,8 +90,8 @@ export default {
     f_setCookie (phone, pwd, exdays = 1) {
       let exdate = new Date()
       exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays)
-      window.document.cookie = "userName" + "=" + phone + ";path=/;expires=" + exdate.toGMTString()
-      window.document.cookie = "userPwd" + "=" + pwd + ";path=/;expires=" + exdate.toGMTString()
+      window.document.cookie = "userName" + "=" + unescape(phone) + ";path=/;expires=" + exdate.toGMTString()
+      window.document.cookie = "userPwd" + "=" + unescape(pwd) + ";path=/;expires=" + exdate.toGMTString()
     },
     f_getCookie () {
       if (document.cookie.length > 0) {
@@ -85,9 +99,9 @@ export default {
         for (let i = 0; i < arr.length; i++) {
           const arr2 = arr[i].split('=')
           if (arr2[0] == 'userName') {
-              this.v_name = arr2[1]
+              this.v_name = escape(arr2[1])
           } else if (arr2[0] == 'userPwd') {
-              this.v_password = arr2[1]
+              this.v_password = escape(arr2[1])
           }
         }
       }

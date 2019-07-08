@@ -10,9 +10,9 @@
         <input type="text" v-model="email" placeholder="邮箱（选填）">
       </div>
     </div>
-    <div class="wr_submit" @click="f_submit">
+    <button class="wr_submit" @click="f_submit">
       提交反馈
-    </div>
+    </button>
   </div>
 </template>
 <script>
@@ -113,6 +113,7 @@ export default {
   }
 }
 .wr_submit {
+  display: block;
   width: 6.9rem;
   height: 0.9rem;
   line-height: 0.9rem;

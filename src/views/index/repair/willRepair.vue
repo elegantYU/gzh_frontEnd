@@ -49,7 +49,7 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="wr_preview_add" @click="f_upload"></div>
+          <button class="wr_preview_add" @click="f_upload"></button>
         </div>
       </div>
       <button class="wr_submit" @click="f_submit">
@@ -390,6 +390,7 @@ export default {
         }
         .wr_preview_add{
           float: left;
+          display: block;
           width: 1.16rem;
           height: 1.16rem;
           box-sizing: border-box;

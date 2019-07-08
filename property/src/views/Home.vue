@@ -8,7 +8,6 @@
 
 <script>
 import Tabs from '../components/Tab.vue'
-import { setTimeout } from 'timers';
 
 export default {
   name: 'Home',

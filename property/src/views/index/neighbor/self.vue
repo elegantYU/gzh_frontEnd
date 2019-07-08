@@ -18,7 +18,7 @@
         </div>
         <div class="ns_input">
           <label>联系方式</label>
-          <input type="text" placeholder="手机号、微信、QQ" v-model="v_from.telephone">
+          <input type="number" placeholder="手机号、微信、QQ" v-model="v_from.telephone">
         </div>
         <!-- 资源共享 -->
         <div class="ns_input ns_input_check">
@@ -53,12 +53,10 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="ns_preview_add" @click="f_upload">
-            <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
-          </div>
+          <button class="ns_preview_add" @click="f_upload"></button>
         </div>
       </div>
-      <div class="ns_submit" @click="f_validate">发布</div>
+      <button class="ns_submit" @click="f_validate">发布</button>
       <!-- 类型 -->
       <mu-bottom-sheet :open.sync="v_typeFlag">
         <mu-list>
@@ -582,6 +580,7 @@ export default {
         }
         .ns_preview_add{
           float: left;
+          display: block;
           width: 1.16rem;
           height: 1.16rem;
           box-sizing: border-box;
@@ -600,7 +599,9 @@ export default {
       }
     }
     .ns_submit{
-      margin: 0 0.3rem; 
+      display: block;
+      width: 6.5rem;
+      margin: 0 auto; 
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;

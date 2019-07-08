@@ -25,14 +25,12 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="wr_preview_add" @click="f_upload">
-            <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
-          </div>
+          <button class="wr_preview_add" @click="f_upload"></button>
         </div>
       </div>
-      <div class="wr_submit" @click="f_submit">
+      <button class="wr_submit" @click="f_submit">
         提交
-      </div>
+      </button>
       <!-- 投诉对象 -->
       <mu-bottom-sheet :open.sync="v_appealFlag">
         <mu-list>
@@ -260,6 +258,7 @@ export default {
         }
         .wr_preview_add{
           float: left;
+          display: block;
           width: 1.16rem;
           height: 1.16rem;
           box-sizing: border-box;
@@ -278,7 +277,9 @@ export default {
       }
     }
     .wr_submit{
-      margin: 0 0.3rem;
+      display: block;
+      width: 6.5rem;
+      margin: 0 auto;
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;

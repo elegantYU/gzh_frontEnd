@@ -13,7 +13,7 @@
         <div class="pop_item">
           <label>联系方式</label>
           <div class="pop_box">
-            <input type="text" placeholder="请输入联系方式" v-model="v_form.phone">
+            <input type="number" placeholder="请输入联系方式" v-model="v_form.phone">
           </div>
         </div>
         <div class="pop_item">
@@ -64,7 +64,7 @@
           <!-- <i></i> -->
         </div>
       </div>
-      <div class="pop_btn" @click="f_submit">立即预约</div>
+      <button class="pop_btn" @click="f_submit">立即预约</button>
     </div>
   </div>
 </template>
@@ -228,6 +228,7 @@ export default {
       }
     }
     .pop_btn{
+      display: block;
       width: 6.3rem;
       height: 0.8rem;
       background-color: #f64682;

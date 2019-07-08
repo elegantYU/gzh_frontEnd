@@ -47,10 +47,10 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="lp_preview_add" @click="f_upload"></div>
+          <button class="lp_preview_add" @click="f_upload"></button>
         </div>
       </div>
-      <div class="lp_submit" @click="f_submit">发布</div>
+      <button class="lp_submit" @click="f_submit">发布</button>
     </div>
   </div>
 </template>
@@ -249,6 +249,7 @@ export default {
         }
         .lp_preview_add{
           float: left;
+          display: block;
           width: 1.16rem;
           height: 1.16rem;
           box-sizing: border-box;
@@ -267,7 +268,9 @@ export default {
       }
     }
     .lp_submit{
-      margin: 0 0.3rem;
+      display: block;
+      width: 6.5rem;
+      margin: 0 auto;
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;

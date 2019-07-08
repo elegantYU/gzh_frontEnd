@@ -43,7 +43,7 @@
           </div>
         </div>
       </div>
-      <div class="ld_submit" v-show="v_del" @click="f_delete">结束</div>
+      <button class="ld_submit" v-show="v_del" @click="f_delete">结束</button>
     </div>
   </div>
 </template>
@@ -205,6 +205,7 @@ export default {
       }
     }
     .ld_submit{
+      display: block;
       margin: 0 0.3rem 0.3rem;
       height: 0.9rem;
       background-color: #f73476;

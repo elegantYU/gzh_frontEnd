@@ -7,7 +7,7 @@
             <label>标题</label>
             <input type="text" readonly v-model="v_from.title">
           </div>
-          <div class="earlyDetali_input">
+          <div class="earlyDetali_input" v-if="status">
             <label>事件状态</label>
             <input type="text" readonly v-model="v_from.statusName">
           </div>
@@ -35,11 +35,11 @@
             <label>报警原因</label>
             <input type="text" readonly v-model="v_from.warningReason">
           </div>
-          <div class="earlyDetali_input">
+          <div class="earlyDetali_input"  v-if="status">
             <label>是否超时</label>
             <input type="text" readonly v-model="v_from.overtimeFlagName">
           </div>
-          <div class="earlyDetali_input">
+          <div class="earlyDetali_input"  v-if="status">
             <label>督办状态</label>
             <input type="text" readonly v-model="v_from.overseeStatusName">
           </div>
@@ -59,7 +59,7 @@
             <label>事件内容</label>
             <div>{{v_from.content}}</div>
           </div>
-          <div class="earlyDetali-bnt" @click="f_submit" v-if="status">{{ btnText }}</div>
+          <button class="earlyDetali-bnt" @click="f_submit" v-if="status">{{ btnText }}</button>
           <!-- popup -->
           <div class="pop_wrapper" v-if="v_pop">
             <div class="pop_mask" @click="f_close"></div>
@@ -113,8 +113,8 @@ export default {
     }
   },
   mounted () {
-    this.f_getDetail()
     this.status = this.$route.query.status
+    this.f_getDetail()
   },
   methods: {
     f_getDetail () {
@@ -122,10 +122,16 @@ export default {
         id: this.$route.query.id
       }
 
+      const url = this.status > 0
+        ? '/applet/event/current/mobile/device/deviceWarningShow'
+        : '/applet/event/current/mobile/ device/completeWarningShow'
+
       this.$http
-        .get('/applet/event/current/mobile/device/deviceWarningShow', { params })
+        .get(url, { params })
         .then(({ data }) => {
-          this.v_from = Object.assign({}, data)
+          this.v_from = this.status > 0
+            ? Object.assign({}, data)
+            : Object.assign({}, data.domain)
         })
     },
     f_submit () {
@@ -152,7 +158,7 @@ export default {
       }
       
       this.$http
-        .post(`/applet/event/current/mobile/device/commentDevice?dealUserName=${this.v_popForm.dealUserName}&mobile=${this.v_popForm.mobile}&content=${this.v_popForm.content}&eventId=${this.v_from.id}&idNumber=${this.$store.state.user.idNo}`)
+        .post(`/applet/event/current/mobile/device/commentDevice?dealUserName=${this.v_popForm.dealUserName}&mobile=${this.v_popForm.mobile}&content=${this.v_popForm.content}&eventId=${this.v_from.eventId}&idNumber=${this.$store.state.user.idNo}`)
         .then(res => {
           if (res.data.flag) {
             this.$router.back()
@@ -250,6 +256,7 @@ export default {
 }
 
 .earlyDetali-bnt{
+  display: block;
   width: 3rem;
   height: 0.8rem;
   color: white;

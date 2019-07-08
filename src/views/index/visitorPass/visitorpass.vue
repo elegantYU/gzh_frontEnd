@@ -15,7 +15,6 @@
           <mu-select v-model="v_from.houseId" :solo="true" placeholder="请选择房屋">
             <mu-option v-for="(v,i) in v_house" :key="i" :label="v.name" :value="v.house"></mu-option>
           </mu-select>
-          <!-- <input type="text" readonly v-model="v_from.houseName" placeholder="请选择房屋"> -->
           <i></i>
         </div>
         <div class="vi_input">
@@ -57,7 +56,7 @@
             >
               <img :src="v">
             </div>
-            <div class="wr_preview_add" @click="f_upload"></div>
+            <button class="wr_preview_add" @click="f_upload"></button>
             <p>请上传清晰的访客人脸照片</p>
           </div>
         </div>
@@ -539,6 +538,7 @@ export default {
         }
       }
       .wr_preview_add{
+        display: block;
         width: 1.16rem;
         height: 1.16rem;
         box-sizing: border-box;

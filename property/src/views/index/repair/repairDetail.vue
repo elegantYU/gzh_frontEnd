@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="rep_comment" v-if="v_info.sts === 2 || v_info.sts === 4">
-        <div class="rep_comment_btn" @click="f_submit">{{ btnText }}</div>
+        <button class="rep_comment_btn" @click="f_submit">{{ btnText }}</button>
       </div>
       <div class="rep_commentList" v-show="v_commments.length">
         <p>评论</p>
@@ -299,7 +299,9 @@ export default {
         }
       }
       .rep_comment_btn{
-        margin: 0 0.3rem;
+        display: block;
+        width: 6.5rem;
+        margin: 0 auto;
         height: 0.9rem;
         background-color: #f73476;
         text-align: center;

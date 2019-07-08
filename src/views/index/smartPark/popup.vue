@@ -58,7 +58,7 @@
           <!-- <i></i> -->
         </div>
       </div>
-      <div class="pop_btn" @click="f_submit">立即预约</div>
+      <button class="pop_btn" @click="f_submit">立即预约</button>
     </div>
   </div>
 </template>
@@ -221,6 +221,7 @@ export default {
       }
     }
     .pop_btn{
+      display: block;
       width: 6.3rem;
       height: 0.8rem;
       background-color: #f64682;

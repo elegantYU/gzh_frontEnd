@@ -21,7 +21,7 @@
           </div>
         </li>
       </ul>
-      <div class="house_submit" @click="f_submit">添加房屋认证</div>
+      <button class="house_submit" @click="f_submit">添加房屋认证</button>
     </div>
   </div>
 </template>
@@ -135,6 +135,7 @@ export default {
       }
     }
     .house_submit{
+      display: block;
       border-radius: 0.15rem;
       line-height: 0.9rem;
       width: 7rem;

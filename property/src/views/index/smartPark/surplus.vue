@@ -74,7 +74,6 @@ export default {
 
 <style lang='scss' scoped>
  .arrow{
-   display: inline-block;
    width: 0.6rem;
    height: 0.6rem;
    float: left;

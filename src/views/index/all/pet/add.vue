@@ -86,9 +86,7 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="pa_preview_add" @click="f_upload">
-            <!-- <input type="file" multiple accept='image/*' ref="" @change="f_upload($event)"> -->
-          </div>
+          <button class="pa_preview_add" @click="f_upload"></button>
         </div>
       </div>
       <div class="pa_submit" @click="f_submit">提交</div>
@@ -336,6 +334,7 @@ export default {
         }
         .pa_preview_add{
           float: left;
+          display: block;
           width: 1.16rem;
           height: 1.16rem;
           box-sizing: border-box;

@@ -45,10 +45,10 @@
         >
           <img :src="v" alt="">
         </div>
-        <div class="ns_preview_add" @click="f_upload"></div>
+        <button class="ns_preview_add" @click="f_upload"></button>
       </div>
     </div>
-    <div class="ns_submit" @click="f_submit">发布</div>
+    <button class="ns_submit" @click="f_submit">发布</button>
   </div>
 </template>
 
@@ -242,6 +242,7 @@ export default {
       }
       .ns_preview_add{
         float: left;
+        display: block;
         width: 1.16rem;
         height: 1.16rem;
         box-sizing: border-box;
@@ -260,7 +261,9 @@ export default {
     }
   }
   .ns_submit{
-    margin: 0 0.3rem; 
+    display: block;
+    margin: 0 auto; 
+    width: 6.5rem;
     height: 0.9rem;
     background-color: #f73476;
     text-align: center;

@@ -64,8 +64,8 @@
         </div>
       </div>
       <div class="pet_btns">
-        <span @click="f_passNot">审核不通过</span>
-        <span @click="f_pass">审核通过</span>
+        <button @click="f_passNot">审核不通过</button>
+        <button @click="f_pass">审核通过</button>
       </div>
       <div class="pet_pop" v-show="v_pop">
         <div class="pet_mask" @click="f_cancel"></div>
@@ -248,8 +248,9 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      span{
+      button{
         flex: 1;
+        display: block;
         height: 100%;
         background-color: #f64682;
         color: #fff;

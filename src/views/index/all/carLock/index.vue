@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="ci_submit" @click="f_getUnlock">解锁</div>
+    <button class="ci_submit" @click="f_getUnlock">解锁</button>
   </div>
 </template>
 
@@ -127,7 +127,9 @@ export default {
     }
   }
   .ci_submit{
-    margin: 0.4rem 0.3rem 0;
+    display: block;
+    width: 6.5rem;
+    margin: 0.4rem auto 0;
     height: 0.9rem;
     background-color: #f73476;
     text-align: center;

@@ -23,8 +23,8 @@
       </div>
     </div>
     <div class="pd_btns">
-      <span @click="f_getCheck(2)">未缴费</span>
-      <span @click="f_getCheck(1)">已缴费</span>
+      <button @click="f_getCheck(2)">未缴费</button>
+      <button @click="f_getCheck(1)">已缴费</button>
     </div>
   </div>
 </template>
@@ -108,8 +108,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    span{
+    button{
       flex: 1;
+      display: block;
       height: 100%;
       background-color: #f64682;
       color: #fff;

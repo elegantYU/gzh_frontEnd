@@ -108,7 +108,7 @@
           >
             <img :src="v" alt="">
           </div>
-          <div class="ns_preview_add" @click="f_upload"></div>
+          <button class="ns_preview_add" @click="f_upload"></button>
         </div>
       </div>
       <a class="ns_submit" @click="f_validate">发布</a>
@@ -649,6 +649,7 @@ export default {
         }
         .ns_preview_add{
           float: left;
+          display: block;
           width: 1.16rem;
           height: 1.16rem;
           box-sizing: border-box;

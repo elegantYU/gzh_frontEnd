@@ -43,7 +43,7 @@
         <div class="rep_comment_area" v-show="v_textareaFlag">
           <textarea placeholder="在这里可以输入评价内容最多200个字" maxlength="200" v-model="v_info.content"></textarea>
         </div>
-        <div class="rep_comment_btn" @click="f_submit">{{ v_submitText }}</div>
+        <button class="rep_comment_btn" @click="f_submit">{{ v_submitText }}</button>
       </div>
       <div class="rep_commentList" v-if="v_commments.length">
         <p>评论</p>
@@ -284,7 +284,9 @@ export default {
         }
       }
       .rep_comment_btn{
-        margin: 0 0.3rem;
+        display: block;
+        margin: 0 auto;
+        width: 6.5rem;
         height: 0.9rem;
         background-color: #f73476;
         text-align: center;

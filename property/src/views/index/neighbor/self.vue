@@ -20,6 +20,10 @@
           <label>联系方式</label>
           <input type="number" placeholder="手机号、微信、QQ" v-model="v_from.telephone">
         </div>
+        <div class="ns_input">
+          <label>预约人数</label>
+          <input type="number" placeholder="人数为0则不限制" v-model="v_from.applyNum">
+        </div>
         <!-- 资源共享 -->
         <div class="ns_input ns_input_check">
           <label>人脸门禁</label>
@@ -139,7 +143,8 @@ export default {
         skill: '',
         createUserId: 1,
         imgUrl: [],
-        villageCode: ''     // 小区code
+        villageCode: '',     // 小区code
+        applyNum: 0
       },
       v_start: '',
       v_end: ''
@@ -386,7 +391,10 @@ export default {
                 content: this.v_from.content,
                 imgUrl: imgList,
                 villageCode: this.v_from.villageCode,
+                doorLock: this.v_from.doorLock,
+                applyNum: this.v_from.applyNum
               }
+              console.log('资源参数', params)
               this.f_submit(params)
             } else {
               this.$toast('请填写内容和时间')

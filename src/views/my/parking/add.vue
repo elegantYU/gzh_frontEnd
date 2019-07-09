@@ -55,7 +55,7 @@
           </div>
         </li>
       </ul>
-      <button class="pa_submit" @click="f_submit">提交</button>
+      <a class="pa_submit" @click="f_submit">提交</a>
     </div>
   </div>
 </template>

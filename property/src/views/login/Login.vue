@@ -11,14 +11,15 @@
         <input :type="v_switch ? 'text' : 'password'" placeholder="请输入密码" v-model="v_password">
         <i @click="f_switch" :class="{'active': v_open}"></i>
       </div>
-      <div class="login_submit" @click="f_login">
+      <a class="login_submit" @click="f_login">
         登录
-      </div>
+      </a>
     </div>
   </div>
 </template>
 
 <script>
+import { escape } from 'querystring';
 export default {
   name: 'Login',
   data () {
@@ -46,7 +47,6 @@ export default {
             this.f_setCookie(this.v_name, this.v_password, 1)
             this.$toast('登录成功')
             this.$store.dispatch('setUser', res.data.data)
-            // this.$store.commit('setVillage', res.data.data.village)
             this.$store.dispatch('setVillageCode', res.data.data.villageCode)
             this.f_getVillage(res.data.data.villageCode)
             this.$router.replace({ name: 'index' })
@@ -89,9 +89,11 @@ export default {
     },
     f_setCookie (phone, pwd, exdays = 1) {
       let exdate = new Date()
+      const p = encodeURI(phone)
+      const pw = encodeURI(pwd)
       exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays)
-      window.document.cookie = "userName" + "=" + unescape(phone) + ";path=/;expires=" + exdate.toGMTString()
-      window.document.cookie = "userPwd" + "=" + unescape(pwd) + ";path=/;expires=" + exdate.toGMTString()
+      window.document.cookie = "userName" + "=" + p + ";path=/;expires=" + exdate.toGMTString()
+      window.document.cookie = "userPwd" + "=" + pw + ";path=/;expires=" + exdate.toGMTString()
     },
     f_getCookie () {
       if (document.cookie.length > 0) {
@@ -99,13 +101,14 @@ export default {
         for (let i = 0; i < arr.length; i++) {
           const arr2 = arr[i].split('=')
           if (arr2[0] == 'userName') {
-              this.v_name = escape(arr2[1])
+              this.v_name = decodeURI(arr2[1])
           } else if (arr2[0] == 'userPwd') {
-              this.v_password = escape(arr2[1])
+              this.v_password = decodeURI(arr2[1])
           }
         }
       }
       if (this.v_name && this.v_password) {
+        console.log('账户', this.v_name, this.v_password)
         this.f_login()
       }
     }
@@ -170,6 +173,7 @@ export default {
       }
     }
     .login_submit{
+      display: block;
       width: 100%;
       height :0.9rem;
       border-radius: 0.41rem;

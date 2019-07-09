@@ -47,10 +47,10 @@
           >
             <img :src="v" alt="">
           </div>
-          <button class="lp_preview_add" @click="f_upload"></button>
+          <a class="lp_preview_add" @click="f_upload"></a>
         </div>
       </div>
-      <button class="lp_submit" @click="f_submit">发布</button>
+      <a class="lp_submit" @click="f_submit">发布</a>
     </div>
   </div>
 </template>

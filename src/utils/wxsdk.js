@@ -3,6 +3,18 @@ import axios from 'axios'
 // 可惜了 到最后还是没有用上
 // 图片上传使用的原生input file，之后的地图定位需要使用jssdk
 const wxsdk = {
+  check (cb) {
+    if (typeof WeixinJSBridge === 'object' && typeof WeixinJSBridge.invoke === 'function') {
+      cb()
+    } else {
+      if (document.addEventListener) {
+        document.addEventListener('WeixinJSBridgeReady', cb, false)
+      } else if (document.attachEvent) {
+        document.attachEvent('WeixinJSBridgeReady', cb)
+        document.attachEvent('onWeixinJSBridgeReady', cb)
+      }
+    }
+  },
   init (url) {
     const params = {
       url: url
@@ -25,40 +37,46 @@ const wxsdk = {
   chooseImage (num) {
     num = num || 3
     return new Promise(resolve => {
-      wx.ready(() => {
-        wx.chooseImage({
-          count: num,
-          sizeType: ['compressed'],
-          sourceType: ['album'],
-          success: res => {
-            console.log('选取的图片', res)
-            resolve(res)
-          }
+      this.check(() => {
+        wx.ready(() => {
+          wx.chooseImage({
+            count: num,
+            sizeType: ['compressed'],
+            sourceType: ['album'],
+            success: res => {
+              console.log('选取的图片', res)
+              resolve(res)
+            }
+          })
         })
       })
     })
   },
   uploadImage (id) {
     return new Promise(resolve => {
-      wx.uploadImage({
-        localId: id,
-        isShowProgressTips: 1,
-        success: res => {
-          // 返回图片的serverid
-          console.log('serverid', res)
-          resolve(res)
-        }
+      this.check(() => {
+        wx.uploadImage({
+          localId: id,
+          isShowProgressTips: 1,
+          success: res => {
+            // 返回图片的serverid
+            console.log('serverid', res)
+            resolve(res)
+          }
+        })
       })
     })
   },
   getLocalImgData (ids) {
     return new Promise(resolve => {
-      wx.ready(() => {
-        wx.getLocalImgData({
-          localId: ids,
-          success: res => {
-            resolve(res)
-          }
+      this.check(() => {
+        wx.ready(() => {
+          wx.getLocalImgData({
+            localId: ids,
+            success: res => {
+              resolve(res)
+            }
+          })
         })
       })
     })

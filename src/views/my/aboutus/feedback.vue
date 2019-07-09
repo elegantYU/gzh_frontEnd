@@ -10,9 +10,9 @@
         <input type="text" v-model="email" placeholder="邮箱（选填）">
       </div>
     </div>
-    <button class="wr_submit" @click="f_submit">
+    <a class="wr_submit" @click="f_submit">
       提交反馈
-    </button>
+    </a>
   </div>
 </template>
 <script>

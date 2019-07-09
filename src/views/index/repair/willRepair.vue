@@ -49,12 +49,12 @@
           >
             <img :src="v" alt="">
           </div>
-          <button class="wr_preview_add" @click="f_upload"></button>
+          <a class="wr_preview_add" @click="f_upload"></a>
         </div>
       </div>
-      <button class="wr_submit" @click="f_submit">
+      <a class="wr_submit" @click="f_submit">
         报修
-      </button>
+      </a>
       <!-- 哪间屋子 -->
       <mu-bottom-sheet :open.sync="v_houseFlag">
         <mu-list>

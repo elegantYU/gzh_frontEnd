@@ -28,7 +28,7 @@
       <div class="pa_input" v-if="v_payInfo.zfb">
         <label>支付宝账号</label>
         <div class="pa_input_box">
-          <input type="text" v-model="v_payInfo.zfb.paymentCode" placeholder='个人支付宝账号' readonly>
+          <input type="text" v-model="v_payInfo.zfb.paymentCode" placeholder='支付宝账号' readonly>
         </div>
       </div>
       <div class="pa_input" v-if="v_payInfo.yhk">
@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <button class="pa_submit" @click="f_applyPark">我已缴费</button>
+    <a  class="pa_submit" @click="f_applyPark">我已缴费</a>
   </div>
 </template>
 

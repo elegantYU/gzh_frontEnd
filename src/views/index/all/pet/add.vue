@@ -86,10 +86,10 @@
           >
             <img :src="v" alt="">
           </div>
-          <button class="pa_preview_add" @click="f_upload"></button>
+          <a class="pa_preview_add" @click="f_upload"></a>
         </div>
       </div>
-      <div class="pa_submit" @click="f_submit">提交</div>
+      <a  class="pa_submit" @click="f_submit">提交</a>
     </div>
   </div>
 </template>

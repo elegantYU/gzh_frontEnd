@@ -34,8 +34,8 @@ export default {
   data () {
     return {
       v_nav: [
-        { name: '失物招领大厅', component: 'Public', active: false, router: null },
-        { name: '我的发布', component: 'Mine', active: true, router: null },
+        { name: '失物招领大厅', component: 'Public', active: true, router: null },
+        { name: '我的发布', component: 'Mine', active: false, router: null },
         { name: '我要发布', component: null, active: false, router: 'lfPublish' }
       ],
       v_filterFlag: false,
@@ -52,7 +52,7 @@ export default {
         ]
       },
       v_now: [],
-      v_component: 'Mine',
+      v_component: 'Public',
       v_filterProp: 0
     }
   },

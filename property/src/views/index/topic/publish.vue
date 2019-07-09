@@ -45,10 +45,10 @@
         >
           <img :src="v" alt="">
         </div>
-        <button class="ns_preview_add" @click="f_upload"></button>
+        <a class="ns_preview_add" @click="f_upload"></a>
       </div>
     </div>
-    <button class="ns_submit" @click="f_submit">发布</button>
+    <a class="ns_submit" @click="f_submit">发布</a>
   </div>
 </template>
 

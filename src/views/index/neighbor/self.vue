@@ -108,7 +108,7 @@
           >
             <img :src="v" alt="">
           </div>
-          <button class="ns_preview_add" @click="f_upload"></button>
+          <a class="ns_preview_add" @click="f_upload"></a>
         </div>
       </div>
       <a class="ns_submit" @click="f_validate">发布</a>
@@ -228,7 +228,7 @@ export default {
   watch: {
     'v_start': function (now, past) {
       let date = dateFormat(now)
-      this.v_from.startTime = `${new Date(now).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')}`
+      this.v_from.startTime = `${date} ${new Date(now).toLocaleTimeString('chinese', { hour12: false })}`
       if (this.v_from.endTime) {
         let time = this.v_from.endTime.split(' ')[1]
         this.v_from.endTime = `${date} ${time}`
@@ -262,10 +262,13 @@ export default {
       let start = this.v_from.startTime
       let startTime = new Date(start).getTime()
       if (now && start) {
-        let endTime = new Date(now).getTime()
-        if (endTime < startTime) {
+        let date = dateFormat(start)
+        let endTime = new Date(now).toLocaleTimeString('chinese', { hour12: false })
+        let endStamp = new Date(now).getTime()
+        if (endStamp < startTime) {
+          let date = dateFormat(start)
           this.v_from.endTime = start
-          this.v_from.startTime = new Date(endTime).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
+          this.v_from.startTime = `${date} ${endTime}`
           const cache = this.v_start
           this.v_start = this.v_endDate
           this.v_endDate = cache
@@ -405,6 +408,7 @@ export default {
             }
             break
           case '2':
+            console.log('参数', this.v_from.carNum , this.v_from.startTime , this.v_from.endTime)
             if (this.v_from.carNum && this.v_from.startTime && this.v_from.endTime) {
               params = {
                 createUserId: this.v_from.createUserId,
@@ -428,6 +432,7 @@ export default {
             }
             break
           case '3':
+            console.log('参数', this.v_from.skill , this.v_from.startTime , this.v_from.endTime)
             if (this.v_from.skill && this.v_from.startTime && this.v_from.endTime) {
               params = {
                 createUserId: this.v_from.createUserId,
@@ -451,6 +456,7 @@ export default {
             }
             break
           case '4':
+            console.log('参数', this.v_from.startTime , this.v_from.endTime , this.v_from.content)
             if (this.v_from.startTime && this.v_from.endTime && this.v_from.content) {
               params = {
                 createUserId: this.v_from.createUserId,
@@ -465,6 +471,7 @@ export default {
                 imgUrl: imgList,
                 villageCode: this.v_from.villageCode,
               }
+              console.log('提交参数', params)
               this.f_submit(params)
             } else {
               this.$toast('请填写内容和时间')
@@ -669,7 +676,7 @@ export default {
     }
     .ns_submit{
       display: block;
-      margin: 0 0.3rem; 
+      margin: 0 0.3rem;
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;

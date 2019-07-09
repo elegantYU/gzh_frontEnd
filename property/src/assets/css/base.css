@@ -71,6 +71,10 @@ section {
   vertical-align: baseline;
 }
 
+button{
+  background-color: transparent;
+}
+
 section,
 header,
 footer,

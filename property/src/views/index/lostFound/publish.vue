@@ -47,10 +47,10 @@
           >
             <img :src="v" alt="">
           </div>
-          <button class="lp_preview_add" @click="f_upload"></button>
+          <a class="lp_preview_add" @click="f_upload"></a>
         </div>
       </div>
-      <button class="lp_submit" @click="f_submit">发布</button>
+      <a class="lp_submit" @click="f_submit">发布</a>
     </div>
   </div>
 </template>
@@ -85,6 +85,7 @@ export default {
   },
   methods: {
     f_upload (e) {
+      console.log('进入', e)
       if (this.v_form.imgUrl.length > 2) {
         this.$toast('最多三张图片')
         return

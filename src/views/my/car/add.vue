@@ -39,7 +39,7 @@
           </div>
         </li>
       </ul>
-      <button class="ca_submit" @click="f_submit">提交</button>
+      <a class="ca_submit" @click="f_submit">提交</a>
     </div>
   </div>
 </template>

@@ -7,7 +7,7 @@ Vue.use(Router)
 const baseUrl = 'http://zjphtech.com'
 
 const router = new Router({
-  mode: 'hash',
+  mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     { path: '/', name: 'app', meta: { title: '首页' }, components: () => import('../App.vue') },
@@ -129,6 +129,15 @@ router.afterEach((to, from, next) => {
   document.title = to.meta.title
   // 每个页面都注册config
   wxsdk.init(`${baseUrl}${to.fullPath}`)
+})
+
+router.onError((error) => {
+  const pattern = /Loading chunk (\d)+ failed/g
+  const isChunkLoadFailed = error.message.match(pattern)
+  const targetPath = router.history.pending.fullPath
+  if (isChunkLoadFailed) {
+    router.replace(targetPath)
+  }
 })
 
 export default router

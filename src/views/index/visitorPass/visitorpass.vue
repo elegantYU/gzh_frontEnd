@@ -56,7 +56,7 @@
             >
               <img :src="v">
             </div>
-            <button class="wr_preview_add" @click="f_upload"></button>
+            <a class="wr_preview_add" @click="f_upload"></a>
             <p>请上传清晰的访客人脸照片</p>
           </div>
         </div>
@@ -106,7 +106,7 @@
         </mu-list>
       </mu-bottom-sheet>
 
-      <div class="visitor-password" @click="f_passWord">生成访客密码</div>
+      <a class="visitor-password" @click="f_passWord">生成访客密码</a>
       <div class="visitor-password-cont" v-if="v_passType == 2">{{v_password}}</div>
       <div class="visitor-password-cont" v-if="v_passType == 1">
         <img :src="v_password" alt="">

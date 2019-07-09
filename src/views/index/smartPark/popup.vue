@@ -58,7 +58,7 @@
           <!-- <i></i> -->
         </div>
       </div>
-      <button class="pop_btn" @click="f_submit">立即预约</button>
+      <a class="pop_btn" @click="f_submit">立即预约</a>
     </div>
   </div>
 </template>

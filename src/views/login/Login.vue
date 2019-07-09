@@ -11,9 +11,9 @@
         <input :type="v_switch ? 'text' : 'password'" placeholder="请输入密码" v-model="v_password">
         <i @click="f_switch" :class="{'active': v_open}"></i>
       </div>
-      <div class="login_submit" @click="f_login">
+      <a class="login_submit" @click="f_login">
         登录
-      </div>
+      </a>
     </div>
     <div class="login_detail clearfix">
       <span @click="f_forget">忘记密码</span>
@@ -178,6 +178,7 @@ export default {
       }
     }
     .login_submit{
+      display: block;
       width: 100%;
       height :0.9rem;
       border-radius: 0.41rem;

@@ -70,7 +70,7 @@
           <label>身份</label>
           <div class="ha_input_box">
             <mu-select v-model="v_form.identityInformation" :solo="true" placeholder="请选择身份">
-              <mu-option v-for="(v,i) in v_identity" :key="i" :label="v" :value="v"></mu-option>
+              <mu-option v-for="(v,i) in v_identity" :key="i" :label="v.name" :value="v.type"></mu-option>
             </mu-select>
           </div>
           <i></i>
@@ -97,7 +97,7 @@
           </div>
         </div>
       </div>
-      <div class="ha_submit" @click="f_submit">提交</div>
+      <a class="ha_submit" @click="f_submit">提交</a>
       <!-- 三级 -->
       <div class="ha_bottom_wrapper" v-show="v_show">
         <div class="ha_bottom_mask" @click="f_closeSelect"></div>
@@ -186,7 +186,12 @@ export default {
       v_building: [],
       v_unit: [],
       v_house: [],
-      v_identity: ['业主', '亲属', '租客'],
+      v_identity: [
+        { name: '', type: 1 },
+        { name: '', type: 2 },
+        { name: '', type: 3 },
+        { name: '', type: 4 }
+      ],
       v_show: false,
       v_common: ''
     }
@@ -401,6 +406,9 @@ export default {
           .mu-input{
             display: block;
             font-size: 0.3rem;
+            padding: 0;
+            height: 100%;
+            min-height: 0;
           }
           input{
             display: block;
@@ -421,7 +429,9 @@ export default {
       }
     }
     .ha_submit{
-      margin: 0.4rem 0.3rem 0;
+      display: block;
+      width: 6.5rem;
+      margin: 0.4rem auto 0;
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;

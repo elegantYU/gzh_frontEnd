@@ -57,10 +57,10 @@
           >
             <img :src="v" alt="">
           </div>
-          <button class="ns_preview_add" @click="f_upload"></button>
+          <a class="ns_preview_add" @click="f_upload"></a>
         </div>
       </div>
-      <button class="ns_submit" @click="f_validate">发布</button>
+      <a class="ns_submit" @click="f_validate">发布</a>
       <!-- 类型 -->
       <mu-bottom-sheet :open.sync="v_typeFlag">
         <mu-list>
@@ -174,11 +174,12 @@ export default {
   watch: {
     'v_start': function (now, past) {
       let date = dateFormat(now)
-      this.v_from.startTime = `${new Date(now).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')}`
+      this.v_from.startTime = `${date} ${new Date(now).toLocaleTimeString('chinese', { hour12: false })}`
       if (this.v_from.endTime) {
         let time = this.v_from.endTime.split(' ')[1]
         this.v_from.endTime = `${date} ${time}`
       }
+      console.log('开始时间', this.v_from.startTime)
     },
     'v_end': function (now, past) {
       let start = this.v_from.startTime
@@ -203,6 +204,7 @@ export default {
           time: 1500
         })
       }
+      console.log('结束时间', this.v_from.endTime)
     }
   },
   mounted () {

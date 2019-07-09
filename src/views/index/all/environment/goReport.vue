@@ -29,12 +29,12 @@
           >
             <img :src="v">
           </div>
-          <button class="wr_preview_add" @click="f_upload"></button>
+          <a class="wr_preview_add" @click="f_upload"></a>
         </div>
       </div>
-      <button class="wr_submit" @click="f_submit">
+      <a class="wr_submit" @click="f_submit">
         发布
-      </button>
+      </a>
       <!-- 分类 -->
       <mu-bottom-sheet :open.sync="v_typeFlag">
         <mu-list>

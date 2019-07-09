@@ -25,12 +25,12 @@
           >
             <img :src="v" alt="">
           </div>
-          <button class="wr_preview_add" @click="f_upload"></button>
+          <a class="wr_preview_add" @click="f_upload"></a>
         </div>
       </div>
-      <button class="wr_submit" @click="f_submit">
+      <a class="wr_submit" @click="f_submit">
         提交
-      </button>
+      </a>
       <!-- 投诉对象 -->
       <mu-bottom-sheet :open.sync="v_appealFlag">
         <mu-list>

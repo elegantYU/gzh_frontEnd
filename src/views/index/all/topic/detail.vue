@@ -145,6 +145,9 @@ export default {
       if (new Date().getTime > new Date(this.v_detail.postEnd)) {
         return 'td_signup_3'
       }
+    },
+    bgImg () {
+      // const img = 
     }
   },
   created () {

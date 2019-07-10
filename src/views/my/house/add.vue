@@ -187,10 +187,9 @@ export default {
       v_unit: [],
       v_house: [],
       v_identity: [
-        { name: '', type: 1 },
-        { name: '', type: 2 },
-        { name: '', type: 3 },
-        { name: '', type: 4 }
+        { name: '业主', type: 1 },
+        { name: '家属', type: 2 },
+        { name: '租客', type: 6 }
       ],
       v_show: false,
       v_common: ''

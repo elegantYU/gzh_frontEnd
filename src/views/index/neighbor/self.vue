@@ -262,7 +262,7 @@ export default {
       let start = this.v_from.startTime
       let startTime = new Date(start).getTime()
       if (now && start) {
-        let date = dateFormat(start)
+        let date = start.split(' ')[0]
         let endTime = new Date(now).toLocaleTimeString('chinese', { hour12: false })
         let endStamp = new Date(now).getTime()
         if (endStamp < startTime) {
@@ -282,6 +282,7 @@ export default {
           time: 1500
         })
       }
+      console.log('时间互换结束时间', this.v_from.endTime)
     }
   },
   mounted () {

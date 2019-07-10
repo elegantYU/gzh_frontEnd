@@ -206,7 +206,8 @@ export default {
     }
     .ld_submit{
       display: block;
-      margin: 0 0.3rem 0.3rem;
+      margin: 0 auto 0.3rem;
+      width: 6.5rem;
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;

@@ -11,6 +11,7 @@
                 <div class="pub_item_left_detail clearfix">
                   <span class="pub_item_detail_time">{{ v.createTime }}</span>
                   <span class="pub_item_detail_title">{{ v.taskType }}</span>
+                  <span>{{ f_topicType(v.shareType) }}</span>
                 </div>
               </div>
               <div class="pub_item_right">
@@ -75,6 +76,12 @@ export default {
           })
         })
     },
+    f_topicType (sts) {
+      if (sts == '2') {
+        return '物业'
+      }
+      return '居民'
+    },
     f_load () {
       this.v_loading = true
       setTimeout(() => {
@@ -138,13 +145,16 @@ export default {
             padding-right: 0.25rem;
             bottom: 0;
             left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             span{
               display: block;
-              float: left;
+              // float: left;
               font-size: 0.2rem;
-              &:last-of-type{
-                float: right;
-              }
+              // &:last-of-type{
+              //   float: right;
+              // }
             }
          }
       }

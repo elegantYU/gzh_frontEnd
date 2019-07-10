@@ -418,7 +418,8 @@ export default {
             border: 1px solid #036ff5;
             border-radius: 50%;
             img{
-              width: 100%;
+              max-width: 100%;
+              max-height: 100%;
             }
           }
           .rep_comments_item_info{

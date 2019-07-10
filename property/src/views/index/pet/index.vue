@@ -44,7 +44,8 @@ export default {
       let params = {
         villageCode: this.$store.state.villageCode,
         page: 1,
-        rows: 100
+        rows: 100,
+        status: 0
       }
 
       this.$http

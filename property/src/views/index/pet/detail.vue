@@ -63,7 +63,7 @@
           </div>
         </div>
       </div>
-      <div class="pet_btns">
+      <div class="pet_btns" v-if="v_checked">
         <button @click="f_passNot">审核不通过</button>
         <button @click="f_pass">审核通过</button>
       </div>
@@ -89,7 +89,8 @@ export default {
       v_detail: {},
       v_images: [],
       v_pop: false,
-      v_desc: ''
+      v_desc: '',
+      v_checked: true
     }
   },
   mounted () {
@@ -122,7 +123,12 @@ export default {
       const { data: { success }} = await this.$http
         .get('/admin/member/pet/system/wx/updatePet', { params })
 
-      success ? this.$toast('审核通过') : this.$toast('网络错误')
+      if (success) {
+        this.$toast('审核通过')
+        this.v_checked = false
+      } else {
+        this.$toast('网络错误')
+      }
     },
     async f_submit () {
       if (!this.v_desc) {
@@ -141,7 +147,12 @@ export default {
       const { data: { success }} = await this.$http
         .get('/admin/member/pet/system/wx/updatePet', { params })
 
-      success ? this.$toast('审批拒绝') : this.$toast('网络错误')
+      if (success) {
+        this.$toast('审批拒绝')
+        this.v_checked = false
+      } else {
+        this.$toast('网络错误')
+      }
     },
     f_cancel () {
       this.v_pop = false

@@ -64,11 +64,14 @@
           <input type="text" readonly v-model="v_content.skill">
           <span>※需要携带本人省份证在进门处登记人脸识别照片</span>
         </div>
+        <div class="nd_input">
+          <p>{{ v_content.applyNum }}</p>
+        </div>
         <!-- 预约状态 -->
-        <div class="nd_input" v-if="v_orderStatus">
+        <!-- <div class="nd_input" v-if="v_orderStatus">
           <label>预约状态</label>
           <input type="text" readonly :value="v_apply">
-        </div>
+        </div> -->
       </div>
       <!-- 内容描述 -->
       <div class="nd_description">
@@ -91,7 +94,7 @@
         </div>
       </div>
       <!-- 取消共享 或者 立即预约 -->
-      <div class="nd_submit" v-if="submit" @click="f_order">
+      <div class="nd_submit" v-if="false" @click="f_order">
         {{ v_orderText }}
       </div>
       <!-- 物业特有评论 -->
@@ -302,6 +305,9 @@ export default {
           color: #ff0000;
           font-size: 0.16rem;
         }
+        p{
+          font-size: 0.34rem;
+        }
       }
     }
     .nd_description{
@@ -352,7 +358,9 @@ export default {
       }
     }
     .nd_submit{
-      margin: 0 0.3rem 0.3rem;
+      display: block;
+      margin: 0 auto 0.3rem;
+      width: 6.5rem;
       height: 0.9rem;
       background-color: #f73476;
       text-align: center;

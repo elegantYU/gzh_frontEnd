@@ -6,8 +6,9 @@
         <p class="title">{{data.title}}</p>
         <p class="ct">{{data.content}}</p>
         <p class="btm clearfix">
-          <span class="time">{{data.createTime}}</span>
+          <span class="time">{{ time }}</span>
           <span class="type">{{ type }}</span>
+          <span class="status">{{ status }}</span>
         </p>
       </div>
       <img :src="img" alt="" class="rtimg">
@@ -23,6 +24,9 @@ export default {
     }
   },
   computed: {
+    time () {
+      return this.data.createTime.substr(0, 16)
+    },
     type () {
       switch (this.data.classify) {
         case '1':
@@ -57,6 +61,25 @@ export default {
     img () {
       const imgs = JSON.parse(this.data.imgUrl)
       return imgs.length && imgs[0]
+    },
+    status () {
+      switch (this.data.status) {
+        case "0":
+          return '待处理'
+          break
+        case "1":
+          return '处理中'
+          break
+        case "2":
+          return '已完成'
+          break
+        case "3":
+          return '已超时'
+          break
+        case "4":
+          return '已督办'
+          break
+      }
     }
   },
   methods: {
@@ -105,12 +128,9 @@ export default {
   .btm {
     color: #000;
     font-size: 0.2rem;
-  }
-  .time {
-    float: left;
-  }
-  .type {
-    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .rtimg {
     width: 1.62rem;

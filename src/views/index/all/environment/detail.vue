@@ -33,6 +33,7 @@
             class="rep_preview_item"
             v-for="(v, i) in v_info.imgUrl"
             :key="i"
+            @click="f_bigger(v)"
           >
             <img :src="v" alt="">
           </div>
@@ -60,6 +61,10 @@
           <div class="rep_comments_item_bottom">{{ v.content }}</div>
         </div>
       </div>
+    </div>
+    <!-- 放大图片 -->
+    <div class="bigger" v-if="v_bigger" @click="v_bigger = false">
+      <img :src="v_currentImg" alt="">
     </div>
   </div>
 </template>
@@ -100,7 +105,9 @@ export default {
         5: '已评论'
       },
       v_submitText: '评论',
-      v_textareaFlag: false
+      v_textareaFlag: false,
+      v_bigger: false,
+      v_currentImg: ''
     }
   },
   methods: {
@@ -173,6 +180,10 @@ export default {
             this.$toast('网络错误')
           }
         })
+    },
+    f_bigger (v) {
+      this.v_bigger = true
+      this.v_currentImg = v
     }
   },
   mounted () {
@@ -354,6 +365,20 @@ export default {
         color: #ccc;
         padding: 0.2rem 0;
       }
+    }
+  }
+  .bigger{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+      max-width: 6.5rem;
     }
   }
 }

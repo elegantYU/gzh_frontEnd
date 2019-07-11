@@ -17,6 +17,7 @@
             <li
               v-for="(v, i) in v_img"
               :key="i"
+              @click="f_bigger(v)"
             >
               <img :src="v" alt="">
             </li>
@@ -36,6 +37,10 @@
         <input type="text" readonly v-model="v_form.modifyTime">
       </div>
     </div>
+    <!-- 放大图片 -->
+    <div class="bigger" v-if="v_bigger" @click="v_bigger = false">
+      <img :src="v_currentImg" alt="">
+    </div>
   </div>
 </template>
 
@@ -44,7 +49,9 @@ export default {
   data () {
     return {
       v_form: {},
-      v_img: []
+      v_img: [],
+      v_bigger: false,
+      v_currentImg: ''
     }
   },
   computed: {
@@ -75,6 +82,10 @@ export default {
           this.v_form = Object.assign({}, data)
           this.v_img = JSON.parse(data.imgUrl)
         })
+    },
+    f_bigger (v) {
+      this.v_bigger = true
+      this.v_currentImg = v
     }
   }
 }
@@ -84,6 +95,20 @@ export default {
 .d_wrapper{
   height: 100%;
   background-color: #efeff4;
+  .bigger{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+      max-width: 6.5rem;
+    }
+  }
   h6{
     font-size: 0.32rem;
     color: #999;

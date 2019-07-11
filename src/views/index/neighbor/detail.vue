@@ -85,6 +85,7 @@
             class="nd_preview_item"
             v-for="(v, i) in imgJson"
             :key="i"
+            @click="f_bigger(v)"
           >
             <img :src="v" alt="">
           </div>
@@ -120,6 +121,10 @@
         </ul>
       </div>
     </div>
+    <!-- 放大图片 -->
+    <div class="bigger" v-if="v_bigger" @click="v_bigger = false">
+      <img :src="v_currentImg" alt="">
+    </div>
   </div>
 </template>
 
@@ -132,7 +137,9 @@ export default {
       v_orderStatus: false,
       v_orderText: '',
       v_apply: '',
-      v_comments: []
+      v_comments: [],
+      v_bigger: false,
+      v_currentImg: ''
     }
   },
   computed: {
@@ -251,6 +258,10 @@ export default {
             })
         }
       }
+    },
+    f_bigger (v) {
+      this.v_bigger = true
+      this.v_currentImg = v
     }
   }
 }
@@ -433,6 +444,20 @@ export default {
           }
         }
       }
+    }
+  }
+  .bigger{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+      max-width: 6.5rem;
     }
   }
 }

@@ -115,7 +115,8 @@ export default {
         endTime: '',
         detail: '',
         img: [],
-        villageCode: 0
+        villageCode: 0,
+        sts: 1
       },
       v_types: [
         { name: '水暖检修' },
@@ -142,7 +143,7 @@ export default {
     // 时间修正
     'v_start': function (now, past) {
       let date = dateFormat(now)
-      this.v_from.startTime = `${new Date(now).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')}`
+      this.v_from.startTime = this.$moment(now).format('YYYY-MM-DD HH:mm:ss')
       if (this.v_from.endTime) {
         let time = this.v_from.endTime.split(' ')[1]
         this.v_from.endTime = `${date} ${time}`
@@ -157,7 +158,7 @@ export default {
         let endStamp = new Date(`${date} ${endTime}`).getTime()
         if (endStamp < new Date(start).getTime()) {
           this.v_from.endTime = this.v_from.startTime
-          this.v_from.startTime = `${date} ${endTime}`
+          this.v_from.startTime = this.$moment(`${date} ${endTime}`).format('YYYY-MM-DD HH:mm:ss')
           const cache = this.v_start
           this.v_start = this.v_end
           this.v_end = cache

@@ -51,6 +51,8 @@ export default {
     loginOut () {
       window.document.cookie = "userPhone=;path=/;expires="
       window.document.cookie = "userPsd=;path=/;expires="
+      this.$store.dispatch('setUser', {})
+      this.$router.replace({ name: 'login' })
     }
   }
 }

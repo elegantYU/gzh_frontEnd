@@ -49,6 +49,7 @@
             class="rep_preview_item"
             v-for="(v, i) in imgs"
             :key="i"
+            @click="f_bigger(v)"
           >
             <img :src="v" alt="">
           </div>
@@ -79,6 +80,10 @@
         </mu-load-more>
       </div>
     </div>
+    <!-- 放大图片 -->
+    <div class="bigger" v-if="v_bigger" @click="v_bigger = false">
+      <img :src="v_currentImg" alt="">
+    </div>
   </div>
 </template>
 
@@ -93,7 +98,9 @@ export default {
       v_commmentNum: 1,
       v_loading: false,
       v_loadAll: false,
-      v_sts: 0
+      v_sts: 0,
+      v_bigger: false,
+      v_currentImg: ''
     }
   },
   mounted () {
@@ -191,6 +198,10 @@ export default {
         .post('/admin/property/repair/update', params)
       
       if (data.success) this.v_info.sts = 6
+    },
+    f_bigger (v) {
+      this.v_bigger = true
+      this.v_currentImg = v
     }
   }
 }
@@ -368,6 +379,20 @@ export default {
         color: #ccc;
         padding: 0.2rem 0;
       }
+    }
+  }
+  .bigger{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+      max-width: 6.5rem;
     }
   }
 }

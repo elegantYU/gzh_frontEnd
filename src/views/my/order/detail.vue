@@ -40,12 +40,12 @@
           <div class="mo_item_btn" v-show="v_orderState > 3" @click="f_delete">
             删除订单
           </div>
-          <div class="mo_item_btn active" v-show="false" @click="f_openComment">
+          <div class="mo_item_btn active" v-show="v_orderState > 3" @click="f_openComment">
             评价
           </div>
         </div>
       </div>
-      <div class="rep_commentList" v-show="false">
+      <div class="rep_commentList" v-show="v_orderState > 3">
         <p>评论</p>
         <mu-load-more :loading="v_loading" @load='f_loadComments' :loaded-all="v_loadAll">
           <mu-list>

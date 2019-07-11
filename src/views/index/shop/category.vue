@@ -7,7 +7,7 @@
     >
       <div class="shop_category_head">
         <span>{{ v.codeText }}</span>
-        <span @click="f_moveMore(v.codeCd)">更多 ></span>
+        <span @click="f_moveMore(v.codeCd, v.codeText)">更多 ></span>
       </div>
       <div class="shop_category_body">
         <ul>
@@ -67,8 +67,8 @@ export default {
         resolve(res)
       })
     },
-    f_moveMore (i) {
-      this.$router.push({ name: 'shopMore', query: { productCateId: i } })
+    f_moveMore (i, v) {
+      this.$router.push({ name: 'shopMore', query: { productCateId: i, category: v } })
     }
   }
 }

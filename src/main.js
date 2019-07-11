@@ -3,6 +3,7 @@ import App from './App.vue'
 import axios from './utils/axios'
 import store from './store/store'
 import Muse from 'muse-ui'
+import moment from 'moment'
 import { deviceRem, initConfirm } from './utils/utils'
 import wxsdk from './utils/wxsdk'
 import toastMessage from './components/plugin/Toast'
@@ -17,6 +18,7 @@ const vConsole = new Vconsole()
 
 Vue.prototype.$http = axios
 Vue.prototype.$wxsdk = wxsdk
+Vue.prototype.$moment = moment
 Vue.use(Muse)
 Vue.use(toastMessage)
 Vue.use(touch)

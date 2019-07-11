@@ -59,6 +59,7 @@ const router = new Router({
     { path: '/publish', name: 'publish', meta: { title: '发布' }, component: () => import('../views/index/publish.vue') },
     // 报修
     { path: '/willrepair', name: 'willRepair', meta: { title: '我要报修' }, component: () => import('../views/index/repair/willRepair.vue') },
+    { path: '/fixed', name: 'fixed', meta: { title: '我要报修' }, component: () => import('../views/index/repair/fixed.vue') },
     // 环境秩序 我要上报
     { path: '/goreport', name: 'goreport', meta: { title: '我要上报' }, component: () => import('../views/index/all/environment/goReport.vue') },
     // 环境秩序 详情页面

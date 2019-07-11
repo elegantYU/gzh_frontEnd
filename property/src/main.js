@@ -4,6 +4,7 @@ import router from './router/router'
 import store from './store/store'
 import axios from './utils/axios'
 import Muse from 'muse-ui'
+import moment from 'moment'
 import './assets/css/base.css'
 import touch from 'vue-directive-touch'
 import 'muse-ui/dist/muse-ui.css'
@@ -17,6 +18,7 @@ const clg = new Vconsole()
 
 Vue.prototype.$http = axios
 Vue.prototype.$wxsdk = wxsdk
+Vue.prototype.$moment = moment
 Vue.use(Muse)
 Vue.use(toastMessage)
 Vue.use(touch)

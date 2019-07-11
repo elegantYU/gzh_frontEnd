@@ -54,7 +54,9 @@
             class="ns_preview_list"
             v-for="(v, i) in v_from.imgUrl"
             :key="i"
+            @click="f_bigger(v)"
           >
+            <i @click.stop="f_deleteImg(i)">x</i>
             <img :src="v" alt="">
           </div>
           <a class="ns_preview_add" @click="f_upload"></a>
@@ -104,6 +106,10 @@
         </mu-list>
       </mu-bottom-sheet>
     </div>
+    <!-- 放大图片 -->
+    <div class="bigger" v-if="v_bigger" @click="v_bigger = false">
+      <img :src="v_currentImg" alt="">
+    </div>
   </div>
 </template>
 
@@ -147,7 +153,9 @@ export default {
         applyNum: 0
       },
       v_start: '',
-      v_end: ''
+      v_end: '',
+      v_bigger: false,
+      v_currentImg: ''
     }
   },
   computed: {
@@ -215,6 +223,9 @@ export default {
     this.f_getPark()
   },
   methods: {
+    f_deleteImg (i) {
+      this.v_from.imgUrl.splice(i, 1)
+    },
     f_openType () {
       this.v_typeFlag = true
     },
@@ -420,6 +431,10 @@ export default {
             this.$toast(res.data.msg)
           }
         })
+    },
+    f_bigger (v) {
+      this.v_bigger = true
+      this.v_currentImg = v
     }
   }
 }
@@ -583,6 +598,21 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
+          position: relative;
+          i{
+            position: absolute;
+            top: -0.15rem;
+            right: -0.15rem;
+            width: 0.3rem;
+            height: 0.3rem;
+            cursor: pointer;
+            border-radius: 50%;
+            background-color: crimson;
+            color: #fff;
+            font-size: 0.15rem;
+            line-height: 0.3rem;
+            text-align: center;
+          }
           img{
             max-width: 100%;
             max-height: 100%;
@@ -620,6 +650,20 @@ export default {
       line-height: 0.9rem;
       border-radius: 0.415rem;
       cursor: pointer;
+    }
+  }
+  .bigger{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+      max-width: 6.5rem;
     }
   }
 }

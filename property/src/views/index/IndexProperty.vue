@@ -53,7 +53,7 @@
               </div>
             </div>
             <div class="index_topic_img">
-              <img :src="v.img[0]" alt="" v-if='v.img'>
+              <img :src="v.img" alt="" v-if='v.img'>
             </div>
           </li>
         </ul>
@@ -342,8 +342,10 @@ export default {
               height: 100%;
               display: flex;
               align-items: center;
+              justify-content: center;
               img{
-                width: 100%
+                max-width: 100%;
+                max-height: 100%;
               }
             }
           }

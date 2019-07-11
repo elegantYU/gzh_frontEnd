@@ -51,7 +51,7 @@ export default {
     f_detail (v) {
       //  这里根据状态判断进入页面
       if (v.sts === 3) {
-        this.$router.push({ name: 'willRepair', query: { id: v.id } })
+        this.$router.push({ name: 'fixed', query: { id: v.id } })
       } else {
         this.$router.push({ name: 'repairDetail', params: { id: v.id } })
       }

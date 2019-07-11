@@ -83,13 +83,19 @@
             class="pa_preview_list"
             v-for="(v, i) in v_form.exemptionImg"
             :key="i"
+            @click="f_bigger(v)"
           >
+            <i @click.stop="f_deleteImg(i)">x</i>
             <img :src="v" alt="">
           </div>
           <a class="pa_preview_add" @click="f_upload"></a>
         </div>
       </div>
       <a  class="pa_submit" @click="f_submit">提交</a>
+    </div>
+    <!-- 放大图片 -->
+    <div class="bigger" v-if="v_bigger" @click="v_bigger = false">
+      <img :src="v_currentImg" alt="">
     </div>
   </div>
 </template>
@@ -115,7 +121,9 @@ export default {
         villageCode: '',        // 小区id
         exemptionImg: []        // 图片数组
       },
-      v_address: []
+      v_address: [],
+      v_bigger: false,
+      v_currentImg: ''
     }
   },
   computed: {
@@ -178,8 +186,7 @@ export default {
     f_submit () {
       let params = Object.assign({}, this.v_form)
       params.exemptionImg = JSON.stringify(this.v_form.exemptionImg)
-      params.exemptionTime = new Date(params.exemptionTime).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
-      console.log(params)
+      params.exemptionTime = this.$moment(params.exemptionTime).format('YYYY-MM-DD HH:mm:ss')
 
       if (params.raiser && params.petBreed && params.exemptionNum && params.exemptionTime && params.vaccineType && params.petRegisNum) {
         this.$http
@@ -206,7 +213,14 @@ export default {
       }else {
         this.v_form.weight = this.v_form.weight + 'kg'
       }
-    }
+    },
+    f_bigger (v) {
+      this.v_bigger = true
+      this.v_currentImg = v
+    },
+    f_deleteImg (i) {
+      this.v_from.exemptionImg.splice(i, 1)
+    },
   }
 }
 </script>
@@ -327,6 +341,21 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
+          position: relative;
+          i{
+            position: absolute;
+            top: -0.15rem;
+            right: -0.15rem;
+            width: 0.3rem;
+            height: 0.3rem;
+            cursor: pointer;
+            border-radius: 50%;
+            background-color: crimson;
+            color: #fff;
+            font-size: 0.15rem;
+            line-height: 0.3rem;
+            text-align: center;
+          }
           img{
             max-width: 100%;
             max-height: 100%;
@@ -364,6 +393,20 @@ export default {
       line-height: 0.9rem;
       border-radius: 0.415rem;
       cursor: pointer;
+    }
+  }
+  .bigger{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+      max-width: 6.5rem;
     }
   }
 }

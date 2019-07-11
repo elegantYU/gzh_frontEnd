@@ -89,7 +89,9 @@ export default {
         dealUserName: '',
         mobile: '',
         content: ''
-      }
+      },
+      v_bigger: false,
+      v_currentImg: ''
     }
   },
   computed: {
@@ -150,7 +152,7 @@ export default {
       }
 
       this.$http
-        .post(`/applet/event/current/mobile/comprehensive/commentComprehensive?dealUserName=${this.v_popForm.dealUserName}&mobile=${this.v_popForm.mobile}&content=${this.v_popForm.content}&eventId=${this.v_from.eventId}&idNumber=${this.$store.state.user.idNo}`)
+        .post(`/applet/event/current/mobile/comprehensive/commentComprehensive?dealUserName=${this.v_popForm.dealUserName}&mobile=${this.v_popForm.mobile}&content=${this.v_popForm.content}&eventId=${this.v_from.eventId}&idNumber=${this.$store.state.user.idNo}&environmentId=${this.v_from.environmentId}`)
         .then(res => {
           if (res.data.flag) {
             this.$router.back()

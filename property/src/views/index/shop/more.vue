@@ -2,7 +2,7 @@
   <div class="sm_wrapper">
     <div class="shop_category">
       <div class="shop_category_head">
-        <span>水果生鲜</span>
+        <span>{{ v_category }}</span>
       </div>
       <div class="shop_category_body">
         <ul>
@@ -35,11 +35,13 @@ export default {
       v_productCateId: 0,
       v_start: 1,
       v_loading: false,
-      v_loadAll: false
+      v_loadAll: false,
+      v_category: ''
     }
   },
   mounted () {
     this.v_productCateId = this.$route.query.productCateId
+    this.v_category = this.$route.query.category
     this.f_getList()
   },
   methods: {

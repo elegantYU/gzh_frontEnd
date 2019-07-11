@@ -42,13 +42,19 @@
           class="ns_preview_list"
           v-for="(v, i) in v_form.img"
           :key="i"
+          @click="f_bigger(v)"
         >
+          <i @click.stop="f_deleteImg(i)">x</i>
           <img :src="v" alt="">
         </div>
         <a class="ns_preview_add" @click="f_upload"></a>
       </div>
     </div>
     <a class="ns_submit" @click="f_submit">发布</a>
+    <!-- 放大图片 -->
+    <div class="bigger" v-if="v_bigger" @click="v_bigger = false">
+      <img :src="v_currentImg" alt="">
+    </div>
   </div>
 </template>
 
@@ -70,7 +76,9 @@ export default {
       },
       v_type: [
         { name: '热门活动', type: '3' }
-      ]
+      ],
+      v_bigger: false,
+      v_currentImg: ''
     }
   },
   computed: {
@@ -88,6 +96,7 @@ export default {
       return new Date(date).getTime() < start
     },
     f_upload (e) {
+      console.log('上传图片', this.v_form.img)
       if (this.v_form.img.length > 2) {
         this.$toast('最多三张图片')
         return
@@ -103,7 +112,6 @@ export default {
                 this.$http
                   .post('/admin/file/upload2', form)
                   .then(({data: { data }}) => {
-                    this. 
                     this.v_form.img.push(data)
                   })
               })
@@ -120,8 +128,8 @@ export default {
       this.v_form.villageCode = this.$store.state.villageCode
     
       const img = this.v_form.img.join(';')
-      const start = new Date(this.v_form.postBegin).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
-      const end = new Date(this.v_form.postEnd).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
+      const start = this.$moment(this.v_form.postBegin).format('YYYY-MM-DD HH:mm:ss')
+      const end = this.$moment(this.v_form.postEnd).format('YYYY-MM-DD HH:mm:ss')
 
       const params = Object.assign({}, this.v_form, { img: img, postBegin: start, postEnd: end })
 
@@ -135,7 +143,14 @@ export default {
             this.$toast('发布失败')
           }
         })
-    }
+    },
+    f_bigger (v) {
+      this.v_bigger = true
+      this.v_currentImg = v
+    },
+    f_deleteImg (i) {
+      this.v_form.img.splice(i, 1)
+    },
   }
 }
 </script>
@@ -144,6 +159,20 @@ export default {
 .tp_wrapper{
   height: 100%;
   background-color: #efeff4;
+  .bigger{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+      max-width: 6.5rem;
+    }
+  }
   h6{
     font-size: 0.34rem;
     height: 0.9rem;
@@ -235,6 +264,21 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
+        i{
+          position: absolute;
+          top: -0.15rem;
+          right: -0.15rem;
+          width: 0.3rem;
+          height: 0.3rem;
+          cursor: pointer;
+          border-radius: 50%;
+          background-color: crimson;
+          color: #fff;
+          font-size: 0.15rem;
+          line-height: 0.3rem;
+          text-align: center;
+        }
         img{
           max-width: 100%;
           max-height: 100%;

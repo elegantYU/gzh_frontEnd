@@ -39,7 +39,7 @@
                 <div class="mo_item_btn" v-show="v.orderState > 3" @click="f_delete(v)">
                   删除订单
                 </div>
-                <div class="mo_item_btn active" v-show="false" @click="f_comment(v)">
+                <div class="mo_item_btn active" v-show="v.orderState == 4" @click="f_comment(v)">
                   评价
                 </div>
               </div>

@@ -38,8 +38,8 @@
         <div class="ns_input ns_shareTime" v-if="v_taskType === '2'">
           <label>共享时间</label>
           <span>
-            <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_from.startTime" type="dateTime" landscape></mu-date-input>
-            <mu-date-input container="bottomSheet" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_from.endTime" type="time" landscape></mu-date-input>
+            <mu-date-input container="bottomSheet" :should-disable-date="f_startTimeRules" prefix="开始" :solo='true' :full-width="true" clock-type='24hr' view-type='list' v-model="v_start" type="dateTime" landscape></mu-date-input>
+            <mu-date-input container="bottomSheet" :solo='true' :full-width="true" prefix="结束" clock-type='24hr' view-type='list' v-model="v_end" type="time" landscape></mu-date-input>
           </span>
         </div>
         <!-- 拼车 -->
@@ -58,7 +58,7 @@
         </div>
         <div class="ns_input" v-if="v_taskType === '1'">
           <label>发车时间</label>
-          <mu-date-input v-model="v_from.startTime" underline-color="red" label="请输入发车时间" view-type='list' container="bottomSheet" :should-disable-date="f_startTimeRules" type="dateTime" :solo='true' clock-type='24hr' label-float full-width landscape></mu-date-input>
+          <mu-date-input v-model="v_start" underline-color="red" label="请输入发车时间" view-type='list' container="bottomSheet" :should-disable-date="f_startTimeRules" type="dateTime" :solo='true' clock-type='24hr' label-float full-width landscape></mu-date-input>
         </div>
         <!-- 时间互换 -->
         <div class="ns_input ns_input_check" v-if="v_taskType === '3'">

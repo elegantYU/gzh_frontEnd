@@ -9,7 +9,7 @@
         >
           <div class="house_input">
             <label>身份</label>
-            <p>{{ v.identityInformation }}</p>
+            <p>{{ f_identiy(v.identityInformation) }}</p>
           </div>
           <div class="house_input">
             <label>房屋信息</label>
@@ -63,6 +63,19 @@ export default {
     },
     f_house (v) {
       return `${v.building}${v.unit}${v.room}`
+    },
+    f_identiy (id) {
+      switch (id * 1) {
+        case 1:
+          return '业主'
+          break
+        case 2:
+          return '家属'
+          break
+        case 6:
+          return '租客'
+          break
+      }
     },
     f_status (v) {
       switch (v.status) {

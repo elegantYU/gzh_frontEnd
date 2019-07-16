@@ -359,7 +359,7 @@ export default {
         .then(res => {
           if (res.data.success) {
             this.$toast(res.data.msg)
-            this.$router.go(-1)
+            this.$router.replace({ name: 'house' })
           } else {
             this.$toast(res.data.msg)
           }

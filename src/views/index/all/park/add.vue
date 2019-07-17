@@ -14,7 +14,7 @@
         <label>费用</label>
         <div class="pa_input_box">
           <input type="text" placeholder="0元" readonly v-model="price">
-          <span>收费标准{{ v_payInfo.price.price }}元/月</span>
+          <span>收费标准{{ v_payInfo.price && v_payInfo.price.price }}元/月</span>
         </div>
       </div>
       <div class="pa_input">
@@ -43,6 +43,12 @@
           <img :src="v_qrcode" alt="">
         </div>
       </div>
+      <div class="pa_input">
+        <label>备注</label>
+        <div class="pa_input_box">
+          <input type="text" v-model="v_form.remarks" placeholder="请输入您的付款方式和付款帐号">
+        </div>
+      </div>
     </div>
     <a  class="pa_submit" @click="f_applyPark">我已缴费</a>
   </div>
@@ -59,13 +65,14 @@ export default {
         endTime: '',
         createUserId: '',
         createUserName: '',
-        villageCode: ''
+        villageCode: '',
+        remarks: ''
       },
       v_payInfo: {
-        wx: {},
-        price: {},
-        zfb: {},
-        yhk: {}
+        wx: null,
+        price: null,
+        zfb: null,
+        yhk: null
       },
       v_carNum: [],
       v_qrcode: '',
@@ -80,6 +87,10 @@ export default {
       const start = new Date(this.v_start).getTime()
       const end = new Date(this.v_end).getTime()
       let result
+      console.log('price', this.v_payInfo.price, !this.v_payInfo.price)
+      if (!this.v_payInfo.price) {
+        return 0
+      }
       if (start && end) {
         if (start >= nowDate && end >= nowDate) {
           if (end > start) {
@@ -164,6 +175,10 @@ export default {
         this.$toast('请选择正确时间')
         return
       }
+      if (!this.v_form.remarks) {
+        this.$toast('请输入付款方式和帐号')
+        return
+      }
       const params = {
         carNum: this.v_form.carNum,
         price: this.v_form.price,
@@ -171,7 +186,8 @@ export default {
         endTime: this.v_form.endTime,
         createUserId: this.$store.state.user.id,
         createUserName: this.$store.state.user.name,
-        villageCode: this.$store.state.villageCode
+        villageCode: this.$store.state.villageCode,
+        remarks: this.v_form.remarks
       }
 
       const { data: { success }} = await this.$http

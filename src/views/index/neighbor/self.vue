@@ -525,6 +525,7 @@ export default {
     top: 0;
     left: 0;
     background-color: #efeff4;
+    width: 100%;
     padding-bottom: 1.2rem;
     overflow: auto;
     h6{

@@ -224,8 +224,7 @@ export default {
     },
     // 申请访客通行密码
     f_passWord () {
-      const applyTime = new Date(this.visiteTime).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
-      console.log('时间格式化', applyTime)
+      const applyTime = this.$moment(this.visiteTime).format('YYYY-MM-DD HH:mm:ss')
       if(this.v_from.time && this.v_from.prpname && this.v_from.phone && this.v_gender && this.v_from.identity && applyTime ) {
         let params = {
           time: this.v_from.time,
@@ -434,7 +433,8 @@ export default {
     }
   }
   .visitor-password{
-    width: 90%;
+    display: block;
+    width: 6.5rem;
     height: 0.8rem;
     background-color: rgb(247,52,118);
     margin: 0.3rem auto;

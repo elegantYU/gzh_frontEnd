@@ -21,7 +21,7 @@
         <div class="lp_input">
           <label>发布人</label>
           <div class="lp_input_box">
-            <input type="text" placeholder="请输入姓名" readonly v-model="v_form.createUserName">
+            <input type="text" placeholder="请输入姓名" v-model="v_form.createUserName">
           </div>
         </div>
         <div class="lp_input">
@@ -88,9 +88,9 @@ export default {
       return this.$store.state.village
     }
   },
-  mounted () {
-    this.v_form.createUserName = this.$store.state.user.name
-  },
+  // mounted () {
+  //   this.v_form.createUserName = this.$store.state.user.name
+  // },
   methods: {
     f_upload (e) {
       if (this.v_form.imgUrl.length > 2) {

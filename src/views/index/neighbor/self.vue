@@ -519,7 +519,11 @@ export default {
 .ns_wrapper{
   background-color: #efeff4;
   height: 100%;
+  position: relative;
   .ns_container{
+    position: absolute;
+    top: 0;
+    left: 0;
     background-color: #efeff4;
     padding-bottom: 1.2rem;
     overflow: auto;

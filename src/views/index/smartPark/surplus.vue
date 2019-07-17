@@ -9,7 +9,7 @@
         <div class="surplus-img-num">{{catnum}}</div>
       </div>
     </div>
-    <div class="surplus-nearby">
+    <div class="surplus-nearby" v-if="catnum">
       <div class="surplus-nearby-text">附近小区停车位</div>
       <div
         class="surplus-nearby-text-cont"
@@ -37,7 +37,7 @@ export default {
   data () {
     return {
       Catimg: Catimg,
-      catnum: '55',
+      catnum: '',
       sname: '计家小区',
       snamenum: '20',
       distance: '1',

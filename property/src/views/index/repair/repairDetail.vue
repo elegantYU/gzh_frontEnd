@@ -47,7 +47,7 @@
         <div class="rep_preview_wrapper">
           <div
             class="rep_preview_item"
-            v-for="(v, i) in imgs"
+            v-for="(v, i) in v_info.img"
             :key="i"
             @click="f_bigger(v)"
           >
@@ -55,7 +55,7 @@
           </div>
         </div>
       </div>
-      <div class="rep_comment" v-if="v_info.sts === 2 || v_info.sts === 4">
+      <div class="rep_comment" v-if="v_info.sts === 1 || v_info.sts === 4">
         <button class="rep_comment_btn" @click="f_submit">{{ btnText }}</button>
       </div>
       <div class="rep_commentList" v-show="v_commments.length">
@@ -104,7 +104,8 @@ export default {
     }
   },
   mounted () {
-    this.v_info = this.$store.state.currentRepair
+    this.v_info = Object.assign({}, this.$store.state.currentRepair)
+    console.log('物业', this.v_info)
     this.f_getComments()
   },
   computed: {
@@ -119,8 +120,10 @@ export default {
     status: function () {
       switch (this.v_info.sts) {
         case 1:
+          return '未确认'
+          break
         case 2:
-          return '待审核'
+          return '已确认'
           break
         case 3:
           return '未通过'
@@ -144,9 +147,6 @@ export default {
         this.v_sts = 5
         return '完成'
       }
-    },
-    imgs () {
-      return JSON.parse(v_info.img)
     }
   },
   methods: {
@@ -154,7 +154,7 @@ export default {
       this.$http
         .get('/admin/comment/list', {
           params: {
-            rId: this.v_id,
+            rId: this.$route.query.id,
             pageNum: this.v_commmentNum,
             pageSize: 100
           }

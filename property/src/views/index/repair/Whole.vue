@@ -54,13 +54,15 @@ export default {
   methods: {
     f_detail (v) {
       this.$store.commit('setCurrentRepair', v)
-      this.$router.push({name:'repairDetail'})
+      this.$router.push({name:'repairDetail', query: { id: v.id }})
     },
     f_formatSts (v) {
       switch (v.sts) {
         case 1:
-        case 2:
           return '待确认'
+          break
+        case 2:
+          return '已确认'
           break
         case 3:
           return '待处理'

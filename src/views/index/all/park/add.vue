@@ -83,11 +83,11 @@ export default {
       if (start && end) {
         if (start >= nowDate && end >= nowDate) {
           if (end > start) {
-            this.v_form.startTime = new Date(start).toLocaleString('chinese', { hour12: false }).replace(/(\d{4}).(\d{1,2}).(\d{1,2}).*/mg, '$1-$2-$3')
-            this.v_form.endTime = new Date(end).toLocaleString('chinese', { hour12: false }).replace(/(\d{4}).(\d{1,2}).(\d{1,2}).*/mg, '$1-$2-$3')
+            this.v_form.startTime = this.$moment(start).format('YYYY-MM-DD HH:mm:ss')
+            this.v_form.endTime = this.$moment(end).format('YYYY-MM-DD HH:mm:ss')
           } else {
-            this.v_form.startTime = new Date(end).toLocaleString('chinese', { hour12: false }).replace(/(\d{4}).(\d{1,2}).(\d{1,2}).*/mg, '$1-$2-$3')
-            this.v_form.endTime = new Date(start).toLocaleString('chinese', { hour12: false }).replace(/(\d{4}).(\d{1,2}).(\d{1,2}).*/mg, '$1-$2-$3')
+            this.v_form.startTime = this.$moment(end).format('YYYY-MM-DD HH:mm:ss')
+            this.v_form.endTime = this.$moment(start).format('YYYY-MM-DD HH:mm:ss')
             // 交换
             const temp = this.v_end
             this.v_end = this.v_start
@@ -98,16 +98,16 @@ export default {
           return this.v_form.price + '元'
         } else {
           if (start < nowDate && end < nowDate) {
-            this.v_form.startTime = new Date(nowDate).toLocaleString('chinese', { hour12: false }).replace(/(\d{4}).(\d{1,2}).(\d{1,2}).*/mg, '$1-$2-$3')
-            this.v_form.endTime = new Date(nowDate).toLocaleString('chinese', { hour12: false }).replace(/(\d{4}).(\d{1,2}).(\d{1,2}).*/mg, '$1-$2-$3')
+            this.v_form.startTime = this.$moment(nowDate).format('YYYY-MM-DD HH:mm:ss')
+            this.v_form.endTime = this.$moment(nowDate).format('YYYY-MM-DD HH:mm:ss')
             result = 0
           } else if (start < nowDate) {
-            this.v_form.startTime = new Date(nowDate).toLocaleString('chinese', { hour12: false }).replace(/(\d{4}).(\d{1,2}).(\d{1,2}).*/mg, '$1-$2-$3')
-            this.v_form.endTime = new Date(end).toLocaleString('chinese', { hour12: false }).replace(/(\d{4}).(\d{1,2}).(\d{1,2}).*/mg, '$1-$2-$3')
+            this.v_form.startTime = this.$moment(nowDate).format('YYYY-MM-DD HH:mm:ss')
+            this.v_form.endTime = this.$moment(end).format('YYYY-MM-DD HH:mm:ss')
             result = (Math.abs(end - nowDate) / (1000*60*60*24*28)).toFixed()
           } else {
-            this.v_form.startTime = new Date(start).toLocaleString('chinese', { hour12: false }).replace(/(\d{4}).(\d{1,2}).(\d{1,2}).*/mg, '$1-$2-$3')
-            this.v_form.endTime = new Date(nowDate).toLocaleString('chinese', { hour12: false }).replace(/(\d{4}).(\d{1,2}).(\d{1,2}).*/mg, '$1-$2-$3')
+            this.v_form.startTime = this.$moment(end).format('YYYY-MM-DD HH:mm:ss')
+            this.v_form.endTime = this.$moment(nowDate).format('YYYY-MM-DD HH:mm:ss')
             result = (Math.abs(start - nowDate) / (1000*60*60*24*28)).toFixed()
           }
           this.v_form.price = result * this.v_payInfo.price.price
@@ -117,7 +117,7 @@ export default {
     },
     cardNum () {
       if (this.v_payInfo.yhk !== null) {
-        return this.v_payInfo.yhk.bankName + this.v_payInfo.yhk.paymentCode
+        return `${this.v_payInfo.yhk.bankName} ${this.v_payInfo.yhk.paymentCode}`
       }
     }
   },

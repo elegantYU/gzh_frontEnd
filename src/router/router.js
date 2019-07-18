@@ -101,6 +101,8 @@ const router = new Router({
     // 我的订单
     { path: '/my/order', name: 'myOrder', meta: { title: '我的订单' }, component: () => import('../views/my/order/list.vue') },
     { path: '/my/orderDetail', name: 'orderList', meta: { title: '订单详情' }, component: () => import('../views/my/order/detail.vue') },
+    // 我的访客
+    { path: '/my/visitors', name: 'visitors', meta: { title: '我的访客' }, component: () => import('../views/my/visitor/index.vue') },
     // 帮助中心
     { path: '/my/help/index', name: 'help', meta: { title: '帮助中心' }, component: () => import('../views/my/help/index.vue') },
     { path: '/my/help/question', name: 'helpQues', meta: { title: '常见问题' }, component: () => import('../views/my/help/question.vue') },

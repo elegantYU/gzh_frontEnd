@@ -160,6 +160,7 @@ export default {
   .wr_content{
     padding-bottom: 1.2rem;
     background-color: #efeff4;
+    overflow: auto;
     h6{
       padding: 0.23rem 0 0.26rem;
       font-size: 0.36rem;

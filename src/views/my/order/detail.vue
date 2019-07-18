@@ -185,21 +185,29 @@ export default {
     async f_comment () {
       const params = {
         rId: this.v_id,
-        rType: 'orders',
+        rtype: 'orders',
         createUserId: this.$store.state.user.id,
         createUserName: this.$store.state.user.name,
-        content: this.v_comment
+        content: this.v_comment,
+        parentId: 0
       }
 
-      await this.$http
+      const { data } = await this.$http
         .post('/admin/comment/add', params)
+      
+      if (data.success)
+        this.f_closeComment()
+        this.v_commmentNum = 1
+        this.v_comments = []
+        this.f_getComments()
+        this.f_updateStatus()
     },
     async f_getComments () {
       const params = {
         rId: this.v_id,
         rType: 'orders',
         pageNum: this.v_commmentNum,
-        pageSize: 10
+        pageSize: 100
       }
 
       const { data: { data: result }} = await this.$http
@@ -209,6 +217,15 @@ export default {
         this.v_noComment = true
       }
       this.v_comments.push(...result)
+    },
+    async f_updateStatus () {
+      const params = {
+        id: this.v_id,
+        sts: 6
+      }
+
+      await this.$http
+        .post('/admin/property/repair/update', params)
     },
     f_loadComments () {
       this.v_loading = true

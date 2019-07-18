@@ -22,7 +22,7 @@
                 </div>
               </div>
               <div class="index_topic_img">
-                <img :src="v.img[0]" alt="">
+                <img :src="v.img" alt="">
               </div>
             </div>
           </template>
@@ -59,7 +59,10 @@ export default {
         .get('/collection/notice/collectionList', { params })
         .then(res => {
           if (res.data.data.length) {
-            res.data.data.map(v => this.v_list.push(v))
+            this.v_list = res.data.data.map(v => ({
+              ...v,
+              img: !v.img ? '' : v.img[0]
+            }))
           } else {
             this.v_loadAll = true
           }

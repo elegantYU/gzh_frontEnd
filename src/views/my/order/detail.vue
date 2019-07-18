@@ -220,12 +220,12 @@ export default {
     },
     async f_updateStatus () {
       const params = {
-        id: this.v_id,
-        sts: 6
+        orderSn: this.v_id.toString(),
+        state: 6
       }
 
       await this.$http
-        .post('/admin/property/repair/update', params)
+        .get('/admin/order/orders/updateState', { params })
     },
     f_loadComments () {
       this.v_loading = true

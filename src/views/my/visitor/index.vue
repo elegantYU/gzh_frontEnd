@@ -11,9 +11,9 @@
           v-for="(v, i) in v_list"
           :key="i"
         >
-          <span>{{ name }}</span>
-          <span>{{ type }}</span>
-          <span>{{ time }}</span>
+          <span>{{ v.name }}</span>
+          <span>{{ v.type }}</span>
+          <span>{{ v.time }}</span>
         </li>
       </ul>
     </div>
@@ -33,16 +33,18 @@ export default {
   methods: {
     async f_getList () {
       const params = {
-
+        userId: this.$store.state.user.id,
+        pageNum: 1,
+        pageSize: 100
       }
 
-      const { data } = await this.$http
-        .get('', { params })
+      const { data: { data }} = await this.$http
+        .get('/admin/visit/getMeVisit', { params })
       
-      this.v_list = data.map(v => ({
-        name: '',
-        type: '',
-        time: ''
+      this.v_list = data.list.map(v => ({
+        name: v.visitorName,
+        type: v.telephone,
+        time: v.applyTime.slice(0, 16)
       }))
     }
   }

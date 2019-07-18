@@ -306,10 +306,10 @@ export default {
             text-overflow: -o-ellipsis-lastline;
             text-overflow: ellipsis;
             overflow: hidden;
-            display: -webkit-box;
+            display: -webkit-flex;
             -webkit-line-clamp: 2;
             /*! autoprefixer: off */
-            -webkit-box-orient: vertical;
+            -webkit-flex-orient: vertical;
             height: 0.8rem;
           }
           .sc_list_detail_footer{

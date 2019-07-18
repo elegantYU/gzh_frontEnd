@@ -318,6 +318,7 @@ export default {
         }
         p{
           font-size: 0.34rem;
+          line-height: 0.9rem;
         }
       }
     }

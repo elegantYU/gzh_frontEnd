@@ -9,7 +9,7 @@
         <div class="surplus-img-num">{{catnum}}</div>
       </div>
     </div>
-    <div class="surplus-nearby" v-if="catnum">
+    <div class="surplus-nearby" v-if="v_list.length">
       <div class="surplus-nearby-text">附近小区停车位</div>
       <div
         class="surplus-nearby-text-cont"

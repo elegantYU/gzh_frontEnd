@@ -20,7 +20,7 @@
           <label>车牌号</label>
           <div class="pop_box">
             <mu-select v-model="v_form.carNum" full-width  placeholder="请选择车牌号">
-              <mu-option v-for="(v,i) in v_carNums" :key="i" :label="v" :value="v"></mu-option>
+              <mu-option v-for="(v,i) in v_carNums" :key="i" :label="v.carNo" :value="v.carNo"></mu-option>
             </mu-select>
           </div>
           <!-- <i></i> -->
@@ -104,7 +104,7 @@ export default {
     }
   },
   mounted () {
-    this.v_form.type = this.parkInfo.type
+    // this.v_form.type = this.parkInfo.type
     this.v_house = this.$store.state.house
     this.f_getCarNum()
   },
@@ -131,7 +131,7 @@ export default {
         ? this.v_form.relationship
         : '2'
 
-      const orderTime = new Date(this.v_form.orderTime).toLocaleString('chinese', {hour12: false}).replace(/\//g, '-')
+      const orderTime = this.$moment(this.v_form.orderTime).format('YYYY-MM-DD HH:mm:ss')
       const params = {
         ...this.v_form,
         orderTime: orderTime

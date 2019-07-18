@@ -82,8 +82,8 @@ export default {
           text-align: left;
           -webkit-line-clamp: 2;
           text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
+          display: -webkit-flex;
+          -webkit-flex-orient: vertical;
           margin-bottom: 0.2rem;
         }
         .earlylist-list-date{

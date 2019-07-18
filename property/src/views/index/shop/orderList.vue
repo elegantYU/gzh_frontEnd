@@ -311,10 +311,10 @@ export default {
                 text-overflow: -o-ellipsis-lastline;
                 text-overflow: ellipsis;
                 overflow: hidden;
-                display: -webkit-box;
+                display: -webkit-flex;
                 -webkit-line-clamp: 4;
                 /*! autoprefixer: off */
-                -webkit-box-orient: vertical;
+                -webkit-flex-orient: vertical;
               }
               .mo_item_desc_count{
                 display: inline-block;

@@ -94,9 +94,9 @@ export default {
     height: 0.8rem;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
+    display: -webkit-flex;
     -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    -webkit-flex-orient: vertical;
     color: #a9a9a9;
     font-size: 0.26rem;
     line-height: 0.4rem;

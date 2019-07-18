@@ -17,7 +17,7 @@
                   </div>
                 </div>
                 <div class="whole_list_img">
-                  <img :src="v.img[0]" alt="">
+                  <img :src="v.img && v.img[0]" alt="">
                 </div>
               </li>
             </template>
@@ -65,16 +65,16 @@ export default {
           return '已确认'
           break
         case 3:
-          return '待处理'
+          return '未通过'
           break
         case 4:
-          return '待评价'
+          return '待处理'
           break
         case 5:
-          return '已完成'
+          return '待评论'
           break
         case 6: 
-          return '已评论'
+          return '已完成'
           break
       }
     },
@@ -147,8 +147,8 @@ export default {
           text-align: left;
           -webkit-line-clamp: 2;
           text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
+          display: -webkit-flex;
+          -webkit-flex-orient: vertical;
           padding-top: 0.02rem;
           margin-bottom: 0.1rem;
         }

@@ -129,13 +129,13 @@ export default {
           return '未通过'
           break
         case 4:
-          return '待上门'
+          return '待处理'
           break
         case 5:
           return '待评论'
           break
         case 6:
-          return '已评论'
+          return '已完成'
           break
       }
     },

@@ -19,7 +19,7 @@ export default {
     return {
       v_tabs: [
         { name: '全部', active: true, status: 0 },
-        { name: '待确认', active: false, status: 1 },
+        { name: '待确认', active: false, status: 2 },
         { name: '待处理', active: false, status: 4 },
         { name: '待评价', active: false, status: 5 },
         { name: '已完成', active: false, status: 6 }

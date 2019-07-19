@@ -59,10 +59,10 @@ export default {
     f_formatSts (v) {
       switch (v.sts) {
         case 1:
-          return '待确认'
+          return '待审核'
           break
         case 2:
-          return '已确认'
+          return '待确认'
           break
         case 3:
           return '未通过'

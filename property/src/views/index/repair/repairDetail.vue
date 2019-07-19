@@ -55,7 +55,7 @@
           </div>
         </div>
       </div>
-      <div class="rep_comment" v-if="v_info.sts === 1 || v_info.sts === 4">
+      <div class="rep_comment" v-if="v_info.sts === 2 || v_info.sts === 4">
         <button class="rep_comment_btn" @click="f_submit">{{ btnText }}</button>
       </div>
       <div class="rep_commentList" v-show="v_commments.length">
@@ -178,19 +178,22 @@ export default {
     },
     f_submit () {
       let params = {
-        rId: this.v_id,
+        id: this.v_info.id,
         sts: this.v_sts
       }
       
       this.$http
-        .post('/admin/property/repair/changeStatus', params)
+        .get('/admin/property/repair/changeStatus', {params})
         .then(({ data }) => {
-          data.success && this.$toast('已确认')
+          if (data.success) {
+            this.$toast('已确认')
+            this.$router.go(-1)
+          }
         })
     },
     async f_updateCommmentStatus () {
       const params = {
-        id: this.v_id,
+        id: this.v_info.id,
         sts: 6
       }
 

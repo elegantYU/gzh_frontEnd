@@ -446,6 +446,7 @@ export default {
   height: 100%;
   .ns_container{
     background-color: #efeff4;
+    width: 100%;
     padding-bottom: 1.2rem;
     overflow: auto;
     h6{

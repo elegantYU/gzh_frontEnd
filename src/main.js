@@ -14,7 +14,7 @@ import router from './router/router'
 import Vconsole from 'vconsole'
 deviceRem(750)
 // initConfirm()
-const vConsole = new Vconsole()
+// const vConsole = new Vconsole()
 
 Vue.prototype.$http = axios
 Vue.prototype.$wxsdk = wxsdk

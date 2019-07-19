@@ -186,7 +186,9 @@ export default {
         .get('/admin/property/repair/changeStatus', {params})
         .then(({ data }) => {
           if (data.success) {
-            this.$toast('已确认')
+            if (this.v_info.sts == 2) {
+              this.$toast('已确认')
+            }
             this.$router.go(-1)
           }
         })

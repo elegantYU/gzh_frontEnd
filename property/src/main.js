@@ -14,7 +14,7 @@ import toastMessage from './components/plugin/Toast'
 import Vconsole from 'vconsole'
 
 deviceRem(750)
-const clg = new Vconsole()
+// const clg = new Vconsole()
 
 Vue.prototype.$http = axios
 Vue.prototype.$wxsdk = wxsdk

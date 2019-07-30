@@ -83,6 +83,7 @@ export default {
       ],
       v_topic: [],
       v_noHouse: false,
+      huoseid:''
     }
   },
   computed: {
@@ -157,6 +158,9 @@ export default {
           name: `${v.building}${v.unit}${v.room}`,
           house: v.houseCode
         }))
+        this.huoseid =result[0].id
+        this.$store.dispatch('setHuoseid', this.huoseid)
+        console.log(this.$store.state.huoseid)
         this.$store.dispatch('setHouse', r)
       }
     }

@@ -134,6 +134,7 @@ export default {
       const orderTime = this.$moment(this.v_form.orderTime).format('YYYY-MM-DD HH:mm:ss')
       const params = {
         ...this.v_form,
+        houseId:this.$store.state.huoseid,
         orderTime: orderTime
       }
 

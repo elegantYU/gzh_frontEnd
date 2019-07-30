@@ -14,6 +14,7 @@ export default new Vuex.Store({
     neighbor: { router: '' },
     lostFound: { router: '' },
     orderParams: [],        // 订单参数
+    huoseid:''
   },
   mutations: {
     setWxInfo: (state, obj) => (state.wxInfo = Object.assign({}, obj)),
@@ -26,13 +27,15 @@ export default new Vuex.Store({
     lostFoundRouter: (state, r) => (state.lostFound.router = r),
     setOrderParams: (state, arr) => {
       state.orderParams = arr.slice(0)
-    }
+    },
+    setHuoseid: (state, str) => (state.huoseid = str)
   },
   actions: {
     setUser: ({ commit }, obj) => commit('setUser', obj),
     setHouse: ({ commit }, arr) => commit('setHouse', arr),
     setVillageCode: ({ commit }, str) => commit('setVillageCode', str),
     setVillage: ({ commit }, str) => commit('setVillage', str),
-    setCurrentPlace: ({ commit }, obj) => commit('setCurrentPlace', obj)
+    setCurrentPlace: ({ commit }, obj) => commit('setCurrentPlace', obj),
+    setHuoseid: ({ commit }, str) => commit('setHuoseid', str)
   }
 })

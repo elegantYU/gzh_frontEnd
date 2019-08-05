@@ -1,6 +1,6 @@
 <template>
   <div class="lp_wrapper">
-    <mu-load-more :loading="v_loading" @load="f_load" :loaded-all="v_laodAll">
+    <mu-load-more :loading="v_loading" @load="f_load" :loaded-all="v_loadAll">
       <mu-list>
         <template v-for="(v, i) in v_list">
           <div class="pub_item clearfix" :key="i" @click="f_viewDetail(v)">
@@ -29,7 +29,7 @@ export default {
       v_list: [],
       v_pageNum: 1,
       v_loading: false,
-      v_laodAll: false
+      v_loadAll: false
     }
   },
   props: {
@@ -64,7 +64,7 @@ export default {
         .get('/admin/lost/getAllLostFoundList', { params })
         .then(({data: {data: res}}) => {
           if (!res.list.length) {
-            this.v_laodAll = true
+            this.v_loadAll = true
             return
           }
           res.list.forEach(v => {

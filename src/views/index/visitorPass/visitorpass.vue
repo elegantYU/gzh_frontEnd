@@ -184,7 +184,7 @@ export default {
   },
   methods: {
     f_upload (e) {
-      if (this.v_from.imgUrl.length > 1) {
+      if (this.v_from.imgUrl.length > 0) {
         this.$toast('最多一张图片')
         return
       }

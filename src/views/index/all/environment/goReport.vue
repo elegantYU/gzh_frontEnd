@@ -160,7 +160,7 @@ export default {
       this.v_currentImg = v
     },
     f_deleteImg (i) {
-      this.v_from.exemptionImg.splice(i, 1)
+      this.v_form.imgUrl.splice(i, 1)
     },
   }
 }
